@@ -1,0 +1,129 @@
+\documentclass[boxes]{homework}
+
+
+% This is a slightly-more-than-minimal document that uses the homework class.
+% See the README at http://git.io/vZWL0 for complete documentation.
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{2}
+\duedate{Thur, Sep 24, 2020 11:59 PM}
+
+\hwname{Assignment}          % Uncomment and replace (Name) with the type of the
+                          % homework (e.g, Assignment, Problem Set, etc.) if you
+                          % don't want the document to be labeled as "Homework."
+% \problemname{Exercise}     % Uncomment and replace (Name) with the desired label
+                          % for problems created with the problem environment.
+%\solutionname{(Name)}    % Uncomment and replace (Name) with the desired label
+                          % for solutions created with the solution environment.
+
+% Load any other packages you need here.
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{bbold}
+\usepackage{nicefrac}
+\usepackage{qcircuit}
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+
+\begin{document}
+
+
+\begin{problem}
+Simple operations on quantum states.
+\begin{parts}
+	\part{Apply $R_\theta$ to the qubit in state $\frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}$}\label{part:1a}
+	\part{Apply $R_\theta$ to the \emph{first} qubit of state $\frac{1}{\sqrt{2}}\ket{00} - \frac{1}{\sqrt{2}}\ket{11}$}\label{part:1b}
+	\part{Apply $R_\theta$ to \emph{both} qubits of state $\frac{1}{\sqrt{2}}\ket{00} - \frac{1}{\sqrt{2}}\ket{11}$}\label{part:1c}
+	\part{Apply $\frac{1}{\sqrt{2}}\mqty[1 & \iu \\ \iu & 1]$ to \emph{both} qubits of state $\frac{1}{\sqrt{2}}\ket{00} + \frac{1}{\sqrt{2}}\ket{11}$}\label{part:1d}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	\begin{align*}
+		R_\theta\qty(\frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}) &= \frac{1}{\sqrt{2}}\mqty(\cos{\theta} && -\sin{\theta} \\ \sin{\theta} && \cos{\theta})\mqty(1 \\ 1) \\
+		&= \frac{1}{\sqrt{2}}\mqty(\cos\theta - \sin\theta \\ \sin\theta + \cos\theta)
+	\end{align*}
+	This is the $\ket{+}$ state rotated about the origin by an angle of $\theta$.
+
+	\ref{part:1b}
+	\begin{align*}
+		R_\theta\otimes\mathbb{1} \qty(\frac{1}{\sqrt{2}}\qty(\ket{00} - \ket{11})) & = \frac{1}{\sqrt{2}}\mqty(\cos\theta && 0 && -\sin\theta && 0 \\ 0 && \cos\theta && 0 && -\sin\theta \\ \sin\theta && 0 && \cos\theta && 0 \\ 0 &&\sin\theta &&  0 && \cos\theta)\mqty(1 \\ 0 \\ 0 \\ -1) \\
+		&= \frac{1}{\sqrt{2}}\mqty(\cos\theta \\ \sin\theta \\ \sin\theta \\ -\cos\theta)
+	\end{align*}
+
+	\ref{part:1c}
+	First we need to calculate $R_\theta\otimes R_\theta$ in order to apply it to our system.
+	\begin{equation*}
+		R_\theta\otimes R_\theta = \mqty(\cos^2\theta && -\cos\theta\sin\theta && -\cos\theta\sin\theta && \sin^2\theta \\ \cos\theta\sin\theta && \cos^2\theta && -\sin^2\theta && -\cos\theta\sin\theta \\ \cos\theta\sin\theta && -\sin^2\theta && \cos^2\theta && -\cos\theta\sin\theta \\ \sin^2\theta && \cos\theta\sin\theta && \cos\theta\sin\theta && \cos^2\theta)
+	\end{equation*}
+	With that we can now apply it to our state.
+	\begin{align*}
+		R_\theta\otimes R_\theta\qty(\frac{1}{\sqrt{2}}\ket{00} - \frac{1}{\sqrt{2}}\ket{11}) & = \frac{1}{\sqrt{2}}\mqty(\cos^2\theta - \sin^2\theta \\ 2\cos\theta\sin\theta \\ 2\cos\theta\sin\theta \\ \sin^2\theta - \cos^2\theta) \\
+		                                                                                      & = \frac{1}{\sqrt{2}}\mqty(\cos 2\theta                \\ \sin 2\theta \\ \sin 2\theta \\ -\cos 2\theta)
+	\end{align*}
+	Which is interesting because it's the same state as the previous part, but with double the angle.
+
+	\ref{part:1d}
+	Again we must first calculate the tensor product of the gate with itself. We call the gate $A$.
+	\begin{equation*}
+		A\otimes A = \frac{1}{2}\mqty(A && \iu A \\ \iu A && A) = \mqty(1 && \iu && \iu && -1 \\ \iu && 1 && -1 && \iu \\ \iu && -1 && 1 && \iu \\ -1 && \iu && \iu && 1)
+	\end{equation*}
+	And now we can apply this to our state as follows.
+	\begin{align*}
+		A\otimes A \qty(\frac{1}{\sqrt{2}}\ket{00} + \frac{1}{\sqrt{2}}\ket{11}) & = \frac{1}{2\sqrt{2}}\mqty(0                    \\ 2\iu \\ 2\iu \\ 0) \\
+		                                                                         & = \frac{\iu}{\sqrt{2}}\mqty(0                   \\ 1 \\ 1 \\ 0) \\
+		                                                                         & = \frac{\iu}{\sqrt{2}}\qty(\ket{01} + \ket{10})
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Simulating a controlled-rotation with CNOT and one-qubit gates.
+\end{problem}
+
+\begin{solution}
+	To begin, as per the hint, we will take $U = R_\alpha$ and $V = R_\beta$. We can then construct the total LHS gate by multiplying the sequence of gates together making sure to reverse the order of multiplication.
+	\begin{equation*}
+		\mathrm{CNOT}\cdot\qty(\mathbb{1}\otimes V)\cdot\mathrm{CNOT}\cdot\qty(\mathbb{1}\otimes U) = \mathrm{CNOT}\cdot\qty(\mathbb{1}\otimes R_\beta)\cdot\mathrm{CNOT}\cdot\qty(\mathbb{1}\otimes R_\alpha)
+	\end{equation*}
+	We can now expand that and set it equal to a controlled rotation. In the following calculation, we will treat each ``element'' as a $2\times 2$ block matrix.
+	\begin{align*}
+		\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[R_\beta && 0 \\ 0 && R_\beta]\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[R_\alpha && 0 \\ 0 && R_\alpha] &= \mqty[R_\beta && 0 \\ 0 && R_\beta X]\mqty[R_\alpha && 0 \\ 0 && R_\alpha X] \\
+		&= \mqty[R_\beta R_\alpha && 0 \\ 0 && XR_\beta X R_\alpha]
+	\end{align*}
+	Now this combined gate is supposed to be equal to a controlled rotation, which has form $\smqty[\mathbb{1} && 0 \\ 0 && R_\theta]$, so we can conclude $R_\beta R_\alpha = \mathbb{1}$ and $XR_\beta X R_\alpha = R_\theta$. The first condition tells use that $\alpha + \beta = 2n\pi$ for some $n\in\mathbb{Z}$ and the second condition requires us to expand the matrices.
+	\begin{align*}
+		R_\theta = XR_\beta X R_\alpha &= \mqty[\sin\beta && \cos\beta \\ \cos\beta && -\sin\beta]\mqty[\sin\alpha && \cos\alpha \\ \cos\alpha && -\sin\alpha] \\
+		&= \mqty[\sin\alpha\sin\beta + \cos\alpha\cos\beta && -\sin\alpha\cos\beta + \cos\alpha\sin\beta \\ -\cos\alpha\sin\beta + \sin\alpha\cos\beta && \cos\alpha\cos\beta + \sin\alpha\sin\beta] \\
+		&= \mqty[\cos(\alpha - \beta) && -\sin(\alpha - \beta) \\ \sin(\alpha - \beta) && \phantom{-}\cos(\alpha - \beta)] = R_{\alpha - \beta}
+	\end{align*}
+	This implies that $\alpha - \beta = \theta$. This, together the the fact that we can choose $n = 0$ in the above criteria means that $\alpha = \beta = \nicefrac{\theta}{2}$.
+\end{solution}
+
+\begin{problem}
+Circuit for constructing a state.
+\end{problem}
+
+\begin{solution}
+	The following quantum circuit turns $\ket{00}$ into the desired state.
+	\[
+		\Qcircuit @C=1em @R=1em {
+		& \gate{H} & \ctrl{1} & \gate{H} & \qw \\
+		& \qw & \targ & \qw & \qw
+		}
+	\]
+	In matrix form we have the following.
+	\begin{align*}
+		\qty(H\otimes \mathbb{1})\cdot\mathrm{CNOT}\cdot\qty(H\otimes \mathbb{1}) & = \frac{1}{2}\mqty[\mathbb{1} && \mathbb{1} \\ \mathbb{1} && -\mathbb{1}]\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[\mathbb{1} && \mathbb{1} \\ \mathbb{1} && -\mathbb{1}] \\
+		& = \frac{1}{2}\mqty[\mathbb{1} + X && \mathbb{1} - X \\ \mathbb{1} - X && \mathbb{1} + X] \\
+		D & = \frac{1}{2}\mqty[\admat[\phantom{-}1]{-1,-1,-1, -1}]
+	\end{align*}
+	Sure enough $D\ket{00} = \frac{1}{2}\qty(\ket{00} + \ket{01} + \ket{10} - \ket{11})$ as desired.
+\end{solution}
+
+\end{document}

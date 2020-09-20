@@ -1,0 +1,85 @@
+\documentclass[boxes]{homework}
+
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Advanced Quantum Theory}
+\courseid{AMATH 673}
+\hwnum{2}
+\duedate{Fri, Sep 25, 2020 11:59 AM}
+
+%\hwname{(Name)}
+\problemname{Exercise}
+%\solutionname{(Name)}
+
+\usepackage{physics}
+\usepackage[makeroom,Smaller]{cancel}
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\footnotesize}
+
+\newcommand{\mmtm}[2]{p_#1^{(#2)}}
+\newcommand{\pstn}[2]{x_#1^{(#2)}}
+\newcommand{\iu}{\mathrm{i}}
+
+\makeatletter
+\numberwithin{@problem}{section}
+\makeatother
+
+\begin{document}
+
+\setcounter{section}{3}
+
+\begin{problem}
+Find and list the defining property of an involution.
+\end{problem}
+
+\begin{solution}
+	An \emph{involution} is a function which is it's own inverse. Symbolically this can be written as $f(f(x)) = x$. This is not to be confused\marginnote{I confused the two, maybe that's just me though!} with \emph{idempotence} which means $f(f(x)) = f(x)$.
+\end{solution}
+
+\begin{problem}
+For classical mechanics, formula Eq.2.37 provided a convenient representation of the Poisson bracket. However, Eq.2.37 is not a valid representation of the Poisson bracket in the case of quantum mechanics. In quantum mechanics, we have a (not so convenient) representation of the Poisson bracket through Eq.3.11:
+\begin{equation*}
+	\pb{\hat{u}}{\hat{v}} = \frac{1}{\iu\hbar}\qty(\hat{u}\hat{v} - \hat{v}\hat{u})
+\end{equation*}
+Use this representation to evaluate the Poisson bracket $\pb{\hat{x}^2}{\hat{p}}$.
+\end{problem}
+
+\begin{solution}
+	The axioms of the Poisson bracket allow us to rewrite $\pb{\hat{x}^2}{\hat{p}}$ as $\hat{x}\pb{\hat{x}}{\hat{p}} + \pb{\hat{x}}{\hat{p}}\hat{x}$. We can now use the canonical commutation relations to evaluate this.
+	\begin{align*}
+		\pb{\hat{x}^2}{\hat{p}} & = \hat{x}\pb{\hat{x}}{\hat{p}} + \pb{\hat{x}}{\hat{p}}\hat{x}                                                                                           \\
+		                        & = \frac{1}{\iu\hbar}\hat{x}\underbracket{\comm{\hat{x}}{\hat{p}}}_{\iu\hbar} + \frac{1}{\iu\hbar}\underbrace{\comm{\hat{x}}{\hat{p}}}_{\iu\hbar}\hat{x} \\
+		                        & = 2\hat{x}
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Reconsider the system with the Hamiltonian Eq.2.4, which consists of two particles that are attracted to another through a harmonic force (a force which is proportional to their distance). In practice, for example the force that binds diatomic molecules and the force that keeps nucleons (i.e., neutrons and protons) inside a nucleus are essentially harmonic. In those cases the effect of $\hbar$ cannot be neglected. One obtains the correct quantum theoretic Hamiltonian from the classical Hamiltonian of Eq.2.4 by simply placing hats on the $x$ and $p$’s. Find explicitly all the equations of motion which the $\hat{x}_i^{(r)}$ and $\hat{p}_j^{(r)}$ (where $r\in \{1,2\}$) of this system must obey.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+To obtain the quantum Hamiltonian from the classical Hamiltonian and vice versa by placing or removing hats on the $x$ and $p$’s is generally not as straight forward as in the previous exercise! Namely, there can occur so-called ``ordering ambiguities'': Consider the two Hamiltonians $\hat{H}_1 = \hat{p}^2/2m + a(\hat{x}^2\hat{p}\hat{x} - \hat{x}\hat{p}\hat{x}^2)$
+and
+$\hat{H}_2 = \hat{p}^2/2m + b(\hat{p}\hat{x}\hat{p}^2 - \hat{p}^2\hat{x}\hat{p})$ where $a$ and $b$ are nonzero constants with appropriate units. Check whether or not these two Hamiltonians are the same in classical mechanics. Also check whether or not they can be the same in quantum mechanics for some nonzero choices of $a$ and $b$.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+Find a Hamiltonian which contains at least one thousand powers of $\hat{x}$ and which also agrees with the Hamiltonian $\hat{H}_1$ of the previous exercise in classical mechanics. Make sure that your Hamiltonian is formally hermitean, i.e., that it obeys $\hat{H}^\dagger = \hat{H}$. Help: To ensure hermiticity, you can symmetrize. For example, $\hat{x}\hat{p}^2$ is not hermitean but$\qty(\hat{x}\hat{p}^2 + \hat{p}^2\hat{x})/2$ is hermitean.
+\end{problem}
+
+\begin{solution}
+	Take $\hat{H}_w = \frac{\hat{p}^2}{2m} + a\qty(\hat{p}\hat{x}^{1000} + \hat{x}^{1000}\hat{p})$.
+\end{solution}
+
+\end{document}

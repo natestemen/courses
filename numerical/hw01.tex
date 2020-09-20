@@ -1,0 +1,189 @@
+\documentclass[boxes]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Numerical Analysis}
+\courseid{AMATH 740}
+\hwnum{1}
+\duedate{Fri, Sep 25, 2020 5:00 PM}
+
+\hwname{Assignment}
+% \problemname{Exercise}
+%\solutionname{(Name)}
+
+\usepackage{physics}
+\usepackage[makeroom,Smaller]{cancel}
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\footnotesize}
+
+\newcommand{\tpose}[1]{#1^\intercal}
+\newcommand{\inv}[1]{#1^{-1}}
+
+
+\begin{document}
+
+\begin{problem}
+Eigenvalues and eigenvectors of the 1D Laplacian.
+\begin{parts}
+	\part{Show that the $n$ eigenvectors are given by the vectors $\vb{x}^{(p)}$ with components
+		\begin{equation*}
+			x_j^{(p)} = \sin(jp\pi h)
+		\end{equation*}
+		and with eigenvalues
+		\begin{equation*}
+			\lambda_p = \frac{2}{h^2}\qty(\cos(p\pi h) - 1).
+		\end{equation*}}\label{part:1a}
+	\part{Verify the functions $u^{(p)}(x) = \sin(p\pi x)$ with $p\in\mathbb{N}$ are eigenfunctions of the continuous differential operator $\dv*[2]{x}$ on domain $[0, 1]$ with boundary conditions $u(0) = 0 = u(1)$.}\label{part:1b}
+	\part{Compare the eigenvectors and the eigenvalues for the discrete and continuous operators and comment. Are the discrete and continuous eigenvalues similar for small values of $h\cdot p$?}\label{part:1c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	We start by verifying the the eigenvectors and eigenvalues given are correct.
+	\begin{align*}
+		A\vb{x}^{(p)} &= \frac{1}{h^2}\mqty[-2 && 1 && && && \\ 1 && -2 && 1 && && \\ && \ddots && \ddots && \ddots && \\ && && 1 && -2&&1\\ && && && 1&& -2]\mqty[\sin(p\pi h) \\ \sin(2p\pi h) \\ \vdots \\ \sin((n - 1)p\pi h) \\ \sin(np\pi h)] \\
+		&= \frac{1}{h^2}\mqty[-2\sin(p\pi h) + \sin(2p\pi h) \\ \sin(p\pi h) - 2\sin(2p\pi h) + \sin(3p\pi h) \\ \vdots \\ \sin((n-1)p\pi h) - 2\sin(np\pi h)]
+	\end{align*}
+	We can compute a an elemente $(A\vb{x}^{(p)})_j$ as follows. We use $\varphi = p\pi h$ to make the trig identity easier to see.
+	\begin{align*}
+		(A\vb{x}^{(p)})_j & = \frac{1}{h^2}\qty(\sin((j - 1)\varphi) - 2\sin(j\varphi) + \sin((j + 1)\varphi))                           \\
+		                  & = \frac{1}{h^2}\qty(-2\sin(j\varphi) + \sin(j\varphi + \varphi) + \sin(j\varphi - \varphi))                  \\
+		                  & = \frac{1}{h^2}\qty(-2\sin(j\varphi) + 2\sin(j\varphi)\cos(\varphi)) \marginnote{By product to sum identity} \\
+		                  & = \frac{2}{h^2}\qty(\cos(p\pi h) - 1)\sin(jp\pi h)                                                           \\
+		                  & = \lambda_p\sin(jp\pi h) = \lambda_p(\vb{x}^{(p)})_j
+	\end{align*}
+	It's worth noting that the first and last elements of $\vb{x}^{(p)}$ are slightly different because they don't get 3 terms, but the above calculation still works. For the first element $(A\vb{x}^{(p)})_1$ the first $\sin$ term disappears because $\sin 0 = 0$, and for $(A\vb{x}^{(p)})_n$ the last $\sin$ term vanishes because $(n+1)h = 1$ and $\sin(n\pi) = 0$.
+
+	\ref{part:1b}
+	First it's simple to verify the boundary conditions because $\sin 0 = 0$ and $\sin(p\pi) = 0$ for $p\in\mathbb{N}$. Now to show it's an eigenvector of the second derivative operator.
+	\begin{equation*}
+		\dv[2]{x}u^{(p)}(x) = p\pi\dv{x}\cos(p\pi x) = \overbrace{-p^2\pi^2}^{\lambda_p}\sin(p\pi x) = \lambda_pu^{(p)}(x)
+	\end{equation*}
+	So the eigenvalues here are $\lambda_p = -p^2\pi^2$.
+
+	\ref{part:1c}
+	At first glance the eigenvectors look very similar for these two problems, but the eigenvalues look quite different. However if we make $n$ very large (make the numerical grid much finer) then we can use the Taylor series for $\cos$ get get the follow approximation.
+	\begin{align*}
+		\frac{2}{h^2}\qty(\cos(p\pi h) - 1) & \approx\frac{2}{h^2}\qty(1 - \frac{p^2\pi^2h^2}{2} + \order{h^4}- 1) \\
+		                                    & =-p^2\pi^2 + \order{h^2}
+	\end{align*}
+	So in the limit $n\to\infty$ we do recover the continuous eigenvalues which is a sign we are doing something right.
+\end{solution}
+
+\clearpage
+
+\begin{problem}
+Find the $LU$ decomposition of
+\begin{equation*}
+	A = \mqty[1 && 4 && 7 \\ 2 && 5 && 8 \\ 3 && 6 && 10]
+\end{equation*}
+and briefly explain the steps.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\mqty[1 && 4 && 7 \\ 2 && 5 && 8 \\ 3 && 6 && 10] &= \overbrace{\mqty[1 && 0 && 0 \\ l_{21} && 1 && 0 \\ l_{31} && l_{32} && 1]}^L \overbrace{\mqty[u_{11} && u_{12} && u_{13} \\ 0 && u_{22} && u_{23} \\ 0 && 0 && u_{33}]}^U \\
+		&= \mqty[u_{11} && u_{12} && u_{13} \\ l_{21}u_{11} && l_{21}u_{12} + u_{22} && l_{21}u_{13} + u_{23} \\ l_{31}u_{11} && l_{31}u_{12} + l_{23}u_{22} && l_{31}u_{13} + l_{32}u_{23} + u_{33}]
+	\end{align*}
+	With this we can immediately see $u_{11} = 1, u_{12} = 4, u_{13} = 7, l_{21} = 2$ and $l_{31} = 3$. We can then plug these numbers into the other 4 equations to work out the rest of the components. With that we obtain the following lower and upper matrices.
+	\begin{align*}
+		L &= \mqty[1 && 0 && 0 \\ 2 && 1 && 0 \\ 3 && 6 && 1] & U & = \mqty[1 && 4 && 7 \\ 0 && -1 && -6 \\ 0 && 0 && 25]
+	\end{align*}
+\end{solution}
+
+\clearpage
+
+\begin{problem}
+Computational work for recursive determinant computation.
+\end{problem}
+
+\begin{solution}
+	Using the following recursive definition of the determinant
+	\begin{equation*}
+		\det A = \sum_{i = 1}^n (-1)^{i + j}a_{ij}\det(A_{ij})
+	\end{equation*}
+	we can calculate the work needed to compute the determinant of an $n\times n$ matrix as $W_n$.
+	\begin{equation*}
+		W_n = \sum_{i = 1}^n\qty(1\mathrm{M} + W_{n - 1}) = n\qty(1 + W_{n - 1})
+	\end{equation*}
+	In order to solve this recursive recurrence relation it is helpful to expand it out a few times.
+	\begin{align*}
+		W_n & = n(1 + W_{n - 1})                                                         \\
+		    & = n(1 + (n - 1)(1 + (n - 2)(1 + W_{n - 3})))                               \\
+		    & = n + n(n - 1) + n(n - 1)(n - 2) + n(n-1)(n - 2)W_{n - 3}                  \\
+		    & = \frac{n!}{(n - 1)!} + \frac{n!}{(n - 2)!} + \frac{n!}{(n - 3)!}W_{n - 3}
+	\end{align*}
+	Writing the expression in the last form allows us to more easily see a pattern arising. We are summing progressively less ``cut off'' forms of the factorial which can be expressed as follows.
+	\begin{equation*}
+		W_n = n!\sum_{k = 1}^{n - 1}\frac{1}{k!}
+	\end{equation*}
+	In the limit of large $n$ this approaches $W_n = en!$. Nice.
+\end{solution}
+
+\clearpage
+
+\begin{problem}
+Vector norm inequalities.
+
+Show that $\norm{\vb{x}}_\infty \leq\norm{\vb{x}}_1 \leq n\norm{\vb{x}}_\infty$ for $\vb{x}\in\mathbb{R}^n$.
+\end{problem}
+
+\begin{solution}
+	First, let $\abs{x_j} \coloneqq \max_i \abs{x_i} = \norm{\vb{x}}_\infty$.
+	\begin{align*}
+		\norm{\vb{x}}_\infty & = \max_{1\leq i\leq n}\abs{x_i}                                                \\
+		                     & \leq \abs{x_j} + \sum_{\substack{i = 1                                         \\ i\neq j}}^n\abs{x_i} \tag{bc second term is positive} \\
+		                     & = \sum_{i=1}^n \abs{x_i} = \norm{\vb{x}}_1                                     \\
+		                     & \leq \sum_{i = 1}^n n\abs{x_j} \tag{bc $\abs{x_j} \geq \abs{x_i}$ for all $i$} \\
+		                     & = n\sum_{i = 1}	^n \abs{x_j} = n\norm{\vb{x}}_\infty \tag*{$\square$}
+	\end{align*}
+\end{solution}
+
+\clearpage
+
+\begin{problem}
+Matrix norm formula.
+
+Let $A\in\mathbb{R}^{n\times n}$. Show that
+\begin{equation*}
+	\norm{A}_1 = \max_{1\leq j \leq n}\sum_{i = 1}^n\abs{a_{ij}}.
+\end{equation*}
+\end{problem}
+
+\clearpage
+
+\begin{problem}
+Inverse update formula.
+
+Let $A\in\mathbb{R}^{n\times n}$ be a nonsingular matrix, and $\vb{u}, \vb{v}\in\mathbb{R}^n$. Show that if $A + \vb{u}\tpose{\vb{v}}$ is nonsingular, then it's inverse can be expressed by the formula
+\begin{equation*}
+	\inv{\qty(A + \vb{u}\tpose{\vb{v}})} = \inv{A} - \frac{1}{1 + \tpose{\vb{v}}\inv{A}\vb{u}}\inv{A}\vb{u}\tpose{\vb{v}}\inv{A}
+\end{equation*}
+\end{problem}
+
+\begin{solution}
+	We start by showing $1 + \tpose{\vb{v}}\inv{A}\vb{u} \neq 0$ by contradiction. So assume $1 + \tpose{\vb{v}}\inv{A}\vb{u} = 0$.
+	\begin{align*}
+		1 + \tpose{\vb{v}}\inv{A}\vb{u}                      & = 0             \\
+		\vb{u} + \vb{u}\tpose{\vb{v}}\inv{A}\vb{u}           & = \vb{0}        \\
+		\qty(\mathbb{1} + \vb{u}\tpose{\vb{v}}\inv{A})\vb{u} & = \vb{0}        \\
+		\mathbb{1} + \vb{u}\tpose{\vb{v}}\inv{A}             & = 0^{n\times n} \\
+		A + \vb{u}\tpose{\vb{v}}                             & = 0^{n\times n}
+	\end{align*}
+	Where we've arrived at a contradiction on the last equation, because we took $A + \vb{u}\tpose{\vb{v}}$ to be nonsingular (and hence not be the 0 matrix).
+
+	With this proved we can now show the formula is indeed an inverse. For notational convenience we use $\alpha = \frac{1}{1 + \tpose{\vb{v}}\inv{A}\vb{u}}$.
+	\begin{align*}
+		\qty(A + \vb{u}\tpose{\vb{v}}) & \qty(\inv{A} - \frac{1}{1 + \tpose{\vb{v}}\inv{A}\vb{u}}\inv{A}\vb{u}\tpose{\vb{v}}\inv{A})                                                    \\
+		                               & = \mathbb{1} - \alpha\vb{u}\tpose{\vb{v}}\inv{A} + \vb{u}\tpose{\vb{v}}\inv{A} - \alpha \vb{u}\tpose{\vb{v}}\inv{A}\vb{u}\tpose{\vb{v}}\inv{A} \\
+		                               & = \mathbb{1} + \vb{u}\qty(-\alpha + 1 - \alpha\tpose{\vb{v}}\inv{A}\vb{u})\tpose{\vb{v}}\inv{A}                                                \\
+		                               & = \mathbb{1} + \vb{u}\qty(1 + -\alpha\qty[1 + \tpose{\vb{v}}\inv{A}\vb{u}])\tpose{\vb{v}}\inv{A}                                               \\
+		                               & = \mathbb{1} + \vb{u}\qty(1 - 1)\tpose{\vb{v}}\inv{A} = \mathbb{1}
+	\end{align*}
+	If a square matrix has a left (or right) inverse, then it also has a right (left) inverse and they are equal.\footnote{If $AB = \mathbb{1}$, then $1 = \det AB = \det A\det B$ so we know $B$ is nonsingular. $BAB = B \implies (BA - \mathbb{1})B = 0 \implies BA = \mathbb{1}$} We can now conclude that the formula given is indeed an inverse for $A + \vb{u}\tpose{\vb{v}}$.
+\end{solution}
+
+\end{document}

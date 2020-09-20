@@ -1,0 +1,119 @@
+\documentclass[boxes]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{1}
+\duedate{Thur, Sep 17, 2020 11:59 PM}
+
+\hwname{Assignment}
+% \problemname{Exercise}
+%\solutionname{(Name)}
+
+\usepackage{physics}
+\usepackage{cleveref}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+
+\begin{document}
+
+\begin{problem}
+Distinguishing between pairs of qubit states.
+\begin{parts}
+	\part{$\ket{0}$ and $\ket{+}$}\label{part:1a}
+	\part{$\ket{0}$ and $-\frac{1}{2}\ket{0} + \frac{\sqrt{3}}{2}\ket{1}$}\label{part:1b}
+	\part{$\frac{1}{\sqrt{2}}\ket{0} + \frac{\iu}{\sqrt{2}}\ket{1}$ and $\frac{1}{\sqrt{2}}\ket{0} - \frac{\iu}{\sqrt{2}}\ket{1}$}\label{part:1c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	To best ditinguish between these two states we will apply $R_\theta$ with $\theta = \frac{\pi}{8}$. Under this transformation the two states get transformed as follows.
+	\begin{align*}
+		R_{\theta}\ket{0} &= \mqty[\cos\theta \\ \sin\theta] & R_{\theta}\ket{+} &= \frac{1}{\sqrt{2}}\mqty[\cos\theta - \sin\theta \\ \cos\theta + \sin\theta]
+	\end{align*}
+	Under this transformation, we have the following probability table.
+	\begin{center}
+		\begin{tabular}{ r | c | c }
+			& \multicolumn{2}{c}{Probability of measuring state} \\
+			                  & $\ket{0}$                                                & $\ket{1}$                                                \\ \midrule
+			$R_\theta\ket{0}$ & $\cos^2\theta\approx 0.85$                               & $\sin^2\theta\approx 0.15$                               \\
+			$R_\theta\ket{+}$ & $\frac{1}{2}\qty(\cos\theta - \sin\theta)^2\approx 0.15$ & $\frac{1}{2}\qty(\cos\theta + \sin\theta)^2\approx 0.85$
+		\end{tabular}
+	\end{center}
+	This leaves us with an overall success probability of $85\%$.
+
+	\ref{part:1b}
+	Here we will make a clockwise rotation of \ang{15} which we will do with $R_\theta$ with $\theta = -\frac{\pi}{12}$. Under this rotation the states are transformed as follows (using $\ket{\psi} = -\frac{1}{2}\ket{0} + \frac{\sqrt{3}}{2}\ket{1}$ for notational convenience).
+	\begin{align*}
+		R_{\theta}\ket{0} &= \mqty[\cos\theta \\ \sin\theta] & R_{\theta}\ket{\psi} &= \frac{-1}{2}\mqty[\cos\theta + \sqrt{3}\sin\theta \\ \sin\theta - \sqrt{3}\cos\theta]
+	\end{align*}
+	With these transformed states we can now evaluate the success probabilities given each state as above.
+	\begin{center}
+		\begin{tabular}{ r | c | c }
+			& \multicolumn{2}{c}{Probability of measuring state} \\
+			                     & $\ket{0}$                                                               & $\ket{1}$                                                               \\ \midrule
+			$R_\theta\ket{0}$    & $\cos^2\theta\approx 0.93$                                              & $\sin^2\theta\approx 0.07$                                              \\
+			$R_\theta\ket{\psi}$ & $\abs{\frac{-1}{4}\qty(\cos\theta + \sqrt{3}\sin\theta)^2}\approx 0.07$ & $\abs{\frac{-1}{4}\qty(\sin\theta - \sqrt{3}\cos\theta)^2}\approx 0.93$
+		\end{tabular}
+	\end{center}
+	So here our overall success probability would be $93\%$. Pretty solid I do say.
+
+	\ref{part:1c}
+	These points are anti-podal on the Bloch sphere, and hence orthogonal, which means they are perfectly distinguishable. To find the unitary transformation $U$ that allows us to measure the state in the computational basis, we need it to satisfy the following two equations.
+	\begin{align*}
+		U\qty(\frac{1}{\sqrt{2}}\ket{0} + \frac{\iu}{\sqrt{2}}\ket{1}) & = \ket{0} \\
+		U\qty(\frac{1}{\sqrt{2}}\ket{0} - \frac{\iu}{\sqrt{2}}\ket{1}) & = \ket{1}
+	\end{align*}
+	These two equations are equivalent to the following two matrix equations.
+	\begin{align*}
+		\frac{1}{\sqrt{2}}\mqty[a & b \\ c & d]\mqty[1 \\ \iu] & = \mqty[1 \\ 0] \\
+		\frac{1}{\sqrt{2}}\mqty[a & b \\ c & d]\mqty[1 \\ -\iu] & = \mqty[0 \\ 1]
+	\end{align*}
+	With the matrix written this way we have 4 equations with 4 unknowns. Solving for $U$ gives us
+	\begin{equation*}
+		U = \frac{1}{\sqrt{2}}\mqty[1 & -\iu \\ 1 & \iu].
+	\end{equation*}
+	This transformation maps our two states to the computational basis which allows us to measure and distinguish perfectly between the two states and hence have 100\% success probability.
+\end{solution}
+
+\clearpage
+
+\begin{problem}
+Product states versus entangled states.
+\begin{parts}
+	\part{$\frac{1}{2}\ket{00} + \frac{1}{2}\ket{01} + \frac{1}{2}\ket{10} - \frac{1}{2}\ket{11}$}\label{part:2a}
+	\part{$\frac{1}{2}\ket{00} + \frac{1}{2}\ket{01} - \frac{1}{2}\ket{10} - \frac{1}{2}\ket{11}$}\label{part:2b}
+	\part{$\frac{1}{\sqrt{3}}\ket{00} + \frac{1}{\sqrt{3}}\ket{01} + \frac{1}{\sqrt{3}}\ket{10}$}\label{part:2c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	For this problem we will use the fact that the tensor products of two general single qubit states is $\alpha_0\beta_0\ket{00} + \alpha_0\beta_1\ket{01} + \alpha_1\beta_0\ket{10} + \alpha_1\beta_1\ket{11}$.
+
+	\ref{part:2a}
+	With the above formula we have the following four equations.
+	\begin{align}
+		\alpha_0\beta_0 & = \frac{1}{2} \label{eq:2a00}  \\
+		\alpha_0\beta_1 & = \frac{1}{2} \label{eq:2a01}  \\
+		\alpha_1\beta_0 & = \frac{1}{2} \label{eq:2a10}  \\
+		\alpha_1\beta_1 & = -\frac{1}{2} \label{eq:2a11}
+	\end{align}
+	Now if we divide \cref{eq:2a00} by \cref{eq:2a01} we get $\beta_0 = \beta_1$ which we will call $\beta$. Dividing \cref{eq:2a10} by \cref{eq:2a11} yields $\frac{\alpha_1\beta}{\alpha_1\beta} = \frac{1/2}{-1/2} \implies 1 = -1$. With this we can conclude this state is not a possible product state and hence an \textbf{entangled state}.
+
+	\ref{part:2b}
+	The following tensor prodduct gives rise to the desired state which tells us the state is a \textbf{product state}, not an entangled state.
+	\begin{equation*}
+		\qty(\frac{1}{\sqrt{2}}\ket{0} - \frac{1}{\sqrt{2}}\ket{1})\otimes\qty(\frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}) = \frac{1}{2}\ket{00} + \frac{1}{2}\ket{01} - \frac{1}{2}\ket{10} - \frac{1}{2}\ket{11}
+	\end{equation*}
+
+	\ref{part:2c}
+	Given the $\ket{11}$ term is nonexistent, we know $\alpha_1\beta_1 = 0$. This implies $\alpha_1 = 0$ or $\beta_1 = 0$. If this was the case then either the $\alpha_1\beta_0\ket{10}$ term would be 0 or the $\alpha_0\beta_1\ket{01}$ term would be zero. This is not the case so we conclude this is an \textbf{entangled state}.
+\end{solution}
+
+\end{document}

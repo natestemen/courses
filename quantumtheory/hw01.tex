@@ -1,0 +1,307 @@
+\documentclass[boxes]{homework}
+
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Advanced Quantum Theory}
+\courseid{AMATH 673}
+\hwnum{1}
+\duedate{Fri, Sep 18, 2020 11:59 AM}
+
+%\hwname{(Name)}
+\problemname{Exercise}
+%\solutionname{(Name)
+
+\usepackage{physics}
+\usepackage[makeroom,Smaller]{cancel}
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\footnotesize}
+
+\newcommand{\mmtm}[2]{p_#1^{(#2)}}
+\newcommand{\pstn}[2]{x_#1^{(#2)}}
+
+\makeatletter
+\numberwithin{@problem}{section}
+\makeatother
+
+\begin{document}
+
+\setcounter{section}{2}
+
+\begin{problem}
+Prove $\pb{c}{f} = 0$.
+\end{problem}
+
+\begin{solution}
+	The antisymmetry of the Poisson bracket allows us to equivalently prove $\pb{f}{c} = 0$.
+	\begin{align*}
+		\pb{f}{c} & = \pb{f}{\sqrt{c}}\sqrt{c} + \sqrt{c}\pb{f}{\sqrt{c}} \\
+		          & = 2\sqrt{c}\pb{f}{\sqrt{c}}                           \\
+		          & = -2\sqrt{c}\pb{\sqrt{c}}{f}                          \\
+		          & = -2\pb{c}{f}                                         \\
+		          & = 2\pb{f}{c}
+	\end{align*}
+	Since we now have $\pb{f}{c} = 2\pb{f}{c}$ we can subtract $\pb{f}{c}$ from both sides to obtain $\pb{f}{c} = 0$.
+\end{solution}
+
+\begin{problem}
+Show that $\pb{f}{f} = 0$ for any $f$.
+\end{problem}
+
+\begin{solution}
+	Again using the antisymmetry axiom we can see $\pb{f}{f} = -\pb{f}{f}$ and hence adding $\pb{f}{f}$ to both sides we obtain $\pb{f}{f} = 0$.
+\end{solution}
+
+\begin{problem}
+Assume that $n$ is a positive integer.
+\begin{parts}
+	\part{Evaluate $\pb{x_1}{p_1^n}$}\label{part:3a}
+	\part{Evaluate $\pb{x_1^n}{p_1}$}\label{part:3b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:3a}
+	I will use a proof by induction to prove $\pb{x_1}{p_1^n} = (2p)^{n-1}$. Starting with the base case of $n = 1$. Then we have $\pb{x_1}{p_1} = (2p)^0 = 1$ which agrees with the definition of the Poisson bracket for position and momentum. Assuming the formula is true for $n$ we will show it's true for $n+1$.
+	\begin{align*}
+		\pb{x_1}{p_1^{n+1}} & = \pb{x_1}{p_1^n}p_1 + p_1\pb{x_1}{p_1^n} \\
+		                    & = 2p_1\pb{x_1}{p_1^n}                     \\
+		                    & = 2p_1(2p_1)^{n-1}                        \\
+		                    & = (2p_1)^n = (2p_1)^{(n + 1) - 1}
+	\end{align*}
+
+
+	\ref{part:3b}
+	I know this is no longer part of the homework, but I did it before the changes were made, so I figured I would leave it in.
+
+	Here we will use the fact that $\pb{fg}{h} = \pb{f}{h}g + f\pb{g}{h}$ which can be derived from the product rule as follows.
+	\begin{align*}
+		\pb{fg}{h} & = -\pb{h}{fg}              \\
+		           & = -\pb{h}{f}g - f\pb{h}{g} \\
+		           & = \pb{f}{h}g + f\pb{g}{h}
+	\end{align*}
+	Again I will use proof by induction to prove $\pb{x_2^n}{p_2} = nx_2^{n-1}$. Starting with the base case of $n = 1$. Then we have $\pb{x_2}{p_2} = 1\cdot x_2^0 = 1$ which agrees with the definition. Assuming the formula is true for $n$ we will show it's true for $n + 1$.
+	\begin{align*}
+		\pb{x_2^{n+1}}{p_2} & = \pb{x_2^n}{p_2}x_2 + x_2^n\pb{x_2}{p_2} \\
+		                    & = \qty(nx_2^{n-1})x_2 + x_2^n             \\
+		                    & = nx_2^n + x_2^n                          \\
+		                    & = (n+1)x_2^n = (n+1)x_2^{(n+1)-1}
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Verify $\pb{-2p_1}{3x_1^2 + 7p_3^4 - 2x_2^2p_1^3 + 6} = 12x_1$.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\text{LHS} & = -2\pb{p_1}{3x_1^2 + 7p_3^4 - 2x_2^2p_1^3 + 6}                                                                  \\
+		           & = -2\qty(3\pb{p_1}{x_1^2} + 7\cancelto{0}{\pb{p_1}{p_3^4}} - 2 \pb{p_1}{x_2^2p_1^3} + \cancelto{0}{\pb{p_1}{6}}) \\
+		           & = -2\qty(-6x_1 - 2\qty(\cancelto{0}{\pb{p_1}{x_2^2}}p_1^3 + x_2^2\cancelto{0}{\pb{p_1}{p_1^3}}))                 \\
+		           & = 12x_1
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Show that the Poisson bracket is not associative by giving a counterexample.
+\end{problem}
+
+\begin{solution}
+	If the Poisson bracket was associative it would mean the following: $\pb{f}{\pb{g}{h}} = \pb{\pb{f}{g}}{h}$ for $f, g, h$ polynomials in $x_i, p_i$. Take $f = p_1^2$, $g = x_1$, and $h = p_1$. We can then evaluate both sides to see this does not hold.
+	\begin{align*}
+		\text{LHS} & = \pb{p_1^2}{\pb{x_1}{p_1}} = \pb{p_1^2}{1} = 0   \\
+		\text{RHS} & = \pb{\pb{p_1^2}{x_1}}{p_1} = \pb{-2p_1}{p_1} = 1
+	\end{align*}
+	Hence the Poisson bracket is not associative.
+\end{solution}
+
+\begin{problem}
+Look up and state the axioms of
+\begin{parts}
+	\part{a Lie algebra}\label{part:6a}
+	\part{an associative algebra}\label{part:6b}
+	\part{a Poisson algebra}\label{part:6c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:6a}
+	A \emph{Lie algebra} is a vector space $\mathfrak{g}$ equipped with bilinear map (called a Lie Bracket) $[\cdot, \cdot]: \mathfrak{g}\times\mathfrak{g}\to\mathfrak{g}$ which is anticommutative ($[x, y] = -[y, x]$) and satisfies the Jacobi Identity.
+	\begin{equation*}
+		[x, [y, z]] + [y, [z, x]] + [z, [x, y]] = 0 \quad\forall x,y,z\in\mathfrak{g}
+	\end{equation*}
+
+	\ref{part:6b}
+	If $R$ is a commutative ring, then an \emph{associative algebra} is an $R$-module $V$ together with a bilinear map $V\times V \to V$ that is associative and has an identity.
+
+	\ref{part:6c}
+	A \emph{Poisson algebra} is a vector space equipped with two bilinear products $-\cdot-$ and $\pb{\cdot}{\cdot}$ such that
+	\begin{itemize}
+		\item $-\cdot-$ forms an associative algebra,
+		\item $\pb{\cdot}{\cdot}$ is antisymmetric, obeys the Jacobi identity and forms a Lie algebra
+		\item The Poisson bracket $\pb{\cdot}{\cdot}$ acts as $\pb{x}{y\cdot z} = \pb{x}{y}\cdot z + y\cdot\pb{x}{z}$ for all $x,y,z$ in the Poisson algebra.
+	\end{itemize}
+\end{solution}
+
+\begin{problem}
+Prove that both methods of calculating $\dot{f}$ yield the same result.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\dv{f}{t} & = \dot{g}h + g\dot{h}            \\
+		          & = \pb{g}{H}h + g\pb{h}{H}        \\
+		          & = -\qty(\pb{H}{g}h + g\pb{H}{h}) \\
+		          & = -\pb{H}{gh}                    \\
+		          & = \pb{gh}{H} = \pb{f}{H}
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Use the Jacobi identity to prove that
+\begin{equation*}
+	\dv{t}\pb{f}{g} = \pb{\dot{f}}{g} + \pb{f}{\dot{g}}
+\end{equation*}
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\dv{t}\pb{f}{g} & = \pb{\pb{f}{g}}{H}                                           \\
+		                & = -\pb{H}{\pb{f}{g}}                                          \\
+		                & = \pb{f}{\pb{g}{H}} + \pb{g}{\pb{H}{f}} \tag{Jacobi identity} \\
+		                & = \pb{f}{\dot{g}} + \pb{g}{-\dot{f}}                          \\
+		                & = \pb{\dot{f}}{g} + \pb{f}{\dot{g}}
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Show that if $H$ is a polynomial in the positions and momenta with arbitrary (and possibly time-dependent) coefficients, it is true that $\dv{H}{t} = \pdv{H}{t}$.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\dv{t}H(x, p, t) & = \pdv{H}{x}\dv{x}{t} + \pdv{H}{p}\dv{p}{t} + \pdv{H}{t}   \\
+		                 & = \pdv{H}{x}\dot{x} + \pdv{H}{p}\dot{p} + \pdv{H}{t}       \\
+		                 & = \pdv{H}{x}\pdv{H}{p} - \pdv{H}{p}\pdv{H}{x} + \pdv{H}{t} \\
+		                 & = \pdv{H}{t}
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Show that the total momentum is conserved.
+\end{problem}
+
+\begin{solution}
+	To show $\mmtm{i}{1} + \mmtm{i}{2}$ is conserved for all $i$ we will show it's time derivative is 0 by taking it's Poisson bracket with the Hamiltonian.
+	\begin{align*}
+		\dv{t}\qty(\mmtm{i}{1} + \mmtm{i}{2}) & = \pb{\mmtm{i}{1} + \mmtm{i}{2}}{H}                                                                                                                                              \\
+		                                      & = \pb{\mmtm{i}{1} + \mmtm{i}{2}}{\frac{k}{2}\sum_j\qty(\pstn{j}{1} - \pstn{j}{2})^2} \marginnote{no contribution from kinetic}                                                   \\
+		                                      & = \frac{k}{2}\pb{\mmtm{i}{1} + \mmtm{i}{2}}{\qty(\pstn{i}{1} - \pstn{i}{2})^2}                                                                                                   \\
+		                                      & = \frac{k}{2}\qty[\pb{\mmtm{i}{1}}{{\pstn{i}{1}}^2} - 2\pb{\mmtm{i}{1}}{\pstn{i}{1}\pstn{i}{2}} + \pb{\mmtm{i}{2}}{{\pstn{i}{2}}^2} - 2\pb{\mmtm{i}{2}}{\pstn{i}{1}\pstn{i}{2}}] \\
+		                                      & = \frac{k}{2}\qty[-2\pstn{i}{1} + 2\pstn{i}{2} - 2\pstn{i}{2} + 2\pstn{i}{1}]                                                                                                    \\
+		                                      & = 0
+	\end{align*}
+	With this, and the fact that has no explicit time dependence, we can conclude that momentum is conserved.
+\end{solution}
+
+\begin{problem}
+Use the derivative definition of the Poisson bracket to evaluate $\pb{x^8p^6}{x^3p^4}$.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\pb{x^8p^6}{x^3p^4} & = \pdv{x}\qty(x^8p^6)\pdv{p}\qty(x^3p^4) - \pdv{p}\qty(x^8p^6)\pdv{x}\qty(x^3p^4) \\
+		                    & = \qty(8x^7p^6)\qty(4x^3p^3) - \qty(6x^8p^5)\qty(3x^2p^4)                         \\
+		                    & = 32x^{10}p^9 - 18x^{10}p^9                                                       \\
+		                    & = 14x^{10}p^9
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Show that the derivative definition of the Poisson bracket is indeed a representation of the Poisson bracket defined by the axioms.
+\end{problem}
+
+\begin{solution}
+	First, antisymmetry.
+	\begin{align*}
+		\pb{f}{g} & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{f}{x_{i}^{(r)}} \pdv{g}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}} \pdv{g}{x_{i}^{(r)}}) \\
+		          & = -\sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{g}{x_{i}^{(r)}}\pdv{f}{p_{i}^{(r)}} - \pdv{g}{p_{i}^{(r)}}\pdv{f}{x_{i}^{(r)}})  \\
+		          & = -\pb{g}{f}
+	\end{align*}
+	Second, linearity.
+	\begin{align*}
+		\pb{cf}{g} & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{(cf)}{x_{i}^{(r)}} \pdv{g}{p_{i}^{(r)}} - \pdv{(cf)}{p_{i}^{(r)}} \pdv{g}{x_{i}^{(r)}}) \\
+		           & = c\sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{f}{x_{i}^{(r)}} \pdv{g}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}} \pdv{g}{x_{i}^{(r)}})      \\
+		           & = c\pb{f}{g}
+	\end{align*}
+	Third, the addition rule.
+	\begin{align*}
+		\pb{f}{g + h} & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{f}{x_{i}^{(r)}} \pdv{(g + h)}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}} \pdv{(g + h)}{x_{i}^{(r)}})                                                                                                                \\
+		              & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{f}{x_{i}^{(r)}} \pdv{g}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}} \pdv{g}{x_{i}^{(r)}} + \pdv{f}{x_{i}^{(r)}} \pdv{h}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}} \pdv{g}{x_{i}^{(r)}})                                    \\
+		              & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{f}{x_{i}^{(r)}} \pdv{g}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}} \pdv{g}{x_{i}^{(r)}}) + \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{f}{x_{i}^{(r)}} \pdv{h}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}} \pdv{g}{x_{i}^{(r)}}) \\
+		              & = \pb{f}{g} + \pb{f}{h}
+	\end{align*}
+	Fourth, the product rule.
+	\begin{align*}
+		\pb{f}{gh} & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{f}{x_{i}^{(r)}} \pdv{(gh)}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}} \pdv{(gh)}{x_{i}^{(r)}})                                                       \\
+		           & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{f}{x_{i}^{(r)}}\qty[\pdv{g}{p_{i}^{(r)}}h + g\pdv{h}{p_{i}^{(r)}}] - \pdv{f}{p_{i}^{(r)}}\qty[\pdv{g}{x_{i}^{(r)}}h + g\pdv{h}{x_{i}^{(r)}}]) \\
+		           & = h\sum_{r=1}^{n} \sum_{i=1}^{3} \qty(\pdv{f}{x_{i}^{(r)}}\pdv{g}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}}\pdv{g}{x_{i}^{(r)}})                                                             \\
+		           & \qquad + g\sum_{r=1}^{n} \sum_{i=1}^{3} \qty(\pdv{f}{x_{i}^{(r)}}\pdv{h}{p_{i}^{(r)}} - \pdv{f}{p_{i}^{(r)}}\pdv{h}{x_{i}^{(r)}})                                                      \\
+		           & = \pb{f}{g}h + g\pb{f}{h}
+	\end{align*}
+	Fifth, six, and seventh: the rules for positions and momenta.
+	\begin{align*}
+		\pb{x_i^{(r)}}{p_j^{(s)}} & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\cancelto{1}{\pdv{x_i^{(r)}}{x_{i}^{(r)}}} \pdv{p_j^{(s)}}{p_{i}^{(r)}} - \cancelto{0}{\pdv{x_i^{(r)}}{p_{i}^{(r)}} \pdv{p_j^{(s)}}{x_{i}^{(r)}}}) \\
+		                          & = \sum_{r=1}^{n} \sum_{i=1}^{3}\delta_{i,j}\delta_{s,r}                                                                                                                                \\
+		                          & = \delta_{i,j}\delta_{s,r}                                                                                                                                                             \\
+	\end{align*}
+	\begin{align*}
+		\pb{x_i^{(r)}}{x_j^{(s)}} & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\pdv{x_i^{(r)}}{x_{i}^{(r)}} \cancelto{0}{\pdv{x_j^{(s)}}{p_{i}^{(r)}}} - \cancelto{0}{\pdv{x_i^{(r)}}{p_{i}^{(r)}}} \pdv{x_j^{(s)}}{x_{i}^{(r)}}) \\
+		                          & = 0
+	\end{align*}
+	\begin{align*}
+		\pb{p_i^{(r)}}{p_j^{(s)}} & = \sum_{r=1}^{n} \sum_{i=1}^{3}\qty(\cancelto{0}{\pdv{p_i^{(r)}}{x_{i}^{(r)}}} \pdv{p_j^{(s)}}{p_{i}^{(r)}} - \pdv{p_i^{(r)}}{p_{i}^{(r)}} \cancelto{0}{\pdv{p_j^{(s)}}{x_{i}^{(r)}}}) \\
+		                          & = 0
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Find the representation of the Hamilton equations
+\end{problem}
+
+\begin{solution}
+	We start with eq. 2.21 and eq. 2.22 and then use those results for eq. 2.19.
+	\begin{align*}
+		\dv{t}\pstn{i}{r} & = \pb{\pstn{i}{r}}{H}                                                                                                             \\
+		                  & = \sum_{s,j}\pdv{\pstn{i}{r}}{\pstn{j}{s}}\pdv{H}{\mmtm{j}{s}} - \cancelto{0}{\pdv{\pstn{i}{r}}{\mmtm{j}{s}}\pdv{H}{\pstn{j}{s}}} \\
+		                  & = \sum_{s,j}\delta_{i,j}\delta_{r,s}\pdv{H}{\mmtm{j}{s}}                                                                          \\
+		\dot{x}_i^{(r)}   & = \pdv{H}{\mmtm{i}{r}}
+	\end{align*}
+	\begin{align*}
+		\dv{t}\mmtm{i}{r} & = \pb{\mmtm{i}{r}}{H}                                                                                                             \\
+		                  & = \sum_{s,j}\cancelto{0}{\pdv{\mmtm{i}{r}}{\pstn{j}{s}}\pdv{H}{\mmtm{j}{s}}} - \pdv{\mmtm{i}{r}}{\mmtm{j}{s}}\pdv{H}{\pstn{j}{s}} \\
+		                  & = -\sum_{s,j}\delta_{i,j}\delta_{r,s}\pdv{H}{\pstn{j}{s}}                                                                         \\
+		\dot{p}_i^{(r)}   & = -\pdv{H}{\pstn{i}{r}}
+	\end{align*}
+	\begin{align*}
+		\dv{f}{t} & = \pb{f}{H} + \pdv{f}{t}                                                                                     \\
+		          & = \sum_{r,i}\pdv{f}{\pstn{i}{r}}\pdv{H}{\mmtm{i}{r}} - \pdv{f}{\mmtm{i}{r}}\pdv{H}{\pstn{i}{r}} + \pdv{f}{t} \\
+		          & = \sum_{r,i}\pdv{f}{\pstn{i}{r}}\dot{x}_i^{(r)} + \pdv{f}{\mmtm{i}{r}}\dot{p}_i^{(r)} + \pdv{f}{t}
+	\end{align*}
+	Which is exactly the chain rule for a function $f(\mathbf{x}^{(1)},\ldots,\mathbf{x}^{(n)}, \mathbf{p}^{(1)},\ldots,\mathbf{p}^{(n)}, t)$.
+
+\end{solution}
+
+% \begin{problem}
+% Derive the equations of motion for $\phi(x, t)$ and $\pi(x, t)$.
+% \end{problem}
+
+% \begin{solution}
+% 	Take $f = \phi(x, t)$ first. Then
+% \end{solution}
+
+
+
+\end{document}
