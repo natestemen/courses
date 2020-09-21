@@ -1,4 +1,4 @@
-\documentclass[boxes]{homework}
+\documentclass[boxes,pages]{homework}
 
 \name{Nate Stemen}
 \studentid{20906566}
@@ -12,6 +12,7 @@
 \hwname{Assignment}
 % \problemname{Exercise}
 %\solutionname{(Name)}
+
 
 \usepackage{physics}
 \usepackage[makeroom,Smaller]{cancel}
@@ -73,8 +74,6 @@ Eigenvalues and eigenvectors of the 1D Laplacian.
 	So in the limit $n\to\infty$ we do recover the continuous eigenvalues which is a sign we are doing something right.
 \end{solution}
 
-\clearpage
-
 \begin{problem}
 Find the $LU$ decomposition of
 \begin{equation*}
@@ -93,8 +92,6 @@ and briefly explain the steps.
 		L &= \mqty[1 && 0 && 0 \\ 2 && 1 && 0 \\ 3 && 6 && 1] & U & = \mqty[1 && 4 && 7 \\ 0 && -1 && -6 \\ 0 && 0 && 25]
 	\end{align*}
 \end{solution}
-
-\clearpage
 
 \begin{problem}
 Computational work for recursive determinant computation.
@@ -123,8 +120,6 @@ Computational work for recursive determinant computation.
 	In the limit of large $n$ this approaches $W_n = en!$. Nice.
 \end{solution}
 
-\clearpage
-
 \begin{problem}
 Vector norm inequalities.
 
@@ -142,8 +137,6 @@ Show that $\norm{\vb{x}}_\infty \leq\norm{\vb{x}}_1 \leq n\norm{\vb{x}}_\infty$ 
 	\end{align*}
 \end{solution}
 
-\clearpage
-
 \begin{problem}
 Matrix norm formula.
 
@@ -153,7 +146,24 @@ Let $A\in\mathbb{R}^{n\times n}$. Show that
 \end{equation*}
 \end{problem}
 
-\clearpage
+\begin{solution}
+	We begin by showing the 1-norm of a matrix must be less or equal to the maximum absolute column sum. Once that is established we will find a vector that brings the matrix norm up to that bound, which shows the maximum can be attained and hence the equality true.
+	\begin{align*}
+		\norm{A\vb{x}}_1 & = \sum_{i = 1}^n\abs{\sum_{j = 1}^n a_{ij}x_j}                                    \\
+		                 & \leq \sum_i\sum_j\abs{a_{ij}x_j}                                                  \\
+		                 & \leq \sum_j\abs{x_j}\sum_i\abs{a_{ij}}                                            \\
+		                 & \leq \qty[\max_k\sum_i\abs{a_{ik}}]\underbrace{\sum_j\abs{x_j}}_{\norm{\vb{x}}_1}
+	\end{align*}
+	If we use the the following definition of the matrix norm $\norm{A}_1 = \max_{\norm{\vb{x}_1} = 1}\norm{A\vb{x}}_1$, then the last term in the above inequality vanishes (goes to 1) and hence we have established the 1-norm of this matrix is always less than or equal to the maximum absolute column sum.
+
+	Now let $\nu$ be the index where the maximum absolute column sum lives ($\max_j\sum_i\abs{a_{ij}} = \sum_i\abs{a_{i\nu}}$). Choose $\vb{x} = \vb{e}_\nu$ where $\vb{e}_\nu$ is the unit normal vector with 1 in the $\nu$th position, and 0 everywhere else. Now we can evaluate the norm of $A$ times this vector.
+	\begin{align*}
+		\norm{A\vb{x}}_1 = \norm{A\vb{e}_\nu}_1 & = \sum_i\abs{\sum_j a_{ij}e_j}                    \\
+		                                        & = \sum_i\abs{a_{i\nu}}                            \\
+		                                        & = \max_{1\leq j \leq n}\sum_{i = 1}^n\abs{a_{ij}}
+	\end{align*}
+	Clearly $\norm{\vb{e}_\nu}_1 = 1$, so we've found a vector on the unit sphere that attains the maximum which shows the equality of the given statement.
+\end{solution}
 
 \begin{problem}
 Inverse update formula.
