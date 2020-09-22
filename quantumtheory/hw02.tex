@@ -1,4 +1,4 @@
-\documentclass[boxes]{homework}
+\documentclass[boxes,pages]{homework}
 
 
 \name{Nate Stemen}
@@ -22,6 +22,9 @@
 \newcommand{\mmtm}[2]{p_#1^{(#2)}}
 \newcommand{\pstn}[2]{x_#1^{(#2)}}
 \newcommand{\iu}{\mathrm{i}}
+\newcommand{\tpose}[1]{#1^\intercal}
+
+\DeclareMathOperator{\id}{id}
 
 \makeatletter
 \numberwithin{@problem}{section}
@@ -50,8 +53,8 @@ Use this representation to evaluate the Poisson bracket $\pb{\hat{x}^2}{\hat{p}}
 \begin{solution}
 	The axioms of the Poisson bracket allow us to rewrite $\pb{\hat{x}^2}{\hat{p}}$ as $\hat{x}\pb{\hat{x}}{\hat{p}} + \pb{\hat{x}}{\hat{p}}\hat{x}$. We can now use the canonical commutation relations to evaluate this.
 	\begin{align*}
-		\pb{\hat{x}^2}{\hat{p}} & = \hat{x}\pb{\hat{x}}{\hat{p}} + \pb{\hat{x}}{\hat{p}}\hat{x}                                                                                           \\
-		                        & = \frac{1}{\iu\hbar}\hat{x}\underbracket{\comm{\hat{x}}{\hat{p}}}_{\iu\hbar} + \frac{1}{\iu\hbar}\underbrace{\comm{\hat{x}}{\hat{p}}}_{\iu\hbar}\hat{x} \\
+		\pb{\hat{x}^2}{\hat{p}} & = \hat{x}\pb{\hat{x}}{\hat{p}} + \pb{\hat{x}}{\hat{p}}\hat{x}                                                                                         \\
+		                        & = \frac{1}{\iu\hbar}\hat{x}\underbrace{\comm{\hat{x}}{\hat{p}}}_{\iu\hbar} + \frac{1}{\iu\hbar}\underbrace{\comm{\hat{x}}{\hat{p}}}_{\iu\hbar}\hat{x} \\
 		                        & = 2\hat{x}
 	\end{align*}
 \end{solution}
@@ -61,7 +64,26 @@ Reconsider the system with the Hamiltonian Eq.2.4, which consists of two particl
 \end{problem}
 
 \begin{solution}
-
+	First remember the Hamiltonian is given by the following equation where we've used $\hat{p}_1$ to denote the momentum of particle 1. This is much easier on the eyes than $\hat{p}^{(1)}$ and the subscripts are not needed for dimensions.
+	\begin{equation*}
+		\widehat{H} = \frac{\hat{p}_1^2}{2m_1} + \frac{\hat{p}_2^2}{2m_2} + \frac{k}{2}\qty(\hat{x}_1 - \hat{x}_2)^2
+	\end{equation*}
+	Now to get the equations of motions we need to take the commutator of our coordinate with $\widehat{H}$.
+	\begin{align*}
+		\dv{t}\hat{x}_i & = \pb{\hat{x}_i}{\widehat{H}} + \partial_t \hat{x}_i \\
+		                & = \pb{\hat{x}_i}{\frac{\hat{p}_i^2}{2m_i}}           \\
+		                & = \frac{2\hat{p}_i}{2m_i} = \frac{\hat{p}_i}{m_i}
+	\end{align*}
+	Now for the slightly more complicated coordinate of momentum.
+	\begin{align*}
+		\dv{t}\hat{p}_i & = \pb{\hat{p}_i}{\widehat{H}} + \partial_t \hat{p}_i                                 \\
+		                & = \pb{\hat{p}_i}{\frac{k}{2}\qty(\hat{x}_1 - \hat{x}_2)^2}                           \\
+		                & = \frac{k}{2}\pb{\hat{p}_i}{\hat{x}_1^2 + \hat{x}_2^2 - 2\hat{x}_1\hat{x}_2}         \\
+		                & = \frac{k}{2}\qty[\pb{\hat{p}_i}{\hat{x}_i^2} - 2\pb{\hat{p}_i}{\hat{x}_i\hat{x}_j}] \\
+		                & = \frac{k}{2}\qty[-2\hat{x}_i + 2\hat{x}_j]                                          \\
+		                & = -k\qty(\hat{x}_i - \hat{x}_j)
+	\end{align*}
+	Where here we have let $j$ be the ``other'' particle. That is if $i = 1$ then $j = 2$ and if $i = 2$ then $j = 1$.
 \end{solution}
 
 \begin{problem}
@@ -71,6 +93,30 @@ $\hat{H}_2 = \hat{p}^2/2m + b(\hat{p}\hat{x}\hat{p}^2 - \hat{p}^2\hat{x}\hat{p})
 \end{problem}
 
 \begin{solution}
+	We start by removing the hats to obtain the classical Hamiltonians.
+	\begin{align*}
+		H_1 & = \frac{p^2}{2m} + a\qty(x^2px - xpx^2) & H_2 & = \frac{p^2}{2m} + b\qty(pxp^2 - p^2xp) \\
+		    & = \frac{p^2}{2m} + a\qty(x^3p - x^3p)   &     & = \frac{p^2}{2m} + b\qty(xp^3 - xp^3)   \\
+		    & = \frac{p^2}{2m}                        &     & = \frac{p^2}{2m}
+	\end{align*}
+	So because the position and momentum operators commute in classical mechanics, they represent the same Hamiltonian.
+
+	To check whether they can be the same Hamiltonian in quantum mechanics we must simplify the second terms.
+	\begin{align*}
+		\hat{x}^2\hat{p}\hat{x} - \hat{x}\hat{p}\hat{x}^2 & = \hat{x}(\hat{x}\hat{p})\hat{x} -\hat{x}(\hat{p}\hat{x})\hat{x}                      \\
+		                                                  & = \hat{x}(\iu\hbar + \hat{p}\hat{x})\hat{x} -\hat{x}(\hat{x}\hat{p} -\iu\hbar)\hat{x} \\
+		                                                  & = -\qty(\hat{x}^2\hat{p}\hat{x} - \hat{x}\hat{p}\hat{x}^2) + 2\iu\hbar \hat{x}^2      \\
+		                                                  & = \iu\hbar \hat{x}^2 = \comm{\hat{x}}{\hat{p}}\hat{x}^2
+	\end{align*}
+	This same procedure can be done for the second term in $\widehat{H}_2$ making sure to expand the inner terms to obtain
+	\begin{equation*}
+		\hat{p}\hat{x}\hat{p}^2 - \hat{p}^2\hat{x}\hat{p} = \iu\hbar \hat{p}^2
+	\end{equation*}
+	Now if we set the two Hamiltonians equal to each other we obtain
+	\begin{equation*}
+		a\hat{x}^2 = b\hat{p}^2
+	\end{equation*}
+	and I do not think it is possible for a constant to transform the position operator to the momentum operator or vice versa, so I conclude there are no constants $a, b$ that make these two Hamiltonians equal in the quantum mechanical sense.
 
 \end{solution}
 
@@ -79,7 +125,155 @@ Find a Hamiltonian which contains at least one thousand powers of $\hat{x}$ and 
 \end{problem}
 
 \begin{solution}
-	Take $\hat{H}_w = \frac{\hat{p}^2}{2m} + a\qty(\hat{p}\hat{x}^{1000} + \hat{x}^{1000}\hat{p})$.
+	Take $\hat{H}_w = \frac{\hat{p}^2}{2m} + a\qty(\hat{x}\hat{p}\hat{x}^{1000} - \hat{x}^{1000}\hat{p}\hat{x})$ with $a$ a purely complex number (i.e. no real part).
+\end{solution}
+
+\begin{problem}
+Find and list the precise axioms that a set has to obey to be called a vector space.
+\end{problem}
+
+\begin{solution}
+	A \emph{vector space} $V$ consists of a field $F$, an operation $+:V\times V\to V$ which forms an abelian group, and an operation $\cdot:F\times V\to V$ which must satisfy the following conditions.
+	\begin{align*}
+		\alpha\cdot(\beta\cdot\vb{v}) & = (\alpha\beta)\cdot\vb{v}              \\
+		1\cdot\vb{v}                  & = \vb{v}                                \\
+		\alpha\cdot(\vb{u} + \vb{v})  & = \alpha\cdot\vb{u} + \alpha\cdot\vb{v} \\
+		(\alpha +_F \beta)\cdot\vb{v} & = \alpha\cdot\vb{v} + \beta\cdot\vb{v}
+	\end{align*}
+	Where $\alpha,\beta\in F$ and $\vb{v}, \vb{u}\in V$ and $1$ is the identity in the field, and $+_F$ is the addition in the field, not the vector addition defined on $V\times V$.
+\end{solution}
+
+\begin{problem}
+Check whether or not the multiplication operator, $M$, which maps $M: g(\lambda)\to\lambda g(\lambda)$ is a linear operator.
+\end{problem}
+
+\begin{solution}
+	Here we just have to verify the function respects addition and scalar multiplication.
+	\begin{align*}
+		M(g + h) & = \lambda\qty(g(\lambda) + h(\lambda))    & M(\alpha g) & = \lambda(\alpha g(\lambda)) \\
+		         & = \lambda g(\lambda) + \lambda h(\lambda) &             & = \alpha\lambda g(\lambda)   \\
+		         & = M(g) + M(h)                             &             & = \alpha M(g)                \\
+	\end{align*}
+	Hence we conclude the multiplication map is a linear operator.
+\end{solution}
+
+\begin{problem}
+Show that the two operators $D$ and $M$ on $V$ do not commute, namely by calculating $(DM-MD)g(\lambda)$.
+\end{problem}
+
+\begin{solution}
+	Lets first calculate the commutator of $D$ and $M$ by calculating the terms separately.
+	\begin{align*}
+		D(M(g(\lambda))) & = D(\lambda g(\lambda))            & M(D(g(\lambda))) & = M(g'(\lambda))      \\
+		                 & = g(\lambda) + \lambda g'(\lambda) &                  & = \lambda g'(\lambda)
+	\end{align*}
+	We can now see the commutator follows.
+	\begin{align*}
+		\comm{D}{M}g(\lambda) & = (DM-MD)g(\lambda)                                      \\
+		                      & = D(M(g(\lambda))) - M(D(g(\lambda)))                    \\
+		                      & = g(\lambda) + \lambda g'(\lambda) - \lambda g'(\lambda) \\
+		                      & = g(\lambda)
+	\end{align*}
+	Written slightly differently we can say $\comm{D}{M} = \id_V$ where $\id_V$ is the identity operator on $V$ that takes $g(\lambda)\stackrel{\id_V}{\longmapsto}g(\lambda)$.
+\end{solution}
+
+\begin{problem}
+Check whether or not the operator $Q$ which acts on functions in $V$ as $Q: g(\lambda)\to \lambda^5g(\lambda)$ is a linear operator.
+\end{problem}
+
+\begin{solution}
+	Here we again verify the function respects addition and scalar multiplication.
+	\begin{align*}
+		Q(g + h) & = \lambda^5\qty(g(\lambda) + h(\lambda))      & Q(\alpha g) & = \lambda^5(\alpha g(\lambda)) \\
+		         & = \lambda^5 g(\lambda) + \lambda^5 h(\lambda) &             & = \alpha\lambda^5 g(\lambda)   \\
+		         & = Q(g) + Q(h)                                 &             & = \alpha Q(g)                  \\
+	\end{align*}
+	Hence we can conclude $Q$ is indeed a linear operator.
+\end{solution}
+
+\begin{problem}
+Verify Eqs.3.38.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\tr(A + B) & = \sum_i(a_{ii} + b_{ii})       \\
+		           & = \sum_i a_{ii} + \sum_i b_{ii} \\
+		           & = \tr(A) + \tr(B)
+	\end{align*}
+	In the following derivation we use $(AB)_{ii}$ to denote the element at the $i$th row and $i$th column in the matrix $AB$.
+	\begin{align*}
+		\tr(AB) & = \sum_i(AB)_{ii}           \\
+		        & =\sum_i\sum_k a_{ik}b_{ki}  \\
+		        & = \sum_k\sum_i b_{ki}a_{ik} \\
+		        & = \sum_k(BA)_{kk}           \\
+		        & = \tr(BA)
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Verify Eq.3.41.
+\end{problem}
+
+\begin{solution}
+	Lets first calculate the two components of the commutator.
+	\begin{align*}
+		aa^\dagger & = \mqty(\dmat{1,2,3,4,\ddots}) & a^\dagger a & = \mqty(\dmat{0,1,2,3,\ddots})
+	\end{align*}
+	From here we can see the commutator $\comm{a}{a^\dagger} = \mathbb{1}$.
+\end{solution}
+
+\begin{problem}
+Verify that the two matrices defined in Eqs.3.42, 3.43 with the help of Eqs.3.39, 3.40, are formally hermitean. I am using the term ``formally'' here to indicate that, for the purposes of this exercise, you need not worry about potential subtleties that may arise because these matrices are infinite dimensional.
+\end{problem}
+
+\begin{solution}
+	Here we use the fact that the Hermitian conjugate is an involution and hence ${f^\dagger}^\dagger = f$ along with the fact that $\qty(a + b)^\dagger = a^\dagger + b^\dagger$ and $c^\dagger = \overline{c}$ if $c\in\mathbb{C}$.
+	\begin{align*}
+		\qty(\hat{x}(t_0))^\dagger & = \qty(L\qty(a^\dagger + a))^\dagger                & \qty(\hat{p}(t_0))^\dagger & = \qty(\frac{\iu\hbar}{2L}\qty(a^\dagger - a))^\dagger      \\
+		                           & = \overline{L}\qty({a^\dagger}^\dagger + a^\dagger) &                            & = \frac{-\iu\hbar}{2L}\qty({a^\dagger}^\dagger - a^\dagger) \\
+		                           & = L\qty(a + a^\dagger) = \hat{x}(t_0)               &                            & = \frac{\iu\hbar}{2L}\qty(-a + a^\dagger) = \hat{p}(t_0)    \\
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Show that the hermitean conjugation of matrices reverses the order, i.e., that if $A$ and$B$ are linear maps, then $(AB)^\dagger = B^\dagger A^\dagger$. To this end, write out the matrices with indices and use that hermitean conjugating a matrix means transposing and complex conjugating it.
+\end{problem}
+
+\begin{solution}
+	Here we use $b'_{ij}$ to denote the elements of $B^\dagger$ and similarly for $A$ where $b'_{ij} = \overline{b_{ji}}$.
+	\begin{align*}
+		\qty(B^\dagger A^\dagger)_{ij} & = \sum_k b_{ik}'a_{kj}'                                    \\
+		                               & = \sum_k \overline{b_{ki}}\overline{a_{jk}}                \\
+		                               & = \sum_k \overline{a_{jk}} \overline{b_{ki}}               \\
+		                               & = \tpose{\qty(\sum_k \overline{a_{ik}} \overline{b_{kj}})} \\
+		                               & = (AB)^\dagger_{ij}
+	\end{align*}
+	Because we've shown this to be true for all $i, j$ it must be the case that $B^\dagger A^\dagger = (AB)^\dagger$.
+\end{solution}
+
+\begin{problem}
+Show that the matrices $\hat{x}(t)$ and $\hat{p}(t)$ obey at all times $t > t_0$ all the quantum mechanical conditions, i.e., the equations of motion, the hermiticity condition, and the commutation relation.
+\end{problem}
+
+\begin{solution}
+	What a lovely problem... I understood why it took being secluded on an island with no one to talk to and nothing to do in order to develop matrix mechanics. Actually, I'm still not sure I understand why because that doesn't sound so bad as to drive me to multiplying matrices for fun.
+
+	Anyway, lets first verify the equations of motion. We'll start with the equation for the position: $\hat{x}(t) = \hat{x}(t_0) + \frac{t - t_0}{m}\hat{p}(t_0)$.
+	\begin{align*}
+		\hat{x}(t_0) + \frac{t - t_0}{m}\hat{p}(t_0) & = \mqty[0 & \sqrt{1}L & & \\ \sqrt{1}L & 0 & \sqrt{2}L & \\ & \sqrt{2}L & 0 & \\ & & & \ddots] + \mqty[0 & -\sqrt{1}\frac{\iu\hbar(t - t_0)}{2Lm} & \\ \sqrt{1}\frac{\iu\hbar(t - t_0)}{2Lm} & 0 & \\ & & \ddots] \\
+		& = \hat{x}(t)
+	\end{align*}
+	That works out. Second we have to verify $\hat{p}(t) = \hat{p}(t_0)$ which is quickly verified because $\hat{p}$ has no time dependence.
+
+	Now to move on to the hermiticity condition. For $\hat{x}(t)$ the above diagonal non-zero terms can all be represented as $\sqrt{n}\qty(L - \frac{\iu\hbar(t - t_0)}{2Lm})$ with it's ``transpose partner'' being $\sqrt{n}\qty(L + \frac{\iu\hbar(t - t_0)}{2Lm})$. Upon taking the Hermitian conjugate the necessary signs will flip because of the imagary unit in the second term and hence $\hat{x}(t)$ is Hermitian. It's slightly easier to see this is also the case for $\hat{p}(t)$ because there is only one term. Taking the complex conjugate of a general term $\overline{-\sqrt{n}\frac{\iu\hbar}{2L}} =\sqrt{n}\frac{\iu\hbar}{2L}$ we see this is exactly the transpose partner.
+
+	\emph{Finally}, we have to verify the commutation relation. Best for last I guess.
+	\begin{align*}
+		\hat{x}(t)\hat{p}(t) & = \mqty[\frac{\iu\hbar}{2L}\qty(L - \frac{\iu\hbar(t - t_0)}{2Lm}) & 0 & \\ 0 & \frac{-\iu\hbar}{2L}\qty(L + \frac{\iu\hbar(t - t_0)}{2Lm}) + \frac{\iu\hbar}{L}\qty(L - \frac{\iu\hbar(t - t_0)}{2Lm}) & \\ & & \ddots] \\
+		\hat{p}(t)\hat{x}(t) & = \mqty[-\frac{\iu\hbar}{2L}\qty(L + \frac{\iu\hbar(t - t_0)}{2Lm}) & 0 & \\ 0 & \frac{\iu\hbar}{2L}\qty(L - \frac{\iu\hbar(t - t_0)}{2Lm}) - \frac{\iu\hbar}{L}\qty(L + \frac{\iu\hbar(t - t_0)}{2Lm}) & \\ & & \ddots]
+	\end{align*}
+	From here we have some serious algebra to do. For the first two elements I've verified $\comm{\hat{x}(t)}{\hat{p}(t)} = \iu\hbar$ and I think that's enough the conclude the result holds. 2 out of infinity is enough, right?
 \end{solution}
 
 \end{document}
