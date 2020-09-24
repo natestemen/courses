@@ -1,8 +1,4 @@
-\documentclass[boxes]{homework}
-
-
-% This is a slightly-more-than-minimal document that uses the homework class.
-% See the README at http://git.io/vZWL0 for complete documentation.
+\documentclass[boxes,pages]{homework}
 
 \name{Nate Stemen}
 \studentid{20906566}
@@ -13,15 +9,10 @@
 \hwnum{2}
 \duedate{Thur, Sep 24, 2020 11:59 PM}
 
-\hwname{Assignment}          % Uncomment and replace (Name) with the type of the
-                          % homework (e.g, Assignment, Problem Set, etc.) if you
-                          % don't want the document to be labeled as "Homework."
-% \problemname{Exercise}     % Uncomment and replace (Name) with the desired label
-                          % for problems created with the problem environment.
-%\solutionname{(Name)}    % Uncomment and replace (Name) with the desired label
-                          % for solutions created with the solution environment.
+\hwname{Assignment}
+% \problemname{Exercise}
+%\solutionname{(Name)}
 
-% Load any other packages you need here.
 \usepackage{physics}
 \usepackage{cancel}
 \usepackage{bbold}
@@ -93,7 +84,7 @@ Simulating a controlled-rotation with CNOT and one-qubit gates.
 	\end{equation*}
 	We can now expand that and set it equal to a controlled rotation. In the following calculation, we will treat each ``element'' as a $2\times 2$ block matrix.
 	\begin{align*}
-		\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[R_\beta && 0 \\ 0 && R_\beta]\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[R_\alpha && 0 \\ 0 && R_\alpha] &= \mqty[R_\beta && 0 \\ 0 && R_\beta X]\mqty[R_\alpha && 0 \\ 0 && R_\alpha X] \\
+		\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[R_\beta && 0 \\ 0 && R_\beta]\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[R_\alpha && 0 \\ 0 && R_\alpha] &= \mqty[R_\beta && 0 \\ 0 && XR_\beta]\mqty[R_\alpha && 0 \\ 0 && XR_\alpha] \\
 		&= \mqty[R_\beta R_\alpha && 0 \\ 0 && XR_\beta X R_\alpha]
 	\end{align*}
 	Now this combined gate is supposed to be equal to a controlled rotation, which has form $\smqty[\mathbb{1} && 0 \\ 0 && R_\theta]$, so we can conclude $R_\beta R_\alpha = \mathbb{1}$ and $XR_\beta X R_\alpha = R_\theta$. The first condition tells use that $\alpha + \beta = 2n\pi$ for some $n\in\mathbb{Z}$ and the second condition requires us to expand the matrices.
