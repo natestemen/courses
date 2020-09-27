@@ -1,0 +1,89 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{3}
+\duedate{Thur, Oct 1, 2020 11:59 PM}
+
+\hwname{Assignment}
+% \problemname{Exercise}
+%\solutionname{(Name)}
+
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{bbold}
+% \usepackage{nicefrac}
+\usepackage{qcircuit}
+\usepackage{booktabs}
+\usepackage{cleveref}
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+
+\begin{document}
+
+
+\begin{problem}
+Measuring the control qubit of a CNOT gate.
+\end{problem}
+
+\begin{solution}
+	Lets start with the most general 2 qubit state.
+	\begin{equation}\label{eq:genstate}
+		\alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
+	\end{equation}
+	Starting with the gate on the left, we first have to make a partial measurement of the first qubit. This collapses the state into one of two possibilities.
+	\begin{center}
+		\begin{tabular}{ r c | c }
+			First qubit state       & $\ket{0}$                                                                                      & $\ket{1}$                                                                                       \\
+			State after measurement & $\frac{1}{n}\ket{0}\otimes\underbrace{\qty(\alpha_{00}\ket{0} + \alpha_{01}\ket{1})}_{\phi_0}$ & $\frac{1}{n'}\ket{1}\otimes\underbrace{\qty(\alpha_{10}\ket{0} + \alpha_{11}\ket{1})}_{\phi_1}$
+		\end{tabular}
+	\end{center}
+	Where $n = \abs{a_{00}}^2 + \abs{\alpha_{01}}^2$ and similarly with $n'$ as factors for normalization. We can now feed these two states into a controlled $U$ gate to see what comes out.
+	\begin{center}
+		\begin{tabular}{c@{\hskip 0.75in} c}
+			Measured $\ket{0}$ & Measured $\ket{1}$ \\ \toprule
+			$\frac{1}{n}\mqty[\mathbb{1} & 0 \\ 0 & U]\mqty[\phi_0 \\ 0] = \frac{1}{n}\mqty[\phi_0 \\ 0]$ & $\frac{1}{n'}\mqty[\mathbb{1} & 0 \\ 0 & U]\mqty[0 \\ \phi_1] = \frac{1}{n'}\mqty[0 \\ U\phi_1]$
+		\end{tabular}
+	\end{center}
+	Now we can switch our attention to the circuit on the right hand side. First we have to apply a controlled $U$ to our general state defined in \cref{eq:genstate}.
+	\begin{equation*}
+		\mqty[\mathbb{1} & 0 \\ 0 & U]\smqty[\alpha_{00} \\ \alpha_{01} \\ \alpha_{10} \\ \alpha_{11}] = \smqty[\alpha_{00} \\ \alpha_{01} \\ u_{11}\alpha_{10} + u_{12}\alpha_{11} \\ u_{21}\alpha_{10} + u_{22}\alpha_{11}]
+	\end{equation*}
+	Now with this state we must make a partial measurement of the first qubit. As before we will only measure $\ket{0}$ or $\ket{1}$ so we have two branches.
+	\begin{center}
+		\begin{tabular}{c@{\hskip 0.5in} c}
+			Measure $\ket{0}$ & Measure $\ket{1}$ \\ \toprule
+			$\smqty[\alpha_{00} \\ \alpha_{01} \\ u_{11}\alpha_{10} + u_{12}\alpha_{11} \\ u_{21}\alpha_{10} + u_{22}\alpha_{11}] \to \frac{1}{n}\smqty[\alpha_{00} \\ \alpha_{01} \\ 0 \\ 0]$ & $\smqty[\alpha_{00} \\ \alpha_{01} \\ u_{11}\alpha_{10} + u_{12}\alpha_{11} \\ u_{21}\alpha_{10} + u_{22}\alpha_{11}] \to \frac{1}{n'}\smqty[0 \\ 0 \\ u_{11}\alpha_{10} + u_{12}\alpha_{11} \\ u_{21}\alpha_{10} + u_{22}\alpha_{11}]$
+		\end{tabular}
+	\end{center}
+	We now have the four states we need to conclude whether or not these circuits are the same. Measuring 0 in the first circuit led us to a state we called $\frac{1}{n}\smqty[\phi_0 \\ 0]$ which is shorthand for $\frac{1}{n}\smqty[\alpha_{00} \\ \alpha_{01} \\ 0 \\ 0]$. This is exactly what we got when first applying the controlled $U$ and then making the measurement so that works out.
+
+	The case for measuring 1 then applying the controlled $U$ gate got us $\frac{1}{n'}\smqty[0 \\ U\phi_1]$ which again was shorthand for $\frac{1}{n'}\smqty[0 \\ 0 \\ u_{11}\alpha_{10} + u_{12}\alpha_{11} \\ u_{21}\alpha_{10} + u_{22}\alpha_{11}]$. This is what we got for the first circuit. At first I thought there might be a different normalization constant that needed to be added instead of just $n'$, but because unitary operators are isometries (distance preserving maps), the length of the vector remains unchanged and hence still normalized.
+\end{solution}
+
+\begin{problem}
+Unitary between two triples of states with same inner products.
+\end{problem}
+
+\begin{solution}
+	We first prove a lemma.
+	\begin{lemma}
+		Given $\vb{x}, \vb{y}\in\mathbb{C}^n$ with $\norm{\vb{x}} = \norm{\vb{y}}$ then there exists a unitary $U$ such that $U\vb{x} = \vb{y}$.
+	\end{lemma}
+	\begin{proof}
+		something
+	\end{proof}
+\end{solution}
+
+\begin{problem}
+A variation of the guess-the-state game.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\end{document}
