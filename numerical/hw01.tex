@@ -14,7 +14,6 @@
 %\solutionname{(Name)}
 
 
-
 \usepackage{physics}
 \usepackage[makeroom,Smaller]{cancel}
 \usepackage{marginnote}
@@ -49,12 +48,12 @@ Eigenvalues and eigenvectors of the 1D Laplacian.
 		A\vb{x}^{(p)} &= \frac{1}{h^2}\mqty[-2 && 1 && && && \\ 1 && -2 && 1 && && \\ && \ddots && \ddots && \ddots && \\ && && 1 && -2&&1\\ && && && 1&& -2]\mqty[\sin(p\pi h) \\ \sin(2p\pi h) \\ \vdots \\ \sin((n - 1)p\pi h) \\ \sin(np\pi h)] \\
 		&= \frac{1}{h^2}\mqty[-2\sin(p\pi h) + \sin(2p\pi h) \\ \sin(p\pi h) - 2\sin(2p\pi h) + \sin(3p\pi h) \\ \vdots \\ \sin((n-1)p\pi h) - 2\sin(np\pi h)]
 	\end{align*}
-	We can compute a an elemente $(A\vb{x}^{(p)})_j$ as follows. We use $\varphi = p\pi h$ to make the trig identity easier to see.
+	That isn't actually that helpful though except to get an idea what we're looking at (but I already typed it up). Lets instead compute a general element $(A\vb{x}^{(p)})_j$ as follows. We use $\varphi = p\pi h$ to make the trig identity easier to see.
 	\begin{align*}
-		(A\vb{x}^{(p)})_j & = \frac{1}{h^2}\qty(\sin((j - 1)\varphi) - 2\sin(j\varphi) + \sin((j + 1)\varphi))                           \\
-		                  & = \frac{1}{h^2}\qty(-2\sin(j\varphi) + \sin(j\varphi + \varphi) + \sin(j\varphi - \varphi))                  \\
-		                  & = \frac{1}{h^2}\qty(-2\sin(j\varphi) + 2\sin(j\varphi)\cos(\varphi)) \marginnote{By product to sum identity} \\
-		                  & = \frac{2}{h^2}\qty(\cos(p\pi h) - 1)\sin(jp\pi h)                                                           \\
+		(A\vb{x}^{(p)})_j & = \frac{1}{h^2}\qty(\sin((j - 1)\varphi) - 2\sin(j\varphi) + \sin((j + 1)\varphi))                    \\
+		                  & = \frac{1}{h^2}\qty(-2\sin(j\varphi) + \sin(j\varphi + \varphi) + \sin(j\varphi - \varphi))           \\
+		                  & = \frac{1}{h^2}\qty(-2\sin(j\varphi) + 2\sin(j\varphi)\cos(\varphi)) \tag{by product to sum identity} \\
+		                  & = \frac{2}{h^2}\qty(\cos(p\pi h) - 1)\sin(jp\pi h)                                                    \\
 		                  & = \lambda_p\sin(jp\pi h) = \lambda_p(\vb{x}^{(p)})_j
 	\end{align*}
 	It's worth noting that the first and last elements of $\vb{x}^{(p)}$ are slightly different because they don't get 3 terms, but the above calculation still works. For the first element $(A\vb{x}^{(p)})_1$ the first $\sin$ term disappears because $\sin 0 = 0$, and for $(A\vb{x}^{(p)})_n$ the last $\sin$ term vanishes because $(n+1)h = 1$ and $\sin(n\pi) = 0$.
@@ -114,11 +113,11 @@ Computational work for recursive determinant computation.
 		    & = n + n(n - 1) + n(n - 1)(n - 2) + n(n-1)(n - 2)W_{n - 3}                  \\
 		    & = \frac{n!}{(n - 1)!} + \frac{n!}{(n - 2)!} + \frac{n!}{(n - 3)!}W_{n - 3}
 	\end{align*}
-	Writing the expression in the last form allows us to more easily see a pattern arising. We are summing progressively less ``cut off'' forms of the factorial which can be expressed as follows.
+	Writing the expression in the last form allows us to more easily see a pattern arising. We are summing progressively less ``cut off'' forms of the factorial which can be expressed as follows. I know the base condition of $W_2 = 3$, but not exactly sure how to put that in here.
 	\begin{equation*}
-		W_n = n!\sum_{k = 1}^{n - 1}\frac{1}{k!}
+		W_n = n!\qty(\sum_{k = 1}^{n - 1}\frac{1}{k!} + 1)
 	\end{equation*}
-	In the limit of large $n$ this approaches $W_n = en!$. Nice.
+	In the limit of large $n$ this approaches $W_n = (e + 1)n!$. Nice... but also \emph{very} expensive!
 \end{solution}
 
 \begin{problem}
@@ -128,7 +127,7 @@ Show that $\norm{\vb{x}}_\infty \leq\norm{\vb{x}}_1 \leq n\norm{\vb{x}}_\infty$ 
 \end{problem}
 
 \begin{solution}
-	First, let $\abs{x_j} \coloneqq \max_i \abs{x_i} = \norm{\vb{x}}_\infty$.
+	First, let $j$ be the index with maximum absolute value. That is $\abs{x_j} = \max_i \abs{x_i} = \norm{\vb{x}}_\infty$.
 	\begin{align*}
 		\norm{\vb{x}}_\infty & = \max_{1\leq i\leq n}\abs{x_i}                                                \\
 		                     & \leq \abs{x_j} + \sum_{\substack{i = 1                                         \\ i\neq j}}^n\abs{x_i} \tag{bc second term is positive} \\

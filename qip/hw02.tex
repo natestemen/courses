@@ -37,38 +37,38 @@ Simple operations on quantum states.
 \begin{solution}
 	\ref{part:1a}
 	\begin{align*}
-		R_\theta\qty(\frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}) &= \frac{1}{\sqrt{2}}\mqty(\cos{\theta} && -\sin{\theta} \\ \sin{\theta} && \cos{\theta})\mqty(1 \\ 1) \\
-		&= \frac{1}{\sqrt{2}}\mqty(\cos\theta - \sin\theta \\ \sin\theta + \cos\theta)
+		R_\theta\qty(\frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}) &= \frac{1}{\sqrt{2}}\mqty[\cos{\theta} && -\sin{\theta} \\ \sin{\theta} && \cos{\theta}]\mqty[1 \\ 1] \\
+		&= \frac{1}{\sqrt{2}}\mqty[\cos\theta - \sin\theta \\ \sin\theta + \cos\theta]
 	\end{align*}
 	This is the $\ket{+}$ state rotated about the origin by an angle of $\theta$.
 
 	\ref{part:1b}
 	\begin{align*}
-		R_\theta\otimes\mathbb{1} \qty(\frac{1}{\sqrt{2}}\qty(\ket{00} - \ket{11})) & = \frac{1}{\sqrt{2}}\mqty(\cos\theta && 0 && -\sin\theta && 0 \\ 0 && \cos\theta && 0 && -\sin\theta \\ \sin\theta && 0 && \cos\theta && 0 \\ 0 &&\sin\theta &&  0 && \cos\theta)\mqty(1 \\ 0 \\ 0 \\ -1) \\
-		&= \frac{1}{\sqrt{2}}\mqty(\cos\theta \\ \sin\theta \\ \sin\theta \\ -\cos\theta)
+		R_\theta\otimes\mathbb{1} \qty(\frac{1}{\sqrt{2}}\qty(\ket{00} - \ket{11})) & = \frac{1}{\sqrt{2}}\mqty[\cos\theta && 0 && -\sin\theta && 0 \\ 0 && \cos\theta && 0 && -\sin\theta \\ \sin\theta && 0 && \cos\theta && 0 \\ 0 &&\sin\theta &&  0 && \cos\theta]\mqty[1 \\ 0 \\ 0 \\ -1] \\
+		&= \frac{1}{\sqrt{2}}\mqty[\cos\theta \\ \sin\theta \\ \sin\theta \\ -\cos\theta]
 	\end{align*}
 
 	\ref{part:1c}
 	First we need to calculate $R_\theta\otimes R_\theta$ in order to apply it to our system.
 	\begin{equation*}
-		R_\theta\otimes R_\theta = \mqty(\cos^2\theta && -\cos\theta\sin\theta && -\cos\theta\sin\theta && \sin^2\theta \\ \cos\theta\sin\theta && \cos^2\theta && -\sin^2\theta && -\cos\theta\sin\theta \\ \cos\theta\sin\theta && -\sin^2\theta && \cos^2\theta && -\cos\theta\sin\theta \\ \sin^2\theta && \cos\theta\sin\theta && \cos\theta\sin\theta && \cos^2\theta)
+		R_\theta\otimes R_\theta = \mqty[\cos^2\theta && -\cos\theta\sin\theta && -\cos\theta\sin\theta && \sin^2\theta \\ \cos\theta\sin\theta && \cos^2\theta && -\sin^2\theta && -\cos\theta\sin\theta \\ \cos\theta\sin\theta && -\sin^2\theta && \cos^2\theta && -\cos\theta\sin\theta \\ \sin^2\theta && \cos\theta\sin\theta && \cos\theta\sin\theta && \cos^2\theta]
 	\end{equation*}
 	With that we can now apply it to our state.
 	\begin{align*}
-		R_\theta\otimes R_\theta\qty(\frac{1}{\sqrt{2}}\ket{00} - \frac{1}{\sqrt{2}}\ket{11}) & = \frac{1}{\sqrt{2}}\mqty(\cos^2\theta - \sin^2\theta \\ 2\cos\theta\sin\theta \\ 2\cos\theta\sin\theta \\ \sin^2\theta - \cos^2\theta) \\
-		                                                                                      & = \frac{1}{\sqrt{2}}\mqty(\cos 2\theta                \\ \sin 2\theta \\ \sin 2\theta \\ -\cos 2\theta)
+		R_\theta\otimes R_\theta\qty(\frac{1}{\sqrt{2}}\ket{00} - \frac{1}{\sqrt{2}}\ket{11}) & = \frac{1}{\sqrt{2}}\mqty[\cos^2\theta - \sin^2\theta \\ 2\cos\theta\sin\theta \\ 2\cos\theta\sin\theta \\ \sin^2\theta - \cos^2\theta] \\
+		                                                                                      & = \frac{1}{\sqrt{2}}\mqty[\cos 2\theta                \\ \sin 2\theta \\ \sin 2\theta \\ -\cos 2\theta]
 	\end{align*}
 	Which is interesting because it's the same state as the previous part, but with double the angle.
 
 	\ref{part:1d}
 	Again we must first calculate the tensor product of the gate with itself. We call the gate $A$.
 	\begin{equation*}
-		A\otimes A = \frac{1}{2}\mqty(A && \iu A \\ \iu A && A) = \frac{1}{2}\mqty(1 && \iu && \iu && -1 \\ \iu && 1 && -1 && \iu \\ \iu && -1 && 1 && \iu \\ -1 && \iu && \iu && 1)
+		A\otimes A = \frac{1}{2}\mqty[A && \iu A \\ \iu A && A] = \frac{1}{2}\mqty[1 && \iu && \iu && -1 \\ \iu && 1 && -1 && \iu \\ \iu && -1 && 1 && \iu \\ -1 && \iu && \iu && 1]
 	\end{equation*}
 	And now we can apply this to our state as follows.
 	\begin{align*}
-		A\otimes A \qty(\frac{1}{\sqrt{2}}\ket{00} + \frac{1}{\sqrt{2}}\ket{11}) & = \frac{1}{2\sqrt{2}}\mqty(0                    \\ 2\iu \\ 2\iu \\ 0) \\
-		                                                                         & = \frac{\iu}{\sqrt{2}}\mqty(0                   \\ 1 \\ 1 \\ 0) \\
+		A\otimes A \qty(\frac{1}{\sqrt{2}}\ket{00} + \frac{1}{\sqrt{2}}\ket{11}) & = \frac{1}{2\sqrt{2}}\mqty[0                    \\ 2\iu \\ 2\iu \\ 0] \\
+		                                                                         & = \frac{\iu}{\sqrt{2}}\mqty[0                   \\ 1 \\ 1 \\ 0] \\
 		                                                                         & = \frac{\iu}{\sqrt{2}}\qty(\ket{01} + \ket{10})
 	\end{align*}
 \end{solution}
@@ -87,13 +87,25 @@ Simulating a controlled-rotation with CNOT and one-qubit gates.
 		\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[R_\beta && 0 \\ 0 && R_\beta]\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[R_\alpha && 0 \\ 0 && R_\alpha] &= \mqty[R_\beta && 0 \\ 0 && XR_\beta]\mqty[R_\alpha && 0 \\ 0 && XR_\alpha] \\
 		&= \mqty[R_\beta R_\alpha && 0 \\ 0 && XR_\beta X R_\alpha]
 	\end{align*}
-	Now this combined gate is supposed to be equal to a controlled rotation, which has form $\smqty[\mathbb{1} && 0 \\ 0 && R_\theta]$, so we can conclude $R_\beta R_\alpha = \mathbb{1}$ and $XR_\beta X R_\alpha = R_\theta$. The first condition tells use that $\alpha + \beta = 2n\pi$ for some $n\in\mathbb{Z}$ and the second condition requires us to expand the matrices.
+	Now this combined gate is supposed to be equal to a controlled rotation, which has the form $\smqty[\mathbb{1} && 0 \\ 0 && R_\theta]$. With this we can conclude $R_\beta R_\alpha = \mathbb{1}$ and $XR_\beta X R_\alpha = R_\theta$. The first condition tells use that $\alpha + \beta = 2n\pi$ for some $n\in\mathbb{Z}$ and the second condition requires us to expand the matrices.
 	\begin{align*}
 		R_\theta = XR_\beta X R_\alpha &= \mqty[\sin\beta && \cos\beta \\ \cos\beta && -\sin\beta]\mqty[\sin\alpha && \cos\alpha \\ \cos\alpha && -\sin\alpha] \\
 		&= \mqty[\sin\alpha\sin\beta + \cos\alpha\cos\beta && -\sin\alpha\cos\beta + \cos\alpha\sin\beta \\ -\cos\alpha\sin\beta + \sin\alpha\cos\beta && \cos\alpha\cos\beta + \sin\alpha\sin\beta] \\
 		&= \mqty[\cos(\alpha - \beta) && -\sin(\alpha - \beta) \\ \sin(\alpha - \beta) && \phantom{-}\cos(\alpha - \beta)] = R_{\alpha - \beta}
 	\end{align*}
-	This implies that $\alpha - \beta = \theta$. This, together the the fact that we can choose $n = 0$ in the above criteria means that $\alpha = \nicefrac{\theta}{2}$ and $\beta = -\nicefrac{\theta}{2}$.
+	This implies that $\alpha - \beta = \theta$. This, together the the fact that we can choose $n = 0$ in the above criteria means that $\alpha = \nicefrac{\theta}{2}$ and $\beta = -\nicefrac{\theta}{2}$. That leaves us with the following equivalence.
+	\[
+		\Qcircuit @C=1em @R=1em {
+		& \qw                 & \ctrl{1} & \qw                        & \ctrl{1} & \qw \\
+		& \gate{R_{\theta/2}} & \targ    & \gate{R_{-\theta/2}}       & \targ    & \qw
+		}
+		\equiv
+		\Qcircuit @C=1em @R=1em {
+		& \ctrl{1}        & \qw \\
+		& \gate{R_\theta} & \qw
+		}
+	\]
+	Are controlled rotations actually implemented this way, or can they be implemented directly?
 \end{solution}
 
 \begin{problem}
@@ -108,13 +120,21 @@ Circuit for constructing a state.
 		& \qw & \targ & \qw & \qw
 		}
 	\]
-	In matrix form we have the following.
+	Where $H$ is the Hadamard gate. In matrix form we have the following.
 	\begin{align*}
 		\qty(H\otimes \mathbb{1})\cdot\mathrm{CNOT}\cdot\qty(H\otimes \mathbb{1}) & = \frac{1}{2}\mqty[\mathbb{1} && \mathbb{1} \\ \mathbb{1} && -\mathbb{1}]\mqty[\mathbb{1} && 0 \\ 0 && X]\mqty[\mathbb{1} && \mathbb{1} \\ \mathbb{1} && -\mathbb{1}] \\
 		& = \frac{1}{2}\mqty[\mathbb{1} + X && \mathbb{1} - X \\ \mathbb{1} - X && \mathbb{1} + X] \\
 		D & = \frac{1}{2}\mqty[\admat[\phantom{-}1]{-1,-1,-1, -1}]
 	\end{align*}
 	Sure enough $D\ket{00} = \frac{1}{2}\qty(\ket{00} + \ket{01} + \ket{10} - \ket{11})$ as desired.
+\end{solution}
+
+\begin{problem}
+Qubit strategies for communicating a trit.
+\end{problem}
+
+\begin{solution}
+	The highest possible worst-case success probability remains at one half. Because Bob cannot communicate to Alice ahead of time as happens in the superdense coding protocol, Alice sending one qubit is not any better than a single bit.
 \end{solution}
 
 \end{document}
