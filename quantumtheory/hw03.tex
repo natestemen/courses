@@ -1,0 +1,135 @@
+\documentclass[boxes,pages]{homework}
+
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Advanced Quantum Theory}
+\courseid{AMATH 673}
+\hwnum{3}
+\duedate{Fri, Oct 3, 2020 11:59 AM}
+
+%\hwname{(Name)}
+\problemname{Exercise}
+%\solutionname{(Name)}
+
+\usepackage{physics}
+\usepackage[makeroom,Smaller]{cancel}
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\footnotesize}
+
+\newcommand{\mmtm}[2]{p_#1^{(#2)}}
+\newcommand{\pstn}[2]{x_#1^{(#2)}}
+\newcommand{\iu}{\mathrm{i}}
+\newcommand{\tpose}[1]{#1^\intercal}
+
+\DeclareMathOperator{\id}{id}
+
+\makeatletter
+\numberwithin{@problem}{section}
+\makeatother
+
+\begin{document}
+
+\setcounter{section}{3}
+
+\begin{problem}
+Show that for any arbitrary choice of complex numbers $r, s$ the matrix-valued functions $\hat{x}(t)$ and $\hat{p}(t)$ defined through Eqs.\ 3.51, 3.52 obey the equations of motion at all time.
+\end{problem}
+
+\begin{solution}
+	Let's first calculate the time derivative of the momentum operator.
+	\begin{align*}
+		\dot{\hat{p}}(t) & = m\ddot{\hat{x}} \\
+		 & = m\ddot{\xi}(t)a + m\ddot{\xi}^*a^\dagger \\
+		 & = -m\omega^2\xi(t)a - m\omega^2\xi^*(t) \\
+		 & = -m\omega^2\hat{x}(t) \\
+		 & = -k\hat{x}(t)
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+	Show that, again for any arbitrary choice of complex numbers $r, s$, the matrix-valued functions $\hat{x}(t)$ and $\hat{p}(t)$ defined through Eqs.\ 3.51, 3.52 obey the hermiticity conditions at all time.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\hat{x}^\dagger & = \qty(\xi(t)a +\xi^*(t)a^\dagger)^\dagger & \hat{p}^\dagger & = m^*\qty(\dot{\xi}(t)a + \dot{\xi}^*(t)a^\dagger)^\dagger \\
+										& = \xi^*(t)a^\dagger + \xi(t)a = \hat{x} & & = m\qty(\dot{\xi}^*(t)a^\dagger + \dot{\xi}(t)a) = \hat{p}
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Find the equation that the complex numbers $r, s$ have to obey so that the matrix-valued functions $\hat{x}(t)$ and $\hat{p}(t)$ defined through Eqs.\ 3.51, 3.52 obey the canonical commutation relations at all time. This equation for $r, s$ is called the Wronskian condition and it has many solutions. Give an example of a pair of complex numbers $r, s$ that obey the Wronskian condition and write down $\hat{x}(t)$ explicitly with these values for $r, s$ filled in.
+\end{problem}
+
+\begin{solution}
+	This question is a computational doozie... We need to ensure $\comm{\hat{x}}{\hat{p}} = \iu\hbar$.
+	\begin{align*}
+		\comm{\hat{x}}{\hat{p}} & = m\qty(\xi a + \xi^*a^\dagger)\qty(\dot{\xi}a + \dot{\xi}^*a^\dagger) - m\qty(\dot{\xi}a + \dot{\xi}^*a^\dagger)\qty(\xi a + \xi^*a^\dagger) \\
+														& = m\qty[\xi(t)\dot{\xi}^*(t) - \dot{\xi}(t)\xi^*(t)] \\
+														& = m\omega\qty(sr^* -rs^*) \\
+														& = m\omega\qty(a_1 + \iu a_1)\qty(b_1 - \iu b_2) - (b_1 + \iu b_2)\qty(a_1 - \iu a_2) \\
+									 \iu\hbar & = 2m\omega\iu\qty[a_2b_1 - a_1b_2] \\
+						a_2b_1 - a_1b_2 & = \frac{\hbar}{2m\omega}
+	\end{align*}
+	From here we can let $s = 0 + \iu \frac{\hbar}{2m\omega}$ and $r = 1 + \iu 666$ and we can write down our position operator.
+	\begin{align*}
+		\hat{x}(t) & = \qty((1 + \iu 666)\sin(\omega t) + \iu\frac{\hbar}{2m\omega}\cos(\omega t))a \\
+		& \quad + \qty((1 - \iu 666)\sin(\omega t) - \iu\frac{\hbar}{2m\omega}\cos(\omega t))a^\dagger
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+	Use Eqs.\ 3.51, 3.52 to express the Hamiltonian in terms of functions and the operators $a, a^\dagger$. There should be terms proportional to $a^2$, to $(a^\dagger)^2$, $aa^\dagger$ and $a^\dagger a$.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\hat{H} & = \frac{\hat{p}^2}{2m} + \frac{m\omega^2}{2}\hat{x}^2 \\
+						& = \qty[\frac{m}{2}\dot{\xi}^2 + \frac{m\omega^2}{2}\xi^2]a^2 + \qty[\frac{m}{2}\dot{\xi}^{*^2} + \frac{m\omega^2}{2}{\xi^*}^2]{a^\dagger}^2 \\
+%						& \quad + \qty[\frac{m}{2}\dot{\xi}\dot{\xi}^* + \frac{m\omega^2}{2}\xi\xi^*]aa^\dagger + \qty[\frac{m}{2}\dot{\xi}\dot{\xi}^* + \frac{m\omega^2}{2}\xi\xi^*]a^\dagger a
+	\end{align*}
+\end{solution}
+
+
+\begin{problem}
+It turns out that it is possible to choose the coefficients $r$ and $s$ so that the terms in the Hamiltonian which are proportional to $a^2$ and $(a^\dagger)^2$ drop out. Find the condition which the equation that $r$ and $s$ have to obey for this to happen. Choose a pair of complex numbers $r, s$ such that the Hamiltonian simplifies this way, and of course such that the Wronskian condition is obeyed. Write down $\hat{H}(t)$ as an explicit matrix for this choice of $r, s$. It should be a diagonal matrix.
+\end{problem}
+
+\begin{solution}
+	We can expand the $a^2$ and ${a^\dagger}^2$ to get the following condtions on $r$ and $s$.
+	\begin{align*}
+%		\frac{m}{2}\dot{\xi}^2 + \frac{m\omega^2}{2}\xi^2 & = \frac{m\omega^2}{2}\qty(r^2 + s^2) \implies r^2 = -s^2 \\
+%		\frac{m}{2} \dot{\xi}^*
+%		\frac{m}{2} \dot{\xi}^{*^2} + \frac{m\omega^2}{2} {\xi^*}^2 & = \frac{m\omega^2}{2}\qty{{r^*}^2 + {s^*}^2 \implies {r^*}^2 = -{s^*}^2
+	\end{align*}
+\end{solution}
+
+
+\begin{problem}
+	Give a counter example for Eq.\ 3.67. To this end, write out Eq.\ 3.67 explicitly, i.e., in matrix form, for the case $\hat{f}(\hat{x}(t), \hat{p}(t)) = \hat{x}^2$. Then choose a suitablenormalized $\psi$ so that Eq.\ 3.67 is seen to be violated. (It is not difficult to find such a $\psi$, almost every one will do.)
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+	Verify that $\psi$ of Eq.\ 3.61 is normalized. For this choice of $\psi$, calculate explicitly the expectation values $\bar{x}(t)$, $\bar{p}(t)$ as well as the uncertainties in those predictions, i.e., the standard deviations $\Delta x(t)$ and$\Delta p(t)$ for the free particle. Your results should show that neither the position nor the momentum are predicted with certainty at any time, not even at the initial time $t_0$. The fact that $\Delta x(t)$ grows in time expresses that a momentum uncertainty over time leads to increasing position uncertainty. $\Delta p(t)$ remains constant in time, expressing that the momentum of a free particle, no matterwhat value it has, remains unchanged.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+Spell out the step of the second equality in Eq.\ 3.68.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\end{document}

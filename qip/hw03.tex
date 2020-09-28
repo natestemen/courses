@@ -75,8 +75,15 @@ Unitary between two triples of states with same inner products.
 		Given $\vb{x}, \vb{y}\in\mathbb{C}^n$ with $\norm{\vb{x}} = \norm{\vb{y}}$ then there exists a unitary $U$ such that $U\vb{x} = \vb{y}$.
 	\end{lemma}
 	\begin{proof}
-		something
+		If $n > 2$, then we can always find vectors that are perpendicular to both $\vb{x}$ and $\vb{y}$. Take $\vb{n}$ to be one such vector and $\theta$ to be the angle between $\vb{x}$ and $\vb{y}$. Then let $U = R(\theta, \vb{n})$ be the rotation of angle $\theta$ about the normal vector. Rotations are surely unitary, and hence we've found $U$.\hfill\qed
 	\end{proof}
+	With that out of the way, we've already got that it's possible to find a $U$ such a that $U\ket{\phi_0} = \ket{\psi_0}$. With that we can now show we can get the next two vectors.
+	\begin{align*}
+		\braket{\psi_0}{\psi_1} & = \braket{U\phi_0}{\psi_1} \\
+		 & = \braket{\phi_0}{U^\dagger \psi_1} \\
+		 & = \braket{\phi_0}{\phi_1} \\
+		\braket{\phi_0}{U^\dagger \psi_1 - \phi_1} & = 0 \implies U^\dagger\psi_1 = \phi_1 \implies U\phi_1 = \psi_1
+	\end{align*}
 \end{solution}
 
 \begin{problem}
