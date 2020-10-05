@@ -25,6 +25,8 @@
 
 \begin{document}
 
+\noindent
+I worked with Chelsea Komlo and Wilson Wu on this assignment.
 
 \begin{problem}
 Measuring the control qubit of a CNOT gate.
@@ -65,32 +67,38 @@ Measuring the control qubit of a CNOT gate.
 	The case for measuring 1 then applying the controlled $U$ gate got us $\frac{1}{n'}\smqty[0 \\ U\phi_1]$ which again was shorthand for $\frac{1}{n'}\smqty[0 \\ 0 \\ u_{11}\alpha_{10} + u_{12}\alpha_{11} \\ u_{21}\alpha_{10} + u_{22}\alpha_{11}]$. This is what we got for the first circuit. At first I thought there might be a different normalization constant that needed to be added instead of just $n'$, but because unitary operators are isometries (distance preserving maps), the length of the vector remains unchanged and hence still normalized.
 \end{solution}
 
-\begin{problem}
+\begin{problem}\label{prob:two}
 Unitary between two triples of states with same inner products.
 \end{problem}
 
 \begin{solution}
-	We first prove a lemma.
-	\begin{lemma}
-		Given $\vb{x}, \vb{y}\in\mathbb{C}^n$ with $\norm{\vb{x}} = \norm{\vb{y}}$ then there exists a unitary $U$ such that $U\vb{x} = \vb{y}$.
-	\end{lemma}
-	\begin{proof}
-		If $n > 2$, then we can always find vectors that are perpendicular to both $\vb{x}$ and $\vb{y}$. Take $\vb{n}$ to be one such vector and $\theta$ to be the angle between $\vb{x}$ and $\vb{y}$. Then let $U = R(\theta, \vb{n})$ be the rotation of angle $\theta$ about the normal vector. Rotations are surely unitary, and hence we've found $U$.\hfill\qed
-	\end{proof}
-	With that out of the way, we've already got that it's possible to find a $U$ such a that $U\ket{\phi_0} = \ket{\psi_0}$. With that we can now show we can get the next two vectors.
+	First assume the sets $\{\phi_i\}$ and $\{\psi_i\}$ are both linearly independent sets of vectors when considered on their own. Let us apply Gram-Schmidt orthonormalization to $\{\phi_i\}$ to obtain $\{\tilde{\phi}_i\}$ and similarly with $\{\psi_i\}$ to obtain $\{\tilde{\psi}_i\}$. We note that we now have two orthonormal bases for $\mathbb{C}^3$, and we know basis transformations are unitary maps. This means we can find a $U$ such that $U\ket{\tilde{\phi}_i} = \ket{\tilde{\psi}_i}$.
+
+	Now we need to show $U\ket{\phi_i} = \ket{\psi_i}$. To do this lets look at how the $\{\tilde{\phi}_i\}$ were created.
 	\begin{align*}
-		\braket{\psi_0}{\psi_1} & = \braket{U\phi_0}{\psi_1} \\
-		 & = \braket{\phi_0}{U^\dagger \psi_1} \\
-		 & = \braket{\phi_0}{\phi_1} \\
-		\braket{\phi_0}{U^\dagger \psi_1 - \phi_1} & = 0 \implies U^\dagger\psi_1 = \phi_1 \implies U\phi_1 = \psi_1
+		\ket{\tilde{\phi}_0} & = \ket{\phi_0}                                                                       & \ket{\tilde{\psi}_0} & = \ket{\psi_0}                                                                       &   \\
+		\ket{\tilde{\phi}_1} & = \ket{\phi_1} - \frac{\braket{\phi_1}{\phi_0}}{\braket{\phi_0}{\phi_0}}\ket{\phi_0} & \ket{\tilde{\psi}_1} & = \ket{\psi_1} - \frac{\braket{\psi_1}{\psi_0}}{\braket{\psi_0}{\psi_0}}\ket{\psi_0} &   \\
+		\ket{\tilde{\phi}_2} & = \ket{\phi_2} - \frac{\braket{\phi_2}{\tilde{\phi}_0}}{\braket{\tilde{\phi}_0}{\tilde{\phi}_0}}\ket{\tilde{\phi}_0} - \frac{\braket{\phi_2}{\tilde{\phi}_1}}{\braket{\tilde{\phi}_1}{\tilde{\phi}_1}}\ket{\tilde{\phi}_1} & \ket{\tilde{\psi}_2} & = \ket{\psi_2} - \frac{\braket{\psi_2}{\tilde{\psi}_0}}{\braket{\tilde{\psi}_0}{\tilde{\psi}_0}}\ket{\tilde{\psi}_0} - \frac{\braket{\psi_2}{\tilde{\psi}_1}}{\braket{\tilde{\psi}_1}{\tilde{\psi}_1}}\ket{\tilde{\psi}_1}
 	\end{align*}
-\end{solution}
+	It clear that $U\ket{\tilde{\phi}_0} = \ket{\tilde{\psi}_0}$ implies $U\ket{\phi_0} = \ket{\psi_0}$. Now let's apply $U$ to $\ket{\tilde{\phi}_1}$.
+	\begin{align*}
+		U\ket{\tilde{\phi}_1} & = U\ket{\phi_1} - \braket{\phi_1}{\phi_0}U\ket{\phi_0}                                                                               \\
+		                      & = U\ket{\phi_1} - \braket{\psi_1}{\psi_0}\ket{\psi_0} \tag{\footnotesize{bc inner prods equal, and $U\ket{\phi_0} = \ket{\psi_0}$.}} \\
+		                      & = \ket{\psi_1} - \braket{\psi_1}{\psi_0}\ket{\psi_0} \tag{\footnotesize{RHS of $U\ket{\tilde{\phi}_1} = \ket{\tilde{\psi}_1}$.}}
+	\end{align*}
+	Where the last two lines show us $U\ket{\phi_1} = U\ket{\psi_1}$ as desired. A similar computation can be done with the third vector.
+	\begin{align*}
+		U\ket{\tilde{\phi}_2} & = U\ket{\phi_2} - \frac{\braket{\phi_2}{\tilde{\phi}_0}}{\braket{\tilde{\phi}_0}{\tilde{\phi}_0}}U\ket{\tilde{\phi}_0} - \frac{\braket{\phi_2}{\tilde{\phi}_1}}{\braket{\tilde{\phi}_1}{\tilde{\phi}_1}}U\ket{\tilde{\phi}_1} \\
+		                      & = U\ket{\phi_2} - \frac{\braket{\phi_2}{\tilde{\phi}_0}}{\braket{\tilde{\phi}_0}{\tilde{\phi}_0}}\ket{\tilde{\psi}_0} - \frac{\braket{\phi_2}{\tilde{\phi}_1}}{\braket{\tilde{\phi}_1}{\tilde{\phi}_1}}\ket{\tilde{\psi}_1}   \\
+		                      & = \ket{\psi_2} - \frac{\braket{\psi_2}{\tilde{\psi}_0}}{\braket{\tilde{\psi}_0}{\tilde{\psi}_0}}\ket{\tilde{\psi}_0} - \frac{\braket{\psi_2}{\tilde{\psi}_1}}{\braket{\tilde{\psi}_1}{\tilde{\psi}_1}}\ket{\tilde{\psi}_1}
+	\end{align*}
+	So as long as we can show the coefficients for the $\ket{\tilde{\psi}_i}$ terms are the same, we can conclude $U\ket{\phi_2} = \ket{\psi_2}$. The $\ket{\tilde{\psi}_0}$ is obviously the same because one can drop the tildes and use the fact that the vectors are normalized, and the inner products are pairwise equal. For the $\ket{\tilde{\psi}_1}$ term we need to compute some stuff.
+	\begin{equation*}
+		\braket{\phi_2}{\tilde{\phi}_1} = \overline{\alpha} - \overline{\alpha}^2
+	\end{equation*}
+	Here we've used $\alpha = \braket{\phi_0}{\phi_1}$ and the fact that the inner product is conjugated when flipped. It's important to note here that this calculation is exactly the same for $\braket{\psi_2}{\tilde{\psi}_1}$ because the inner products are equal (i.e. the indices match). The same logic and computation mean $\braket{\tilde{\phi}_1}{\tilde{\phi}_1} = \braket{\tilde{\psi}_1}{\tilde{\psi}_1}$. With this we conclude the problem solved for linearly independent sets of vectors.
 
-\begin{problem}
-A variation of the guess-the-state game.
-\end{problem}
-
-\begin{solution}
+	Now if we assume the sets $\{\phi_i\}, \{\psi_i\}$ are linearly dependent, then we only have to show the first two vectors land in the right spots, because if $\ket{\phi_2} = \alpha\ket{\phi_0} + \beta\ket{\phi_1}$, then $U\ket{\phi_2} = \alpha\ket{\psi_0} + \beta\ket{\psi_1} = \ket{\psi_2}$ which is the only possibly option for $\ket{\psi_2}$ in order to preserve the inner products. The problem is trivial for all three vectors linearly dependent because a simple rotation will take a line to a line.
 \end{solution}
 
 \end{document}

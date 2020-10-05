@@ -8,7 +8,7 @@
 \course{Advanced Quantum Theory}
 \courseid{AMATH 673}
 \hwnum{3}
-\duedate{Fri, Oct 3, 2020 11:59 AM}
+\duedate{Mon, Oct 5, 2020 11:59 AM}
 
 %\hwname{(Name)}
 \problemname{Exercise}
@@ -23,6 +23,7 @@
 \newcommand{\pstn}[2]{x_#1^{(#2)}}
 \newcommand{\iu}{\mathrm{i}}
 \newcommand{\tpose}[1]{#1^\intercal}
+\newcommand{\conj}[1]{\overline{#1}}
 
 \DeclareMathOperator{\id}{id}
 
@@ -33,31 +34,43 @@
 \begin{document}
 
 \setcounter{section}{3}
+\problemnumber{15}
 
 \begin{problem}
 Show that for any arbitrary choice of complex numbers $r, s$ the matrix-valued functions $\hat{x}(t)$ and $\hat{p}(t)$ defined through Eqs.\ 3.51, 3.52 obey the equations of motion at all time.
 \end{problem}
 
 \begin{solution}
-	Let's first calculate the time derivative of the momentum operator.
+	We first have to calculate the equation of motion besides the given $\hat{p} = m\dot{\hat{x}}(t)$.
 	\begin{align*}
-		\dot{\hat{p}}(t) & = m\ddot{\hat{x}} \\
-		 & = m\ddot{\xi}(t)a + m\ddot{\xi}^*a^\dagger \\
-		 & = -m\omega^2\xi(t)a - m\omega^2\xi^*(t) \\
-		 & = -m\omega^2\hat{x}(t) \\
-		 & = -k\hat{x}(t)
+		\dot{\hat{p}}(t) = \dv{t}\hat{p} & = \frac{1}{\iu\hbar}\comm{\hat{p}}{\widehat{H}}                  \\
+		                                 & = \frac{1}{\iu\hbar}\comm{\hat{p}}{\frac{m\omega^2}{2}\hat{x}^2} \\
+		                                 & = \frac{m\omega^2}{2\iu\hbar}\comm{\hat{p}}{\hat{x}^2}           \\
+		                                 & = \frac{m\omega^2}{2\iu\hbar}\qty(-2\iu\hbar\hat{x})             \\
+		                                 & = -m\omega^2\hat{x} = -k\hat{x}
 	\end{align*}
+	Just like we remember from classical mechanics. Now we need to ensure our ansatz works for this equation of motion.
+	\begin{align*}
+		\dot{\hat{p}}(t) = m\ddot{\hat{x}} & = m\qty(\ddot{\xi}a + \ddot{\conj{\xi}}a^\dagger)                                                                                                    \\
+		                                   & = m\qty[\qty(-r\omega^2\sin(\omega t) - s\omega^2\cos(\omega t))a + \qty(-\conj{r}\omega^2\sin(\omega t) - \conj{s}\omega^2\cos(\omega t))a^\dagger] \\
+		                                   & = -m\omega^2\qty[\qty(-r\sin(\omega t) - s\cos(\omega t))a + \qty(-\conj{r}\sin(\omega t) - \conj{s}\cos(\omega t))a^\dagger]                        \\
+		                                   & = -m\omega^2\qty[\xi(t)a + \conj{\xi}(t)a^\dagger]                                                                                                   \\
+		                                   & = -m\omega\hat{x}(t) = -k\hat{x}(t)
+	\end{align*}
+	Sweet.
 \end{solution}
 
 \begin{problem}
-	Show that, again for any arbitrary choice of complex numbers $r, s$, the matrix-valued functions $\hat{x}(t)$ and $\hat{p}(t)$ defined through Eqs.\ 3.51, 3.52 obey the hermiticity conditions at all time.
+Show that, again for any arbitrary choice of complex numbers $r, s$, the matrix-valued functions $\hat{x}(t)$ and $\hat{p}(t)$ defined through Eqs.\ 3.51, 3.52 obey the hermiticity conditions at all time.
 \end{problem}
 
 \begin{solution}
+	Note: we are now using a star/asterisk to denote complex conjugate whereas in the previous question we used an overline. Sorry for any confusion.
 	\begin{align*}
 		\hat{x}^\dagger & = \qty(\xi(t)a +\xi^*(t)a^\dagger)^\dagger & \hat{p}^\dagger & = m^*\qty(\dot{\xi}(t)a + \dot{\xi}^*(t)a^\dagger)^\dagger \\
-										& = \xi^*(t)a^\dagger + \xi(t)a = \hat{x} & & = m\qty(\dot{\xi}^*(t)a^\dagger + \dot{\xi}(t)a) = \hat{p}
+		                & = \xi^*(t)a^\dagger + \xi(t)a = \hat{x}    &                 & = m\qty(\dot{\xi}^*(t)a^\dagger + \dot{\xi}(t)a) = \hat{p}
 	\end{align*}
+	Here we've not actually had to use the ansatz $\xi(t)$, and hence we have shown that the position and momentum operators are hermitian for all $r, s$.
 \end{solution}
 
 \begin{problem}
@@ -68,31 +81,30 @@ Find the equation that the complex numbers $r, s$ have to obey so that the matri
 	This question is a computational doozie... We need to ensure $\comm{\hat{x}}{\hat{p}} = \iu\hbar$.
 	\begin{align*}
 		\comm{\hat{x}}{\hat{p}} & = m\qty(\xi a + \xi^*a^\dagger)\qty(\dot{\xi}a + \dot{\xi}^*a^\dagger) - m\qty(\dot{\xi}a + \dot{\xi}^*a^\dagger)\qty(\xi a + \xi^*a^\dagger) \\
-														& = m\qty[\xi(t)\dot{\xi}^*(t) - \dot{\xi}(t)\xi^*(t)] \\
-														& = m\omega\qty(sr^* -rs^*) \\
-														& = m\omega\qty(a_1 + \iu a_1)\qty(b_1 - \iu b_2) - (b_1 + \iu b_2)\qty(a_1 - \iu a_2) \\
-									 \iu\hbar & = 2m\omega\iu\qty[a_2b_1 - a_1b_2] \\
-						a_2b_1 - a_1b_2 & = \frac{\hbar}{2m\omega}
+		                        & = m\qty[\xi(t)\dot{\xi}^*(t) - \dot{\xi}(t)\xi^*(t)]                                                                                          \\
+		                        & = m\omega\qty(sr^* -rs^*)                                                                                                                     \\
+		                        & = m\omega\qty(a_1 + \iu a_1)\qty(b_1 - \iu b_2) - (b_1 + \iu b_2)\qty(a_1 - \iu a_2)                                                          \\
+		\iu\hbar                & = 2m\omega\iu\qty[a_2b_1 - a_1b_2]                                                                                                            \\
+		a_2b_1 - a_1b_2         & = \frac{\hbar}{2m\omega}
 	\end{align*}
 	From here we can let $s = 0 + \iu \frac{\hbar}{2m\omega}$ and $r = 1 + \iu 666$ and we can write down our position operator.
 	\begin{align*}
-		\hat{x}(t) & = \qty((1 + \iu 666)\sin(\omega t) + \iu\frac{\hbar}{2m\omega}\cos(\omega t))a \\
-		& \quad + \qty((1 - \iu 666)\sin(\omega t) - \iu\frac{\hbar}{2m\omega}\cos(\omega t))a^\dagger
+		\hat{x}(t) & = \qty((1 + \iu 666)\sin(\omega t) + \iu\frac{\hbar}{2m\omega}\cos(\omega t))a               \\
+		           & \quad + \qty((1 - \iu 666)\sin(\omega t) - \iu\frac{\hbar}{2m\omega}\cos(\omega t))a^\dagger
 	\end{align*}
 \end{solution}
 
 \begin{problem}
-	Use Eqs.\ 3.51, 3.52 to express the Hamiltonian in terms of functions and the operators $a, a^\dagger$. There should be terms proportional to $a^2$, to $(a^\dagger)^2$, $aa^\dagger$ and $a^\dagger a$.
+Use Eqs.\ 3.51, 3.52 to express the Hamiltonian in terms of functions and the operators $a, a^\dagger$. There should be terms proportional to $a^2$, to $(a^\dagger)^2$, $aa^\dagger$ and $a^\dagger a$.
 \end{problem}
 
 \begin{solution}
 	\begin{align*}
-		\hat{H} & = \frac{\hat{p}^2}{2m} + \frac{m\omega^2}{2}\hat{x}^2 \\
-						& = \qty[\frac{m}{2}\dot{\xi}^2 + \frac{m\omega^2}{2}\xi^2]a^2 + \qty[\frac{m}{2}\dot{\xi}^{*^2} + \frac{m\omega^2}{2}{\xi^*}^2]{a^\dagger}^2 \\
-%						& \quad + \qty[\frac{m}{2}\dot{\xi}\dot{\xi}^* + \frac{m\omega^2}{2}\xi\xi^*]aa^\dagger + \qty[\frac{m}{2}\dot{\xi}\dot{\xi}^* + \frac{m\omega^2}{2}\xi\xi^*]a^\dagger a
+		\hat{H} & = \frac{\hat{p}^2}{2m} + \frac{m\omega^2}{2}\hat{x}^2                                                                                                                  \\
+		        & = \qty[\frac{m}{2}\dot{\xi}^2 + \frac{m\omega^2}{2}\xi^2]a^2 + \qty[\frac{m}{2}\dot{\xi}^{*^2} + \frac{m\omega^2}{2}\xi^{*^2}]{a^\dagger}^2                            \\
+		        & \quad + \qty[\frac{m}{2}\dot{\xi}\dot{\xi}^* + \frac{m\omega^2}{2}\xi\xi^*]aa^\dagger + \qty[\frac{m}{2}\dot{\xi}\dot{\xi}^* + \frac{m\omega^2}{2}\xi\xi^*]a^\dagger a
 	\end{align*}
 \end{solution}
-
 
 \begin{problem}
 It turns out that it is possible to choose the coefficients $r$ and $s$ so that the terms in the Hamiltonian which are proportional to $a^2$ and $(a^\dagger)^2$ drop out. Find the condition which the equation that $r$ and $s$ have to obey for this to happen. Choose a pair of complex numbers $r, s$ such that the Hamiltonian simplifies this way, and of course such that the Wronskian condition is obeyed. Write down $\hat{H}(t)$ as an explicit matrix for this choice of $r, s$. It should be a diagonal matrix.
@@ -101,27 +113,52 @@ It turns out that it is possible to choose the coefficients $r$ and $s$ so that 
 \begin{solution}
 	We can expand the $a^2$ and ${a^\dagger}^2$ to get the following condtions on $r$ and $s$.
 	\begin{align*}
-%		\frac{m}{2}\dot{\xi}^2 + \frac{m\omega^2}{2}\xi^2 & = \frac{m\omega^2}{2}\qty(r^2 + s^2) \implies r^2 = -s^2 \\
-%		\frac{m}{2} \dot{\xi}^*
-%		\frac{m}{2} \dot{\xi}^{*^2} + \frac{m\omega^2}{2} {\xi^*}^2 & = \frac{m\omega^2}{2}\qty{{r^*}^2 + {s^*}^2 \implies {r^*}^2 = -{s^*}^2
+		\frac{m}{2}\dot{\xi}^2 + \frac{m\omega^2}{2}\xi^2           & = \frac{m\omega^2}{2}\qty(r^2 + s^2) \implies r^2 = -s^2                 \\
+		\frac{m}{2} \dot{\xi}^{*^2} + \frac{m\omega^2}{2} \xi^{*^2} & = \frac{m\omega^2}{2}\qty(r^{*^2} + s^{*^2}) \implies r^{*^2} = -s^{*^2}
 	\end{align*}
+	Turns out these equations are equivalent (no duh, you might say). So we have to satisfy the following three conditions simultaneously where $r = a_1 + \iu a_2$ and $s = b_1 + \iu b_2$.
+	\begin{align*}
+		a_2b_1 - a_1b_2 & = \frac{\hbar}{2m\omega} \\
+		b_1^2 -b_2^2    & = a_2^2 - a_1^2          \\
+		b_1b_2          & = -a_1a_2
+	\end{align*}
+	The following values are a quadruple that satisfy the above equations.
+	\begin{align*}
+		a_1 & = \qty(\frac{-\hbar}{4m\omega})^{\frac{1}{2}} & b_1 & = -\qty(\frac{-\hbar}{4m\omega})^{\frac{1}{2}} \\
+		a_2 & = \qty(\frac{-\hbar}{4m\omega})^{\frac{1}{2}} & b_2 & = \qty(\frac{-\hbar}{4m\omega})^{\frac{1}{2}}
+	\end{align*}
+	The Hamiltonian would then read
+	\begin{equation*}
+		\widehat{H} = -\frac{\hbar\omega}{2}\mqty[\dmat{1,3,5,7,\ddots}]
+	\end{equation*}
+	where the off diagonal elements are 0.
 \end{solution}
 
-
 \begin{problem}
-	Give a counter example for Eq.\ 3.67. To this end, write out Eq.\ 3.67 explicitly, i.e., in matrix form, for the case $\hat{f}(\hat{x}(t), \hat{p}(t)) = \hat{x}^2$. Then choose a suitablenormalized $\psi$ so that Eq.\ 3.67 is seen to be violated. (It is not difficult to find such a $\psi$, almost every one will do.)
+Give a counter example for Eq.\ 3.67. To this end, write out Eq.\ 3.67 explicitly, i.e., in matrix form, for the case $\hat{f}(\hat{x}(t), \hat{p}(t)) = \hat{x}^2$. Then choose a suitable normalized $\psi$ so that Eq.\ 3.67 is seen to be violated. (It is not difficult to find such a $\psi$, almost every one will do.)
 \end{problem}
 
 \begin{solution}
-
+	If $\hat{f}(\hat{x}, \hat{p}) = \hat{x}^2$, then the expectation $\bar{f}$ is as follows.
+	\begin{equation*}
+		\bar{f} = \sum_{n, m = 1}^\infty\psi_n^*\qty[\hat{x}^2]_{n,m}\psi_m
+	\end{equation*}
+	On the other hand if we look at $f(\overline{x}, \overline{p})$ then we have the following.
+	\begin{equation*}
+		f(\overline{x}, \overline{p}) = \qty(\overline{x})^2 = \qty[\sum_{n, m = 1}^\infty\psi_n^*\hat{x}_{n,m}\psi_m]^2
+	\end{equation*}
+	Now let $\psi = \mqty[1 & 0 & \cdots]^\intercal$ (all zeros except for the first element). Then we have $\bar{f} = \qty[\hat{x}^2]_{0,0}$ and $f(\overline{x}, \overline{p}) = \qty(\hat{x}_{0, 0})^2$. Because $[\hat{x}^2]_{0,0} = x_{0k}x_{k0}$ where the sum over $k$ is implied, this is not in general equal to $x_{0,0}^2$. Even given the fact that $\hat{x}$ is hermitian, and hence $x_{0k} = x_{k0}^*$ so $[\hat{x}^2]_{0,0} = x_{0k}^2$ it's still not generally true.
 \end{solution}
 
 \begin{problem}
-	Verify that $\psi$ of Eq.\ 3.61 is normalized. For this choice of $\psi$, calculate explicitly the expectation values $\bar{x}(t)$, $\bar{p}(t)$ as well as the uncertainties in those predictions, i.e., the standard deviations $\Delta x(t)$ and$\Delta p(t)$ for the free particle. Your results should show that neither the position nor the momentum are predicted with certainty at any time, not even at the initial time $t_0$. The fact that $\Delta x(t)$ grows in time expresses that a momentum uncertainty over time leads to increasing position uncertainty. $\Delta p(t)$ remains constant in time, expressing that the momentum of a free particle, no matterwhat value it has, remains unchanged.
+Verify that $\psi$ of Eq.\ 3.61 is normalized. For this choice of $\psi$, calculate explicitly the expectation values $\bar{x}(t)$, $\bar{p}(t)$ as well as the uncertainties in those predictions, i.e., the standard deviations $\Delta x(t)$ and$\Delta p(t)$ for the free particle. Your results should show that neither the position nor the momentum are predicted with certainty at any time, not even at the initial time $t_0$. The fact that $\Delta x(t)$ grows in time expresses that a momentum uncertainty over time leads to increasing position uncertainty. $\Delta p(t)$ remains constant in time, expressing that the momentum of a free particle, no matterwhat value it has, remains unchanged.
 \end{problem}
 
 \begin{solution}
-
+	First, the fact that $\psi$ is normalized:
+	\begin{equation*}
+		\frac{1}{5}\mqty[4 & -3\iu & 0 & \cdots]\frac{1}{5}\mqty[4 \\ 3\iu \\ 0 \\ \vdots] = \frac{1}{25}\qty(16 + 9) = 1
+	\end{equation*}
 \end{solution}
 
 \begin{problem}
@@ -129,7 +166,43 @@ Spell out the step of the second equality in Eq.\ 3.68.
 \end{problem}
 
 \begin{solution}
+	Pretty much all of the of the manipulations that follow are because of the fact that the expectation value of a constant is just that constant. So $\overline{Q\overline{Q}} = \overline{Q}^2$.
+	\begin{align*}
+		\qty(\Delta Q)^2 & = \overline{\qty(Q - \overline{Q})^2}                                    \\
+		                 & = \overline{Q^2 + \overline{Q}^2 - 2Q\overline{Q}}                       \\
+		                 & = \overline{Q^2} + \overline{\overline{Q}^2} - 2\overline{Q\overline{Q}} \\
+		                 & = \overline{Q^2} + \overline{Q}^2 - 2\overline{Q}\overline{Q}            \\
+		                 & = \overline{Q^2} - \overline{Q}^2
+	\end{align*}
+\end{solution}
 
+\begin{problem}
+Verify that $\mathcal{H}^*$ is a complex vector space.
+\end{problem}
+
+\begin{solution}
+	Define the addition of ``bra'' vectors as follows.
+	\begin{equation*}
+		\qty(\bra{\phi} + \bra{\psi})\ket{\xi} \mapsto \braket{\phi}{\xi} + \braket{\psi}{\xi}
+	\end{equation*}
+	With this defined, we have to show it forms an abelian group. First, closure. For $\bra{\phi}, \bra{\psi} \in\mathcal{H}$ there sum is also in $\mathcal{H}$ because the sum of two complex numbers is again a complex number. Secon, associativity. This follows from the fact that the addition of complex numbers is associative. Third, identity. Let the identity element be $\bra{0}$ which is the linear functional that sends everything to 0. With this it's clear $\bra{\phi} + \bra{0} = \bra{0} + \bra{\phi} = \bra{\phi}$. Fourth, inverses. The inverse of $\bra{\phi}$ will be defined by $-\bra{\phi}$. We then have $\qty(\bra{\phi} + (-\bra{\phi}))\ket{\xi} = \braket{\phi}{\xi} - \braket{\phi}{\xi} = 0$ which is equivalent to the action of the 0 bra vector. Lastly, commutativity. This follows easily from the commutativity of complex number addition.
+
+	Now we need to define scalar multiplication. Define the action as follows.
+	\begin{equation*}
+		\qty(\alpha\bra{\phi})\ket{\psi} = \alpha\braket{\phi}{\psi}
+	\end{equation*}
+	Now we need to verify some properties about the interaction of scalar multiplication and bra vector addition.
+	\begin{align*}
+		\qty((\alpha + \beta)\bra{\phi})\ket{\psi} & = (\alpha + \beta)\braket{\phi}{\psi}                        \\
+		                                           & = \alpha\braket{\phi}{\psi} + \beta\braket{\phi}{\psi}       \\
+		                                           & = (\alpha\bra{\phi})\ket{\psi} + (\beta\bra{\phi})\ket{\psi} \\
+		(\alpha(\bra{\phi} + \bra{\psi}))\ket{\xi} & = \alpha \braket{\phi}{\xi} + \alpha\braket{\psi}{\xi}       \\
+		((\alpha\beta)\bra{\phi})\ket{\psi}        & = (\alpha\beta)\braket{\phi}{\psi}                           \\
+		                                           & = \alpha(\beta\braket{\phi}{\psi})                           \\
+		(1\bra{\phi})\ket{\xi}                     & = 1\braket{\phi}{\xi}                                        \\
+		                                           & = \braket{\phi}{\xi}
+	\end{align*}
+	With all of these properties satisfied we can conclude that $\mathcal{H}^*$ is indeed a vector space.
 \end{solution}
 
 \end{document}
