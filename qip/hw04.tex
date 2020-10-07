@@ -1,0 +1,250 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{4}
+\duedate{Thur, Oct 8, 2020 11:59 PM}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+\usepackage{bbold}
+\usepackage{cleveref}
+\usepackage{booktabs}
+
+\usepackage{tikz}
+\usetikzlibrary{quantikz}
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\union}{\cup}
+
+\begin{document}
+
+\noindent
+I worked with Chelsea Komlo and Wilson Wu on this assignment.
+
+\begin{problem}
+Teleporting entanglement?
+\end{problem}
+
+\begin{solution}
+	We start with writing down the circuit for our teleportation of an entangled state.
+	\begin{center}
+		\begin{quantikz}[row sep=0.9cm]
+			\lstick[wires=2]{$\ket{\Phi}$}                                  & \qw \gategroup[1,steps=5,style={dashed,rounded corners,fill=red!20, inner xsep=2pt},background, label style={label position=above,xshift=0.5cm}]{Carol}     & \qw   & \qw & \qw & \qw & \qw \rstick[wires=4]{$\ket{\Phi}$}       \\
+			& \ctrl{1}\slice{$\ket{\psi_1}$}\gategroup[2,steps=5,style={dashed,rounded corners,fill=blue!20, inner xsep=2pt},background, label style={label position=above,xshift=0.5cm}]{Alice}   & \gate{H}\slice{$\ket{\psi_2}$} & \meter{$M_1$}  & \cw & \cwbend{2}    \\
+			\lstick[wires=2]{$\frac{1}{\sqrt{2}}\qty(\ket{00} + \ket{11})$} & \targ{}  & \qw & \meter{$M_2$} & \cwbend{1}           \\
+			& \qw \gategroup[1,steps=5,style={dashed,rounded corners,fill=green!20, inner xsep=2pt},background, label style={label position=below,xshift=-0.3cm}]{Bob}     & \qw & \qw & \gate{X^{M_2}} & \gate{Z^{M_1}} & \qw
+		\end{quantikz}
+	\end{center}
+	Where we've assumed the end state is $\ket{\Phi}$ which we will prove. We've labeled $\ket{\psi_1}$ and $\ket{\psi_2}$ as intermediary states that we will expand below. To start lets first write down the total state of the sysem (4 qubits) that are at play.
+	\begin{align*}
+		\ket{\Phi}\otimes\frac{1}{\sqrt{2}}\qty(\ket{00} + \ket{11}) & = \frac{1}{\sqrt{2}}\left[\right.                                                                       \\
+		                                                             & \qquad\, \alpha_{00}\ket{0}_C\ket{00}_A\ket{0}_B + \alpha_{00}\ket{0}_C\ket{01}_A\ket{1}_B              \\
+		                                                             & \quad + \alpha_{01}\ket{0}_C\ket{10}_A\ket{0}_B + \alpha_{01}\ket{0}_C\ket{11}_A\ket{1}_B               \\
+		                                                             & \quad + \alpha_{10}\ket{1}_C\ket{00}_A\ket{0}_B + \alpha_{10}\ket{1}_C\ket{01}_A\ket{1}_B               \\
+		                                                             & \quad + \alpha_{11}\ket{1}_C\ket{10}_A\ket{0}_B + \alpha_{11}\ket{1}_C\ket{11}_A\ket{1}_B \left.\right]
+	\end{align*}
+	Where we're using the convention that the first qubit in Alice's state is the one from Carol, and the second one is the one shared with Bob. Now the first step of the teleportation protocol is to \textsc{CNOT} Alice's qubits. If we do this we then get the following state (omiting the factor of $\tfrac{1}{\sqrt{2}}$ in front).
+	\begin{align*}
+		\ket{\psi_1} & = \phantom{+}\alpha_{00}\ket{0}_C\ket{00}_A\ket{0}_B + \alpha_{00}\ket{0}_C\ket{01}_A\ket{1}_B \\
+		             & \quad + \alpha_{01}\ket{0}_C\ket{11}_A\ket{0}_B + \alpha_{01}\ket{0}_C\ket{10}_A\ket{1}_B      \\
+		             & \quad + \alpha_{10}\ket{1}_C\ket{00}_A\ket{0}_B + \alpha_{10}\ket{1}_C\ket{01}_A\ket{1}_B      \\
+		             & \quad + \alpha_{11}\ket{1}_C\ket{11}_A\ket{0}_B + \alpha_{11}\ket{1}_C\ket{10}_A\ket{1}_B
+	\end{align*}
+	Now we need to apply a Hadamard to the first of Alice's qubits.
+	\begin{align*}
+		\ket{\psi_2} & = \phantom{+}\alpha_{00}\ket{0}_C\ket{+0}_A\ket{0}_B + \alpha_{00}\ket{0}_C\ket{+1}_A\ket{1}_B \\
+		             & \quad + \alpha_{01}\ket{0}_C\ket{-1}_A\ket{0}_B + \alpha_{01}\ket{0}_C\ket{-0}_A\ket{1}_B      \\
+		             & \quad + \alpha_{10}\ket{1}_C\ket{+0}_A\ket{0}_B + \alpha_{10}\ket{1}_C\ket{+1}_A\ket{1}_B      \\
+		             & \quad + \alpha_{11}\ket{1}_C\ket{-1}_A\ket{0}_B + \alpha_{11}\ket{1}_C\ket{-0}_A\ket{1}_B
+	\end{align*}
+	Now, adding the normalization constants and expanding the plus/minus states out we have
+	\begin{align*}
+		\ket{\psi_2} & = \frac{1}{2}\Big[\alpha_{00}\qty(\ket{0}_C\ket{00}_A\ket{0}_B + \ket{0}_C\ket{10}_A\ket{0}_B + \ket{0}_C\ket{01}_A\ket{1}_B + \ket{0}_C\ket{11}_A\ket{1}_B) \\
+		             & \quad + \alpha_{01}\qty(\ket{0}_C\ket{01}_A\ket{0}_B - \ket{0}_C\ket{11}_A\ket{0}_B + \ket{0}_C\ket{00}_A\ket{1}_B - \ket{0}_C\ket{10}_A\ket{1}_B)           \\
+		             & \quad + \alpha_{10}\qty(\ket{1}_C\ket{00}_A\ket{0}_B + \ket{1}_C\ket{10}_A\ket{0}_B + \ket{1}_C\ket{01}_A\ket{1}_B + \ket{1}_C\ket{11}_A\ket{1}_B)           \\
+		             & \quad + \alpha_{11}\qty(\ket{1}_C\ket{01}_A\ket{0}_B - \ket{1}_C\ket{11}_A\ket{0}_B + \ket{1}_C\ket{00}_A\ket{1}_B - \ket{1}_C\ket{10}_A\ket{1}_B)\Big]
+	\end{align*}
+	Now we need to group these elements by Alice's qubits since we are momentarily going to measure them.
+	\begin{align*}
+		2\ket{\psi_2} & = \phantom{+}\!\ket{00}_A\qty(\alpha_{00}\ket{0}_C\ket{0}_B + \alpha_{01}\ket{0}_C\ket{1}_B + \alpha_{10}\ket{1}_C\ket{0}_B + \alpha_{11}\ket{1}_C\ket{1}_B) \\
+		              & \quad + \ket{01}_A\qty(\alpha_{00}\ket{0}_C\ket{1}_B + \alpha_{01}\ket{0}_C\ket{0}_B + \alpha_{10}\ket{1}_C\ket{1}_B + \alpha_{11}\ket{1}_C\ket{0}_B)        \\
+		              & \quad + \ket{10}_A\qty(\alpha_{00}\ket{0}_C\ket{0}_B - \alpha_{01}\ket{0}_C\ket{1}_B + \alpha_{10}\ket{1}_C\ket{0}_B - \alpha_{11}\ket{1}_C\ket{1}_B)        \\
+		              & \quad + \ket{11}_A\qty(\alpha_{00}\ket{0}_C\ket{1}_B - \alpha_{01}\ket{0}_C\ket{0}_B + \alpha_{10}\ket{1}_C\ket{1}_B - \alpha_{11}\ket{1}_C\ket{0}_B)
+	\end{align*}
+	Written in this form we can more easily see what happens when we measure Alice's qubits. If we measure them and get 00, we can see the state collapses to Carol and Bob sharing the general state $\ket{\Phi}$, with Bob having the second qubit (as desired). No other operations need to be performed (just like during the regular teleportation protocol and the sender measures 00).
+
+	Just as in the teleportation protocol, the result of Alice's measurement is sent to Bob where he conditionally applies a Pauli $X$ if Alice's second qubit measures 1, and then again conditionally applies a Pauli $Z$ if Alice's first qubit measures 1. Applying these transformations to Bob's state does exactly the necessary phase and bit flips to get the state back into $\ket{\Phi}$. This proves that an entangled state can be teleported and remain entangled during the process. This also shows that Bob and Carol now share the entangled state $\ket{\Phi}$. What a fun question\dots
+\end{solution}
+
+\begin{problem}
+A simple collision-finding problem.
+\begin{parts}
+	\part{How many queries to $f$ does a \emph{classical} algorithm require to find a collision? The algorithm must always succeed (the error probability for any run should be 0).}\label{part:2a}
+	\part{Show how to solve this problem by a \emph{quantum} algorithm that makes one single query to $f$. The algorithm must always succeed (the error probability for any run should be 0)}\label{part:2b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:2a}
+	A classical algorithm would require 3 queries to $f$ in order to guarantee 100\% success. This is because the first two queries could result in different values, but the third will always give something you've already seen (provided the first two queries were different).
+
+	\ref{part:2b}
+	It's important to note here that there are six such functions on domain $\{0, 1\}^2$ that are two-to-one functions.
+	\begin{center}
+		\begin{tabular}{c | c}
+			$a$ & $f_0(a)$ \\ \toprule
+			00  & 0        \\
+			01  & 0        \\
+			10  & 1        \\
+			11  & 1
+		\end{tabular}
+		\qquad
+		\begin{tabular}{c | c}
+			$a$ & $f_1(a)$ \\ \toprule
+			00  & 0        \\
+			01  & 1        \\
+			10  & 0        \\
+			11  & 1
+		\end{tabular}
+		\qquad
+		\begin{tabular}{c | c}
+			$a$ & $f_2(a)$ \\ \toprule
+			00  & 0        \\
+			01  & 1        \\
+			10  & 1        \\
+			11  & 0
+		\end{tabular}
+	\end{center}
+	\begin{center}
+		\begin{tabular}{c | c}
+			$a$ & $f_3(a)$ \\ \toprule
+			00  & 1        \\
+			01  & 1        \\
+			10  & 0        \\
+			11  & 0
+		\end{tabular}
+		\qquad
+		\begin{tabular}{c | c}
+			$a$ & $f_4(a)$ \\ \toprule
+			00  & 1        \\
+			01  & 0        \\
+			10  & 1        \\
+			11  & 0
+		\end{tabular}
+		\qquad
+		\begin{tabular}{c | c}
+			$a$ & $f_5(a)$ \\ \toprule
+			00  & 1        \\
+			01  & 0        \\
+			10  & 0        \\
+			11  & 1
+		\end{tabular}
+	\end{center}
+	We've arranged the tables so that the tables aligned vertically are similiar in the sense that they are the negation of each other. That is $f_0(a) = \neg f_3(a)$, $f_1(a) = \neg f_4(a)$, and $f_2(a) = \neg f_5(a)$.
+	Back to the circuit. Lets take the system through the following circuit.
+	\begin{center}
+		\begin{quantikz}
+			\lstick{$\ket{0}$} & \gate{H} & \gate[2][1.2cm]{f}     & \qw \rstick[wires=2]{$\ket{\psi}$}\\
+			\lstick{$\ket{0}$} & \gate{H} &                        & \qw \\
+			\lstick{$\ket{1}$} & \gate{H} & \targ{}\vqw{-1}        & \qw
+		\end{quantikz}
+	\end{center}
+	We can now calculate what $\ket{\psi}$ looks like for each $f_i$ using the fact that the state after $f$ is applied is $\ket{-}\sum_{a\in\{0, 1\}^2}(-1)^{f(a)}\ket{a}$.
+	\begin{align*}
+		f_0 \mapsto \ket{\psi_0} & = \phantom{-}\ket{00} + \ket{01} - \ket{10} - \ket{11} \\
+		f_1 \mapsto \ket{\psi_1} & = \phantom{-}\ket{00} - \ket{01} + \ket{10} - \ket{11} \\
+		f_2 \mapsto \ket{\psi_2} & = \phantom{-}\ket{00} - \ket{01} - \ket{10} + \ket{11} \\
+		f_3 \mapsto \ket{\psi_3} & = -\ket{00} - \ket{01} + \ket{10} + \ket{11}           \\
+		f_4 \mapsto \ket{\psi_4} & = -\ket{00} + \ket{01} - \ket{10} + \ket{11}           \\
+		f_5 \mapsto \ket{\psi_5} & = -\ket{00} + \ket{01} + \ket{10} - \ket{11}           \\
+	\end{align*}
+	Now here we can note that similar to how $f_0(a) = \neg f_3(a)$, we have $\ket{\psi_0} = -\ket{\psi_3}$ which holds for the other pairs we made above as well. Also important to note that $\ket{\psi_0}$ is orthogonal to every other $\ket{\psi_i}$ except $\ket{\psi_3}$. In particular though $\ket{\psi_0}$, $\ket{\psi_1}$, and $\ket{\psi_2}$ are all orthogonal. This means we can find a $U$ such that $U\ket{\psi_0} = \ket{00}$, $U\ket{\psi_1} = \ket{01}$, $U\ket{\psi_2} = \ket{10}$. When we then measure our state we will get one of 00, 01, or 10. If we measure 00, then we know our state was either $\ket{\psi_0}$ or $\ket{\psi_3}$ and hence 00, and 01 collide when fed into $f$. If we measured 01, we know our state was either $\ket{\psi_1}$ or $\ket{\psi_4}$ and hence 00, and 10 collide. Lastly, if we measure 10, we know our state was either $\ket{\psi_2}$ or $\ket{\psi_5}$ and hence 00 and 11 collide. The circuit bellow is a representation of the quantum compuutation portion of our algorithm.
+	\begin{center}
+		\begin{quantikz}
+			\lstick{$\ket{0}$} & \gate{H} & \gate[2][1.2cm]{f} & \gate[2][1.2cm]{U} & \meter{} & \cw \\
+			\lstick{$\ket{0}$} & \gate{H} &                    &                    & \meter{} & \cw \\
+			\lstick{$\ket{1}$} & \gate{H} & \targ{}\vqw{-1}    & \qw                &          &
+		\end{quantikz}
+	\end{center}
+
+	Thus we've shown an algorithm that solves this problem with only one query to $f$.
+\end{solution}
+
+\begin{problem}
+A variant of Simon's problem.
+
+\begin{parts}
+	\part{Show that if you find any three colliding points $a, b,x$ then $r, s$ and $r\oplus s$ ca be deduced from that.}\label{part:3a}
+	\part{Give a quantum circuit that makes one query to $f$ and products the state
+		\begin{equation}\label{eq:state}
+			\frac{1}{\sqrt{2^n}}\sum_{a\in\{0,1\}^n}\ket{a}\ket{f(a)}
+		\end{equation}}\label{part:3b}
+	\part{For the state in \cref{eq:state}, suppose that the last $n$ qubits are measured (in the computational basis), and then a Hadamard transform is applied to each of the first $n$ qubits, and then those qubits are measured (in the computational basis). Explain what the outcome is, where your answer should be supported by full calculations.}\label{part:3c}
+\end{parts}
+
+\end{problem}
+
+\begin{solution}
+	\ref{part:3a}
+	Start by taking the XOR of $a$ with $b$.
+	\begin{align*}
+		a\oplus b & = a\oplus(a\oplus r)  \\
+		          & = (a\oplus a)\oplus r \\
+		          & = 0^n\oplus r         \\
+		          & = r
+	\end{align*}
+	This same procedure can be done with $a\oplus c$ to get $s$. With these values we can XOR them together to get $r\oplus s$.
+
+	\ref{part:3b}
+	The following circuit gives the desired state.
+	\begin{center}
+		\begin{quantikz}[row sep=0.25cm]
+			\lstick{$\ket{0}$} & \gate{H}                       & \gate[3][1.2cm]{f}                    & \qw \rstick[wires=6]{$\displaystyle \frac{1}{\sqrt{2^n}}\sum_{a\in\{0, 1\}^n}\ket{a}\ket{f(a)}$} \\
+			\lstick{$\vdots$}  & \gate{H}\qwbundle[alternate]{} & \qwbundle[alternate]{}                & \qwbundle[alternate]{}  \\
+			\lstick{$\ket{0}$} & \gate{H}                       &                                       & \qw \\
+			\lstick{$\ket{0}$} & \qw                            & \targ{}\vqw{-1}                       & \qw \\
+			\lstick{$\vdots$}  & \qwbundle[alternate]P{}        & \targ{}\vqw{-1}\qwbundle[alternate]{} & \qwbundle[alternate]{}  \\
+			\lstick{$\ket{0}$} & \qw                            & \targ{}\vqw{-1}                       & \qw
+		\end{quantikz}
+	\end{center}
+
+	\ref{part:3c}
+	I think it's easiest to see what's happening if we draw out the circuit.
+	\begin{center}
+		\begin{quantikz}[row sep=0.2cm]
+			\lstick{$\ket{0}$} & \gate{H}                       & \gate[3][1.2cm]{f}                    & \qw & \qw & \gate{H} & \meter{} & \cw\\
+			\lstick{$\vdots$}  & \gate{H}\qwbundle[alternate]{} & \qwbundle[alternate]{}                & \qwbundle[alternate]{} & \qwbundle[alternate]{} & \gate{H} \qwbundle[alternate]{} & \meter{} \qwbundle[alternate]{} & \cw \\
+			\lstick{$\ket{0}$} & \gate{H}                       &                                       & \qw & \qw & \gate{H} & \meter{} & \cw\\
+			\lstick{$\ket{0}$} & \qw                            & \targ{}\vqw{-1}                       & \qw & \meter{} & \cw & \cw & \cw\\
+			\lstick{$\vdots$}  & \qwbundle[alternate]P{}        & \targ{}\vqw{-1}\qwbundle[alternate]{} & \qwbundle[alternate]{} & \meter{} \qwbundle[alternate]{} & \cw & \cw & \cw\\
+			\lstick{$\ket{0}$} & \qw                            & \targ{}\vqw{-1}                       & \qw & \meter{} & \cw & \cw & \cw
+		\end{quantikz}
+	\end{center}
+	In order to get a grasp on what happens when we measure things here it'll help if we rewrite \cref{eq:state} using the fact that $f$ is a four-to-one function. First let $T\subset\{0,1\}^n$ contain exactly one element from each colliding quartet. Then notice that $\{0, 1\}^n = T\union(T\oplus r)\union(T\oplus s)\union(T\oplus r \oplus s)$. With this we can rewrite our state \cref{eq:state} as follows.
+	\begin{equation*}
+		\sum_{a\in T}\ket{a}\ket{f(a)} + \ket{a\oplus r}\ket{f(a\oplus r)} + \ket{a\oplus s}\ket{f(a\oplus s)} + \ket{a\oplus r\oplus s}\ket{f(a\oplus r\oplus s)}
+	\end{equation*}
+	Using the fact that $f$ is a four-to-one function we can again rewrite this pulling out the $\ket{f}$ terms.
+	\begin{equation*}
+		\sum_{a\in T}\qty(\ket{a} + \ket{a\oplus r} + \ket{a\oplus s} + \ket{a\oplus r\oplus s})\ket{f(a)}
+	\end{equation*}
+	Written in this form we see when we measure the last $n$ qubits we will obtain $f(a)$ for some random $a$ and it collapses the sum to just a particular $a$. This leaves us with $\ket{a} + \ket{a\oplus r} + \ket{a\oplus s} + \ket{a\oplus r\oplus s}$. Now we need to apply Hadamards to each of qubits left. To do this we will use the general formula below.
+	\begin{equation*}
+		H^{\otimes n}\ket{x} = \frac{1}{\sqrt{2^n}}\sum_{z\in\{0, 1\}^n}(-1)^{x\cdot z}\ket{z}
+	\end{equation*}
+	Applying this to our state we have the following expansion.
+	\begin{align*}
+		\frac{1}{\sqrt{2^n}}\sum_{z\in\{0, 1\}^n} & (-1)^{a\cdot z}\ket{z} + (-1)^{(a\oplus r)\cdot z}\ket{z} + (-1)^{(a\oplus s)\cdot z}\ket{z} + (-1)^{(a\oplus r \oplus s)\cdot z}\ket{z}                             \\
+		                                          & = \frac{1}{\sqrt{2^n}}\sum_{z\in\{0, 1\}^n}\qty((-1)^{a\cdot z} + (-1)^{(a\oplus r)\cdot z} + (-1)^{(a\oplus s)\cdot z} + (-1)^{(a\oplus r \oplus s)\cdot z})\ket{z} \\
+		                                          & = \frac{1}{\sqrt{2^n}}\sum_{z\in\{0, 1\}^n}(-1)^{a\cdot z}\qty(1 + (-1)^{r\cdot z} + (-1)^{s\cdot z} + (-1)^{(r\oplus s)\cdot z})\ket{z}                             \\
+	\end{align*}
+	This is the outcome state. Presumably there is some reasoning we can follow just as we did with Simon's problem to measure this, get a string perpendicular to something, and then run that a bunch of times. The difference here is that in order to have terms go to zero, one has to be $+1$, and the other two have to be $-1$. So I'm not exactly sure how to make this happen though, and what the associated probabilities are for each measurement.
+\end{solution}
+
+\end{document}
