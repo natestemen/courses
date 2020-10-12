@@ -1,0 +1,3 @@
+[submodule "numerical/numerical"]
+	path = numerical/numerical
+	url = git@github.com:natestemen/numerical.git
