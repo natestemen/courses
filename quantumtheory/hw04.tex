@@ -1,0 +1,320 @@
+\documentclass[boxes,pages]{homework}
+
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Advanced Quantum Theory}
+\courseid{AMATH 673}
+\hwnum{4}
+\duedate{Mon, Oct 5, 2020 CHANGE}
+
+\problemname{Exercise}
+
+\usepackage{physics}
+\usepackage{cleveref}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{bib.bib}
+
+\usepackage[dvipsnames]{xcolor}
+\colorlet{LightLavender}{Lavender!40!}
+\newcommand{\highlight}[2][LightLavender]{\mathchoice%
+  {\colorbox{#1}{$\displaystyle#2$}}%
+  {\colorbox{#1}{$\textstyle#2$}}%
+  {\colorbox{#1}{$\scriptstyle#2$}}%
+  {\colorbox{#1}{$\scriptscriptstyle#2$}}}%
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\tpose}[1]{#1^\intercal}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\hilb}{\mathcal{H}}
+\newcommand{\inv}[1]{{{#1}^{-1}}}
+\newcommand{\herm}[1]{{{#1}^\dagger}}
+\newcommand{\e}{\mathrm{e}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\spec}{spec}
+
+\makeatletter
+\numberwithin{@problem}{section}
+\makeatother
+
+\begin{document}
+
+\setcounter{section}{3}
+\problemnumber{24}
+
+\begin{problem}
+Let us consider how large we can make the domain $D_f\subset\hilb{}$ of the operator $\hat{f}$ defined in Eq. 3.98. Concretely, how fast do the coefficients $\psi_n$ of $\ket{\psi}$ have to decay, as $n\to\infty$. For this exercise, assume that the coefficients $\abs{\psi_n}$ scale as $n^s$ for $n\to\infty$. What then are the allowed values for $s$? Hint: The so-called Dirichlet series representation of the Riemann zeta function $\zeta(r) \coloneqq\sum_{n = 1}^\infty 1/n^r$ diverges for $r\leq 1$ butconverges for $r > 1$.
+\end{problem}
+
+\begin{solution}
+	Lets first expand $\ket{\varphi} = \hat{f}\ket{\psi}$ so we can see how it scales with $n$.
+	\begin{align*}
+		\ket{\varphi} = \hat{f}\ket{\psi} & = \mqty[\dmat{1^2,2^2,3^2, \ddots}]\mqty[\psi_1 \\ \psi_2 \\ \psi_3 \\ \vdots] \\
+		                                  & = \mqty[1^2\psi_1                               \\ 2^2\psi_2 \\ 3^2\psi_3 \\ \vdots]
+	\end{align*}
+	It's then clear that $\varphi_n = n^2\psi_n$. Now we need $\sum_n \overline{\varphi}_n\varphi = \sum_n n^4\overline{\psi}_n\psi_n$ to converge, and if $\psi_n$ scales as $n^{-s}$ (sorry changing the question a little bit), then $s$ must be greater than 2.5. Let $s = 2.5 + \frac{\varepsilon}{2}$ where $\varepsilon \in\mathbb{R}_+$\footnote{Using the convention here that $\mathbb{R}_+ = \{x\in \mathbb{R} \mid x > 0\}$.}. Now lets expand the norm.
+	\begin{align*}
+		\norm{\varphi}^2 & = \sum_n n^4 \qty(\frac{1}{n^{2.5 + \tfrac{\varepsilon}{2}}})^2 \\
+		                 & = \sum_n n^4 \frac{1}{n^{5 + \varepsilon}}                      \\
+		                 & = \sum_n \frac{1}{n^{1 + \varepsilon}}
+	\end{align*}
+	Now because we've chosen $\varepsilon > 0$, we know this will converge and hence the state can be normalized. So $\abs{\psi_n}$ must scale like $\frac{1}{n^s}$ for $s > 2.5$.
+
+	This means the domain $D_f$ can act on all vectors that when $n\to\infty$ they go to zero faster than $\frac{1}{n^{2.5}}$.
+\end{solution}
+
+\begin{problem}
+By comparing Eqs. 3.108 and Eq. 3.109, find out how to express the wave function of $\ket{\psi}$ in the $b$ basis in terms of its wave function in the $c$ basis, using the matrix of $\hat{U}$. Also express the representation of $\hat{f}$ as a matrix in the $b$ basis in terms of its representation as a matrix in the $c$ basis, using the matrix representation of $\hat{U}$. Finally write Eq. 3.109 in terms of a row vector, some matrices and a column vector.
+\end{problem}
+
+\begin{solution}
+	First, a basis change of $\ket{\psi}$ in the $b$ basis to the $c$ basis.
+	\begin{align*}
+		\ket{\psi} & = \sum_n\psi_n\ket{b_n}                             \\
+		           & = \sum_n\psi_n\mathbb{1}\ket{b_n}                   \\
+		           & = \sum_{n, m}\psi_n\qty(\ketbra{c_m}{c_m})\ket{b_n} \\
+		           & = \sum_{n, m}\psi_n\braket{c_m}{b_n}\ket{c_m}       \\
+		           & = \sum_{n, m}\psi_nU_{mn}\ket{c_m}                  \\
+		           & = \sum_m \tilde{\psi}_m\ket{c_m}
+	\end{align*}
+	Next, we do the same for an operator $\hat{f}$.
+	\begin{align*}
+		\hat{f} & = \sum_{i, j}\ket{b_i}f_{ij}\bra{b_j}                                                     \\
+		        & = \sum_{i, j}\mathbb{1}\ket{b_i}f_{ij}\bra{b_j}\mathbb{1}                                 \\
+		        & = \sum_{i, j, k, l}\qty(\ketbra{c_k}{c_k})\ket{b_i}f_{ij}\bra{b_j}\qty(\ketbra{c_l}{c_l}) \\
+		        & = \sum_{i, j, k, l} \ket{c_k}\qty[\braket{c_k}{b_i}f_{ij}\braket{b_j}{c_l}]\bra{c_l}      \\
+		        & = \sum_{i, j, k, l} \ket{c_k}\qty[U_{ki}f_{ij}U_{jl}]\bra{c_l}                            \\
+		        & = \sum_{i,j} \ket{c_i}\tilde{f}_{ij}\bra{c_j}
+	\end{align*}
+	Lastly, the matrix/vector portion of this question. Here we write out the term being summed over, ommitting the summation for brevity.
+	\begin{align*}
+		\underbrace{\bra{\psi}}_{\herm{\psi}}\underbrace{\ket{c_r}\overbrace{\braket{c_r}{b_n}}^{\conj{U_{nr}}}\bra{b_n}}_{\herm{\hat{U}}}\underbrace{\ket{c_s}\overbrace{\bra{c_s}\hat{f}\ket{c_u}}^{f_{su}}\bra{c_u}}_{\hat{f}}\underbrace{\ket{b_m}\overbrace{\braket{b_m}{c_v}}^{U_mv}\bra{c_v}}_{\hat{U}}\underbrace{\ket{\psi}}_\psi
+	\end{align*}
+	Which can be written more consicely as $\herm{\psi}\,\herm{\hat{U}}\,\hat{f}\,\hat{U}\,\psi$. This can be recognized as $\hat{f}$ in the $c$ basis because $\hat{U}\ket{b_n}\to\ket{c_n}$.
+\end{solution}
+
+\begin{problem}
+Assume that the basis vectors $\ket{b_n}$ are orthonormal. Show that if the new vectors $\ket{c_n}$ are to be an orthonormal basis too then $\hat{U}$ has to obey $\herm{\hat{U}} = \inv{U}$. This means that $\hat{U}$ is what is called a unitary operator.
+\end{problem}
+
+\begin{solution}
+	Let's see what happens when we take the inner product of two $c_i$ vectors and force it to be $\delta_{n,m}$.
+	\begin{align*}
+		\braket{c_n}{c_m} & = \bra{b_n}\herm{\hat{U}}\hat{U}\ket{b_m}
+	\end{align*}
+	Given $\braket{b_n}{b_m} = \delta_{n,m}$, then we can see if $\herm{\hat{U}}\hat{U} = \mathbb{1}$, then $\braket{c_n}{c_m}$ will also be orthonormal as desired. If we multiply on the right with $\inv{\hat{U}}$ we obtain $\herm{\hat{U}} = \inv{\hat{U}}$ and hence $\hat{U}$ is unitary.
+\end{solution}
+
+\begin{problem}
+Assume that $b,\herm{b}$ are linear maps on a Hilbert space and are obeying $\comm{b}{\herm{b}} = \mathbb{1}$,where $\mathbb{1}$ is the identity map. Assume that there is a normalized vector, which we denote by $\ket{0}$, which obeys $b\ket{0} = 0$. Show that the vector $\ket{z}$ which is defined through $\ket{z} = \e^{z\herm{b}}\ket{0}$ is an eigenvector of $b$ if $z$ is any complex number. These vectors are related to so-called coherent states which are of practical importance, for example,in quantum optics (light is often found in a similar quantum state). These states are also of importance regarding the problem of ``decoherence'' in quantum measurement theory, as we will discuss later.
+\end{problem}
+
+\begin{solution}
+	It'll be helpful if we first write down how $\ket{z}$ is defined so we recognize it later on.
+	\begin{equation*}
+		\ket{z} = \qty[\sum_n\frac{\qty(z\herm{b})^n}{n!}]\ket{0} = \sum_n\frac{z^n}{n!}\qty(\herm{b})^n\ket{0}
+	\end{equation*}
+	Right so now let's apply $b$ to this.
+	\begin{align}
+		b\ket{z} & = b\,\e^{z\herm{b}}\ket{0} = b\sum_n\frac{z^n}{n!}\qty(\herm{b})^n\ket{0} \nonumber \\
+		         & = \sum_n\frac{z^n}{n!}b \qty(\herm{b})^n\ket{0} \label{eq:zvec}
+	\end{align}
+	At this point we can't really do anything unless we know how to move that $b$ in front of the $\herm{b}$ term. To this end let's use the fact that we know the commutation relation for $b$ and it's Hermitian conjugate to calculate the commutator of $b$ with $\qty(\herm{b})^n$. Here we will use the fact that $b\herm{b} = \mathbb{1} + \herm{b}b$.
+	\begin{align*}
+		\comm{b}{\herm{b}^n} & = b\herm{b}^n - \herm{b}^nb                                   \\
+		                     & = \qty(b\herm{b})\herm{b}^{n - 1} - \herm{b}^nb               \\
+		                     & = \qty(\mathbb{1} + \herm{b}b)\herm{b}^{n - 1} - \herm{b}^nb  \\
+		                     & = \herm{b}^{n - 1} + \herm{b}b\herm{b}^{n - 1} - \herm{b}^nb  \\
+		                     & = 2\herm{b}^{n-1} + \herm{b}^2b\herm{b}^{n - 2} - \herm{b}^nb
+	\end{align*}
+	Here we notice a pattern emerging. Every substitution we make, we get an additional $\herm{b}^{n - 1}$ term, and decrease the powers of $\herm{b}$ acting on the right hand side. With this we posit $\comm{b}{\herm{b}^n} = n\herm{b}^{n - 1}$ and can be verified for all $n$ using a proof by induction. We can rewrite the commutation relation as $b\herm{b}^n = n\herm{b}^{n - 1} + \herm{b}^nb$ and you may say it doesn't seem like we're getting anywhere, and I felt that way too when working through this problem, but let's plug it into \cref{eq:zvec} and see what happens.
+	\begin{align*}
+		b\ket{z} & = \sum_n\frac{z^n}{n!}b \qty(\herm{b})^n\ket{0}                    \\
+		         & = \sum_n\frac{z^n}{n!}\qty(n\herm{b}^{n - 1} + \herm{b}^nb)\ket{0}
+	\end{align*}
+	Using the given fact that $b\ket{0} = 0$, we can drop the second term. Let's look at this now, making sure to carefully manipulate our summation boundaries.
+	\begin{align*}
+		b\ket{z} & = \sum_{n=0}^\infty\frac{z^n}{n!}n\herm{b}^{n - 1}\ket{0}                       \\
+		         & = \sum_{n=1}^\infty\frac{z^n}{n!}n\herm{b}^{n - 1}\ket{0} \tag{$n=0$ term is 0} \\
+		         & = z\sum_{n=1}^\infty\frac{z^{n - 1}}{(n - 1)!}\herm{b}^{n - 1}\ket{0}           \\
+		         & = z\sum_{n=0}^\infty\frac{z^n}{n!}\herm{b}^n\ket{0}                             \\
+		         & = z\,\e^{z\herm{b}}\ket{0} = z\ket{z}
+	\end{align*}
+	Thus we've now shown $b\ket{z} = z\ket{z}$, so $\ket{z}$ is an eigenvector of $b$ with eigenvalue $z$.
+\end{solution}
+
+\setcounter{section}{4}
+\problemnumber{1}
+
+\begin{problem}
+Are there any values of $\beta$ for which the commutation relation$\comm{\hat{x}}{\hat{p}} = \iu\hbar\qty(1 + \beta\hat{p}^2)$ may possess a finite-dimensional Hilbert space representation?
+\end{problem}
+
+\begin{solution}
+	Previously we ruled this out as a possibility by assuming there was a finite dimensional representation, taking the trace of both sides of $\comm{\hat{x}}{\hat{p}} = \iu\hbar$ and arriving at a contradiction. Let's try using that argument here. The trace of the left hand side will still be 0 because $\tr(\hat{x}\hat{p}) = \tr(\hat{p}\hat{x})$. That leaves $0 = \tr\qty(\iu\hbar\qty(\mathbb{1} + \beta\hat{p}^2))$. Using basic properties of the trace, we can expand this as follows.
+	\begin{align*}
+		0     & = \tr\qty(\iu\hbar\qty(\mathbb{1} + \beta\hat{p}^2))                            \\
+		      & = \iu\hbar\qty(N + \beta\tr(\hat{p}^2)) \tag{$N$ is dimension of Hilbert space} \\
+		\beta & = -\frac{N}{\tr(\hat{p}^2)}
+	\end{align*}
+	Thus maybe it's possible if we have a nonlinear commutation relation. That said wouldn't $\hat{p}^2$ be different for every system, and hence $\beta$ would too?
+\end{solution}
+
+\begin{problem}
+Assume that $\ket{\psi}$ is an eigenvector of a self-adjoint operator $\hat{f}$ with eigenvalue $\lambda$. Show that $\lambda$ is real.
+\end{problem}
+
+\begin{solution}
+	The above question can simply be written as $\hat{f}\ket{\psi} = \lambda\ket{\psi}$. Let's now move some stuff around.
+	\begin{align*}
+		\hat{f}\ket{\psi}                                            & = \lambda\ket{\psi}                                                                             \\
+		\bra{\psi}\herm{\hat{f}}                                     & = \overline{\lambda}\bra{\psi} \tag{apply adjoint to both sides}                                \\
+		\bra{\psi}\herm{\hat{f}}\ket{\psi}                           & = \overline{\lambda}\underbrace{\braket{\psi}{\psi}}_{1} \tag{apply $\ket{\psi}$ to both sides} \\
+		\bra{\psi}\underbrace{\hat{f}\ket{\psi}}_{\lambda\ket{\psi}} & = \overline{\lambda} \tag{$\hat{f}$ is self-adjoint}                                            \\
+		\bra{\psi}\lambda\ket{\psi}                                  & = \overline{\lambda} \tag*{using eigenvector equation}                                          \\
+		\lambda                                                      & = \overline{\lambda}
+	\end{align*}
+	With this we can conclude $\lambda$ is real because if $a+\iu b = a - \iu b$ then $b = 0$ and hence the value is real.
+\end{solution}
+
+\begin{problem}
+Show that $\hat{E}_N$ is a projector.
+\end{problem}
+
+\begin{solution}
+	First, we show $\hat{E}_N$ is idempotent.
+	\begin{align*}
+		\hat{E}_N^2 & = \qty(\sum_n^N\ketbra{f_n}{f_n})\qty(\sum_m^N\ketbra{f_m}{f_m}) \\
+		            & = \sum_{n, m}^N\qty(\ketbra{f_n}{f_n})\qty(\ketbra{f_m}{f_m})    \\
+		            & = \sum_{n, m}^N\ket{f_n}\braket{f_n}{f_m}\bra{f_m}               \\
+		            & = \sum_{n, m}^N\ket{f_n}\delta_{n,m}\bra{f_m}                    \\
+		            & = \sum_n^N\ketbra{f_n}{f_n} = \hat{E}_N
+	\end{align*}
+	Now we need to show $\hat{E}_N$ is self-adjoint.
+	\begin{align*}
+		\herm{\hat{E}_N} & = \herm{\qty(\sum_n^N\ketbra{f_n}{f_n})}                                                                  \\
+		                 & = \sum_n^N\herm{\qty(\ketbra{f_n}{f_n})}                                                                  \\
+		                 & = \sum_n^N\ketbra{f_n}{f_n} \tag*{by $\herm{\qty(ab)} = \herm{b}\herm{a}$ and $\herm{\ket{f}} = \bra{f}$}
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Derive the expression for the abstract equation $\ket{\varphi} = \hat{g}\ket{\psi}$ in this basis.
+\end{problem}
+
+\begin{solution}
+	This question is pretty confusing, so let's just try and doing exactly what is done in the lecture notes.
+	\begin{align*}
+		\braket{f}{\phi} & = \bra{f}\hat{g}\mathbb{1}\ket{\psi}                                                                     \\
+		                 & = \bra{f}\hat{g}\qty(\sum_n\ketbra{f_n}{f_n} + \int_J\ketbra{f'}{f'}\dd{f'})\ket{\psi}                   \\
+		                 & = \sum_n\bra{f}\hat{g}\ket{f_n}\braket{f_n}{\psi} + \int_J\bra{f}\hat{g}\ket{f'}\braket{f'}{\psi}\dd{f'} \\
+		                 & = \sum_n g_m,n\psi_n + \int_J g(f, f')\psi(f)\dd{f'}                                                     \\
+		                 & = \phi_m + \phi(f)
+	\end{align*}
+	Not really sure what I'm doing here though, mostly symbol pushing.
+\end{solution}
+
+\begin{problem}
+Look up and state the complete spectrum of the Hamiltonian of the Hydrogen atom (without spin or higher order corrections of any form). Give the exact source in a textbook.
+\end{problem}
+
+\begin{solution}
+	The spectrum as given in \cite[355]{shankar} is given by the following.
+	\begin{equation*}
+		E_n = -\frac{me^4}{2\hbar^2n^2}\qquad n\in\mathbb{N}_{>0}
+	\end{equation*}
+	\printbibliography{}
+\end{solution}
+
+\begin{problem}
+Show that $\hat{U}$ is unitary.
+\end{problem}
+
+\begin{solution}
+	First let $\hat{A} = \hat{f} - \iu\mathbb{1}$. We can then write $\hat{U} = \hat{A}\inv{\qty(\herm{\hat{A}})}$. First thing we will show is that $\hat{A}$ is normal.
+	\begin{align*}
+		\hat{A}\herm{\hat{A}} & = \qty(\hat{f} -\iu\mathbb{1})\qty(\hat{f} + \iu\mathbb{1}) = \hat{f}^2 + \iu\hat{f} - \iu\hat{f} + \mathbb{1} = \hat{f}^2 + \mathbb{1} \\
+		\herm{\hat{A}}\hat{A} & = \qty(\hat{f} +\iu\mathbb{1})\qty(\hat{f} - \iu\mathbb{1}) = \hat{f}^2 - \iu\hat{f} + \iu\hat{f} + \mathbb{1} = \hat{f}^2 + \mathbb{1}
+	\end{align*}
+	Now to show that $\hat{U}$ is unitary we need to show $\hat{U}\herm{\hat{U}} = \herm{\hat{U}}\hat{U} = \mathbb{1}$ so lets expand that out.
+	\begin{align*}
+		\hat{U}\herm{\hat{U}} & = \hat{A}\inv{\qty(\herm{\hat{A}})}\inv{\hat{A}}\herm{\hat{A}}       & \herm{\hat{U}}\hat{U} & = \inv{\hat{A}}\herm{\hat{A}}\hat{A}\inv{\qty(\herm{\hat{A}})}                          \\
+		                      & = \hat{A}\inv{\qty(\hat{A}\herm{\hat{A}})}\herm{\hat{A}}             &                       & = \inv{\hat{A}}\herm{\qty(\herm{\hat{A}}\hat{A})}\inv{\qty(\herm{\hat{A}})}             \\
+		                      & = \hat{A}\inv{\qty(\highlight{\herm{\hat{A}}\hat{A}})}\herm{\hat{A}} &                       & = \inv{\hat{A}}\herm{\qty(\highlight{\hat{A}\herm{\hat{A}}})}\inv{\qty(\herm{\hat{A}})} \\
+		                      & = \hat{A}\inv{\hat{A}}\inv{\qty(\herm{\hat{A}})}\herm{\hat{A}}       &                       & = \inv{\hat{A}}\hat{A}\herm{A}\inv{\qty(\herm{\hat{A}})}                                \\
+		                      & = \mathbb{1}                                                         &                       & = \mathbb{1}
+	\end{align*}
+	Where in the colored box we've used the fact that $\hat{A}$ is normal. Since we've shown $\hat{U}\herm{\hat{U}} = \herm{\hat{U}}\hat{U} = \mathbb{1}$ we can conclude $\hat{U}$ is unitary.
+\end{solution}
+
+\begin{problem}
+Show that each $\alpha$ is a complex number on the unit circle of the complex plane, i.e., that its modulus squared is $\alpha\alpha^* = 1$.
+\end{problem}
+
+\begin{solution}
+	Let $\ket{\psi}$ be an eigenvector of $\hat{U}$.
+	\begin{equation*}
+		\braket{\psi}{\psi} = \ev{\herm{\hat{U}}\hat{U}}{\psi} = \ev{\alpha^*\alpha}{\psi} = \abs{\alpha}^2\braket{\psi}{\psi}
+	\end{equation*}
+	With this, we conclude $\alpha = \e^{\iu\theta}$ for some $\theta$ and hence $\alpha$ is on the complex unit circle.
+\end{solution}
+
+\begin{problem}
+ssume that $\hat{f}$ is a self-adjoint operator with a purely point spectrum $\{f_n\}$. Further assume that $\hat{U}$ is the Cayley transform of $f$. Determine whether or not the operator $\hat{Q} \coloneqq \hat{f} + \hat{U}$ is a normal operator. If not, why not? If yes, what is the spectrum of $\hat{Q}$?
+\end{problem}
+
+\begin{solution}
+	For $\hat{Q}$ to be normal we must have $\hat{Q}\herm{\hat{Q}} = \herm{\hat{Q}}\hat{Q}$, so let's expand both sides to see what we get.
+	\begin{align*}
+		\hat{Q}\herm{\hat{Q}} & = \qty(\hat{f} + \hat{U})\qty(\hat{f} + \herm{\hat{U}})           & \herm{\hat{Q}}\hat{Q} & = \qty(\hat{f} + \herm{\hat{U}})\qty(\hat{f} + \hat{U})           \\
+		                      & = \hat{f}^2 + \hat{f}\herm{\hat{U}} + \hat{U}\hat{f} + \mathbb{1} &                       & = \hat{f}^2 + \hat{f}\hat{U} + \herm{\hat{U}}\hat{f} + \mathbb{1}
+	\end{align*}
+	So we can see if $\hat{f}\herm{\hat{U}} + \hat{U}\hat{f} = \hat{f}\hat{U} + \herm{\hat{U}}\hat{f}$ then $\hat{Q}$ is normal. Now because we can simultaneously diagonalize $\hat{f}$ and $\hat{U}$, we can make the followin expansions.
+	\begin{align*}
+		\hat{f}\herm{\hat{U}} + \hat{U}\hat{f} & = \qty(\sum_nf_n\ketbra{f_n}{f_n})\qty(\sum_nu_n^*\ketbra{f_n}{f_n}) + \qty(\sum_nu_n\ketbra{f_n}{f_n})\qty(\sum_nf_n\ketbra{f_n}{f_n}) \\
+		                                       & = \sum_nf_n\qty(u_n + u_n^*)\ketbra{f_n}{f_n}                                                                                           \\
+		                                       & = \sum_nf_nu_n\ketbra{f_n}{f_n} + \sum_n u_n^* f_n\ketbra{f_n}{f_n}                                                                     \\
+		                                       & = \hat{f}\hat{U} + \herm{\hat{U}}\hat{f}
+	\end{align*}
+	Hence $\hat{Q}$ is normal. The spectrum of $\hat{Q}$ would be given by the intersection of the spectrum of $\hat{f}$ and $\hat{U}$ ($\spec(\hat{Q}) = \spec(\hat{f})\cap\spec(\hat{U})$).
+\end{solution}
+
+\setcounter{section}{5}
+\problemnumber{1}
+
+\begin{problem}
+Consider the  harmonic oscillator of above, choose $L = (2m\omega)^{-1/2}$ and assume that the oscillator system is in this state:
+\begin{equation*}
+	\ket{\psi} = \frac{1}{\sqrt{2}}\qty(\ket{E_0} - \ket{E_1})
+\end{equation*}
+Calculate $\overline{H}$ and $\overline{x}$ and the position wave function $\psi(x)\coloneqq\braket{x}{\psi}$.
+\end{problem}
+
+\begin{solution}
+	Let's start with the expectation value of position.
+	\begin{align*}
+		\overline{x} & = \sum_{n, m}\psi_n^*x_{n,m}\psi_m \\
+		& = \frac{1}{\sqrt{2}}\mqty[1 & 1 & 0 & \cdots]L\mqty[0 & \sqrt{1} & \\ \sqrt{1} & 0 & \sqrt{2} \\ & \sqrt{2} & 0 \\ & & & \ddots]\frac{1}{\sqrt{2}}\mqty[1 \\ 1 \\ 0 \\ \vdots] \\
+		& = \frac{L}{2}\mqty[1 & 1 & 0 & \cdots]\mqty[\sqrt{1} \\ \sqrt{1} \\ \vdots] = L
+	\end{align*}
+	Now the expectation value of the Hamiltonian.
+	\begin{align*}
+		\overline{H} & = \sum_{n, m}\psi_n^*H_{n,m}\psi_m \\
+		  & = \frac{1}{\sqrt{2}}\mqty[1    & 1 & 0 & \cdots]\hbar\omega\mqty[\dmat{0,1+\frac{1}{2},2 + \frac{1}{2}, \ddots}]\frac{1}{\sqrt{2}}\mqty[1 \\ 1 \\ 0 \\ \vdots] \\
+		  & = \frac{\hbar\omega}{2}\mqty[1 & 1 & 0 & \cdots]\mqty[0                                                                                   \\ 1 + \frac{1}{2} \\ \vdots] = \frac{3\hbar\omega}{4}
+	\end{align*}
+	Lastly the wave function in the position basis.
+	\begin{align*}
+		\psi(x) & = \braket{x}{\psi}                                                                        \\
+		        & = \qty(\sum_n\braket{x}{E_n}\bra{E_n})\qty(\frac{1}{\sqrt{2}}\qty(\ket{E_0} - \ket{E_1})) \\
+		        & = \frac{1}{\sqrt{2}}\qty(\braket{E_0}{x}\ket{E_0} - \braket{E_1}{x}\ket{E_1})             \\
+		        & = \frac{\exp(\frac{-x^2}{4L^2})}{\sqrt{2}\pi^{1/4}}\qty(\ket{E_0} + \frac{x}{L}\ket{E_1})
+	\end{align*}
+\end{solution}
+
+
+
+\end{document}
