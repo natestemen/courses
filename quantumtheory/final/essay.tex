@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{mathpazo}
+\usepackage{graphicx}
+\usepackage[linktocpage]{hyperref}
+\usepackage{varioref}
+\usepackage{float}
+\usepackage{titletoc}
+\usepackage[numbers]{natbib}
+\bibliographystyle{unsrt}
+\usepackage[nottoc]{tocbibind}
+
+
+
+
+\titlecontents{section}[1.8pc]
+  {\addvspace{3pt}\bfseries}
+  {\contentslabel[\thecontentslabel]{1.8pc}}
+  {}
+  {\quad\thecontentspage}
+
+\titlecontents*{subsection}[1.8pc]
+  {\small}
+  {\thecontentslabel. }
+  {}
+  {, \thecontentspage}
+  [.---][.]
+
+\begin{document}
+
+\begin{titlepage}
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+	\begin{center}
+
+		\textsc{\LARGE University of Waterloo}\\[1.5cm]
+
+		\textsc{\large AMATH 673 --- Advanced Quantum Theory}\\[0.75cm]
+
+		\HRule\\[0.4cm]
+
+		{\huge\bfseries Final Essay}\\[0.15cm]
+
+		\HRule\\[1cm]
+
+		{\large
+		\textbf{Name:} Nathaniel Stemen (20906566)\hspace{\fill} \textbf{Due:} 2020/12/10 \\
+		\textbf{Email:} \href{mailto:nate.stemen@uwaterloo.ca}{\texttt{nate.stemen@uwaterloo.ca}} \hspace{\fill} \textbf{Professor:} Achim Kempf
+		}
+
+		\vfill
+		\includegraphics[width=0.8\textwidth]{uwlogo.jpg}\\[1cm]
+	\end{center}
+\end{titlepage}
+
+
+\tableofcontents
+
+\section{Introduction}
+
+
+\clearpage
+
+\bibliography{refs}
+
+\end{document}
+
