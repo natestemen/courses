@@ -1,0 +1,147 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{5}
+\duedate{Thur, Oct 22, 2020 11:59 PM}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+\usepackage{bbold}
+\usepackage{cleveref}
+\usepackage{booktabs}
+
+\usepackage{tikz}
+\usetikzlibrary{quantikz}
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\union}{\cup}
+
+\begin{document}
+
+\noindent
+I worked with Chelsea Komlo and Wilson Wu on this assignment.
+
+\begin{problem}
+Consider the case where $m = 35$, $r = 7$, and $s = 5$.
+\begin{parts}
+	\part{Give an example of a function $f: \mathbb{Z}_{35}\to \mathbb{Z}_{35}$ that is strictly 7-periodic. You may give the truth table or you may give a list of 35 numbers, that we'll interpret as $f(0),f(1),f(2),\ldots,f(34)$. Although any strictly 7-periodic function will get full marks here, please try to make your function look as irregular as you can subject to the condition of being strictly 7-periodic.}\label{part:1a}
+	\part{What are the \emph{colliding sets} of your function in part (a)? List these sets. Also, show that they satisfy the Simon mod 35 property, namely, that they are of the form $\{a, a+7, a+2\cdot 7, \ldots, a+(s-1)\cdot 7\}$ for some $a\in\mathbb{Z}_{35}$.}\label{part:1b}
+	\part{List all $b\in\mathbb{Z}_{35}$ such that $b\cdot 7 = 0$ (in mod 35 arithmetic).}\label{part:1c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	We will first give the values of $f$ as our strictly 7-periodic function.
+	\begin{center}
+		\setlength{\tabcolsep}{10pt}
+		\begin{tabular}{rccccccc}
+			\centering
+			$x$    & 0  & 1  & 2  & 3  & 4  & 5   & 6  \\
+			$f(x)$ & 4  & 43 & 0  & 7  & 20 & 572 & 2  \\\midrule
+			$x$    & 7  & 8  & 9  & 10 & 11 & 12  & 13 \\
+			$f(x)$ & 4  & 43 & 0  & 7  & 20 & 572 & 2  \\\midrule
+			$x$    & 14 & 15 & 16 & 17 & 18 & 19  & 20 \\
+			$f(x)$ & 4  & 43 & 0  & 7  & 20 & 572 & 2  \\\midrule
+			$x$    & 21 & 22 & 23 & 24 & 25 & 26  & 27 \\
+			$f(x)$ & 4  & 43 & 0  & 7  & 20 & 572 & 2  \\\midrule
+			$x$    & 28 & 29 & 30 & 31 & 32 & 33  & 34 \\
+			$f(x)$ & 4  & 43 & 0  & 7  & 20 & 572 & 2
+		\end{tabular}
+	\end{center}
+
+	\ref{part:1b}
+	The way we've aligned the table shows clearly the colliding sets are as follows.
+	\begin{center}
+		\renewcommand{\arraystretch}{1.15}
+		\begin{tabular}{cl}
+			Colliding set       & Collision value \\\toprule
+			$0, 7, 14, 21, 28$  & 4               \\
+			$1, 8, 15, 22, 29$  & 43              \\
+			$2, 9, 16, 23, 30$  & 0               \\
+			$3, 10, 17, 24, 31$ & 7               \\
+			$4, 11, 18, 25, 32$ & 20              \\
+			$5, 12, 19, 26, 33$ & 572             \\
+			$6, 13, 20, 27, 34$ & 2               \\
+		\end{tabular}
+	\end{center}
+
+	\ref{part:1c}
+	Any  $b\in\{0, 5, 10, 15, 20, 25, 30\}$ will satisfy $b\cdot 7 = 0$.
+
+\end{solution}
+
+\begin{problem}
+Simon mod $m$ algorithm in the $d = 1$ case.
+\end{problem}
+
+\begin{solution}
+	As we did in lecture we will break this down into finding out how the state transforms at each step of the way.
+	\begin{center}
+		\begin{quantikz}
+			\lstick{$\ket{0}$} & \gate{F_m}\slice{$\ket{\psi_1}$} & \gate{f} \slice{$\ket{\psi_2}$} & \qw \slice{$\ket{\psi_3}$} & \gate{F_m^*} \slice{$\ket{\psi_4}$} & \meter{} & \cw & b\\
+			\lstick{$\ket{0}$} & \qw                              & \targ{}\vqw{-1}                 & \meter{}                   & \cw                               & \cw      & \cw
+		\end{quantikz}
+	\end{center}
+	With that, let's apply the first Fourier transform to $\ket{0}$.
+	\begin{equation*}
+		\ket{\psi_1} = F_m\ket{0}\ket{0} = \frac{1}{\sqrt{m}}\sum_{b\in\mathbb{Z}_m}\omega^{0\cdot b}\ket{b}\ket{0} = \frac{1}{\sqrt{m}}\sum_{b\in\mathbb{Z}_m}\ket{b}\ket{0}
+	\end{equation*}
+	And now let's apply the second gate. It's not a controlled-$f$, but that's what I want to call it. What do we call this thing?
+	\begin{equation*}
+		\ket{\psi_2} = \frac{1}{\sqrt{m}}\sum_{b\in\mathbb{Z}_m}\ket{b}\ket{0 + f(b)} = \frac{1}{\sqrt{m}}\sum_{b\in\mathbb{Z}_m}\ket{b}\ket{f(b)}
+	\end{equation*}
+	That's not too bad. Now we're going to measure the second qubit. When we do this we are going to get a random $f(b)$ for $b\in\mathbb{Z}_m$. Say we get $f(\tilde{b})$. By the $r$-periodicity of $f$ we know that all of $f(\tilde{b} + kr) = f(\tilde{b})$ for $k\in\mathbb{Z}$, so the first qubit\footnote{Well actually an $m$-dimensional qudit, right?} collapses into a superposition of those $\tilde{b} + kr$ states.
+	\begin{equation*}
+		\ket{\psi_3} = \frac{1}{\sqrt{m}}\sum_{k\in\mathbb{Z}_m}\ket{\tilde{b} + kr}
+	\end{equation*}
+	Lastly we have to apply the inverse Fourier transform.
+	\begin{align*}
+		\ket{\psi_4} & = F_m^*\frac{1}{\sqrt{m}}\sum_{k\in\mathbb{Z}_m}\ket{\tilde{b} + kr}                                      \\
+		             & = \frac{1}{m}\sum_{b\in\mathbb{Z}_m}\sum_{k\in\mathbb{Z}_m}\omega^{-(\tilde{b} + kr)b}\ket{b}             \\
+		             & = \frac{1}{m}\sum_{b\in\mathbb{Z}_m}\sum_{k\in\mathbb{Z}_m}\omega^{-b\tilde{b}}\omega^{-krb}\ket{b}       \\
+		             & = \frac{1}{m}\sum_{b\in\mathbb{Z}_m}\omega^{-b\tilde{b}}\qty[\sum_{k\in\mathbb{Z}_m}\omega^{-krb}]\ket{b}
+	\end{align*}
+	From here we can see if $rb \neq 0$ then using the fact that $\sum_{b\in\mathbb{Z}_m}\omega^{b} = 0$\footnote{Multiply both sides by $\frac{1}{\omega^{kr}\omega^{m - 1}}$ to get the needed equation.} that these terms will drop out of the expression and hence we will always measure a state with $rb = 0$. This leaves the state as $\sum_b\omega^{-b\tilde{b}}\ket{b}$ and because norm of every coefficient is the same, the probability of getting $rb = 0$ is equally distributed over the states.
+\end{solution}
+
+\begin{problem}
+Deducing $r$ from $b$.
+\end{problem}
+
+\begin{solution}
+	First let's make the following observations. $35 = m = 5\cdot 7 = rs$. So $m$ is the product of two primes. Now assume we are given a $b$ with $br = 0$. This implies that $br$ is a multiple of $m$, and because $m = rs$ we can write $br = krs$ which implies $b = ks$ for some $k\in\mathbb{Z}$. If we take the greatest common divisor of $b$ and $m$ to $\gcd(b, m) = a$ then we will have two cases.
+	\begin{enumerate}
+		\item $a$ is prime because $b = ks$ and $m = rs$
+		\item $a$ is 0 which implies $b$ was 0
+	\end{enumerate}
+	When $a$ is prime it is $s$ which we can then use to divide $m$ to get $r$.
+\end{solution}
+
+
+\begin{problem}
+Suppose that $f: \mathbb{Z}_3\to\mathbb{Z}_3$ is of the form $f(x) = ax^2 + bx + c$\dots
+\end{problem}
+
+\begin{solution}
+	(a) Let's first look at the three values $f$ can take.
+	\begin{align*}
+		f(0) & = c                        \\
+		f(1) & = a + b + c                \\
+		f(2) & = 4a + 2b + c = a + 2b + c
+	\end{align*}
+	We can then solve for $a$ as
+	\begin{equation*}
+		a = -f(0) + 2f(1) - f(2)
+	\end{equation*}
+	which clearly shows we need to make three queries to $f$.
+\end{solution}
+
+
+\end{document}
