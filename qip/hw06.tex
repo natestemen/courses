@@ -1,0 +1,65 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{6}
+\duedate{Fri, Oct 30, 2020 11:59 PM}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+
+\begin{document}
+
+\noindent
+I worked with Chelsea Komlo and Wilson Wu on this assignment.
+
+\begin{problem}
+Quantum Fourier transform.
+\begin{parts}
+	\part{Prove that $F_m$ is unitary.}\label{part:1a}
+	\part{What computational basis state is $F_m^2\ket{a}$?}\label{part:1b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	To show that $F_m$ is unitary, we will show $(F_m)_i(F_m)^\dagger_j = \delta_{ij}$ where $(F_m)_i$ is the $i$-th row of $F_m$ and $(F_m)^\dagger_j$ is the $j$-th column of $F_m^\dagger$.
+	\begin{align*}
+		(F_m)_i(F_m)^\dagger_j & = \frac{1}{m}\mqty[1 & \omega^i & \omega^{2i} & \cdots & \omega^{(m - 1)i}]\mqty[1 \\ \overline{\omega}^i \\ \overline{\omega}^{2i} \\ \vdots \\ \overline{\omega}^{(m - 1)i}] \\
+		& = \frac{1}{m}\sum_{n = 0}^{m - 1}\omega^{ni}\overline{\omega}^{nj} \\
+		& = \frac{1}{m}\sum_{n = 0}^{m - 1}\omega^{ni}\omega^{-nj} \\
+		& = \frac{1}{m}\sum_{n = 0}^{m - 1}\omega^{n(i -j)} \\
+	\end{align*}
+	If $i = j$, then we have $\frac{1}{m}\sum_{n = 0}^{m - 1}1 = 1$. Now if $i\neq j$, say $i - j = a\in\mathbb{Z}$, then we have $\frac{1}{m}\sum_{n = 0}^{m - 1}\omega^{an} = 0$ by the sum of powers of roots of unity identities presented in lecture\footnote{In lecture this was only presented for $a>1$, but holds as well for negative $a$ because $\omega^{-1}$ is also a primitive root of unity.}. We thus conclude this product is $\delta_{ij}$ and hence equivalently we write $F_mF_m^\dagger = \mathbb{1}$.
+
+	\ref{part:1b}
+	We'll first have to expand $F_m^2$, and we'll do it component-wise again.
+	\begin{equation*}
+		(F_m^2)_{ik} = \sum_{j = 1}^m(F_m)_{ij}(F_m)_{jk} = \sum_{j = 1}^m\frac{1}{m}\omega^{(i-1)(j-1)}\omega^{(j-1)(k-1)}  = \frac{1}{m}\sum_{j = 0}^{m - 1}\omega^{j(i + k - 2)}
+	\end{equation*}
+	If $i + k - 2 \equiv 0 \mod m$, then $(F_m^2)_{ik} = 1$, and as above, if it's not 0, then $(F_m^2)_{ik} = 0$. This matrix isn't the identity, but it is full rank with only 1's and 0's as components. For a $4\times 4$ we have the following.
+	\begin{equation*}
+		F_4^2 = \smqty[1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0]
+	\end{equation*}
+	In general we have a 1 in the first position, and an $(m-1)\times(m-1)$ anti-diagonal matrix with 1s on the anti-diagonal with 0's everywhere else. This indeed maps computational basis states to computational basis states.
+\end{solution}
+
+\begin{problem}
+Superposition of eigenvectors in phase estimation algorithm.
+\end{problem}
+
+\begin{solution}
+	Let $A = (F_{2^\ell}^*\otimes \mathbb{1})W(H^{\otimes n}\otimes \mathbb{1})$. Surely this in a linear operator. Thus we have the following.
+	\begin{align*}
+		A\ket*{0^\ell}\otimes\qty(\alpha_1\ket{\psi_1} + \alpha_2\ket{\psi_2}) & = \alpha_1A\ket*{0^\ell}\otimes\ket{\psi_1} + \alpha_2A\ket*{0^\ell}\otimes\ket{\psi_2} \\
+		                                                                       & = \alpha_1\ket{a}\otimes\ket{\psi_1} + \alpha_2\ket{b}\otimes\ket{\psi_2}
+	\end{align*}
+	Written this way we can see when we measure the first $\ell$ qubits we will get $a$ with probability $\abs{\alpha_1}^2$ and $b$ with probability $\abs{\alpha_2}^2$.
+\end{solution}
+
+\end{document}
