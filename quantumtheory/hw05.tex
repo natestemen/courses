@@ -1,0 +1,307 @@
+\documentclass[boxes,pages]{homework}
+
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Advanced Quantum Theory}
+\courseid{AMATH 673}
+\hwnum{5}
+\duedate{Mon, Nov 2, 2020 11:50 AM}
+
+\problemname{Exercise}
+
+\usepackage{physics}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+
+\colorlet{LightLavender}{Lavender!40!}
+\colorlet{LightApricot}{Apricot!40!}
+\tcbset{on line, 
+        boxsep=4pt, left=0pt,right=0pt,top=0pt,bottom=0pt,
+        colframe=white,colback=LightLavender,  
+        highlight math style={enhanced}
+        }
+
+\usepackage{pgfplots}
+\usetikzlibrary{math}
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\tpose}[1]{#1^\intercal}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\hilb}{\mathcal{H}}
+\newcommand{\inv}[1]{{{#1}^{-1}}}
+\newcommand{\herm}[1]{{{#1}^\dagger}}
+\newcommand{\e}{\mathrm{e}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\spec}{spec}
+
+\makeatletter
+\numberwithin{@problem}{section}
+\makeatother
+
+\begin{document}
+
+\setcounter{section}{5}
+\problemnumber{2}
+
+\begin{problem}
+Verify the canonical commutation relation in the position representation, i.e., verify that, for all (differentiable) wave functions $\psi(x)$:
+\[
+	(\hat{x}\hat{p} - \hat{p}\hat{x} - \iu\hbar).\psi(x) = 0
+\]
+\end{problem}
+
+\begin{solution}
+	Let's first evaluate each term separately.
+	\begin{align*}
+		(\hat{x}\hat{p}).\psi(x) & = \hat{x}.(\hat{p}.\psi(x)) = \hat{x}.\qty(-\iu\hbar\dv{x}\psi(x)) = -\iu\hbar x\psi'(x)                                  \\
+		(\hat{p}\hat{x}).\psi(x) & = \hat{p}.(\hat{x}.\psi(x)) = \hat{p}.\qty(x\psi(x)) = -\iu\hbar\dv{x}\qty(x\psi(x)) = -\iu\hbar\qty(\psi(x) + x\psi'(x)) \\
+		(\iu\hbar).\psi(x)       & = \iu\hbar\psi(x)
+	\end{align*}
+	Putting these together (with the appropriate signs) yields
+	\begin{align*}
+		-\iu\hbar x\psi'(x) & + \iu\hbar\qty(\psi(x) + x\psi'(x)) - \iu\hbar\psi(x)                                                                                                                      \\
+		                    & = -\tcboxmath{\iu\hbar x\psi'(x)} + \tcboxmath[colback=LightApricot]{\iu\hbar\psi(x)} + \tcboxmath{\iu\hbar x\psi'(x)} - \tcboxmath[colback=LightApricot]{\iu\hbar\psi(x)} \\
+		                    & = 0
+	\end{align*}
+	as desired. I hope you like my colors.
+\end{solution}
+
+\begin{problem}
+Derive the action of $\hat{x}$ and $\hat{p}$ on momentum wave functions, i.e., derive the short hand notation $\hat{x}.\tilde{\psi}(p) = ?\tilde{\psi}(p)$ and $\hat{p}.\tilde{\psi}(p) = ?\tilde{\psi}(p)$ analogously to how we derived the short hand notation for the position representation.
+\end{problem}
+
+\begin{solution}
+	Lets start with the simple one $\hat{p}.\tilde{\psi}(p)$. Begin by letting $\ket{\phi} = \hat{p}\ket{\psi}$.
+	\begin{equation*}
+		\tilde{\phi}(p) = \braket{p}{\phi} = \bra{p}\hat{p}\ket{\psi} = p\braket{p}{\psi} = p\tilde{\psi}(p)
+	\end{equation*}
+	With this we can conclude $\hat{p}.\tilde{\psi}(p) = p\tilde{\psi}(p)$.
+
+	Now to the slightly more challenging $\hat{x}.\tilde{\psi}(p)$. We'll first prove a little lemma we'll use in our computation down the line.
+	\begin{lemma}
+		\begin{equation*}
+			\bra{p}\hat{x}\ket*{p'} = \iu\hbar\dv{p}\delta(p' - p)
+		\end{equation*}
+	\end{lemma}
+	\begin{proof}
+		Let's do two insertions of the identity in the position basis which we know how to handle a little bit better.
+		\begin{align*}
+			\bra{p}\hat{x}\ket*{p'} & = \bra{p}\mathbb{1}\hat{x}\mathbb{1}\ket*{p'}                                                                                                \\
+			                        & = \int_{\mathbb{R}^2}\dd{x}\dd{x'}\braket{p}{x}\bra{x}\hat{x}\ket*{x'}\braket*{x'}{p'}                                                       \\
+			                        & = \int_{\mathbb{R}^2}\dd{x}\dd{x'}\frac{\e^{-\iu px/\hbar}}{\sqrt{2\pi\hbar}}\qty[x\delta(x-x')]\frac{\e^{\iu p'x'/\hbar}}{\sqrt{2\pi\hbar}} \\
+			                        & = \frac{1}{2\pi\hbar}\int_\mathbb{R}\dd{x}x\e^{\iu x(p' - p)/\hbar}                                                                          \\
+			                        & = \frac{\iu}{2\pi}\int_\mathbb{R}\dd{x}\dv{p}\e^{\iu x(p' - p)/\hbar}                                                                        \\
+			                        & = \frac{\iu}{2\pi}\dv{p}\int_\mathbb{R}\dd{x}\e^{\iu x(p' - p)/\hbar}                                                                        \\
+			                        & = \frac{\iu}{2\pi}\dv{p}\qty[-2\pi\hbar\delta(p'-p)]                                                                                         \\
+			                        & = \iu\hbar\dv{p}\delta(p-p')                                                                                                                 \\
+		\end{align*}
+	\end{proof}
+	Great, so now let's get back to the question at hand. Let $\ket{\phi} = \hat{x}\ket{\psi}$. Then we have
+	\begin{align*}
+		\tilde{\phi}(p) & = \braket{p}{\phi} = \bra{p}\hat{x}\ket{\psi}                                                      \\
+		                & = \int_\mathbb{R}\dd{p'}\bra{p}\hat{x}\ket*{p'}\braket*{p'}{\psi}                                  \\
+		                & = \int_\mathbb{R}\dd{p'}\iu\hbar\dv{p}\delta(p-p')\tilde{\psi}(p') = \iu\hbar\dv{p}\tilde{\psi}(p)
+	\end{align*}
+	With this we can conclude $\hat{x}.\tilde{\psi}(p) = \iu\hbar\dv{p}\tilde{\psi}(p)$, or perhaps if we're being technical $\hat{x}.\tilde{\psi}(p) = \iu\hbar\pdv{p}\tilde{\psi}(p)$. That has a nice symmetry\footnote{Presumably coming from the fact that $x$ and $p$ are Fourier transforms of each other?} with $\hat{p}$ acting in position space.
+
+\end{solution}
+
+\setcounter{section}{6}
+\problemnumber{1}
+
+\begin{problem}
+Explain Eq. 6.5 using a sketch of the plot of a function and a partitioning of the integration interval.
+\end{problem}
+
+\begin{solution}
+	\pgfmathdeclarefunction{gauss}{2}{%
+		\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2)) + x/10}%
+	}
+	Using the following plot, we can calculate the Riemann-Stieltjes integral of the function in blue with respect the Heaviside function $\theta(x)$.
+	\begin{figure}[h!]
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+					width = 6in, height = 3in,
+					grid = major,
+					grid style = {dashed, gray!30},
+					axis y line = left,
+					axis x line = bottom,
+					xtick       = {-2,-1, -0.6, 0, 1, 2, 3, 4},
+					xticklabels = {$a$,$x_i$, $\overline{x}_i$, 0, $x_{i+1}$, $\overline{x}_{i + 1}$, $x_{i+2}$, $b$},
+					ytick       = {0, 1},
+					yticklabels = {0, 1},
+					samples     = 100,
+					domain      = -2.5:2.5,
+					xmin = -2.5, xmax = 4.2,
+					ymin = -0.1, ymax = 1.25,
+				]
+				\addplot[domain=-2.5:4.2, blue]{gauss(0,0.5)};
+				\addplot[domain=-2:0]{0};
+				\addplot[domain=0:4.2]{1};
+				\addplot[fill=white,only marks,mark=*] coordinates{(0,0)(0,1)};
+				\addplot[only marks,mark=*] coordinates{(0,0.5)};
+			\end{axis}
+		\end{tikzpicture}
+	\end{figure}
+	Because $\theta(x)$ is the same everywhere except near zero, all the terms in our summation cancel out and we are left with the following equation.
+
+	\begin{equation*}
+		\int_a^bf(x)\dd \theta(x) = \lim_{\varepsilon\to 0}f(\overline{x}_i)\qty[\theta(x_{i+1}) - \theta(x_i)] = \lim_{\varepsilon\to 0}f(\overline{x}_i)
+	\end{equation*}
+	As $\varepsilon$ goes to 0, $\overline{x}_i$ is forced to approach zero and hence in the limit $\int_a^bf(x)\dd \theta(x) = f(0)$.
+
+	It's worth noting that if one of the interval points lands right on the origin $x_j = 0$, then the picture changes slightly because we have two terms.
+	\begin{equation*}
+		\int_a^bf(x)\dd \theta(x) = \lim_{\varepsilon\to 0}f(\overline{x}_i)\qty[\theta(x_{i+1}) - \theta(x_i)] = \lim_{\varepsilon\to 0}\frac{1}{2}f(\overline{x}_{j+1}) + \frac{1}{2}f(\overline{x}_j)
+	\end{equation*}
+	In the limit of small $\varepsilon$, this approaches the average of the points just left and right of 0, which is of course (for continuous functions) $f(0)$.
+\end{solution}
+
+\begin{problem}
+Plot an integrator function $m(x)$ which integrates over the intervals $[3,6]$ and $[9,11]$ and sums over the values of the integrand at the points $x = 5$ and $x = 6$.
+\end{problem}
+
+\begin{solution}
+	The following function $m(x)$ will pluck out the values at 5 and 6 so we can add them. I've only defined the function on $[3,6]\cup[9,11]$ because that's seems like the easiest thing to do.
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\tikzmath{
+				\q1 = 3;
+				\q2 = 5;
+				\q3 = 6;
+				\q4 = 9;
+				\q5 = 11;
+			}
+			\begin{axis}[
+					width = 6in, height = 2.5in,
+					axis x line=bottom,
+					axis y line=middle,
+					grid = major,
+					grid style = {dashed, gray!30},
+					ylabel=$m(x)$,
+					xlabel=$x$,
+					xtick={0,\q1,\q2,\q3,\q4,\q5},
+					xticklabels={0,3, 5, 6, 9, 11, { }},
+					xlabel near ticks,
+					x label style={at={(axis description cs:1, 0)},anchor=north},
+					ytick={0, 1, 2, 3},
+					yticklabels={0, 1, 2, 3},
+					ylabel near ticks,
+					y label style={at={(axis description cs:0,1)}, rotate=-90},
+					xmax=\q5+2,
+					ymax=4,
+					xmin=0,
+					ymin=0
+				]
+
+				\addplot[domain=\q1:\q2]{1};
+				\addplot[domain=\q2:\q3]{2};
+
+				\addplot[domain=\q4:\q5]{1};
+
+				\addplot[fill=white,only marks,mark=*] coordinates{(\q2,1)(\q3,2)};
+				\addplot[only marks,mark=*] coordinates{(\q1,1)(\q2,2)(\q3, 3)(\q4,1)(\q5, 1)};
+			\end{axis}
+		\end{tikzpicture}
+	\end{figure}
+\end{solution}
+
+\setcounter{section}{7}
+\problemnumber{1}
+
+\begin{problem}
+There are indications from studies of quantum gravity, that the uncertainty relation between positions and momenta acquire corrections due to gravity effects and should be of the form: $\Delta x\Delta p\geq \frac{\hbar}{2}(1 + \beta(\Delta p)^2 + \ldots)$, where $\beta$ is expected to be a small positive number. Show that this type of uncertainty relation arises if the canonical commutation relation is modified to read$\comm{\hat{x}}{\hat{p}} = \iu\hbar(1 + \beta\hat{p}^2)$. Sketch the modified uncertainty relation $\Delta x\Delta p\geq\frac{\hbar}{2}(1 + \beta(\Delta p)^2)$ in the $\Delta p$ versus $\Delta x$ plane. Bonus: Show that this resulting uncertainty relation implies that the uncertainty in position can never be smaller than $\Delta x_\text{min} = \hbar\sqrt{\beta}$.
+\end{problem}
+
+\begin{solution}
+	Let's start with the general uncertainty principle.
+	\begin{equation*}
+		\Delta f\Delta g \geq \frac{1}{2}\abs{\expval{\comm{f}{g}}{\psi}}
+	\end{equation*}
+	We can now replace $f$ and $g$ with $x$ and $p$ respectively to obtain the new uncertainty principle.
+	\begin{align*}
+		\Delta x\Delta p & \geq \frac{1}{2}\abs{\expval{\iu\hbar(1 + \beta p^2)}{\psi}}                                                  \\
+		                 & = \frac{\hbar}{2}\abs{\braket{\psi}{\psi} + \beta\expval{p^2}{\psi}}                                          \\
+		                 & = \frac{\hbar}{2}\qty(1 + \beta\,\overline{p^2})                                                              \\
+		                 & = \frac{\hbar}{2}\qty(1 + \beta(\Delta p)^2 + \beta\,\overline{p}^2) \tag{using the definition of $\Delta p$}
+	\end{align*}
+	Or, written slightly differently we have $\Delta x\Delta p\geq \frac{\hbar}{2}\qty(1 + \beta(\Delta p)^2 + \ldots)$.
+
+	Now if write this as $xy = \frac{\hbar}{2}(1 + \beta y^2)$, it's maybe slightly easy to see it's a hyperbola. To find the minimum value for $x = \Delta x$, let's first solve for $y$.
+	\begin{equation*}
+		y^2 - \frac{2}{\hbar\beta}xy + \frac{1}{\beta} = 0 \implies y = \frac{\frac{2}{\hbar\beta}x \pm\sqrt{\frac{4}{\hbar^2\beta^2}x^2 - \frac{4}{\beta}}}{2} = \frac{x}{\hbar\beta} \pm\sqrt{\frac{x^2}{\hbar^2\beta^2} - \frac{1}{\beta}}
+	\end{equation*}
+	From here we can take the derivative of $y$ and find where if evaluates to infinity. This is the point we're looking for.
+	\begin{equation*}
+		\eval{y'}_{y'\to\infty} = \eval{\frac{1}{\hbar\beta} + \frac{\frac{2x}{\hbar^2\beta^2}}{\sqrt{\frac{x^2}{\hbar^2\beta^2} - \frac{1}{\beta}}}}_{y'\to\infty}\implies \frac{x^2}{\hbar^2\beta^2} = \frac{1}{\beta}
+	\end{equation*}
+	Where we've arrived at the condition $\Delta x_\text{min} = \hbar\sqrt{\beta}$. Putting the two together we have $\Delta x_\text{min}\Delta p = \hbar\sqrt{\beta}\frac{1}{\sqrt{\beta}} = \hbar$ which indeed satisfies the uncertainty principle. Nice.
+
+	Okay, to get onto the plotting. I couldn't figure out how to shade the region ``inside'' (to the right of the blue line), but that's the allowed region. Here we plot the portion of the hyperbola where both $\Delta x$ and $\Delta p$ are positive because those are the only physical values.
+
+	\pgfmathdeclarefunction{hype}{1}{%
+		\pgfmathparse{x + sqrt(x^2 - 1)}%
+	}
+	\pgfmathdeclarefunction{hypeP}{1}{%
+		\pgfmathparse{x - sqrt(x^2 - 1)}%
+	}
+	\begin{figure}[h!]
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+					width = 6in, height = 3in,
+					grid = major,
+					grid style = {dashed, gray!30},
+					axis y line = left,
+					axis x line = bottom,
+					xtick       = {0, 1},
+					xticklabels = {0, $\Delta x_\text{min} = \hbar\sqrt{\beta}$},
+					yticklabels = {0, $\frac{1}{\sqrt{\beta}}$},
+					ytick       = {0, 1},
+					xlabel={$\Delta x$},
+					ylabel={$\Delta p$},
+					samples     = 200,
+					domain      = 0:5,
+					xmin = 0, xmax = 5,
+					ymin = -0.1, ymax = 5,
+				]
+				\addplot[domain=0:5, blue]{hype(0)};
+				\addplot[domain=0:5, blue]{hypeP(0)};
+				% \addplot[domain=-2:0]{0};
+				% \addplot[domain=0:4.2]{1};
+				% \addplot[fill=white,only marks,mark=*] coordinates{(0,0)(0,1)};
+				\addplot[fill=blue,only marks,mark=*] coordinates{(1,1)};
+			\end{axis}
+		\end{tikzpicture}
+	\end{figure}
+\end{solution}
+
+
+\begin{problem}
+Ultimately, every clock is a quantum system, with the clock's pointer or display consisting of one or more observables of the system. Even small quantum systems such as a nucleus, an electron, atom or molecule have been made to serve as clocks. Assume now that you want to use a small system, such as a molecule, as a clock by observing how one of its observables changes over time. Assume that your quantum clock possess a discrete and bounded energy spectrum $E_1\leq E_2\leq E_3\leq\ldots\leq E_\text{max}$ with $E_\text{max} - E_1 = 1\text{eV}$ (1eV=1 electronvolt) which is a typical energy scale in atomic physics.
+\begin{parts}
+	\part{Calculate the maximum uncertainty in energy, $\Delta E$ that your quantum clock can possess.}\label{part:clocka}
+	\part{Calculate the maximally achievable accuracy for such a clock. I.e., what is the shortest time interval (in units of seconds) within which any observable property of the clock could change its expectation value by a standard deviation?}\label{part:clockb}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+
+	\ref{part:clocka}
+	The maximum energy uncertainty would be the highest energy minus the lowest energy. I've gotta be missing something for this question\dots $\Delta E = E_\text{max} - E_1 = 1\text{eV}$.
+
+	\ref{part:clockb}
+	\begin{align*}
+		\Delta t \geq \frac{1}{\Delta H}\frac{\hbar}{2} = \frac{1}{1\text{eV}}\frac{\hbar}{2} = \frac{6.58\times 10^{-16}\text{eV}\cdot\text{s}}{2\text{eV}} = 3.29\times 10^{-16}\,\text{s}
+	\end{align*}
+
+\end{solution}
+
+\end{document}
