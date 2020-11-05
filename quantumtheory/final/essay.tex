@@ -3,15 +3,25 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
+\usepackage[margin=1.2in]{geometry}
+
 \usepackage{mathpazo}
 \usepackage{graphicx}
 \usepackage[linktocpage]{hyperref}
 \usepackage{varioref}
+% \usepackage{cleveref}
+\usepackage{physics}
+\usepackage{mathtools}
 \usepackage{float}
 \usepackage{titletoc}
 \usepackage[numbers]{natbib}
 \bibliographystyle{unsrt}
 \usepackage[nottoc]{tocbibind}
+
+\newcommand{\twonorm}[1][\rho]{c_{2,\mathrm{B}} (#1)}
+\newcommand{\twonormE}[1][\rho]{c_{2,\mathrm{B}}}
+\newcommand{\dephase}{\mathcal{D}_\mathrm{B}}
+\DeclareMathOperator{\diag}{diag}
 
 
 
@@ -56,10 +66,44 @@
 	\end{center}
 \end{titlepage}
 
-
 \tableofcontents
 
+\newpage
+
 \section{Introduction}
+
+In this section we work through the calculations presented in section 2 of \cite{Kendall_2020}.
+Let's start with showing the 2-norm coherence $\twonorm{}$ is the sum of the off diagonal elements squared of $\rho$.
+To start, let's calculate the inner part of the norm.
+\begin{align*}
+	\qty(\mathbb{1} - \dephase)\rho & = \rho - \dephase\rho \\
+	& = \mqty[\rho_{11} & \rho_{12} & \cdots & \rho_{1d} \\ \rho_{21} & \rho_{22} & & \\ \vdots & & \ddots & \\ \rho_{d1} & & & \rho_{dd}] - \mqty[\diagonalmatrix{\rho_{11},\rho_{22},\ddots,\rho_{dd}}] \\
+	& = \mqty[0 & \rho_{12} & \cdots & \rho_{1d} \\ \rho_{21} & 0 & & \\ \vdots & & \ddots & \\ \rho_{d1} & & & 0] = \tilde{\rho}
+\end{align*}
+Now we need to calculate the norm of this operator $\tilde{\rho}$ using the following norm definition $\norm{X}_2 = \sqrt{\tr(X^\dagger X)}$.
+Using the property the property that density matrices are Hermitian we can simplify this as $\norm{\tilde{\rho}}_2 = \sqrt{\tr(\tilde{\rho}^2)}$.
+Now we can calculate the diagonal elements of $\tilde{\rho}^2$ so we can sum them up and get the trace.
+\begin{align*}
+	\tilde{\rho}^2 & = \mqty[0 & \rho_{12} & \cdots & \rho_{1d} \\ \rho_{21} & 0 & & \\ \vdots & & \ddots & \\ \rho_{d1} & & & 0]\mqty[0 & \rho_{12} & \cdots & \rho_{1d} \\ \rho_{21} & 0 & & \\ \vdots & & \ddots & \\ \rho_{d1} & & & 0] \\
+	& = \mqty[\dmat{\sum_{i \neq 1 }^d\rho_{1i}\rho_{i1},\sum_{i \neq 2}^d\rho_{2i}\rho_{i2},\ddots, \sum_{i \neq d}^d\rho_{di}\rho_{id}}]
+\end{align*}
+This expression, with the fact that $\rho_{ij} = \overline{\rho_{ji}}$ allows us to write the trace, and hence the 2-norm coherence as
+\begin{align*}
+	\twonorm{} & \coloneqq\norm{\qty(\mathbb{1} - \dephase)\rho}_2^2 = \sum_{\substack{i\neq j \\ i,j = 1}}^d\abs{\rho_{ij}}^2.
+\end{align*}
+
+We will now show how to write the variance $(\Delta B)^2$ can be written in terms of the purity $\gamma$ and the 2-norm coherence $\twonormE$.
+\begin{align*}
+	\frac{1 - \gamma + \twonormE}{2} & = \frac{1}{2}\qty(1 - \tr(\rho^2) + \twonormE)                                             \\
+	                                 & = \frac{1}{2}\qty(1 - \rho_{xx}^2 - \rho_{yy}^2 - 2\abs{\rho_{xy}}^2 + 2\abs{\rho_{xy}}^2) \\
+	                                 & = \frac{1}{2}\qty(1 - \rho_{xx}^2 - \rho_{yy}^2)
+\end{align*}
+Note here that the $\rho_{ii}$ terms don't need an absolute value because diagonal terms of the density matrix are always real by the Hermiticity condition $\rho_{ii} = \overline{\rho_{ii}}$.
+We can now use the fact that $\tr\rho = 1$ to write $\rho_{yy} = 1 - \rho_{xx}$ to rewrite our equation purely in terms of $\rho_{xx}$.
+\begin{equation*}
+	\frac{1 - \gamma + \twonormE}{2} =\frac{1}{2}\qty(1 - \rho_{xx}^2 - \qty[1 - 2\rho_{xx} + \rho_{xx}^2]) = \rho_{xx} - \rho_{xx}^2
+\end{equation*}
+
 
 
 \clearpage
