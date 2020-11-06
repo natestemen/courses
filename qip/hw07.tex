@@ -1,0 +1,156 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{7}
+\duedate{Thurs, Nov 5, 2020 11:59 PM}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+
+\usepackage{tikz}
+\usetikzlibrary{quantikz}
+
+\begin{document}
+
+\noindent
+I worked with Chelsea Komlo and Wilson Wu on this assignment.
+
+% --- PROBLEM 1 --- %
+
+\begin{problem}
+Efficiently computing bijections.
+\end{problem}
+
+\begin{solution}
+	The following circuit computes $U_f$.
+
+	\begin{center}
+		\begin{quantikz}
+			\lstick{$\ket{a}$} & \gate[wires=2][1.15cm]{Q_f} \slice{$\ket{\psi_0}$} & \gate[swap]{}\slice{$\ket{\psi_1}$} & \gate[wires=2]{Q_{f^{-1}}} & \rstick{$\ket{f(a)}$} \qw \\
+			\lstick{$\ket{0}$} &                                                    &                                     &                     &  \rstick{$\ket{f^{-1}(f(a))\oplus a}$}\qw
+		\end{quantikz}
+	\end{center}
+	Where we have the following intermediary states that follow directly from the definition of $Q_f$ and \texttt{SWAP}.
+	\begin{align*}
+		\ket{\psi_0} & = \ket{a}\ket{f(a)} & \ket{\psi_1} & = \ket{f(a)}\ket{a}
+	\end{align*}
+	Here the swap isn't really just one gate. In order to swap two qubits, it takes 3 \texttt{CNOT} gates, and we need to swap $n$ qubits in the top register with $n$ qubits in the bottom register. This is $\order{n}$ gates combined with one use of $Q_f$ and one use of $Q_{f^{-1}}$.
+
+	Lastly it's important to note that the bottom register is returned to $\ket{0}$ because $f^{-1}(f(a))$ is $a$ and $a\oplus a$ is 0.
+\end{solution}
+
+% --- PROBLEM 2 --- %
+
+\begin{problem}
+Basic questions about density matrices.
+\begin{parts}
+	\part{Show that, for any operator that is Hermitian, positive definite (i.e.,has no negative eigenvalues), and has trace 1, there is a probabilistic mixture of pure states whose density matrix is $\rho$.}\label{part:2a}
+	\part{A density matrix $\rho$ corresponds to a pure state if and only if $\rho = \ketbra{\psi}{\psi}$. Show that any density matrix $\rho$ corresponds to a pure state if and only if $\tr(\rho^2) = 1$.}\label{part:2b}
+	\part{Show that every $2\times2$ density matrix $\rho$ can be expressed as an equally weighted mixture of pure states.}\label{part:2c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:2a}
+	By the spectral theorem for Hermitian operators, we can write our Hermitian, positive definite operator as
+	\begin{equation*}
+		A = \sum_i\lambda_i\ketbra{i}{i}.
+	\end{equation*}
+	This can be seen to be a density operator because each $\lambda_i$ is an eigenvalue of $A$, and by the Hermiticity of $A$ it is real and non-negative.
+
+	\ref{part:2b}
+	Let $\rho = \ketbra{\psi}{\psi}$. Then $\rho^2 = \qty(\ketbra{\psi}{\psi})^2 = \ket{\psi}\braket{\psi}{\psi}\bra{\psi} = \ketbra{\psi}{\psi} = \rho$. Thus $\tr(\rho^2) = \tr(\rho) = 1$.
+
+	Now take $\tr(\rho^2) = 1$. Let's first calculate $\rho^2$.
+	\begin{align*}
+		\rho^2 & = \qty(\sum_{i = 1}^n p_i\ketbra{i}{i})^2 = \sum_{i = 1}^n p_i\ketbra{i}{i}\sum_{j = 1}^n p_j\ketbra{j}{j}   \\
+		       & = \sum_{i,j = 1}^n p_ip_j\ket{i}\braket{i}{j}\bra{j} \tag{using a basis where $\braket{i}{j} = \delta_{ij}$} \\
+		       & = \sum_{i = 1}^n p_i^2\ketbra{i}{i}
+	\end{align*}
+	Now taking the trace of $\rho^2$ we get a condition on the $p_i$'s.
+	\begin{align*}
+		\tr \rho^2 & = \sum_{k = 1}^n\bra{k}\rho^2\ket{k}                     \\
+		           & = \sum_{k,i = 1}^n\bra{k}\qty(p_i^2\ketbra{i}{i})\ket{k} \\
+		           & = \sum_{i = 1}^n p_i^2 = 1
+	\end{align*}
+	So we now know $\sum p_i = 1 = \sum p_i^2$. By basic properties of real numbers, we know $p_i^2 \leq p_i$ when $p_i\in[0, 1]$ and equality only holding when $p_i \in\{0, 1\}$. Using this fact we can write
+	\begin{equation*}
+		\sum_{i = 1}^n p_i^2 \leq \sum_{i = 1}^n p_i
+	\end{equation*}
+	where again equality only holds if $p_i\in\{0, 1\}$ for all $i$. The only way this can be true is if one of the $p_i$'s is 1 and all of the rest are 0. In that case our summation collapses to one term, and we are left with $\rho = \ketbra{\psi_i}{\psi_i}$ as desired.
+
+	\ref{part:2c}
+	Let $\rho$ be an arbitrary $2\times 2$ density matrix:
+	\begin{equation*}
+		\rho = p_0\ketbra{\psi_0}{\psi_0} + p_1\ketbra{\psi_1}{\psi_1}.
+	\end{equation*}
+	Define the following two vectors:
+	\begin{align*}
+		\ket{\tilde{\psi}_0} & = \sqrt{\frac{p_0}{2}}\ket{\psi_0} + \sqrt{\frac{p_1}{2}}\ket{\psi_1} & \ket{\tilde{\psi}_1} & = \sqrt{\frac{p_0}{2}}\ket{\psi_0} - \sqrt{\frac{p_1}{2}}\ket{\psi_1}.
+	\end{align*}
+	We'll now show that $\rho = \frac{1}{2}\ketbra{\tilde{\psi}_0}{\tilde{\psi}_0} + \frac{1}{2}\ketbra{\tilde{\psi}_1}{\tilde{\psi}_1}$. For the page width's sake, let's calculate each term separately.
+	\begin{align*}
+		\ketbra{\tilde{\psi}_0}{\tilde{\psi}_0} & = \qty(\sqrt{p_0}\ket{\psi_0} + \sqrt{p_1}\ket{\psi_1})\qty(\sqrt{p_0}\bra{\psi_0} + \sqrt{p_1}\bra{\psi_1})                            \\
+		                                        & = p_0\ketbra{\psi_0}{\psi_0} + \sqrt{p_0p_1}\ketbra{\psi_0}{\psi_1} + \sqrt{p_0p_1}\ketbra{\psi_1}{\psi_0} + p_1\ketbra{\psi_1}{\psi_1} \\
+		\ketbra{\tilde{\psi}_1}{\tilde{\psi}_1} & = \qty(\sqrt{p_0}\ket{\psi_0} - \sqrt{p_1}\ket{\psi_1})\qty(\sqrt{p_0}\bra{\psi_0} -\sqrt{p_1}\bra{\psi_1})                             \\
+		                                        & = p_0\ketbra{\psi_0}{\psi_0} - \sqrt{p_0p_1}\ketbra{\psi_0}{\psi_1} - \sqrt{p_0p_1}\ketbra{\psi_1}{\psi_0} + p_1\ketbra{\psi_1}{\psi_1} \\
+	\end{align*}
+	Thus putting those together we have
+	\begin{align*}
+		\frac{1}{2}\ketbra{\tilde{\psi}_0}{\tilde{\psi}_0} + \frac{1}{2}\ketbra{\tilde{\psi}_1}{\tilde{\psi}_1} & = p_0\ketbra{\psi_0}{\psi_0} + p_1\ketbra{\psi_1}{\psi_1}
+	\end{align*}
+	Thus we conclude it's possible to write an arbitrary density matrix as an equally weighted mixture of pure states.
+\end{solution}
+
+% --- PROBLEM 3 --- %
+
+\begin{problem}
+The density matrix depends on what you know.
+\begin{parts}
+	\part{What is the density matrix of the state from Bob's perspective?}\label{part:3a}
+	\part{What's Alice's density matrix for Bob's state assuming that her initial state was $\ket{0}$? What's Alice's density matrix for Bob's state assuming that her initial state was $\ket{+}$?}\label{part:3b}
+	\part{What is the density matrix of the state from Bob's perspective? Is it the same matrix as in part \ref{part:3a}?}\label{part:3c}
+	\part{What's Alice's density matrix for Bob's state assuming that her initial state was $\ket{\psi_0}$? What's Alice's density matrix for Bob's state assuming that her initial state was $\ket{\psi_1}$?}\label{part:3d}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:3a}
+	From Bob's perspective, he knows that there is a 50\% chance he's getting $\ket{0}$ and a 50\% chance he's getting $\ket{+}$. With that information we can write down the following density matrix.
+	\begin{equation*}
+		\rho_\text{Bob} = \sum_ip_i\ketbra{i}{i} =\frac{1}{2}\ketbra{0}{0} + \frac{1}{2}\ketbra{+}{+} = \mqty[\frac{1}{2} & 0 \\ 0 & 0] + \mqty[\frac{1}{4} & \frac{1}{4} \\ \frac{1}{4} & \frac{1}{4}] = \mqty[\frac{3}{4} & \frac{1}{4} \\ \frac{1}{4} & \frac{1}{4}]
+	\end{equation*}
+
+	\ref{part:3b}
+	Assuming Alice's initial state was $\ket{0}$, then she knows exactly which state she sent to Bob and hence she knows what state he measured: $\rho_{\text{Alice},\ket{0}} = \mqty[1 & 0 \\ 0 & 0]$. When she sends the $\ket{+}$, Bob will measure $\ket{0}$ and $\ket{1}$ with equal probabilities. Thus the off diagonal terms vanish and we are left with
+	\begin{equation*}
+		\rho_{\text{Alice},\ket{+}} = \sum_i p_i\ketbra{i}{i} = \mqty[\frac{1}{2} & 0 \\ 0 & \frac{1}{2}].
+	\end{equation*}
+
+	\ref{part:3c}
+	From Bob's perspective, he's getting $\ket{\psi_0}$ with probability $\cos^2(\pi/8)$ and $\ket{\psi_1}$ with probability $\sin^2(\pi/8)$. Thus from his perspective he has the following density matrix.
+	\begin{align*}
+		\rho_\text{Bob} & = \cos^2(\pi/8)\ketbra{\psi_0}{\psi_0} + \sin^2(\pi/8)\ketbra{\psi_1}{\psi_1} \\
+		& = \mqty[\cos^4(\tfrac{\pi}{8}) & \cos^3(\tfrac{\pi}{8})\sin(\tfrac{\pi}{8}) \\ \cos^3(\tfrac{\pi}{8})\sin(\tfrac{\pi}{8}) & \cos^2(\tfrac{\pi}{8})\sin^2(\tfrac{\pi}{8})] + \mqty[\sin^4(\tfrac{\pi}{8}) & -\cos(\tfrac{\pi}{8})\sin^3(\tfrac{\pi}{8}) \\ -\cos(\tfrac{\pi}{8})\sin^3(\tfrac{\pi}{8}) & \cos^2(\tfrac{\pi}{8})\sin^2(\tfrac{\pi}{8})] \\
+		& = \mqty[\frac{3}{4} & \frac{1}{4} \\ \frac{1}{4} & \frac{1}{4}] \tag{by judicious use of wolfram alpha}
+	\end{align*}
+	Interestingly, this is the same as in \ref{part:3a}!
+
+	\ref{part:3d}
+	Start with Alice sending $\ket{\psi_0}$. Similar to what we saw in part \ref{part:3b}, Alice knows that once Bob measure the state will be in state $\ket{0}$ with probability $\cos^2(\tfrac{\pi}{8})$ and in state $\ket{1}$ with probability $\sin^2(\tfrac{\pi}{8})$.
+	\begin{equation*}
+		\rho_{\text{Alice},\ket{\psi_0}} = \smqty[\frac{1}{4}\qty(2 + \sqrt{2}) & 0 \\ 0 & \frac{1}{4}\qty(2 - \sqrt{2})]
+	\end{equation*}
+	A similar computation can be done if Alice sends $\ket{\psi_1}$.
+	\begin{equation*}
+		\rho_{\text{Alice},\ket{\psi_1}} = \smqty[\frac{1}{4}\qty(2 - \sqrt{2}) & 0 \\ 0 & \frac{1}{4}\qty(2 + \sqrt{2})]
+	\end{equation*}
+\end{solution}
+
+\end{document}
