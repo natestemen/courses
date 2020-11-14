@@ -1,0 +1,174 @@
+\documentclass[boxes,pages]{homework}
+
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Advanced Quantum Theory}
+\courseid{AMATH 673}
+\hwnum{6}
+\duedate{Mon, Nov 16, 2020 11:59 AM}
+
+\problemname{Exercise}
+
+\usepackage{physics}
+\usepackage{cleveref}
+\usepackage{wasysym}
+
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\tpose}[1]{#1^\intercal}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\hilb}{\mathcal{H}}
+\newcommand{\inv}[1]{{{#1}^{-1}}}
+\newcommand{\herm}[1]{{{#1}^\dagger}}
+\newcommand{\e}{\mathrm{e}}
+
+\makeatletter
+\numberwithin{@problem}{section}
+\makeatother
+
+\begin{document}
+
+\setcounter{section}{8}
+
+\begin{problem}
+Assume that $\hat{f}(t)$ is any observable which does not explicitly depend on time (i.e., which is a polynomial or a well-behaved power series in the position and momentum operators with constant coefficients). Show that the time evolution of any such $\hat{f}(t)$ is given by:
+\begin{equation*}
+	\hat{f}(t) = \herm{\hat{U}}(t)\hat{f}(t_0)\hat{U}(t).
+\end{equation*}
+\end{problem}
+
+\begin{solution}
+	Let $P_n(\hat{x}, \hat{p})$ denote a single polynomial term of degree $n$ in the $\hat{x}$ and $\hat{p}$'s. For example $P_n(\hat{x}, \hat{p})$ could be $\hat{x}^n$, or $\hat{x}^{n/2}\hat{p}^{n/2}$ or $\hat{x}\hat{p}\hat{x}\cdots\hat{x}\hat{p}$ where $\hat{x}\hat{p}$ is repeated $n/2$ times. With this notation we can then write our function $\hat{f}$ as
+	\begin{equation*}
+		\hat{f}(t) = \sum_n \alpha_nP_n(\hat{x}(t), \hat{p}(t))
+	\end{equation*}
+	Now before showing the time evolution of $\hat{f}$ is given as above we will show the time evolution of the individual terms is given by
+	\begin{equation}\label{eq:timeev}
+		P_n(\hat{x}(t), \hat{p}(t)) = \herm{\hat{U}}(t)P_n(\hat{x}(t_0), \hat{p}(t_0))\hat{U}(t).
+	\end{equation}
+	We'll follow the tried and tested method of inserting identities (but really $\herm{\hat{U}}\hat{U}$) between every term. This is the part I don't know how to show in symbols. It makes complete sense to me, and all of the examples I provided above work out perfectly, but I don't know how to write a general term of $P_n$ out so that I can insert identities between the terms. Maybe something like $P_n = \prod_{p_i} \hat{v}^{p_i}$ where $\hat{v}\in\{\hat{x}, \hat{p}\}$ and $\sum_i p_i = n$. Then I think that would work because the $\hat{x}$ and the $\hat{p}$'s behave the same way when doing this. So I'll take that \cref{eq:timeev} works. Now let's conjugate $\hat{f}(t_0)$.
+	\begin{align*}
+		\herm{\hat{U}}(t)\hat{f}(t_0)\hat{U}(t) & = \herm{\hat{U}}(t)\qty[\sum_n \alpha_nP_n(\hat{x}(t_0), \hat{p}(t_0))]\hat{U}(t) \\
+		                                        & = \sum_n \alpha_n\herm{\hat{U}}(t)P_n(\hat{x}(t_0), \hat{p}(t_0))\hat{U}(t)       \\
+		                                        & = \sum_n \alpha_n P_n(\hat{x}(t), \hat{p}(t))                                     \\
+		                                        & = \hat{f}(t)
+	\end{align*}
+
+\end{solution}
+
+\begin{problem}
+Bonus question:
+\end{problem}
+
+\begin{solution}
+	Sorry, super busy this week so no extra time unfortunately \frownie{}.
+\end{solution}
+
+\begin{problem}
+\begin{parts}
+	\part{Use the time evolution operator to prove that the canonical commutation relations are conserved, i.e., that, for example, $\comm{\hat{x}(t_0)}{\hat{p}(t_0)} = \iu\hbar$ implies $\comm{\hat{x}(t)}{\hat{p}(t)} = \iu\hbar$ for all $t$.}\label{part:3a}
+	\part{Consider the possibility that (due to quantum gravity effects) at some time $t_0$ the $xp$ commutation relations take the form $\comm{\hat{x}(t_0)}{\hat{p}(t_0)} = \iu\hbar(1 + \beta\hat{p}(t_0)^2)$ (where $\beta$ is a small positive constant). Assume that the Hamiltonian is self-adjoint, i.e., that the time evolution operator is still unitary. Will these commutation relations be conserved under the time evolution?}\label{part:3b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:3a}
+	Let's start by conjugating the commutator at the initial time $t_0$.
+	\begin{align*}
+		\iu\hbar & = \herm{\hat{U}}(t)\comm{\hat{x}(t_0)}{\hat{p}(t_0)}\hat{U}(t)                                                                                                    \\
+		         & = \herm{\hat{U}}(t)\hat{x}(t_0)\hat{p}(t_0)\hat{U}(t) - \herm{\hat{U}}(t)\hat{p}(t_0)\hat{x}(t_0)\hat{U}(t)                                                       \\
+		         & = \herm{\hat{U}}(t)\hat{x}(t_0)\hat{U}(t)\herm{\hat{U}}(t)\hat{p}(t_0)\hat{U}(t) - \herm{\hat{U}}(t)\hat{p}(t_0)\hat{U}(t)\herm{\hat{U}}(t)\hat{x}(t_0)\hat{U}(t) \\
+		         & = \hat{x}(t)\hat{p}(t) - \hat{p}(t)\hat{x}(t)                                                                                                                     \\
+		         & = \comm{\hat{x}(t)}{\hat{p}(t)}
+	\end{align*}
+	Feeling thankful for copy and paste right now, my best buds.
+
+	\ref{part:3b}
+	In part \ref{part:3a} we demonstrated that when we conjugate the commutator of $\hat{x}(t_0)$ and $\hat{p}(t_0)$ it evolves to the commutator of $\hat{x}(t)$ and $\hat{p}(t)$. So to answer this part of the question we will show $\iu\hbar(1 + \beta\hat{p}(t_0)^2)\xmapsto{\herm{\hat{U}}{\scriptscriptstyle \bigstar}\hat{U}} \iu\hbar(1 + \beta\hat{p}(t)^2)$ where I've used $\bigstar$ to denote the thing being conjugated.
+	\begin{align*}
+		\herm{\hat{U}}(t)\iu\hbar(1 + \beta\hat{p}(t_0)^2)\hat{U}(t) & = \iu\hbar\qty[\herm{\hat{U}}(t)\hat{U}(t) + \beta \herm{\hat{U}}(t)\hat{p}(t_0)\hat{p}(t_0)\hat{U}(t)]           \\
+		                                                             & = \iu\hbar\qty[\mathbb{1} + \beta \herm{\hat{U}}(t)\hat{p}(t_0)\hat{U}(t)\herm{\hat{U}}(t)\hat{p}(t_0)\hat{U}(t)] \\
+		                                                             & = \iu\hbar\qty[\mathbb{1} + \beta \hat{p}(t)^2]
+	\end{align*}
+	Thus we conclude even a modified commutation relation like the above is conserved with unitary time evolution. Quantum gravity solved.
+\end{solution}
+
+\begin{problem}
+Consider a system with a Hamiltonian that has no explicit time dependence. Assume that we prepare the system in a state so that its energy at the initial time $t_0$ is known precisely.
+\begin{parts}
+	\part{Show that the energy of the system will stay sharp, i.e., without uncertainty, at that value.}\label{part:4a}
+	\part{Consider now the specific example of a harmonic oscillator system. Its positions and momenta evolve according to Eqs.7.26. Given the time-energy uncertainty relations, what more can you conclude for the time-evolution of $\overline{x}(t)$ and $\overline{p}(t)$ if the system is in a state with vanishing uncertainty in the energy?}\label{part:4b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:4a}
+	In the next question we show that when $\hat{H}$ has no explicit time dependence, then it commutes with the time evolution operator $\hat{U}(t)$. Using this fact we have
+	\begin{equation*}
+		\hat{H}(t) = \herm{\hat{U}}(t)\hat{H}(t_0)\hat{U}(t) = \hat{H}(t_0)\herm{\hat{U}}(t)\hat{U}(t) = \hat{H}(t_0).
+	\end{equation*}
+	Thus if $\qty(\Delta\hat{H}(t))^2 = \expval{\hat{H}^2(t)} - \expval{\hat{H}(t)}^2$ then inserting the above clearly shows the $\qty(\Delta\hat{H}(t_0))^2$ is the same.
+
+	\ref{part:4b}
+	Given $\Delta E = 0$, then $\Delta t$ must go infinity, and hence the expectation values $\overline{x}(t)$ and $\overline{p}(t)$ will follow the same patterns for all time, until something disturbs the system. Dang disturbances.
+\end{solution}
+
+\begin{problem}
+Eq.8.37 shows that, in general, $\hat{H} \neq \hat{H}_S$ because in general the Heisenberg Hamiltonian does not commute with the time evolution operator. And this is because time-dependent Heisenberg Hamiltonians generally don’t even commute with themselves at different times. Show that if the Heisenberg Hamiltonian $\hat{H}$ does not explicitly depend on time (i.e., if it is a polynomial in the $\hat{x}$ and $\hat{p}$ with time-independent coefficients, i.e., if we do not introduce an explicit time-dependence manually) then it coincides with the Schr\"{o}dinger Hamiltonian.
+\end{problem}
+
+\begin{solution}
+	When $\hat{H}$ has no time dependence then $\hat{U}$ is defined as
+	\begin{equation*}
+		\hat{U}(t)\coloneqq \sum_{n = 0}^\infty\frac{1}{n!}\qty(\frac{t - t_0}{\iu\hbar})^n\hat{H}^n.
+	\end{equation*}
+	We'll now show that this time evolution operator commutes with the Heisenberg Hamiltonian.
+	\begin{equation*}
+		\hat{U}(t)\hat{H} = \sum_{n = 0}^\infty\frac{1}{n!}\qty(\frac{t - t_0}{\iu\hbar})^n\hat{H}^{n + 1} = \hat{H}\sum_{n = 0}^\infty\frac{1}{n!}\qty(\frac{t - t_0}{\iu\hbar})^n\hat{H}^n = \hat{H}\hat{U}(t)
+	\end{equation*}
+	With this let's take a look at what the Schr\"odinger Hamiltonian looks like.
+	\begin{equation*}
+		\hat{H}_S \coloneqq \hat{U}(t)\hat{H}\herm{\hat{U}}(t) = \hat{H}\hat{U}(t)\herm{\hat{U}}(t) = \hat{H}
+	\end{equation*}
+	Thus we've shown when either the Heisenberg/Schr\"odinger Hamiltonian has no explicit time dependence, then they are equal.
+\end{solution}
+
+\begin{problem}
+Assuming that $\hat{f}$ is an observable that has no explicit time dependence (i.e., that depends on time only through the operators $\hat{x}(t)$ and $\hat{p}(t)$), show that the following equation holds true in the Schr\"{o}dinger picture and in the Heisenberg picture:
+\begin{equation*}
+	\iu\hbar\dv{t}\expval{\hat{f}}{\psi} = \expval{\comm*{\hat{f}}{\hat{H}}}{\psi}.
+\end{equation*}
+\end{problem}
+
+\begin{solution}
+	Let's first do the Heisenberg picture where the states $\ket{\psi}$ are frozen in time and hence have no time dependence.
+	\begin{align*}
+		\iu\hbar\dv{t}\expval{\hat{f}}{\psi} & = \iu\hbar\expval{\dot{\hat{f}}}{\psi}                                                                                                                \\
+		                                     & = \iu\hbar\dv{t}\expval{\pb*{\hat{f}}{\hat{H}} + \partial_t f}{\psi} \tag{Hamilton's equation}                                                        \\
+		                                     & = \dv{t}\expval{\comm*{\hat{f}}{\hat{H}}}{\psi} \tag{by $\pb*{\hat{f}}{\hat{H}} = \frac{1}{\iu\hbar}\comm*{\hat{f}}{\hat{H}}$ and $\partial_t f = 0$}
+	\end{align*}
+	Now the Schr\"{o}dinger picture. Here we will use $\iu\hbar\dv{t}\ket{\psi(t)} = \hat{U}(t)\hat{H}(t)\herm{\hat{U}}(t)\ket{\psi(t)}$ in the derivation.
+	\begin{align*}
+		\iu\hbar\dv{t}\expval{\hat{f}}{\psi} & = \iu\hbar\bra{\dot{\psi}(t)}\hat{f}\ket{\psi(t)} + \iu\hbar\bra{\psi(t)}\hat{f}\ket{\dot{\psi}(t)}                                                \\
+		                                     & = -\bra{\psi(t)}\hat{U}(t)\hat{H}(t)\herm{\hat{U}}(t)\hat{f}\ket{\psi(t)} + \bra{\psi(t)}\hat{f}\hat{U}(t)\hat{H}(t)\herm{\hat{U}}(t)\ket{\psi(t)} \\
+		                                     & = \bra{\psi(t)}\hat{f}\hat{H}_S(t) - \hat{H}_S(t)\hat{f}\ket{\psi(t)}                                                                              \\
+		                                     & = \expval{\comm*{\hat{f}}{\hat{H}_S}}{\psi}
+	\end{align*}
+	Thus we've shown the equation to hold true in both the Heisenberg and the Schr\"odinger picture. Cool stuff.
+\end{solution}
+
+\begin{problem}
+Show that $\hat{U}'(t)$ is unitary.
+\end{problem}
+
+\begin{solution}
+	\begin{equation*}
+		\herm{\qty[\hat{U}'(t)]}\hat{U}'(t) = \herm{\qty[\hat{U}^{(e)\dagger}(t)\hat{U}(t)]}\hat{U}^{(e)\dagger}(t)\hat{U}(t) = \herm{\hat{U}}(t)\hat{U}^{(e)}(t)\hat{U}^{(e)\dagger}(t)\hat{U}(t) = \mathbb{1}
+	\end{equation*}
+	Where we've used the fact that $\hat{U}^{(e)}(t)\hat{U}^{(e)\dagger}(t) = \mathbb{1}$ along with $\herm{\hat{U}}(t)\hat{U}(t) = \mathbb{1}$.
+\end{solution}
+
+\end{document}
