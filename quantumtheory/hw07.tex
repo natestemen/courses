@@ -1,0 +1,92 @@
+\documentclass[boxes,pages]{homework}
+
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Advanced Quantum Theory}
+\courseid{AMATH 673}
+\hwnum{7}
+\duedate{Mon, Nov 23, 2020 11:59 AM}
+
+\problemname{Exercise}
+
+\usepackage{physics}
+\usepackage{cleveref}
+\usepackage{wasysym}
+
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\tpose}[1]{#1^\intercal}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\hilb}{\mathcal{H}}
+\newcommand{\inv}[1]{{{#1}^{-1}}}
+\newcommand{\herm}[1]{{{#1}^\dagger}}
+\newcommand{\e}{\mathrm{e}}
+\DeclareMathOperator{\spec}{spec}
+
+\makeatletter
+\numberwithin{@problem}{section}
+\makeatother
+
+\begin{document}
+
+\setcounter{section}{8}
+\problemnumber{8}
+
+\begin{problem}
+Show that $\psi(x,t)$ of Eq.8.89 does obey the Schr\"odinger equation Eq.8.84 and the initial condition Eq.8.86.
+\end{problem}
+
+\setcounter{section}{9}
+\problemnumber{1}
+
+\begin{problem}
+Assume that $\spec(\hat{Q}) = \{0,1\}$ for a normal operator $\hat{Q}$. Does this mean that $\hat{Q}$ is a projector, and why?
+\end{problem}
+
+\begin{problem}
+Verify that this operator $\hat{Q}$ is a projector.
+\end{problem}
+
+\begin{problem}
+Let us check that the prescription Eq.9.15 describes the collapse correctly. To see this we need to check if it obeys the condition that it describes the outcome of an ideal measurement, i.e., of a measurement that, when immediately repeated, will yield the same result. Show that when the collapse described by Eq.9.15 is applied twice, it yields the same state as after the first application
+\end{problem}
+
+\begin{problem}
+\begin{parts}
+	\part{Consider a free electron in one dimension. Write down the 1-bit observable $\hat{Q}$ which yields the measurement outcome 1 if the electron is measured in the interval $[x_a, x_b]$ and 0 if it is found outside this interval.}\label{part:4a}
+	\part{Consider a one-dimensional harmonic oscillator. Write down the 1-bit observable $\hat{Q}$ which yields the measurement outcome 1 if the energy of the oscillator is up to $7\hbar\omega 2$ and is 0 if the energy is above $7\hbar\omega 2$.}\label{part:4b}
+\end{parts}
+\end{problem}
+
+\setcounter{section}{10}
+\problemnumber{1}
+
+\begin{problem}
+\begin{parts}
+	\part{Prove that $\tr(\hat{\rho}) = 1$}
+	\part{Prove that $\tr(\hat{\rho}^2) \leq 1$ and that $\tr(\hat{\rho}^2) = 1$ if and only if $\hat{\rho}$ is the density operator of a pure state.}
+\end{parts}
+\end{problem}
+
+\begin{problem}
+Use the Schr\"odinger equation and the definition of the density operator to prove the von Neumann equation Eq.10.20.
+\end{problem}
+
+\begin{problem}
+Prove Eq.10.22 using Eq.10.21.
+\end{problem}
+
+\begin{problem}
+Use Eq.10.24 to  show that the Shannon entropy definition Eq.10.23 obeys the additivity condition Eq.10.25. Hint: the ignorance about the combined system, $S[\{\tilde{\rho}_{n,m}\}]$, is calculated with the same formula, namely:
+\[
+	S[\{\tilde{\rho}_{n,m}\}] = -\sum_{n, m}\tilde{\rho}_{n, m}\ln(\tilde{\rho}_{n,m})
+\]
+Also, you may use that $1 = \sum_n \rho_n = \sum_m\rho'_m = \sum_{n, m}\tilde{\rho}_{n,m}$.
+\end{problem}
+\begin{solution}
+\end{solution}
+
+\end{document}
