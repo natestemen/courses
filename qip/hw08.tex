@@ -7,7 +7,7 @@
 \course{Quantum Information Processing}
 \courseid{QIC 710}
 \hwnum{8}
-\duedate{Tues, Nov 17, 2020 11:59 PM}
+\duedate{Tues, Nov 18, 2020 11:59 PM}
 
 \hwname{Assignment}
 
@@ -26,6 +26,23 @@ Kraus operators for the reset channel.
 \end{problem}
 
 \begin{solution}
+	Let $E_0 = \ketbra{0}{0}$ and $E_1 = \ketbra{0}{1}$. We'll first show these are valid Kraus operators, before showing they produce the desired quantum channel.
+	Let $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ be our systems input state and the result after the channel be $\mathcal{E}(\rho)$.
+	\begin{align*}
+		\mathcal{E}(\rho) & = \sum_k E_k\rho E_k^\dagger                                                                                                                                 \\
+		                  & = \ketbra{0}{0}\rho\ketbra{0}{0} + \ketbra{0}{1}\rho\ketbra{1}{0}                                                                                            \\
+		                  & = \ket{0}\underbrace{\braket{0}{\psi}\braket{\psi}{0}}_{\abs{\alpha}^2}\bra{0} + \ket{0}\underbrace{\braket{1}{\psi}\braket{\psi}{1}}_{\abs{\beta}^2}\bra{0} \\
+		                  & = \abs{\alpha}^2\ketbra{0}{0} + \abs{\beta}^2\ketbra{0}{0}                                                                                                   \\
+		                  & = \ketbra{0}{0}
+	\end{align*}
+	With this we conclude that $\ket{\psi_\text{out}} = \ket{0}$.
+
+	We'll now show these are valid Kraus operators.
+	\begin{align*}
+		\sum_k E_k^\dagger E_k & = \ket{0}\braket{0}{0}\bra{0} + \ket{1}\braket{0}{0}\bra{1} \\
+		                       & = \ketbra{0}{0} + \ketbra{1}{1} = \mathbb{1}
+	\end{align*}
+	Thus these operators are trace preserving and hence are valid Kraus operators.
 \end{solution}
 
 \begin{problem}
@@ -33,15 +50,64 @@ Distinguishing between $\ket{0}$ vs. $\ket{+}$ revisited.
 \end{problem}
 
 \begin{solution}
-
+	Here we will use the Holevo-Helstrom theorem to show there does does not exist a measurement procedure that performs better than succeeding with probability $\geq 0.85\ldots$.
+	To do this we will need to calculate the trace distance between these two states.
+	\begin{equation*}
+		A \coloneqq \rho_0 - \rho_+ = \mqty[1 & 0 \\ 0 & 0 ] - \frac{1}{2}\mqty[1 & 1 \\ 1 & 1] = \frac{1}{2}\mqty[\phantom{-}1 & -1 \\ -1 & -1]
+	\end{equation*}
+	In order to calculate $\tr\abs{A}$ we will use $\tr\abs{A} = \tr\sqrt{A^\dagger A}$.
+	\begin{equation*}
+		A^\dagger A = \frac{1}{4}\mqty[\phantom{-}1 & -1 \\ -1 & -1]\mqty[\phantom{-}1 & -1 \\ -1 & -1] = \frac{1}{2}\mqty[\imat{2}]
+	\end{equation*}
+	Thus taking the square root we have $\sqrt{A^\dagger A} = \frac{1}{\sqrt{2}}\mqty[\imat{2}]$.
+	Taking the trace we have $\tr\abs{A} = \frac{2}{\sqrt{2}}$, and thus the maximum success probability is given by
+	\begin{equation*}
+		\frac{1}{2} + \frac{1}{4}\norm{\rho_0 - \rho_+}_1 = \frac{1}{2} + \frac{1}{4}\cdot \frac{2}{\sqrt{2}} = \frac{1 + \sqrt{2}}{2\sqrt{2}}\approx 0.85.
+	\end{equation*}
+	With this we've shown 0.85 is the best probability we can achieve when distinguishing between $\ket{0}$ and $\ket{+}$, and hence there is no POVM measurement that does better.
 \end{solution}
 
 \begin{problem}
 A four-state distinguishing problem.
+\begin{parts}
+	\part{Give a measurement in the Kraus form for this problem with as high a success probability as you can.}\label{part:3a}
+	\part{Give a measurement in the Stinespring form for this problem with as high a success probability as you can.}\label{part:3b}
+\end{parts}
 \end{problem}
 
 \begin{solution}
+	\ref{part:3a}
+	Let's first define the following operators.
+	\begin{align*}
+		A_0 & = \frac{3}{4}\ketbra{\psi_0}{\psi_0} & A_1 & = \frac{3}{4}\ketbra{\psi_1}{\psi_1} \\
+		A_2 & = \frac{3}{4}\ketbra{\psi_2}{\psi_2} & A_3 & = \frac{3}{4}\ketbra{\psi_3}{\psi_3}
+	\end{align*}
+	Please save us the algebra of showing us satisfy $\sum_iA_i^\dagger A_i = \mathbb{1}$.
+	I promise I did it, I just can bother \TeX{}ing it right now.
+	Now assume we are given $\rho_k \coloneqq \ketbra{\psi_k}$ as the input.
+	With that we want to calculate the probability of measuring the correct state.
+	To do this let's first calculate $A_k\rho_k A_k^\dagger$.
+	\begin{equation*}
+		A_k\rho_k A_k^\dagger = \frac{9}{16}\ket{\psi_k}\braket{\psi_k}\braket{\psi_k}\bra{\psi_k} = \frac{9}{16}\ketbra{\psi_k}
+	\end{equation*}
+	Now let's take the trace of that.
+	\begin{equation*}
+		\tr(A_k\rho_k A_k^\dagger) = \frac{9}{16}\sum_{n = 0}^2\underbrace{\braket{n}{\psi_k}\braket{\psi_k}{n}}_{\frac{1}{3}} = \frac{9}{16}
+	\end{equation*}
+	Thus the best probability we can achieve is $\frac{9}{16}$.
 
+	\ref{part:3b}
+	To put this in Stinespring form we can construct the following unitary matrix $U$.
+	\begin{equation*}
+		\sbox0{$\begin{matrix}A_0 \\ A_1 \\ A_2 \\ A_3 \end{matrix}$}
+		U = \left[
+			\begin{array}{c|c}
+				\usebox{0} & \quad \raisebox{-7pt}{\scalebox{3}{$W$}}\quad
+			\end{array}
+			\right]
+	\end{equation*}
+	Where $W$ is chosen so as to make $U$ unitary.
+	We know we can do this because it was used in lecture\dots
 \end{solution}
 
 \end{document}
