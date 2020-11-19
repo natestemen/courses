@@ -24,6 +24,9 @@
 \newcommand{\inv}[1]{{{#1}^{-1}}}
 \newcommand{\herm}[1]{{{#1}^\dagger}}
 \newcommand{\e}{\mathrm{e}}
+\newcommand{\R}{\mathbb{R}}
+\usepackage{xparse}
+\NewDocumentCommand{\green}{ O{t} }{G(x, x', #1)}
 \DeclareMathOperator{\spec}{spec}
 
 \makeatletter
@@ -39,6 +42,24 @@
 Show that $\psi(x,t)$ of Eq.8.89 does obey the Schr\"odinger equation Eq.8.84 and the initial condition Eq.8.86.
 \end{problem}
 
+\begin{solution}
+	First, we show it obeys the Schr\"odinger equation.
+	\begin{align*}
+		\iu\hbar\dv{t}\psi(x, t) & = \iu\hbar\dv{t}\int_\R\green\psi_0(x')\dd{x'}                \\
+		                         & = \int_\R\iu\hbar\dv{t}\green \psi_0(x')\dd{x'}               \\
+		                         & = \int_\R \hat{H}_S(\hat{x}, \hat{p})\green \psi_0(x')\dd{x'} \\
+		                         & = \hat{H}_S(\hat{x}, \hat{p})\int_\R \green \psi_0(x')\dd{x'} \\
+		                         & = \hat{H}_S(\hat{x}, \hat{p})\psi(x, t)
+	\end{align*}
+	That works, sweet. Now let's check the initial conditions.
+	\begin{align*}
+		\psi(x, t_0) & = \int_\R\green[t_0]\psi_0(x')\dd{x'}    \\
+		             & = \int_\R\delta(x - x')\psi_0(x')\dd{x'} \\
+		             & = \psi_0(x)
+	\end{align*}
+	It indeed works!
+\end{solution}
+
 \setcounter{section}{9}
 \problemnumber{1}
 
@@ -50,9 +71,45 @@ Assume that $\spec(\hat{Q}) = \{0,1\}$ for a normal operator $\hat{Q}$. Does thi
 Verify that this operator $\hat{Q}$ is a projector.
 \end{problem}
 
+\begin{solution}
+	We'll first show $\herm{\hat{Q}} = \hat{Q}$.
+	\begin{equation*}
+		\herm{\hat{Q}} = \herm{\qty[\sum_{a = 1}^N\ketbra{f_{j_a}}]} = \sum_{a = 1}^N\herm{\qty(\ketbra{f_{j_a}})} = \sum_{a = 1}^N\ketbra{f_{j_a}} = \hat{Q}
+	\end{equation*}
+	Now we can show $\hat{Q}^2 = \hat{Q}$.
+	\begin{align*}
+		\hat{Q}^2 & = \qty[\sum_{a = 1}^N\ketbra{f_{j_a}}]\qty[\sum_{b = 1}^N\ketbra{f_{j_b}}] \\
+		          & = \sum_{a, b = 1}^N\ket{f_{j_a}}\braket{f_{j_a}}{f_{j_b}}\bra{f_{j_b}}     \\
+		          & = \sum_{a, b = 1}^N\ket{f_{j_a}}\delta_{ab}\bra{f_{j_b}}                   \\
+		          & = \sum_{a = 1}^N\ketbra{f_{j_a}} = \hat{Q}
+	\end{align*}
+\end{solution}
+
 \begin{problem}
 Let us check that the prescription Eq.9.15 describes the collapse correctly. To see this we need to check if it obeys the condition that it describes the outcome of an ideal measurement, i.e., of a measurement that, when immediately repeated, will yield the same result. Show that when the collapse described by Eq.9.15 is applied twice, it yields the same state as after the first application
 \end{problem}
+
+\begin{solution}
+	Let's first define the following 3 states.
+	\begin{itemize}
+		\item $\ket{\psi}$ be the state before measurement
+		\item $\ket{\psi_1}$ be the state just after the first measurement
+		\item $\ket{\psi_2}$ be the state just after the second measurement
+	\end{itemize}
+	With these we are trying to show that $\ket{\psi_2} = \ket{\psi_1}$.
+	\begin{align*}
+		\ket{\psi_2} & = \frac{1}{\norm{\hat{Q}\ket{\psi_1}}}\hat{Q}\ket{\psi_1}                                              \\
+		             & = \frac{1}{\norm{\hat{Q}\ket{\psi_1}}}\hat{Q}\qty(\frac{1}{\norm{\hat{Q}\ket{\psi}}}\hat{Q}\ket{\psi}) \\
+		             & = \frac{1}{\norm{\hat{Q}\ket{\psi}}}\hat{Q}^2\ket{\psi}                                                \\
+		             & = \frac{1}{\norm{\hat{Q}\ket{\psi}}}\hat{Q}\ket{\psi} \eqqcolon \ket{\psi_1}
+	\end{align*}
+	Where we've used the fact that $\norm{\hat{Q}\ket{\psi_1}} = 1$ which can be shown as follows.
+	\begin{align*}
+		\norm{\hat{Q}\ket{\psi_1}} & = \norm{\frac{1}{\norm{\hat{Q}\ket{\psi}}}\hat{Q}^2\ket{\psi}}  \\
+		                           & = \frac{\norm{\hat{Q}\ket{\psi}}}{\norm{\hat{Q}\ket{\psi}}} = 1
+	\end{align*}
+	Where we've use the fact that $\hat{Q}^2 = \hat{Q}$ and that you can pull (the absolute value of) a scalar out of a norm.
+\end{solution}
 
 \begin{problem}
 \begin{parts}
@@ -66,10 +123,43 @@ Let us check that the prescription Eq.9.15 describes the collapse correctly. To 
 
 \begin{problem}
 \begin{parts}
-	\part{Prove that $\tr(\hat{\rho}) = 1$}
-	\part{Prove that $\tr(\hat{\rho}^2) \leq 1$ and that $\tr(\hat{\rho}^2) = 1$ if and only if $\hat{\rho}$ is the density operator of a pure state.}
+	\part{Prove that $\tr(\hat{\rho}) = 1$}\label{part:1a}
+	\part{Prove that $\tr(\hat{\rho}^2) \leq 1$ and that $\tr(\hat{\rho}^2) = 1$ if and only if $\hat{\rho}$ is the density operator of a pure state.}\label{part:1b}
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	\begin{align*}
+		\tr(\hat{\rho}) & = \sum_n\expval{\hat{\rho}}{n}                \\
+		                & = \sum_n\expval{\qty[\sum_ip_i\ketbra{i}]}{n} \\
+		                & = \sum_{n, i}p_i\delta_{ni}                   \\
+		                & = \sum_i p_i = 1
+	\end{align*}
+	Where we've used the fact that $\braket{i}{n} = \delta_{in}$ and the sum of the probabilities equal 1.
+
+	\ref{part:1b}
+
+
+	First we show that if $\hat{\rho} = \ketbra{\psi}$, i.e. it is a pure, state, then $\tr(\hat{\rho}^2) = 1$. First note that $\hat{\rho}^2 = \ket{\psi}\braket{\psi}{\psi}\bra{\psi} = \ketbra{\psi} = \hat{\rho}$. Thus we immediately have $\tr(\hat{\rho}^2) = \tr(\hat{\rho}) = 1$.
+	Now we prove the other direction: suppose $\tr(\hat{\rho}^2) = 1$. Let's first calculate $\hat{\rho}^2$.
+	\begin{align*}
+		\hat{\rho}^2 & = \qty(\sum_{i = 1}^n p_i\ketbra{i}{i})^2 = \sum_{i = 1}^n p_i\ketbra{i}{i}\sum_{j = 1}^n p_j\ketbra{j}{j}   \\
+		             & = \sum_{i,j = 1}^n p_ip_j\ket{i}\braket{i}{j}\bra{j} \tag{using a basis where $\braket{i}{j} = \delta_{ij}$} \\
+		             & = \sum_{i = 1}^n p_i^2\ketbra{i}{i}
+	\end{align*}
+	Now taking the trace of $\hat{\rho}^2$ we get a condition on the $p_i$'s.
+	\begin{align*}
+		\tr \hat{\rho}^2 & = \sum_{k = 1}^n\bra{k}\rho^2\ket{k}                     \\
+		                 & = \sum_{k,i = 1}^n\bra{k}\qty(p_i^2\ketbra{i}{i})\ket{k} \\
+		                 & = \sum_{i = 1}^n p_i^2 = 1
+	\end{align*}
+	So we now know $\sum p_i = 1 = \sum p_i^2$. By basic properties of real numbers, we know $p_i^2 \leq p_i$ when $p_i\in[0, 1]$ and equality only holding when $p_i \in\{0, 1\}$. Using this fact we can write
+	\begin{equation*}
+		\sum_{i = 1}^n p_i^2 \leq \sum_{i = 1}^n p_i
+	\end{equation*}
+	where again equality only holds if $p_i\in\{0, 1\}$ for all $i$. The only way this can be true is if one of the $p_i$'s is 1 and all of the rest are 0. In that case our summation collapses to one term, and we are left with $\hat{\rho} = \ketbra{i}$ as desired.
+\end{solution}
 
 \begin{problem}
 Use the Schr\"odinger equation and the definition of the density operator to prove the von Neumann equation Eq.10.20.
