@@ -28,6 +28,7 @@
 \usepackage{xparse}
 \NewDocumentCommand{\green}{ O{t} }{G(x, x', #1)}
 \DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\im}{im}
 
 \makeatletter
 \numberwithin{@problem}{section}
@@ -66,6 +67,20 @@ Show that $\psi(x,t)$ of Eq.8.89 does obey the Schr\"odinger equation Eq.8.84 an
 \begin{problem}
 Assume that $\spec(\hat{Q}) = \{0,1\}$ for a normal operator $\hat{Q}$. Does this mean that $\hat{Q}$ is a projector, and why?
 \end{problem}
+
+\begin{solution}
+	Take $\hat{Q}:V\to V$ and $v$ be a vector in $V$. We can then write $V = \ker{\hat{Q}}\oplus \im{\hat{Q}}$ where $\im{\hat{Q}}$ denotes the image of $\hat{Q}$.
+	This means any vector $v\in V$ can be decomposed as $v = x + y$ with $x \in \ker{\hat{Q}}$ and $y\in\im{\hat{Q}}$.
+	Now we know $\spec(\hat{Q}) = \{0,1\}$ so eigenvectors of $\hat{Q}$ satisfy either of the two equations:
+	\begin{align*}
+		\hat{Q}v & = 0 & \hat{Q}v & = v.
+	\end{align*}
+	Thus taking a general $v\in V$ we have $\hat{Q}v = \hat{Q}x + \hat{Q}y = 0 + y$.
+	And applying $\hat{Q}$ twice we have $\hat{Q}^2v = \hat{Q}y = y$.
+	This shows that $\hat{Q}^2 = \hat{Q}$.
+	Now I know I need to show $\hat{Q} = \herm{\hat{Q}}$, and I suppose I should use the fact that $\hat{Q}$ is normal, but I can't figure out how \frownie.
+	To be honest, I don't even feel like my above answer is correct, but it's the best I got.
+\end{solution}
 
 \begin{problem}
 Verify that this operator $\hat{Q}$ is a projector.
@@ -114,9 +129,21 @@ Let us check that the prescription Eq.9.15 describes the collapse correctly. To 
 \begin{problem}
 \begin{parts}
 	\part{Consider a free electron in one dimension. Write down the 1-bit observable $\hat{Q}$ which yields the measurement outcome 1 if the electron is measured in the interval $[x_a, x_b]$ and 0 if it is found outside this interval.}\label{part:4a}
-	\part{Consider a one-dimensional harmonic oscillator. Write down the 1-bit observable $\hat{Q}$ which yields the measurement outcome 1 if the energy of the oscillator is up to $7\hbar\omega 2$ and is 0 if the energy is above $7\hbar\omega 2$.}\label{part:4b}
+	\part{Consider a one-dimensional harmonic oscillator. Write down the 1-bit observable $\hat{Q}$ which yields the measurement outcome 1 if the energy of the oscillator is up to $7\hbar\omega/2$ and is 0 if the energy is above $7\hbar\omega/2$.}\label{part:4b}
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	\ref{part:4a}
+	\begin{equation*}
+		\hat{Q} = \int_{x_a}^{x_b}\dd{x}\ketbra{x}
+	\end{equation*}
+
+	\ref{part:4b}
+	\begin{equation*}
+		\hat{Q} = \sum_{n = 0}^3\ketbra{E_n}
+	\end{equation*}
+\end{solution}
 
 \setcounter{section}{10}
 \problemnumber{1}
@@ -139,7 +166,8 @@ Let us check that the prescription Eq.9.15 describes the collapse correctly. To 
 	Where we've used the fact that $\braket{i}{n} = \delta_{in}$ and the sum of the probabilities equal 1.
 
 	\ref{part:1b}
-
+	In a moment we will show that $\tr \hat{\rho}^2 \leq 1$, but first let us show the other two properties that are asked of us.
+	We will use the proof that $\tr \hat{\rho}^2 = 1$ for pure states in our proof that $\tr \hat{\rho}^2 \leq 1$.
 
 	First we show that if $\hat{\rho} = \ketbra{\psi}$, i.e. it is a pure, state, then $\tr(\hat{\rho}^2) = 1$. First note that $\hat{\rho}^2 = \ket{\psi}\braket{\psi}{\psi}\bra{\psi} = \ketbra{\psi} = \hat{\rho}$. Thus we immediately have $\tr(\hat{\rho}^2) = \tr(\hat{\rho}) = 1$.
 	Now we prove the other direction: suppose $\tr(\hat{\rho}^2) = 1$. Let's first calculate $\hat{\rho}^2$.
@@ -159,15 +187,45 @@ Let us check that the prescription Eq.9.15 describes the collapse correctly. To 
 		\sum_{i = 1}^n p_i^2 \leq \sum_{i = 1}^n p_i
 	\end{equation*}
 	where again equality only holds if $p_i\in\{0, 1\}$ for all $i$. The only way this can be true is if one of the $p_i$'s is 1 and all of the rest are 0. In that case our summation collapses to one term, and we are left with $\hat{\rho} = \ketbra{i}$ as desired.
+
+	Returning to $\tr \hat{\rho}^2 \leq 1$, we know that $\tr \hat{\rho}^2  = \sum_i p_i^2$ and $p_i^2 \leq p_i$ for all $p_i\in\R_{\geq 0}$. Therefore $\sum_i p_i^2 \leq 1$ and hence $\tr \hat{\rho}^2 \leq 1$.
 \end{solution}
 
 \begin{problem}
 Use the Schr\"odinger equation and the definition of the density operator to prove the von Neumann equation Eq.10.20.
 \end{problem}
 
+\begin{solution}
+	\begin{align*}
+		\iu\hbar\dv{t}\hat{\rho}(t) & = \iu\hbar\dv{t}\sum_np_n\ketbra{\psi_n(t)}                                                          \\
+		                            & = \iu\hbar\sum_n p_n\ketbra{\psi_n'(t)}{\psi_n(t)} + p_n\ketbra{\psi_n(t)}{\psi_n'(t)}               \\
+		                            & = \sum_n p_n\hat{H}_S(t)\ketbra{\psi_n(t)}{\psi_n(t)} + p_n\ketbra{\psi_n(t)}{\psi_n(t)}\hat{H}_S(t) \\
+		                            & = \hat{H}_S(t)\sum_n p_n\ketbra{\psi_n(t)}{\psi_n(t)} + p_n\ketbra{\psi_n(t)}{\psi_n(t)}\hat{H}_S(t) \\
+		                            & = \comm{\hat{H}_S(t)}{\hat{\rho}(t)}
+	\end{align*}
+\end{solution}
+
 \begin{problem}
 Prove Eq.10.22 using Eq.10.21.
 \end{problem}
+
+\begin{solution}
+	First, let's take $\hat{\rho}$ to be in a basis that diagonalizes itself.
+	That is
+	\begin{equation*}
+		\hat{\rho} = \mqty[\dmat{p_0, p_1,\ddots}] \quad \text{and} \quad \log\hat{\rho} = \mqty[\dmat{\log p_0, \log p_1, \ddots}]
+	\end{equation*}
+	where all the off diagonal terms are 0.
+	In this case it's easy to see their product is also a diagonal matrix:
+	\begin{equation*}
+		\hat{\rho}\log\hat{\rho} = \mqty[\dmat{p_0\log p_0, p_1\log p_1, \ddots}]
+	\end{equation*}
+	Taking the trace we now have
+	\begin{equation*}
+		\tr(\hat{\rho}\log\hat{\rho}) = \sum_n p_n\log p_n
+	\end{equation*}
+	and adding a minus sign to both sides shows $S \coloneqq -\sum_n p_n\log p_n = -\tr(\hat{\rho}\log\hat{\rho})$.
+\end{solution}
 
 \begin{problem}
 Use Eq.10.24 to  show that the Shannon entropy definition Eq.10.23 obeys the additivity condition Eq.10.25. Hint: the ignorance about the combined system, $S[\{\tilde{\rho}_{n,m}\}]$, is calculated with the same formula, namely:
@@ -176,7 +234,18 @@ Use Eq.10.24 to  show that the Shannon entropy definition Eq.10.23 obeys the add
 \]
 Also, you may use that $1 = \sum_n \rho_n = \sum_m\rho'_m = \sum_{n, m}\tilde{\rho}_{n,m}$.
 \end{problem}
+
 \begin{solution}
+	We start by expanding out $S[\{\tilde{\rho}_{n,m}\}]$ which we will denote as $S[\tilde{\rho}]$.
+	\begin{align*}
+		S[\tilde{\rho}] & = -\sum_{n, m}\tilde{\rho}_{n, m}\log\tilde{\rho}_{n, m}                                                                 \\
+		                & = -\sum_{n, m}\rho_n\rho_m'\log(\rho_n\rho_m')                                                                           \\
+		                & = -\sum_{n, m}\rho_n\rho_m'\qty[\log\rho_n + \log\rho_m']                                                                \\
+		                & = - \sum_m\rho_m'\qty[\sum_n\rho_n\log\rho_n] - \sum_n\rho_n\qty[\sum_m\rho_m'\log\rho_m']                               \\
+		                & = - \qty[\sum_n\rho_n\log\rho_n]\underbrace{\sum_m\rho_m'}_1 - \qty[\sum_m\rho_m'\log\rho_m']\underbrace{\sum_n\rho_n}_1 \\
+		                & = - \sum_n\rho_n\log\rho_n - \sum_m\rho_m'\log\rho_m'                                                                    \\
+		                & = S[\rho] + S[\rho']
+	\end{align*}
 \end{solution}
 
 \end{document}
