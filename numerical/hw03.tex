@@ -1,0 +1,266 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Numerical Analysis}
+\courseid{AMATH 740}
+\hwnum{3}
+\duedate{Fri, Nov 27, 2020 5:00 PM}
+
+\hwname{Assignment}
+
+\newcommand{\eqorder}[1]{\overset{h^#1}{=}}
+\newcommand{\tpose}[1]{#1^\intercal}
+
+\begin{document}
+
+\begin{problem}
+Consider the CG method for $A\vb{x} = \vb{b}$ with $A$ SPD. Show that, in the update formula
+\[
+	\vb{x}_k = \vb{x}_{k-1} + \alpha_k\vb{p}_{k-1},
+\]
+CG chooses the step length that minimizes $\phi(\vb{x})$ along direction $\vb{p}_{k-1}$, as in steepest descent,
+\[
+	\dv{\alpha_k}\phi(\vb{x}_k(\alpha_k)) = 0.
+\]
+\begin{parts}
+	\part{Show that this requires step length \[\alpha_k = \frac{\tpose{\vb{r}_{k-1}}\vb{p}_{k-1}}{\tpose{\vb{p}_{k-1}}A\vb{p}_{k-1}}\]}\label{part:1a}
+	\part{Using properties we showed in class for the CG method, show that his $\alpha_k$ equals the $\alpha_k$ used in the CG algorithm: \[\alpha_k = \frac{\tpose{\vb{r}_{k-1}}\vb{r}_{k-1}}{\tpose{\vb{p}_{k-1}}A\vb{p}_{k-1}}\]}\label{part:1b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	Let's first recall the following derivative:
+	\begin{equation*}
+		\dv{\vb{x}}\phi(\vb{x}) = \dv{\vb{x}}\qty[\frac{1}{2}\tpose{\vb{x}}A\vb{x} - \tpose{\vb{b}}\vb{x} + c] = \tpose{\vb{x}}A - \tpose{\vb{b}}.
+	\end{equation*}
+	With that let's calculate the derivative of $\phi$ with respect to $\alpha_k$.
+	\begin{align*}
+		\dv{\alpha_k}\phi(\vb{x}_k(\alpha_k)) & = \phi'(\vb{x}_k(\alpha_k))\vb{p}_{k-1}                                                     \\
+		                                      & = \phi'(\vb{x}_{k-1} + \alpha_k\vb{p}_{k-1})\vb{p}_{k-1}                                    \\
+		                                      & = \qty[\tpose{\vb{x}_{k-1}}A + \alpha_k \tpose{\vb{p}_{k-1}}A - \tpose{\vb{b}}]\vb{p}_{k-1} \\
+		                                      & = \qty[-\tpose{\qty(\vb{b} - A\vb{x}_{k-1})} + \alpha_k \tpose{\vb{p}_{k-1}}A]\vb{p}_{k-1}  \\
+		                                      & = \qty[-\tpose{\vb{r}_{k-1}} + \alpha_k \tpose{\vb{p}_{k-1}}A]\vb{p}_{k-1}                  \\
+		                                      & = -\tpose{\vb{r}_{k-1}}\vb{p}_{k-1} + \alpha_k \tpose{\vb{p}_{k-1}}A\vb{p}_{k-1}
+	\end{align*}
+	Setting this equal to 0 we can move one term over and divide by the other to obtain
+	\begin{equation*}
+		\alpha_k = \frac{\tpose{\vb{r}_{k-1}}\vb{p}_{k-1}}{\tpose{\vb{p}_{k-1}}A\vb{p}_{k-1}}
+	\end{equation*}
+
+	\ref{part:1b}
+	First, remember we have $\vb{p}_k = \vb{r}_k + \beta_k\vb{p}_{k-1}$.
+	Also, recall $R_k$ and $P_k$ as defined on page 69 of the courses notes are equal. This means we can write $\vb{p}_k$ as a linear combination of of the $\vb{r}_i$'s with $i\in\{0, \ldots, k\}$.
+	\begin{align*}
+		\tpose{\vb{r}_{k-1}}\vb{p}_{k-1} & = \tpose{\vb{r}_{k-1}}\qty(\vb{r}_{k-1} + \beta_{k-1}\vb{p}_{k-2})                                \\
+		                                 & = \tpose{\vb{r}_{k-1}}\vb{r}_{k-1} + \beta_{k-1}\tpose{\vb{r}_{k-1}}\vb{p}_{k-2}                  \\
+		                                 & = \tpose{\vb{r}_{k-1}}\vb{r}_{k-1} + \beta_{k-1}\tpose{\vb{r}_{k-1}}\sum_{i = 0}^{k-2}a_i\vb{r}_i \\
+		                                 & = \tpose{\vb{r}_{k-1}}\vb{r}_{k-1}
+	\end{align*}
+	Where we've used the fact that $\tpose{\vb{r}_{i}}\vb{r}_{j} = 0$ when $i\neq j$.
+	Thus we can conclude the above forms of $\alpha_k$ are equivalent.
+\end{solution}
+
+\begin{problem}
+Write the following third-order ODE as a first-order ODE system:
+\[
+	y'''(x) + 3y''(x) - 4y'(x) + 7y(x) = x^2 + 7,
+\]
+and give the system in matrix form.
+\end{problem}
+
+\begin{solution}
+	Let's first define the following functions:
+	\begin{align*}
+		y_1(x) & = y(x) & y_2(x) & = y'(x) & y_3(x) & = y''(x).
+	\end{align*}
+	We then have the following relations between them.
+	\begin{align*}
+		y_1'(x) - y_2(x) & = 0 & y_2'(x) - y_3(x) & = 0.
+	\end{align*}
+	This allows us to construct the following matrix system
+	\begin{equation*}
+		\mqty[y_1 \\ y_2 \\ y_3]' = \mqty[0 & 1 & 0 \\ 0 & 0 & 1 \\ -7 & 4 & -3]\mqty[y_1 \\ y_2 \\ y_3] - \mqty[0 \\ 0 \\ x^2 + 7]
+	\end{equation*}
+	This is equivalent to the above third order ODE.
+\end{solution}
+
+\begin{problem}
+Consider the Ralston method for ODE $y' = f(x, y)$:
+\begin{align*}
+	k_1       & = f(x_n, y_n),                                      \\
+	k_2       & = f\qty(x_n + \frac{2}{3}h, y_n + \frac{2}{3}hk_1), \\
+	y_{n + 1} & = y_n + h\qty(\frac{1}{4}k_1 + \frac{3}{4}k_2).
+\end{align*}
+Show that the local truncation error at $x_{n+1}$ given by $l_{n+1} = \hat{y}(x_{n+1}) - y_{n+1}$, is $\order{h^3}$. (Note: We assume as usual that $f$ and it's derivatives are sufficiently smooth and bounded. The Ralston method is a 2-stage RK method.)
+\end{problem}
+
+\begin{solution}
+	To begin, let's expand $k_2$ to order $h$ (we don't need beyond this because it's multiplied by $h$ in the equation for $y_{n+1}$). Here we use the notation $a \eqorder{n} b$ to mean $a = b + \order{h^n}$.
+	\begin{align*}
+		k_2 & \coloneqq f\qty(x_n + \frac{2}{3}h, y_n + \frac{2}{3}hk_1)                         \\
+		    & \eqorder{2} f(x_n, y_n) + \frac{2h}{3}f_x(x_n, y_n) + \frac{2hk_1}{3}f_y(x_n, y_n) \\
+		    & \eqorder{2} k_1 + \frac{2h}{3}f_x(x_n, y_n) + \frac{2hk_1}{3}f_y(x_n, y_n)
+	\end{align*}
+	Now let's expand $\hat{y}(x_{n+1})$ to order $h^2$.
+	\begin{align*}
+		\hat{y}(x_{n+1}) & \eqorder{3} \hat{y}(x_n) + h\hat{y}'(x_n) + \frac{h^2}{2}\hat{y}''(x_n)                                          \\
+		                 & \eqorder{3} y_n + hf(x_n, y_n) + \frac{h^2}{2}\dv{x}f(x_n, \hat{y}(x_n))                                         \\
+		                 & \eqorder{3} y_n + hf(x_n, y_n) + \frac{h^2}{2}\qty[f_x(x_n, \hat{y}(x_n)) + f_y(x_n, \hat{y}(x_n))\hat{y}'(x_n)] \\
+		                 & \eqorder{3} y_n + hf(x_n, y_n) + \frac{h^2}{2}\qty[f_x(x_n, y_n) + f_y(x_n, y_n)f(x_n, y_n)]                     \\
+		                 & \eqorder{3} y_n + hk_1 + \frac{h^2}{2}\qty[f_x(x_n, y_n) + k_1f_y(x_n, y_n)]
+	\end{align*}
+	Now let's try and calculate the local truncation error.
+	\begin{align*}
+		\ell_{n+1} & \coloneqq \hat{y}(x_{n+1}) - y_{n+1}                                                                                                                             \\
+		           & \eqorder{3} y_n + hk_1 + \frac{h^2}{2}\qty[f_x(x_n, y_n) + k_1f_y(x_n, y_n)] - y_n - h\qty(\frac{1}{4}k_1 + \frac{3}{4}k_2)                                      \\
+		           & \eqorder{3} \frac{3}{4}hk_1 + \frac{h^2}{2}\qty[f_x(x_n, y_n) + k_1f_y(x_n, y_n)] - \frac{3}{4}hk_2                                                              \\
+		           & \eqorder{3} \frac{3}{4}hk_1 + \frac{h^2}{2}\qty[f_x(x_n, y_n) + k_1f_y(x_n, y_n)] - \frac{3}{4}hk_1 - \frac{h^2}{2}f_x(x_n, y_n) - \frac{h^2k_1}{2}f_y(x_n, y_n) \\
+		           & \eqorder{3} 0
+	\end{align*}
+	Thus we can conclude $\ell_{n+1}$ is $\order{h^3}$.
+\end{solution}
+
+\begin{problem}
+Consider numerical method
+\[
+	y_{n+1} = y_n + hf(x_n + (1 - \eta)h, \eta y_n + (1 - \eta)y_{n+1})\qquad \eta\in[0, 1]
+\]
+for $y' = f(x, y)$. Show that the local truncation error $l_{n+1} = \order{h^2}$ for any $\eta\in[0, 1]$. Is there a value of $\eta$ for which $l_{n+1} = \order{h^3}$?
+
+(Note: We assume as usual that $f$ and it's derivatives are sufficiently smooth and bounded.)
+\end{problem}
+
+\begin{solution}
+	The first thing we will do (which is the thing that took me the longest to figure out), is rewrite the second argument of $f$.
+	\begin{equation*}
+		\eta y_n + (1 - \eta)y_{n+1} = y_n + (1 - \eta)(y_{n+1} - y_n)
+	\end{equation*}
+	This allows us to get that pesky $\eta$ out of our way so we can Taylor expand properly.
+	We'll start by expanding $y_{n+1}$ up to order $h^2$.
+	\begin{align*}
+		y_{n+1} & = y_n + hf(x_n + (1 - \eta)h, y_n + (1 - \eta)(y_{n+1} - y_n))                                           \\
+		        & \eqorder{3} y_n + h\qty[f(x_n, y_n) + f_x(x_n, y_n)(1 - \eta)h + f_y(x_n, y_n)(1 - \eta)(y_{n+1} - y_n)]
+	\end{align*}
+	Here we use our formula for $y_{n+1}$ and subtract over $y_n$ to obtain an equation for the difference.
+	We know to first order $f(x_n + (1 - \eta)h, \eta y_n + (1 - \eta)y_{n+1}) = f(x_n, y_n)$ from our above expansion, so we can simply use that since we don't want higher order terms of $h$.
+	\begin{align*}
+		y_{n+1} & \eqorder{3} y_n + h\qty[f(x_n, y_n) + f_x(x_n, y_n)(1 - \eta)h + f_y(x_n, y_n)(1 - \eta)hf(x_n, y_n)]
+	\end{align*}
+	Now we expand the perfect answer.
+	\begin{align*}
+		\hat{y}(x_{n+1}) & \eqorder{3} \hat{y}(x_n) + \hat{y}'(x_n)h + \hat{y}''(x_n)\frac{h^2}{2}                  \\
+		                 & \eqorder{3} y_n + f(x_n, y_n)h + \frac{h^2}{2}\eval{\dv{x}f(x, y(x))}_{x = x_n}          \\
+		                 & \eqorder{3} y_n + f(x_n, y_n)h + \frac{h^2}{2}\qty(f_x(x_n, y_n) + f_y(x_n, y_n)y'(x_n))
+	\end{align*}
+	Now we can take their difference.
+	\begin{align*}
+		\ell_{n+1} & \coloneqq \hat{y}(x_{n+1}) - y_{n+1}                                             \\
+		           & \eqorder{3} \frac{h^2}{2}\qty(f_x + f_yf) - f_x(1 - \eta)h^2 - f_yf(1 - \eta)h^2 \\
+		           & \eqorder{3} \qty(\eta - \frac{h^2}{2})\qty(f_x + f_yf)
+	\end{align*}
+	From here we can see $\ell_{n+1}$ is always $\order{h^2}$ (because the $h^1$ terms cancelled out) and when $\eta = \frac{h^2}{2}$, then $\ell_{n+1}$ is $\order{h^3}$.
+\end{solution}
+
+\begin{problem}
+You are given the ODE
+\[
+	y'(x) = f(x, y)
+\]
+with explicit knowledge of $f(x, y)$ as a function of $x$ and $y$. Assume that, given the initial condition $y_0 = y(x_0)$, you need a starting value for $y_1$ at $x_1 = x_0 + h$ that is accurate with order $h^4$. Find an explicit method for calculating such an accurate starting value $y_1$, using only evaluations of $f(x, y)$ and it's partial derivatives at $x_0$. (Hint: as always, Taylor is your best friend.)
+\end{problem}
+
+\begin{solution}
+	Not much to say here, so let's just get into the calculation.
+	\begin{align*}
+		y_1 & = y(x_1) = y(x_0 + h)                                                                                                                \\
+		    & \eqorder{4} y(x_0) + hy'(x_0) + \frac{h^2}{2}y''(x_0) + \frac{h^3}{3!}y'''(x_0)                                                      \\
+		    & \eqorder{4} y_0 + hf(x_0, y_0) + \frac{h^2}{2}\eval{\dv{x}f(x, y(x))}_{x = x_0} + \frac{h^3}{3!}\eval{\dv[2]{x}f(x, y(x))}_{x = x_0}
+	\end{align*}
+	Now let's calculate each of the last two terms separately so we avoid a giant mess.
+	\begin{align*}
+		\frac{h^2}{2}\eval{\dv{x}f(x, y(x))}_{x = x_0}     & = \frac{h^2}{2}\qty[f_x(x_0, y_0) + f_y(x_0, y_0)y'(x_0)]                                                \\
+		                                                   & = \frac{h^2}{2}\qty[f_x(x_0, y_0) + f_y(x_0, y_0)f(x_0, y_0)]                                            \\
+		\frac{h^3}{3!}\eval{\dv[2]{x}f(x, y(x))}_{x = x_0} & = \frac{h^3}{3!}\left[f_{xx}(x_0, y_0) + f_{yx}(x_0, y_0)f(x_0, y_0) + f_y(x_0, y_0)f_x(x_0, y_0)\right. \\
+		                                                   & \quad + f_{xy}(x_0, y_0)y'(x_0) + f_{yy}(x_0, y_0)f(x_0, y_0)y'(x_0)                                     \\
+		                                                   & \quad \left. + f_y(x_0, y_0)f_y(x_0, y_0)y'(x_0)\right]                                                  \\
+		                                                   & = \frac{h^3}{3!}\qty[f_{xx} + f_{yx}f + f_yf_x + f_{xy}f + f_{yy}f^2 + f_y^2f]                           \\
+		                                                   & = \frac{h^3}{3!}\qty[f_{xx} + 2f_{yx}f + f_yf_x + f_{yy}f^2 + f_y^2f]
+	\end{align*}
+	Where I've taken away all the function parameters because they're all $(x_0, y_0)$.
+	So, putting this all together we have
+	\begin{align*}
+		y_1 & \eqorder{4} y_0 + hf + \frac{h^2}{2}\qty[f_x + f_yf] + \frac{h^3}{3!}\qty[f_{xx} + 2f_{yx}f + f_yf_x + f_{yy}f^2 + f_y^2f].
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Find the region $D$ of absolute stability for the backward Euler method
+\[
+	y_{n+1} = y_n + hf(x_{n+1}, y_{n+1})
+\]
+in the complex $h\lambda$ plane.
+
+(Note: this is an implicit one-step method, and can be derived similar to the forward Euler method.)
+\end{problem}
+
+\begin{solution}
+	As per the ``test equation'' we have
+	\begin{align*}
+		y_{n+1} & = y_n + hf(x_{n+1}, y_{n+1})       \\
+		        & = y_n + h\lambda y_{n+1}           \\
+		        & = \frac{y_n}{1 - h\lambda}         \\
+		        & = \frac{y_0}{\qty(1 - h\lambda)^n}
+	\end{align*}
+	Thus for stability we have
+	\begin{equation*}
+		1 < \abs{1 - h\lambda}.
+	\end{equation*}
+	Thus our region of stability is $D = \{z\in\mathbb{C}\mid \Re(z) < 0 \} \eqqcolon \mathbb{C}_-$.
+\end{solution}
+
+\begin{problem}
+Consider the Ralston method
+\begin{align*}
+	k_1     & = f(x_n, y_n),                                      \\
+	k_2     & = f\qty(x_n + \frac{2}{3}h, y_n + \frac{2}{3}hk_1), \\
+	y_{n+1} & = y_n + h\qty(\frac{1}{4}k_1 + \frac{3}{4}k_2).
+\end{align*}
+\begin{parts}
+	\part{Show that the region $D$ of absolute stability for this method in the complex $h\lambda$ plane is described by the condition\[\abs{1 + h\lambda + h^2\lambda^2/2} < 1.\]}\label{part:7a}
+	\part{Consider this inequality for the case of real $\lambda < 0$, and derive an upper stability bound for the step length $h$.}\label{part:7b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:7a}
+	In order to find the region of stability we take the model equation $y'(x) = \lambda y(x)$. This translates into $k_1 = f(x_n, y_n) = \lambda y_n$. In order to start this problem we start by simplifying the $k_2$ term.
+	\begin{align*}
+		k_2 & = f\qty(x_n + \frac{2}{3}h, y_n + \frac{2}{3}hf(x_n, y_n)) \\
+		    & = f\qty(x_n + \frac{2}{3}h, y_n + \frac{2}{3}h\lambda y_n) \\
+		    & = \lambda\qty(y_n + \frac{2}{3}h\lambda y_n)
+	\end{align*}
+	Now we can take a look at the expression for $y_{n+1}$.
+	\begin{align*}
+		y_{n+1} & = y_n + h\qty(\frac{\lambda y_n}{4} + \frac{3\lambda}{4}\qty[y_n + \frac{2}{3}h\lambda y_n]) \\
+		        & = y_n + h\lambda y_n + \frac{1}{2}h^2\lambda^2 y_n                                           \\
+		        & = \qty(1 + h\lambda + \frac{1}{2}h^2\lambda^2)y_n
+	\end{align*}
+	Thus for stability we require
+	\begin{equation*}
+		\abs{1 + h\lambda + \frac{1}{2}h^2\lambda^2} < 1.
+	\end{equation*}
+
+	\ref{part:7b}
+	Let $\lambda = -\gamma$ where $\gamma\in\mathbb{R}_{>0}$.
+	\begin{align*}
+		1 - h\gamma + \frac{1}{2}h^2\gamma^2 & < 1 \\
+		- h\gamma + \frac{1}{2}h^2\gamma^2   & < 0 \\
+		h < \frac{2}{\lambda}
+	\end{align*}
+\end{solution}
+
+\end{document}
