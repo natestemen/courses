@@ -1,0 +1,98 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{9}
+\duedate{Thurs, Nov 26, 2020 11:59 PM}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+\usepackage{wasysym}
+
+\begin{document}
+
+\noindent
+I worked with Chelsea Komlo and Wilson Wu on this assignment.
+
+\begin{problem}
+An error-correcting encoding of a qubit into three qutrits.
+\begin{parts}
+	\part{Consider the following linear operator $M$ acting on two-qutrit states. For all $a, b\in\{0, 1, 2\}$, $M\ket{a, b}\coloneqq \ket{2a + b\mod 3, a + b \mod 3}$. Show that this $M$ is unitary.}\label{part:1a}
+	\part{Show that, if $M$ is applied to the first two qutrits of the above encoded state, then it is transformed to the state \[\qty(\alpha_0\ket{0} + \frac{\alpha_1}{\sqrt{2}}\qty(\ket{1} + \ket{2}))\otimes \frac{1}{\sqrt{3}}\qty(\ket{00} + \ket{12} + \ket{21})\]}\label{part:1b}
+	\part{Assume the results in part (a) and (b) are true, and show how to recover the data qubit from just the first two qutrits of the encoded state.}\label{part:1c}
+	\part{Assume a solution to part (c) and show how to recover teh qubit from the state of \emph{any} two of the qutrits in a manner that oes not require us to know which two qutrits they are (or in what order they ar given). (Hint: symmetry!)}\label{part:1d}
+	\part{Now, supposed that you are in possession of only the first qutrit of the encoding. Prove that absolutely no information about the original qubit can be deduced from this.}\label{part:1e}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	In order to show that $M$ is unitary, we want to show that $MM^\dagger = \mathbb{1}$. We can do this by taking two arbitrary vectors $\ket{a, b}$ and $\ket{c, d}$, applying $M$ to them, and taking their inner product. \emph{If} we can show this equals the inner product of the two vectors themselves, then we've shown $M$ is unitary. First recall $\ip{a, b}{c, d} = \delta_{ac}\delta_{bd}$. Thus when we write
+	\begin{equation*}
+		\bra{a, b}M^\dagger M\ket{c, d} = \braket{2a + b\mod 3, a + b \mod 3}{2c + d\mod 3, c + d \mod 3}
+	\end{equation*}
+	we can see this will only be 1 when $2a + b = 2c + d$ (mod 3) \emph{and} $a + b = c + d$ (again, mod 3). Subtracting the second equation from the first we see then that $a = c$, which then implies $b = d$. In all other cases the expression will be 0, and hence equivalent to $\delta_{ac}\delta_{bd}$. Thus we've shown $\bra{a, b}M^\dagger M\ket{c, d} = \ip{a, b}{c, d}$, and hence $M$ is unitary.
+
+	\ref{part:1b}
+	Here we will apply $M\otimes\mathbb{1}$ onto the encoded state and then do some algebra.
+	\begin{align*}
+		M\otimes\mathbb{1} & \left[\frac{\alpha_0}{\sqrt{3}}\qty(\ket{000} + \ket{111} + \ket{222})\right.                                                            \\
+		                   & \qquad + \left.\frac{\alpha_1}{\sqrt{6}}\qty(\ket{012} + \ket{021} + \ket{102} + \ket{120} + \ket{201} + \ket{210})\right]               \\
+		                   & = \frac{\alpha_0}{\sqrt{3}}\qty(\ket{000} + \ket{021} + \ket{012})                                                                       \\
+		                   & \qquad + \frac{\alpha_1}{\sqrt{6}}\qty(\ket{112} + \ket{221} + \ket{212} + \ket{100} + \ket{121} + \ket{200})                            \\
+		                   & = \frac{\alpha_0}{\sqrt{3}}\ket{0}\otimes\qty[\ket{00} + \ket{21} + \ket{12}]                                                            \\
+		                   & \qquad + \frac{\alpha_1}{\sqrt{6}}\ket{1}\otimes\qty[\ket{12} + \ket{00} + \ket{21}]                                                     \\
+		                   & \qquad + \frac{\alpha_1}{\sqrt{6}}\ket{2}\otimes\qty[\ket{21} + \ket{12} + \ket{00}]                                                     \\
+		                   & = \qty(\alpha_0\ket{0} + \frac{\alpha_1}{\sqrt{2}}\qty(\ket{1} + \ket{2}))\otimes \frac{1}{\sqrt{3}}\qty(\ket{00} + \ket{12} + \ket{21})
+	\end{align*}
+
+	\ref{part:1c}
+	To begin, apply $M$ as defined above to the first two qutrits, and throw away the second qubit. Then apply a transformation that does the following basis change on the first qubit:
+	\begin{align*}
+		\ket{0}                                   & \longmapsto \ket{0} \\
+		\frac{1}{\sqrt{2}}\qty(\ket{1} + \ket{2}) & \longmapsto \ket{1} \\
+		\frac{1}{\sqrt{2}}\qty(\ket{1} - \ket{2}) & \longmapsto \ket{2}
+	\end{align*}
+	This can be seen to be a unitary operation by a previous homework exercise we showed changes of bases are indeed unitary operations. This unitary will take our first qubit to $\alpha_0\ket{0} + \alpha_1\ket{1}$ as desired.
+
+	\ref{part:1d}
+	Here we use the fact that the encoded state is invariant under permutations of the qutrits. That is when swapping any two qutrits, the encoded state remains the same. So, if the first qutrit goes missing, we can permute it to the last qutrits position and run through the procedure we outlined above.
+
+	\ref{part:1e}
+	What I would like to do here is ``simply'' trace out the second two qutrits for the above encoded state, and I would expect that to yield a qutrit that is a uniform superposition of $\ket{0}, \ket{1}$ and $\ket{2}$, or something similar, but I don't know how to do this. \frownie
+\end{solution}
+
+\begin{problem}
+A key result that's used in the construction of CSS codes.
+\end{problem}
+
+\begin{solution}
+	We'll first show part (a) for good measure. We'll make use of the fact that the $n$-fold tensor product of the Hadamard gate on an arbitrary state $\ket{a}$ where $a\in\{0, 1\}^n\eqqcolon\mathbb{B}^n$ is given by
+	\begin{equation*}
+		H^{\otimes n}\ket{a} = \frac{1}{\sqrt{2^n}}\sum_{x\in\mathbb{B}^n}(-1)^{a\cdot x}\ket{x}.
+	\end{equation*}
+	Let's now apply this to our equally weighted superposition over $C$.
+	\begin{align*}
+		H^{\otimes n}\qty(\frac{1}{\sqrt{\abs{C}}}\sum_{x\in C}\ket{x}) & = \frac{1}{\sqrt{\abs{C}}}\sum_{x\in C}\frac{1}{\sqrt{2^n}}\sum_{y\in\mathbb{B}^n}(-1)^{x\cdot y}\ket{y}                   \\
+		                                                                & = \frac{1}{\sqrt{2^n\abs{C}}}\sum_{\substack{x\in C                                                                        \\ y\in\mathbb{B}^n}}(-1)^{x\cdot y}\ket{y} \\
+		                                                                & = \frac{1}{\sqrt{2^n\abs{C}}}\qty[\abs{C}\sum_{y\in C^\perp}\ket{y} + \sum_{\substack{x\in C                               \\ y\notin C^\perp}}(-1)^{x\cdot y}\ket{y}] \\
+		                                                                & = \sqrt{\frac{\abs{C}}{2^n}}\sum_{y\in C^\perp}\ket{y} \tag{using $\sum_{x\in C}(-1)^{x\cdot y} = 0$ if $y\notin C^\perp$} \\
+		                                                                & = \frac{1}{\sqrt{\abs{C^\perp}}}\sum_{y\in C^\perp}\ket{y}
+	\end{align*}
+	Where in the last line we've used the fact that $\abs{C}\abs{C^\perp} = 2^n$.
+	Now to do part (b) we will replace most instances of $x$ with $x + w$. Let's go through it again (leaving out a few steps though).
+	\begin{align*}
+		H^{\otimes n}\qty(\frac{1}{\sqrt{\abs{C}}}\sum_{x\in C}\ket{x + w}) & = \frac{1}{\sqrt{2^n\abs{C}}}\sum_{\substack{x\in C                                                         \\ y\in\mathbb{B}^n}}(-1)^{x\cdot y}(-1)^{w\cdot y}\ket{y} \\
+		                                                                    & = \frac{1}{\sqrt{2^n\abs{C}}}\qty[\abs{C}\sum_{y\in C^\perp}(-1)^{w\cdot y}\ket{y} + \sum_{\substack{x\in C \\ y\notin C^\perp}}(-1)^{(x+w)\cdot y}\ket{y}] \\
+		                                                                    & = \sqrt{\frac{\abs{C}}{2^n}}\sum_{y\in C^\perp}(-1)^{w\cdot y}\ket{y}                                       \\
+		                                                                    & = \frac{1}{\sqrt{\abs{C^\perp}}}\sum_{y\in C^\perp}(-1)^{w\cdot y}\ket{y}
+	\end{align*}
+	Where again the second term drops out for the same reason as above. To make this a little clearer, split the exponent $(-1)^{(x+w)\cdot y} = (-1)^{x\cdot y}(-1)^{w\cdot y}$ and notice for each $x$, the second term is constant, and hence still goes to zero when $y\notin C$.
+\end{solution}
+
+\end{document}
