@@ -1,0 +1,251 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Advanced Quantum Theory}
+\courseid{AMATH 673}
+\hwnum{8}
+\duedate{Mon, Dec 7, 2020 11:59 AM}
+
+\problemname{Exercise}
+
+\usepackage{tikzsymbols}
+\usepackage{pgfplots}
+\usetikzlibrary{math}
+
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\hilb}{\mathcal{H}}
+\newcommand{\inv}[1]{{{#1}^{-1}}}
+\newcommand{\herm}[1]{{{#1}^\dagger}}
+\newcommand{\e}{\mathrm{e}}
+
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\im}{im}
+
+\makeatletter
+\numberwithin{@problem}{section}
+\makeatother
+
+\begin{document}
+
+\setcounter{section}{11}
+
+\begin{problem}
+Show that, conversely, as the temperature is driven to zero, $\beta\to\infty$, the density matrix tends towards the pure ground state of the Hamiltonian.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+Differentiate Eq.11.16 with respect to $\lambda$ and show that  this derivative is always $\leq 0$. Hint: Recall the definition of the variance (of the energy).
+\end{problem}
+
+\begin{solution}
+	First, we'll put $\hat{H}$ in it's eigenbasis so it's diagonal. That makes these computations much easier.
+	\begin{align*}
+		\dv{\lambda}\overline{E} & = \dv{\lambda}\qty(\frac{1}{\sum_n\e^{-\lambda E_n}}\sum_n E_n\e^{-\lambda E_n})
+	\end{align*}
+	This is going to get a touch messy so let's break this into two pieces and then apply the chain rule $f' = g'h + gh'$\footnote{Just in case you forgot \Winkey.} later. So we'll first calculate the derivative of the first and second terms separately.
+	\begin{align*}
+		\dv{\lambda}\qty(\frac{1}{\sum_n\e^{-\lambda E_n}}) & = \frac{\sum_n E_n\e^{-\lambda E_n}}{\qty(\sum_n\e^{-\lambda E_n})^2} & \dv{\lambda}\qty(\sum_n E_n\e^{-\lambda E_n}) & = -\sum_n E_n^2\e^{-\lambda E_n}
+	\end{align*}
+	Putting these back together we have:
+	\begin{align*}
+		\dv{\lambda}\overline{E} & =\qty(\frac{\sum_n E_n\e^{-\lambda E_n}}{\sum_n\e^{-\lambda E_n}})^2 - \frac{\sum_n E_n^2\e^{-\lambda E_n}}{\sum_n\e^{-\lambda E_n}} \\
+		                         & = \overline{E}^2 - \overline{E^2}                                                                                                    \\
+		                         & = -(\Delta E)^2
+	\end{align*}
+	Because we know $\Delta E \geq 0$, we can conclude $\dv{E}{\lambda} \leq 0$ as desired.
+\end{solution}
+
+\begin{problem}
+Consider a quantum harmonic oscillator of frequency $\omega$ in a thermal environment with temperature $T$.
+\begin{parts}
+	\part{Calculate its thermal state $\hat{\rho}$.}\label{part:3a}
+	\part{Explicitly calculate the energy expectation value $\overline{E}(\beta)$ as a function of the inverse temperature $\beta$.}\label{part:3b}
+\end{parts}
+Hint: Consider using the geometric series $\sum_{n=0}^\infty\e^{-\alpha n} = \sum_{n=0}^\infty(\e^\alpha)^n = 1 / (1 - \e^{-\alpha})$ which holds for all $\alpha > 0$. Also the derivative of this equation with respect to $\alpha$ is useful.
+\end{problem}
+
+\begin{solution}
+	\ref{part:3a}
+	In the eigenbasis of the Hamiltonian we have
+	\begin{equation*}
+		\hat{H} = \mqty[\dmat{E_0, E_1, E_2, \ddots}]
+	\end{equation*}
+	which makes it easy to see that our thermal state is given by the following
+	\begin{equation*}
+		\hat{\rho} = \frac{1}{\sum_n\e^{-\beta E_n}}\mqty[\dmat{\e^{-\beta E_0}, \e^{-\beta E_1}, \e^{-\beta E_2}, \ddots}]
+	\end{equation*}
+	where $E_n = \hbar\omega(n + \frac{1}{2})$.
+
+	\ref{part:3b}
+	We start with the equation
+	\begin{equation*}
+		\overline{E}(\beta) = \frac{1}{\tr(\e^{-\beta \hat{H}})}\tr(\hat{H}\e^{-\beta\hat{H}}).
+	\end{equation*}
+	Let's take this step by step and calculate the trace of the simpler $\e^{-\beta \hat{H}}$ first.
+	\begin{align*}
+		\tr(-\beta\hat{H}) & = \sum_n\bra{n}\e^{-\beta\hat{H}}\ket{n}                      \\
+		                   & = \sum_n\e^{-\beta\hbar\omega(n + \frac{1}{2})}               \\
+		                   & = \e^{-\beta\hbar\omega/2}\sum_n\e^{-\beta\hbar\omega n}      \\
+		                   & = \frac{\e^{-\beta\hbar\omega/2}}{1 - \e^{-\beta\hbar\omega}} \\
+		                   & = \frac{\e^{\beta\hbar\omega/2}}{\e^{\beta\hbar\omega} - 1}
+	\end{align*}
+	Now we'll need the trace of $\e^{-\beta\hat{H}}\hat{H}$ also.
+	\begin{align*}
+		\tr(\e^{-\beta\hat{H}}\hat{H}) & = \sum_n\bra{n}\e^{-\beta\hat{H}}\hat{H}\ket{n}                                                                                                                                     \\
+		                               & = \sum_n \e^{-\beta\hbar\omega(n+\frac{1}{2})}\qty[\hbar\omega\qty(n + \frac{1}{2})]                                                                                                \\
+		                               & = \frac{\hbar\omega}{2}\sum_n\e^{-\beta\hbar\omega(n+\frac{1}{2})} + \hbar\omega\sum_n n\e^{-\beta\hbar\omega(n+\frac{1}{2})}                                                       \\
+		                               & = \frac{\hbar\omega}{2}\frac{\e^{\beta\hbar\omega/2}}{\e^{\beta\hbar\omega} - 1} + \hbar\omega\e^{-\beta\hbar\omega/2}\frac{\e^{-\beta\hbar\omega}}{(1 - \e^{-\beta\hbar\omega})^2} \\
+		                               & = \frac{\hbar\omega}{2}\frac{\e^{\beta\hbar\omega/2}}{\e^{\beta\hbar\omega} - 1} + \hbar\omega\frac{\e^{\beta\hbar\omega/2}}{(\e^{\beta\hbar\omega} - 1)^2}                         \\
+		                               & = \hbar\omega\frac{\e^{\beta\hbar\omega/2}}{\e^{\beta\hbar\omega} - 1}\qty(\frac{1}{2} + \frac{1}{\e^{\beta\hbar\omega} - 1})
+	\end{align*}
+	Putting these together we have
+	\begin{equation*}
+		\overline{E}(\beta) = \frac{1}{\tr(\e^{-\beta \hat{H}})}\tr(\hat{H}\e^{-\beta\hat{H}}) = \frac{\hbar\omega}{2} + \frac{\hbar\omega}{\e^{\beta\hbar\omega} - 1}.
+	\end{equation*}
+\end{solution}
+
+\setcounter{section}{13}
+\problemnumber{1}
+
+\begin{problem}
+Assume that the density operator of system A is $\hat{\rho}^{(A)}$ and that $\hat{f}^{(A)}$ is an observable in system A. Then the prediction for $\overline{f}^{(A)}$ is given as always by $\overline{f} = \tr(\hat{\rho}^{(A)}\hat{f}^{(A)})$. Now assume that the density operator of a combined system AB happens to be of the form $\hat{\rho}^{(AB)} = \hat{\rho}^{(A)}\otimes\hat{\rho}^{(B)}$. Show that the operator $\hat{f}^{(A)}\otimes\mathbb{1}$ represents the observable $\hat{f}^{(A)}$ on the larger system AB, which means that the prediction $\overline{f}(A)$ can also be calculated within the large system AB, namely as the expectation value of the observable $\hat{f}^{(A)}\otimes\mathbb{1}$. I.e., the task is to show that $\overline{f}^{(A)} = \tr(\hat{\rho}^{(AB)}(\hat{f}^{(A)}\otimes\mathbb{1}))$.
+\end{problem}
+
+\begin{solution}
+	\begin{align*}
+		\overline{f}_A^{(A)}    & = \tr(\hat{\rho}^{(A)}\hat{f}^{(A)})                                             \\
+		\overline{f}_{AB}^{(A)} & = \tr(\hat{\rho}^{(AB)}\qty(\hat{f}^{A}\otimes\mathbb{1}))                       \\
+		                        & = \tr(\hat{\rho}^{(A)}\otimes\hat{\rho}^{(B)}\qty(\hat{f}^{A}\otimes\mathbb{1})) \\
+		                        & = \tr(\hat{\rho}^{(A)}\hat{f}^{A}\otimes\hat{\rho}^{(B)})                        \\
+		                        & = \tr(\hat{\rho}^{(A)}\hat{f}^{A})\tr(\hat{\rho}^{(B)})                          \\
+		                        & = \tr(\hat{\rho}^{(A)}\hat{f}^{A}) = \overline{f}_A^{(A)}
+	\end{align*}
+	Thus we conclude the observable measured with respect to the system A $\overline{f}_A^{(A)}$ is equal to the observable measured with respect to the combined system AB $\overline{f}_A^{(AB)}$.
+\end{solution}
+
+\begin{problem}
+Prove the proposition above. Hint: Notice that the trace on the left hand side is a trace in the large Hilbert space $\hilb^{(AB)}$ while the trace on the right hand side is a trace over only the Hilbert space $\hilb^{(A)}$.
+\end{problem}
+
+\begin{problem}
+Consider two systems, A and B, with Hilbert spaces $\hilb^{(A)}$ and $\hilb^{(B)}$ which each are only two-dimensional. Assume that $\{\ket{a_1}, \ket{a_2}\}$ and $\{\ket{b_1}, \ket{b_2}\}$ are orthonormal bases of the Hilbert spaces $\hilb^{(A)}$ and $\hilb^{(B)}$ respectively. Assume that the composite system AB is in a pure state $\ket{\Omega}\in\hilb^{(AB)}$ given by:
+\[
+	\ket{\Omega}\coloneqq \alpha\qty(\ket{a_1}\ket{b_2} + 3\ket{a_2}\ket{b_1})
+\]
+Here, $\alpha\in\mathbb{R}$ is a constant so that $\ket{\Omega}$ is normalized:$\braket{\Omega} = 1$.
+\begin{parts}
+	\part{Calculate $\alpha$}\label{part:13a}
+	\part{Is $\ket{\Omega}$ an entangled or unentangled state?}\label{part:13b}
+	\part{Calculte the density matrix $\hat{\rho}^{(A)}$ of subsystem A. Is it pure or mixed? Hint: you can use your reply to (b).}\label{part:13c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:13a}
+	All we have to do is ensure the state $\ket{\Omega}$ is normalized.
+	\begin{align*}
+		1 = \braket{\Omega} & = \alpha^2\qty(\bra{a_1}\bra{b_2} + 3\bra{a_2}\bra{b_1})\qty(\ket{a_1}\ket{b_2} + 3\ket{a_2}\ket{b_1}) \\
+		                    & = \alpha^2\qty(1 + 9)                                                                                  \\
+		\alpha              & = \pm\frac{1}{\sqrt{10}}
+	\end{align*}
+
+	\ref{part:13b}
+	The state $\ket{\Omega}$ is \emph{entangled} because it can't be as a simple product $\ket{\Omega} \neq \ket{\psi}\otimes \ket{\phi}$. This can be shown by assuming they can and arriving at a contradiction.
+	\begin{align*}
+		\ket{\Omega} & = \ket{\psi}\otimes \ket{\phi}                                                                                                                                                          \\
+		             & = \qty(c_1\ket{a_1} + c_2\ket{a_2})\otimes\qty(d_1\ket{b_1} + d_2\ket{d_2})                                                                                                             \\
+		             & = \underbrace{c_1d_1}_0\ket{a_1b_1} + \underbrace{c_1d_2}_{\frac{1}{\sqrt{10}}}\ket{a_1b_2} + \underbrace{c_2d_1}_{\frac{3}{\sqrt{10}}}\ket{a_2b_1} + \underbrace{c_1d_2}_0\ket{a_2b_2}
+	\end{align*}
+	The first equation $c_1d_1 = 0$ tells us $c_1$ or $d_1$ is 0, but then both $c_1d_2 = \frac{1}{\sqrt{10}}$ \emph{and} $c_2d_1 = \frac{3}{\sqrt{10}}$ are impossible to satisfy simultaneously. Thus it is impossible to write this state as a product and hence it is entangled.
+
+	\ref{part:13c}
+	\begin{align*}
+		\rho^{(A)} & = \tr_B\qty(\rho^{(AB)}) = \sum_{n = 1}^2\braket{b_n}{\Omega}\braket{\Omega}{b_n} \\
+		           & = \frac{1}{10}\qty[\ketbra{a_1} + 9\ketbra{a_2}]
+	\end{align*}
+	This is clearly of the form $\sum_np_n\ketbra{\psi_n}$ with $\sum_np_n = 1$ and hence is a mixed state. We can also conclude this by the fact that $\ket{\Omega}$ is entangled.
+\end{solution}
+
+\setcounter{section}{14}
+\problemnumber{1}
+
+\begin{problem}
+\begin{parts}
+	\part{Show that $\hat{U}(t)$ is unitary.}\label{part:14a}
+	\part{Calculate $\hat{\rho}^{(AB)}(t)$.}\label{part:14b}
+	\part{Use the result of (b) to calculate $\hat{\rho}^{(A)}(t)$.}\label{part:14c}
+	\part{Calculate, therefore, the purity measure $P[\hat{\rho}^{(A)}(t)]$ and sketch a plot of it as a function of time.}\label{part:14d}
+	\part{Now in our example here, if the initial state were instead $\ket{\Omega(t_0)} = \ket{a_1}\ket{b_2}$, what would then be the purity measure of $\hat{\rho}^{(A)}$ as a function of time? Hint: In this case, there is a quick way to get the answer.}\label{part:14e}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:14a}
+	This is really tedious. Why do you make us do this? We'll do this by showing $\hat{U}\hat{U}^\dagger = \mathbb{1}$.
+	\begin{align*}
+		\hat{U}\hat{U}^\dagger & = \ketbra{a_1b_2} + \ketbra{a_2b_1}                                                            \\
+		                       & \qquad + \sin^2(\omega t)\ketbra{a_2b_2} + \sin{\omega t}\cos{\omega t}\ketbra{a_2b_2}{a_1b_1} \\
+		                       & \qquad + \sin^2(\omega t)\ketbra{a_1b_1} - \sin{\omega t}\cos{\omega t}\ketbra{a_1b_1}{a_2b_2} \\
+		                       & \qquad + \cos^2(\omega t)\ketbra{a_2b_2} - \sin{\omega t}\cos{\omega t}\ketbra{a_2b_2}{a_1b_1} \\
+		                       & \qquad + \cos^2(\omega t)\ketbra{a_1b_1} + \sin{\omega t}\cos{\omega t}\ketbra{a_1b_1}{a_2b_2} \\
+		                       & = \ketbra{a_1b_2} + \ketbra{a_2b_1} + \ketbra{a_2b_2} + \ketbra{a_1b_1}                        \\
+		                       & = \sum_{i,j = 1}^2\ketbra{a_ib_j} = \mathbb{1}
+	\end{align*}
+
+	\ref{part:14b}
+	First we need to know $\ket{\Omega(t)} = U\ket{\Omega(t_0)} = \sin{\omega t}\ket{a_2b_2} + \cos{\omega t}\ket{a_1b_1}$.
+	\begin{align*}
+		\hat{\rho}^{(AB)}(t) & = \hat{U}\ket{\Omega(t_0)}\bra{\Omega(t_0)}\hat{U}^\dagger                                     \\
+		                     & = \sin^2(\omega t)\ketbra{a_2b_2} + \sin{\omega t}\cos{\omega t}\ketbra{a_2b_2}{a_1b_1}        \\
+		                     & \qquad + \sin{\omega t}\cos{\omega t}\ketbra{a_1b_1}{a_2b_2} + \cos^2(\omega t)\ketbra{a_1b_1}
+	\end{align*}
+
+	\ref{part:14c}
+	\begin{align*}
+		\hat{\rho}^{(A)}(t) & = \tr_B\!\qty(\hat{\rho}^{(AB)}(t))                           \\
+		                    & = \sum_{n = 1}^2\bra{b_n}\hat{\rho}^{(AB)}(t)\ket{b_n}        \\
+		                    & = \sin^2(\omega t)\ketbra{a_2} + \cos^2(\omega t)\ketbra{a_1}
+	\end{align*}
+
+	\ref{part:14d}
+	We can now calculate the square of the density matrix as $\hat{\rho}^2 = \sin^4(\omega t) + \cos^4(\omega t)$. Below is a plot of this function.
+	\begin{figure}[h!]
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+					width = 6in, height = 3in,
+					grid          = major,
+					grid style    = {dashed, draw=gray!30},
+					axis lines    = middle,
+					enlargelimits = {abs=0.2},
+					ytick         = {0.5, 1},
+					xtick         = {0, 0.7853, 1.5707},
+					xticklabels   = {0, $\frac{\pi}{4\omega}$, $\frac{\pi}{2\omega}$},
+					xlabel        = $t$,
+					ylabel        = {$sin^4(\omega t) + \cos^4(\omega t)$},
+				]
+				\addplot[domain=0:2.3,samples=100,blue] {cos(deg(x))^4 + sin(deg(x))^4};
+			\end{axis}
+		\end{tikzpicture}
+	\end{figure}
+
+	\ref{part:14e}
+	Given this new initial state, then the state never picks up any time dependence on evolution $\ket{\Omega(t)} = \ket{a_1b_2}$, and hence this state stays a pure state and hence the purity $P$ remains at 1.
+\end{solution}
+
+\begin{problem}
+Assume a system possesses a Hilbert space that is $N$-dimensional. Which state $\rho$ is its least pure, i.e., which is its maximally mixed state, and what is the value of the purity $P[\rho]$ of that state?
+\end{problem}
+
+\begin{solution}
+	The state $\rho$ that is the most mixed is that state that is a uniform distribution across all possible states: $\rho = \frac{1}{N}\mathbb{1}$. The purity of this state is $P[\rho] = \tr(\rho^2) = \frac{1}{N^2}\tr(\mathbb{1}) = \frac{1}{N}$.
+\end{solution}
+
+\end{document}
