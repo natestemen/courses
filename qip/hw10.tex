@@ -1,0 +1,84 @@
+\documentclass[boxes,pages]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate.stemen@uwaterloo.ca}
+\term{Fall 2020}
+\course{Quantum Information Processing}
+\courseid{QIC 710}
+\hwnum{10}
+\duedate{Mon, Dec 7, 2020 11:59 PM}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+\usepackage{wasysym}
+
+\begin{document}
+
+\noindent
+I worked with Chelsea Komlo and Wilson Wu on this assignment.
+
+\begin{problem}
+Prove that $R_1R_2$ is a rotation by angle $2\qty(\theta_1 - \theta_2)$.
+\end{problem}
+
+\begin{solution}
+	Here we use $\ket{\psi_\alpha}$ and $\ket{\psi_\beta}$ to denote the two states we will use to define $R_1$ and $R_2$ respectively.
+	This is only done because it's easier to typeset than $\ket{\psi_{\theta_1}}$.
+	The first thing we'll need to do calculate $\ketbra{\psi_\alpha}$.
+	\begin{align*}
+		\ketbra{\psi_\alpha}        & = \qty(\cos\alpha\ket{0} + \sin\alpha\ket{1})\qty(\cos\alpha\bra{0} + \sin\alpha\bra{1})                                  \\
+		                            & = \cos^2\alpha\ketbra{0} + \sin^2\alpha\ketbra{1} + \sin\alpha\cos\alpha\ketbra{1}{0} + \cos\alpha\sin\alpha\ketbra{0}{1} \\
+		\ketbra*{\psi_\alpha^\perp} & = \sin^2\ketbra{0} + \cos^2\alpha\ketbra{1} - \sin\alpha\cos\alpha\ketbra{0}{1} - \sin\alpha\cos\alpha\ketbra{1}{0}
+	\end{align*}
+	With these we can now calculate $R_1$.
+	\begin{align*}
+		R_1 & = \ketbra{\psi_\alpha} - \ketbra*{\psi_\alpha^\perp}                                                  \\
+		    & = \cos2\alpha\ketbra{0} - \cos2\alpha\ketbra{1} + \sin2\alpha\ketbra{1}{0} + \sin2\alpha\ketbra{0}{1}
+	\end{align*}
+	where I've used the fact that $\cos^2\alpha - \sin^2\alpha = \cos2\alpha$ and $2\sin\alpha\cos\alpha = \sin2\alpha$.
+	Now $R_2$ should have the exact same form, but with $\beta$ in place of $\alpha$.
+	We're now ready to calculate $R_1R_2$.
+	\begin{align*}
+		R_1R_2 & = \qty(\cos2\alpha\cos2\beta + \sin2\alpha\sin2\beta)\ketbra{0}           \\
+		       & \qquad + \qty(\cos2\alpha\sin2\beta - \sin2\alpha\cos2\beta)\ketbra{0}{1} \\
+		       & \qquad + \qty(\cos2\beta\sin2\alpha - \cos2\alpha\sin2\beta)\ketbra{1}{0} \\
+		       & \qquad + \qty(\cos2\alpha\cos2\beta + \sin2\alpha\sin2\beta)\ketbra{1}    \\
+		       & = \cos(2(a-b))\ketbra{0} - \sin(2(a-b))\ketbra{0}{1}                      \\
+		       & \qquad + \sin(2(a-b))\ketbra{1}{0} + \cos(2(a-b))\ketbra{1}
+	\end{align*}
+	Now using the fact that $\ket{0}$ and $\ket{1}$ represent the standard basis, we can expand $\ketbra{0}$ into matrices to see that $R_1R_2$ takes the following form.
+	\begin{equation*}
+		R_1R_2 = \mqty[\cos(2(a-b)) & -\sin(2(a-b)) \\ \sin(2(a-b)) & \phantom{-}\cos(2(a-b))]
+	\end{equation*}
+	This is the same form as an arbitrary rotation $R_\theta$ in two dimensions.
+\end{solution}
+
+\begin{problem}
+\begin{parts}
+	\part{Show that, for any classical algorithm, the number of $f$-queries required to solve this problem exactly is exponential in $n$.}\label{part:2a}
+	\part{Show that there is a quantum algorithm that makes one single $f$-query and is guaranteed to find an $x\in\{0, 1\}^n$ such that $f(x) = 1$. (Hint: consider what a single iteration fo Grover's algorithm does.)}\label{part:2b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:2a}
+	It's possible for a classical algorithm to query $\frac{3}{4}$ of the entire space $\{0, 1\}^n$ and not find a satisfying assignment.
+	It's only once it queries in $\frac{3}{4} + 1$ places can we guarantee that it finds a satisfying assignment.
+	Thus we conclude the worst case scenario requires $\sim \frac{3}{4}2^n$ queries.
+
+	\ref{part:2b}
+	Let's first take a look at our state $H\ket{0^n}$.
+	\begin{equation*}
+		H\ket{0^n} = \sqrt{\frac{s_0}{2^n}}\ket{A_0} + \sqrt{\frac{s_1}{2^n}}\ket{A_1} = \frac{\sqrt{3}}{4}\ket{A_0} + \frac{1}{2}\ket{A_1}
+	\end{equation*}
+	Here we've used the fact that $s_0 = \frac{3}{4}2^n$ and $s_1 = \frac{1}{4}2^n$.
+	Now note that the angle this vector makes on the $\ket{A_0}, \ket{A_1}$ plane is $\theta = \frac{\pi}{6}$.
+	Now when we perform a single iteration of Grover's algorithm we will be rotated to a vector with angle $3\theta$ with respect to the $\ket{A_0}$ axis.
+	Lucky for us $3\theta = \frac{\pi}{2}$.
+	Thus we've landed right on $\ket{A_1}$, and hence we've only made 1 query to $f$, and gotten our state vector in the right place.
+	We can now measure it to obtain one of the (possibly) many values for which $f(x) = 1$.
+\end{solution}
+
+\end{document}
