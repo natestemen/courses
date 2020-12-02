@@ -11,6 +11,7 @@
 
 \problemname{Exercise}
 
+\usepackage{cleveref}
 \usepackage{tikzsymbols}
 \usepackage{pgfplots}
 \usetikzlibrary{math}
@@ -52,7 +53,7 @@ Show that, conversely, as the temperature is driven to zero, $\beta\to\infty$, t
 		\lim_{\beta\to\infty}Z = \lim_{\beta\to\infty}\e^{-\beta E_0} + \e^{-\beta E_1} + \e^{-\beta E_2} + \cdots \approx \e^{-\beta E_0}
 	\end{equation*}
 	Where, I don't think this is very rigorous, but makes intuitive sense because every $E_i\geq E_0$, so they go to 0 faster.
-	This allows us to cancel the terms in front of the $\ketbra{E_0}$ term, and using the fact that $\lim_{\beta\to\infty}\e^{-\beta E} = 0$ we can drop the second term.
+	This allows us to cancel the terms in front of the $\ketbra{E_0}$ term, and using the fact that $\lim_{\beta\to\infty}\e^{-\beta E} = 0$ we can drop the second term of \cref{eq:density}.
 	This leaves us with
 	\begin{equation*}
 		\lim_{\beta\to\infty}\hat{\rho} = \ketbra{E_0}.
