@@ -37,7 +37,27 @@ Show that, conversely, as the temperature is driven to zero, $\beta\to\infty$, t
 \end{problem}
 
 \begin{solution}
-
+	First note that we can write the density matrix as
+	\begin{equation*}
+		\hat{\rho} = \sum_{i = 0}^\infty \frac{\e^{-\beta E_i}}{Z}\ketbra{E_i}.
+	\end{equation*}
+	where $Z$ is the usual partition function.
+	Now we can pull out the first term marked by the property that is has the lowest energy $E_0 \leq E_i$ for all $i$.
+	\begin{align}
+		\hat{\rho} & = \e^{-\beta E_0}\sum_{i=0}^\infty\frac{\e^{-\beta(E_i - E_0)}}{Z}\ketbra{E_i} \nonumber                                          \\
+		           & = \e^{-\beta E_0}\qty[\frac{1}{Z}\ketbra{E_0} + \sum_{i=1}^\infty\frac{\e^{-\beta(E_i - E_0)}}{Z}\ketbra{E_i}] \label{eq:density}
+	\end{align}
+	Now let's take a look at the partition function when $\beta\to\infty$.
+	\begin{equation*}
+		\lim_{\beta\to\infty}Z = \lim_{\beta\to\infty}\e^{-\beta E_0} + \e^{-\beta E_1} + \e^{-\beta E_2} + \cdots \approx \e^{-\beta E_0}
+	\end{equation*}
+	Where, I don't think this is very rigorous, but makes intuitive sense because every $E_i\geq E_0$, so they go to 0 faster.
+	This allows us to cancel the terms in front of the $\ketbra{E_0}$ term, and using the fact that $\lim_{\beta\to\infty}\e^{-\beta E} = 0$ we can drop the second term.
+	This leaves us with
+	\begin{equation*}
+		\lim_{\beta\to\infty}\hat{\rho} = \ketbra{E_0}.
+	\end{equation*}
+	I think somewhat equivalently, one could scale all the energies so that $\tilde{E}_0 = 0$, and $\tilde{E}_i = E_i - E_0$. This maybe makes it more clear that the first term isn't going anywhere, but everything else will. I just wasn't sure if that's always valid to scale the energies like that.
 \end{solution}
 
 \begin{problem}
@@ -133,6 +153,31 @@ Assume that the density operator of system A is $\hat{\rho}^{(A)}$ and that $\ha
 \begin{problem}
 Prove the proposition above. Hint: Notice that the trace on the left hand side is a trace in the large Hilbert space $\hilb^{(AB)}$ while the trace on the right hand side is a trace over only the Hilbert space $\hilb^{(A)}$.
 \end{problem}
+
+\begin{solution}
+	Let's start with the right hand side of the proposition.
+	We'll do this piece by piece since it's messy.
+	\begin{align*}
+		\hat{f}^{(A)}\otimes\mathbb{1}                          & = \qty(\sum_{i, j}f_{ij}\ketbra{a_i}{a_j})\otimes\qty(\sum_n\ketbra{b_n})                                                              \\
+		                                                        & = \sum_{i,j,n}f_{ij}\ketbra{a_i}{a_j}\otimes\ketbra{b_n}                                                                               \\
+		%  & = \sum_{i,j,n}f_{ij}\qty(\ket{a_i}\otimes\ket{b_n})\qty(\bra{a_j}\otimes\bra{b_n})                                                                 \\
+		\qty(\hat{f}^{(A)}\otimes\mathbb{1})\hat{S}^{(AB)}      & = \qty[\sum_{i,j,n}f_{ij}\ketbra{a_i}{a_j}\otimes\ketbra{b_n}]\sum_{r,s,t,u}S_{rstu}\ket{a_r}\otimes\ket{b_s}\bra{a_t}\otimes\bra{b_n} \\
+		                                                        & = \sum_{i,j,n,t,u}f_{ij}S_{jntu}\ketbra{a_i}{a_t}\otimes\ketbra{b_n}{b_u}                                                              \\
+		                                                        & = \sum_{i,j,n,t,u}f_{ij}S_{jntu}\qty(\ket{a_i}\otimes\ket{b_n})\qty(\bra{a_t}\otimes\bra{b_u})                                         \\
+		\tr(\qty(\hat{f}^{(A)}\otimes\mathbb{1})\hat{S}^{(AB)}) & = \sum_{k, s}\bra{a_k}\otimes\bra{b_s}\qty(\hat{f}^{(A)}\otimes\mathbb{1})\hat{S}^{(AB)}\ket{a_k}\otimes\ket{b_s}                      \\
+		                                                        & = \sum_{k,j,s}f_{kj}S_{jsks}
+	\end{align*}
+	Now the right hand side.
+	\begin{align*}
+		\hat{g}^{(A)}                   & = \sum_{i}\bra{b_i}\qty[\sum_{j,k,s,n}S_{jksn}\qty(\ket{a_j}\otimes\ket{b_k})\qty(\bra{a_s}\otimes\bra{b_n})]\ket{b_i} \\
+		                                & = \sum_{i,j,s}S_{jisi}\ketbra{a_j}{a_s}                                                                                \\
+		\hat{f}^{(A)}\hat{g}^{(A)}      & = \qty[\sum_{i, j}f_{ij}\ketbra{a_i}{a_j}]\qty[ \sum_{i,j,s}S_{jisi}\ketbra{a_j}{a_s}]                                 \\
+		                                & = \sum_{i,j,s,n}f_{ij}S_{jsns}\ketbra{a_i}{a_n}                                                                        \\
+		\tr(\hat{f}^{(A)}\hat{g}^{(A)}) & = \sum_k\bra{a_k}\qty[\sum_{i,j,s,n}f_{ij}S_{jsns}\ketbra{a_i}{a_n}]\ket{a_k}                                          \\
+		                                & = \sum_{k, j, s}f_{kj}S_{jsks}
+	\end{align*}
+	Wow I didn't even plan it so the indices match, but they do!
+\end{solution}
 
 \begin{problem}
 Consider two systems, A and B, with Hilbert spaces $\hilb^{(A)}$ and $\hilb^{(B)}$ which each are only two-dimensional. Assume that $\{\ket{a_1}, \ket{a_2}\}$ and $\{\ket{b_1}, \ket{b_2}\}$ are orthonormal bases of the Hilbert spaces $\hilb^{(A)}$ and $\hilb^{(B)}$ respectively. Assume that the composite system AB is in a pure state $\ket{\Omega}\in\hilb^{(AB)}$ given by:
@@ -246,6 +291,43 @@ Assume a system possesses a Hilbert space that is $N$-dimensional. Which state $
 
 \begin{solution}
 	The state $\rho$ that is the most mixed is that state that is a uniform distribution across all possible states: $\rho = \frac{1}{N}\mathbb{1}$. The purity of this state is $P[\rho] = \tr(\rho^2) = \frac{1}{N^2}\tr(\mathbb{1}) = \frac{1}{N}$.
+\end{solution}
+
+\setcounter{section}{15}
+\problemnumber{1}
+
+\begin{problem}
+In the example of two identical bosonic subsystems just above, assume now that $\hat{H}^{(A)}\ket{a_j} = E_j\ket{a_j}$ with $E_1 = 0$ and $E_2 = E > 0$.
+\begin{parts}
+	\part{Calculate the thermal density matrix of the system AA. In particular, what are the probabilities for the three basis states of Eq.16.7 as a function of the temperature?}\label{part:15a}
+	\part{Determine the temperature dependence of the preference of bosons to be in the same state: Does this preference here increase or decrease as the temperature either goes to zero or to infinity?}\label{part:15b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:15a}
+	Let's first calculate the action of $\hat{H}^{(AA)}$ on our basis states.
+	\begin{align*}
+		\hat{H}^{(AA)}\ket{a_1a_1}                                        & = 0                                                    \\
+		\hat{H}^{(AA)}\ket{a_2a_2}                                        & = 2E\ket{a_2a_2}                                       \\
+		\hat{H}^{(AA)}\frac{1}{\sqrt{2}}\qty(\ket{a_1a_2} + \ket{a_2a_1}) & = E\frac{1}{\sqrt{2}}\qty(\ket{a_1a_2} + \ket{a_2a_1}) \\
+	\end{align*}
+	So now we know our Hamiltonian takes the form
+	\begin{equation*}
+		\hat{H}^{(AA)} = \mqty[\dmat{0, 2E, E}]
+	\end{equation*}
+	and hence our density matrix looks like
+	\begin{equation*}
+		\hat{\rho} = \frac{1}{\e^{-2\beta E} + \e^{-\beta E}}\mqty[\dmat{0, \e^{-2\beta E}, \e^{-\beta E}}] = \mqty[\dmat{0, \frac{1}{\e^{\beta E} + 1}, \frac{\e^{\beta E}}{\e^{\beta E} + 1}}].
+	\end{equation*}
+	Hence the probabilities are exactly those terms on the diagonal.
+
+	\ref{part:15b}
+	Since the $\ket{a_2a_2}$ term is the only one representing bosons, we just divide that by the other non-zero term.
+	\begin{equation*}
+		\text{Bosonic Preference} = \frac{1}{\e^{\beta E} + 1}\frac{\e^{\beta E} + 1}{\e^{\beta E}} = \e^{-\frac{E}{kT}}
+	\end{equation*}
+	As $T\to 0$, this preference goes to 0 and hence the particles are more likely to be in the entangled state. As $T\to\infty$ they are more likely to be in the same state.
 \end{solution}
 
 \end{document}
