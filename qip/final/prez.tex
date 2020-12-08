@@ -6,7 +6,6 @@
     block=fill,
     progressbar=frametitle
 ]{metropolis}
-% \usetheme[right]{sidebar}
 \usepackage{appendixnumberbeamer}
 
 \usepackage{wasysym}
@@ -55,13 +54,6 @@
 
 \maketitle
 
-% \begin{frame}{Table of contents}
-%   \setbeamertemplate{section in toc}[sections numbered]
-%   \tableofcontents%[hideallsubsections]
-% \end{frame}
-
-\section{The Theorem}
-
 \begin{frame}{The Gottesman-Knill Theorem}
 	\begin{theorem}[\cite{gottesman-knill}]
 		A quantum circuit using only the following elements can be efficiently \textbf{simulated} on a classical computer:
@@ -73,8 +65,6 @@
 	\end{theorem}
 \end{frame}
 
-\subsection{Setup}
-
 \begin{frame}{What does a classical simulation of a quantum computer mean?}
 	Two different main kinds of simulation possible:\pause
 	\begin{exampleblock}{Strong Simulation}
@@ -82,21 +72,24 @@
 	\end{exampleblock}\pause
 	\begin{exampleblock}{Weak Simulation}
 		Given an input $x$, compute a sample from $p(x)$.
-	\end{exampleblock}
+	\end{exampleblock}\pause
+	Gottesman-Knill theorem deals with weak simulation.
+
+	Strong simulation of quantum computers shown to be $\#\bm{\mathsf{P}}$-hard \cite{nest}.
 \end{frame}
 
 \begin{frame}[t]{How can we (na\"ively) simulate a quantum computer?}
-	Suppose we have $N$ qubits and we want to run them through $D$ gates.
+	Suppose we have $n$ qubits and we want to run them through $D$ gates.
 	\begin{center}
 		\begin{quantikz}
-			\lstick[wires=3]{$\mathbb{C}^{2^N}\ni \ket{\psi}$} & \gate[wires=3]{A_1} & \gate[wires=3]{A_2} & \ \ldots\ \qw &  \gate[wires=3]{A_D} & \qw \rstick[wires=3]{$A_D\cdots A_2A_1\ket{\psi}$} \\
+			\lstick[wires=3]{$\mathbb{C}^{2^n}\ni \ket{\psi}$} & \gate[wires=3]{A_1} & \gate[wires=3]{A_2} & \ \ldots\ \qw &  \gate[wires=3]{A_D} & \qw \rstick[wires=3]{$A_D\cdots A_2A_1\ket{\psi}$} \\
 			& \qwbundle[alternate]{}  &  \qwbundle[alternate]{}     & \ \ldots\ \qwbundle[alternate]{} & \qwbundle[alternate]{} & \qwbundle[alternate]{} \\
 			&                     &                          & \ \ldots\ \qw & & \qw
 		\end{quantikz}
 	\end{center}
 
 	\begin{onlyenv}<1>
-		End state has $D-1$ matrix multiplications, each of which cost $O\qty(2^{3N})$\footnote{Theoretically possible to get $O\qty(2^{2.373 N})$.}, so total cost is $O\qty(D2^{3N})$.
+		Final state contains $D-1$ matrix multiplications, each costing $O\qty(2^{3n})$\footnote{Theoretically possible to get $O\qty(2^{2.373 n})$.}, so total cost is $O\qty(D2^{3n})$.
 
 		Simulating Grover's algorithm on 40 qubits took nearly a full day! \cite{slowsim}
 	\end{onlyenv}
@@ -113,7 +106,7 @@
 \section{Stabilizer Formalism}
 
 \begin{frame}{Stabilizer Formalism}
-	\begin{itemize}
+	\begin{itemize}[<+->]
 		\item Let $\ket{\psi} = \frac{1}{\sqrt{2}}\qty(\ket{00} + \ket{11})$
 		\item $X_1X_2\ket{\psi} = \ket{\psi}$ and $Z_1Z_2\ket{\psi} = \ket{\psi}$
 		\item $\ket{\psi}$ is the \emph{unique} state stabilized by both of these operators.
@@ -153,14 +146,18 @@
 		\begin{equation*}
 			P_n\coloneqq\qty{\pm\mathbb{1}, \pm\iu\mathbb{1}, \pm A_i, \pm\iu A_i: A_i\in\{\mathbf{1}, X_i, Y_i, Z_i\}}\equiv \langle X_i, Z_i\rangle
 		\end{equation*}
-		$P_n$ forms a group under matrix multiplication. Every pair of elements either commute or anti-commute. $\abs{P_n} = 4\cdot 4^n$, and $P_n$ forms a basis for $\mathbb{C}^{2^n\times2^n}$.
+		\begin{itemize}
+			\item $P_n$ forms a group under matrix multiplication.
+			\item Every pair of elements either commute or anti-commute.
+			\item $\abs{P_n} = 4\cdot 4^n$
+		\end{itemize}
 	\end{onlyenv}
 \end{frame}
 
 \begin{frame}{Stabilizer States}
-	Let $S$ be a subgroup of $P_n$. Define the \emph{vector space} $V_S$ as all the states stabilized by everything in $S$.
+	Let $S$ be a subgroup of $P_n$. Define the \emph{vector space} $V_S$ as the states stabilized by everything in $S$.
 	\begin{equation*}
-		V_S\coloneqq \qty{\ket{\psi}\in\mathbb{C}^{2^N}: g\ket{\psi} = \ket{\psi}, \forall g\in S}
+		V_S\coloneqq \qty{\ket{\psi}\in\mathbb{C}^{2^n}: g\ket{\psi} = \ket{\psi}, \forall g\in S}
 	\end{equation*}
 	\begin{exampleblock}{Example}
 		Take $P_3$ and subgroup $S = \qty{\mathbb{1}, Z_1Z_2, Z_2Z_3, Z_1Z_3}$. Note that $\ket{000}, \ket{001}, \ket{110}, \ket{111}$ are stabilized by $Z_1Z_2$, and $\ket{000}, \ket{100}, \ket{011}, \ket{111}$ are stabilized by $Z_2Z_3$. These, together with the fact that $Z_1Z_3 = (Z_1Z_2)(Z_2Z_3)$ tell us that $V_S = \qty{\ket{000}, \ket{111}}$. In this case we can write $S = \langle Z_1Z_2, Z_2Z_3\rangle$.
@@ -169,61 +166,47 @@
 \end{frame}
 
 \begin{frame}[t]{What about other gates?}
-	Let $U$ by an arbitary unitary gate from $\unitary{2^n}$, $\ket{\psi}\in V_S$ and $g\in V_S$.
+	Let $U$ by an arbitary unitary gate from $\unitary{2^n}$, $\ket{\psi}\in V_S$ and $g\in S$.\pause
 	\begin{equation*}
-		U\ket{\psi} = Ug\ket{\psi} = UgU^\dagger U\ket{\psi}
-	\end{equation*}
+		U\ket{\psi} = Ug\ket{\psi} = UgU^\dagger U\ket{\psi} = g'U\ket{\psi}
+	\end{equation*}\pause
 	So $U\ket{\psi}$ is stabilized by $UgU^\dagger$, and in general $UV_S$ is stabilized by $USU^\dagger = \qty{UgU^\dagger : g\in S}$.
 
 	\begin{corollary}
 		If $S$ is generated by $g_1,\ldots, g_n$, then $USU^\dagger$ is generated by $Ug_1U^\dagger,\ldots, Ug_nU^\dagger$.
-	\end{corollary}
+	\end{corollary}\pause
 
-	If $G$ is a group, $\abs{G}$ is the number of elements in $G$, then the number of generators of $G$ is bounded by $\log\abs{G}$.
+	If $G$ is an Abelian group with $\abs{G}$ the number of elements in $G$, then the number of generators of $G$ is bounded by $\log\abs{G}$.\pause
 
-	\begin{onlyenv}<2->
-		\begin{warning}
-			\begin{center}
-				What if $UgU^\dagger$ doesn't land back in $P_n$?
-			\end{center}
-		\end{warning}
-	\end{onlyenv}
-\end{frame}
-
-\begin{frame}[t]{Clifford Group}
 	\begin{warning}
 		\begin{center}
 			What if $UgU^\dagger$ doesn't land back in $P_n$?
 		\end{center}
 	\end{warning}
-	% If it doesn't: \frownie
-
-	% If it does: \smiley
-	\begin{theorem}
-		Suppose $U$ in any unitary on $n$ qubits with the property that if $g\in P_n$ then $UgU^\dagger\in P_n$, then $U$ can be composed from $O(n^2)$ Hadamard, CNOT, and phase gates.
-	\end{theorem}
-	\begin{onlyenv}<2>
-		\begin{block}{Definition}
-			The \emph{Clifford Group} is defined to be the set of operators that leave Pauli operators invariant under conjugation.
-			\begin{equation*}
-				C_n \coloneqq \qty{V\in \unitary{2^n} : VP_nV^\dagger = P_n}
-			\end{equation*}
-		\end{block}
-	\end{onlyenv}
 \end{frame}
 
-% \begin{frame}[t]{Clifford Group}
-%     \begin{onlyenv}<1->
+\begin{frame}[t]{Clifford Group}
+	\only<1-2>{
+		\begin{warning}
+			\begin{center}
+				What if $UgU^\dagger$ doesn't land back in $P_n$?
+			\end{center}
+		\end{warning}}
 
-%     \end{onlyenv}
+	\begin{theorem}
+		Suppose $U$ in any unitary on $n$ qubits with the property that for $g\in P_n$ we have $UgU^\dagger\in P_n$. Then $U$ can be composed from $O(n^2)$ Hadamard, CNOT, and phase gates.
+	\end{theorem}\pause
 
-%     \begin{onlyenv}<2->
-%         What's in $C_n$?
-%         \onslide<3>{\begin{align*}
-%             H & = \frac{1}{\sqrt{2}}\mqty[1 & \phantom{-}1 \\ 1 & -1] & P & = \mqty[1 & 0 \\ 0 & \iu] & \textbf{CNOT}
-%         \end{align*}}
-%     \end{onlyenv}
-% \end{frame}
+	\begin{block}{Definition}
+		The \emph{Clifford Group} is defined to be the set of operators that leave Pauli operators invariant under conjugation.
+		\begin{equation*}
+			C_n \coloneqq \qty{V\in \unitary{2^n} : VP_nV^\dagger = P_n}
+		\end{equation*}
+	\end{block}
+	\onslide<3>{\begin{align*}
+			H & = \frac{1}{\sqrt{2}}\mqty(1 & \phantom{-}1 \\ 1 & -1) & P & = \mqty(1 & \phantom{+}0 \\ 0 & \phantom{+}\iu) & \textbf{CNOT}
+		\end{align*}}
+\end{frame}
 
 \begin{frame}{Recap}
 	\begin{enumerate}[<+->]
@@ -231,8 +214,7 @@
 		\item What can we simulate more easily?
 		\item Stabilizer formalism gave us a way to track operators instead of state vectors (duality between subgroup $S$ of Paulis and vector space of stabilised states $V_S$)
 		\item Keeping track of the generators of a stabilizer $S$ provide a succinct way to understand how $S$ is changing ($\log\abs{S}$ generators)
-		\item Found that elements of the Clifford group is as simple as updating the generators
-		\item
+		\item Found that elements of the Clifford group can efficiently build elements that conjugate the Pauli group back to the Pauli group
 	\end{enumerate}
 \end{frame}
 
@@ -322,56 +304,56 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}[t]{What does this mean?}
+	What makes quantum computers powerful?\pause
+	\begin{warning}
+		\begin{center}
+			Not entanglement!
+		\end{center}
+	\end{warning}\pause
+	\only<3>{Circuits built with the Clifford group don't actually provide us with any more power than a classical computer, despite CNOTs, Hadamards, and phase gates being used to construct purely quantum phenomenon.}
+	\onslide<4->{\begin{columns}
+			\begin{column}{0.2\textwidth}
+				\only<4>{Quantum teleportation}
+				\only<5>{Superdense coding}
+			\end{column}
+			\begin{column}{0.8\textwidth}
+				\begin{center}
+					\only<4>{\begin{quantikz}[row sep=0.8cm]
+							\lstick{$\ket{\psi}$} & \qw & \qw & \ctrl{1}\gategroup[2,steps=5,style={dashed,rounded corners,fill=blue!20, inner xsep=2pt},background, label style={label position=above,yshift=-1.7cm, xshift=0.4cm}]{Alice}   & \gate{H} & \meter{$M_1$}  & \cw & \cwbend{2}    \\
+							\lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \targ{}  & \qw & \meter{$M_2$} & \cwbend{1}           \\
+							\lstick{$\ket{0}$} & \qw      & \targ{} & \qw \gategroup[1,steps=5,style={dashed,rounded corners,fill=green!20, inner xsep=2pt},background, label style={label position=below,xshift=-0.3cm}]{Bob}     & \qw & \qw & \gate{X^{M_2}} & \gate{Z^{M_1}} & \qw \rstick{$\ket{\psi}$}
+						\end{quantikz}}
+					\only<5>{\begin{quantikz}[row sep=0.8cm]
+							\lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \gate{X^a} & \gate{Z^b} & \ctrl{1} & \gate{H} & \meter{} & \cw\rstick{$a$} \\
+							\lstick{$\ket{0}$} & \qw      & \targ{}  & \qw      & \qw      & \targ{}  & \qw      & \meter{} & \cw\rstick{$b$}
+						\end{quantikz}}
+				\end{center}
+			\end{column}
+		\end{columns}}
+\end{frame}
+
 \begin{frame}{Where do we go from here?}
 	\begin{itemize}[<+->]
-		\item Clifford gates aren't enough for universal quantum computation (UQC)
+		\item Clifford gates aren't enough for universal quantum computation
 		\item Clifford group shown to be $\oplus\bm{\mathsf{L}}$-complete \cite{aaronson}
-		\item Adding \emph{any} 1 or 2-qubit gate\footnote{That doesn't map computational basis states to computational basis states} will turn the Cliffords into a universal set \cite{shi}
+		\item Adding \emph{any} 1 or 2-qubit gate\footnote<3->{That doesn't map computational basis states to computational basis states} will turn the Cliffords into a universal set \cite{shi}
 	\end{itemize}
 	\onslide<2->{\begin{center}
-			\includegraphics[width=0.5\textwidth]{complexity.pdf}
+			\includegraphics[width=0.65\textwidth]{complexity.pdf}
 		\end{center}}
 \end{frame}
 
-
-
-% \begin{frame}{Heisenberg Picture}
-%     \begin{table}
-%     \begin{tabular}{ccc}
-%       \toprule
-%       & Heisenberg & Schr\"odinger \\
-%       \midrule
-%       State & $\ket{\psi}$ & $U(t)\ket{\psi}$ \\
-%       Observable & $\hat{U}^\dagger(t)A\hat{U}(t)$ & $A$ \\
-%       \bottomrule
-%     \end{tabular}
-%     \caption{Quantum Mechanical Pictures}
-%   \end{table}
-% \end{frame}
-% \begin{frame}[fragile]{Metropolis}
-
-
-
-
-
-% \begin{frame}{References}
-%   \cite{aaronson,gottesman-knill,nest,cuffaro,shi,kitaev}
-% \end{frame}
-
-% \section{Conclusion}
-
-
-% {\setbeamercolor{palette primary}{fg=black, bg=pink}
-% \begin{frame}[standout]
-%   Questions?
-% \end{frame}
-% }
-
 \begin{frame}[allowframebreaks]{References}
-
+	\nocite{*}
 	\bibliographystyle{apalike}
 	\bibliography{refs}
+\end{frame}
 
+\begin{frame}[standout]
+	\smiley Thank you!\smiley
+
+	Questions?
 \end{frame}
 
 \end{document}
