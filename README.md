@@ -12,6 +12,6 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
  - [Quantum Information Processing](http://cleve.iqc.uwaterloo.ca/qic710/index.html) taught by [Richard Cleve](http://cleve.iqc.uwaterloo.ca/)
 
 ### Winter 2021
- - Quantum Information Processing Devices
+ - Quantum Information Processing Devices taught by [Christopher Wilson](https://uwaterloo.ca/electrical-computer-engineering/profile/cc4wilso)
  - 
 
