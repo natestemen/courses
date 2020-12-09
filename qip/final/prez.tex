@@ -1,3 +1,4 @@
+% !TEX program = xelatex
 \documentclass[11pt,aspectratio=1610]{beamer}
 
 \usetheme[
@@ -102,8 +103,6 @@
 	\end{onlyenv}
 
 \end{frame}
-
-\section{Stabilizer Formalism}
 
 \begin{frame}{Stabilizer Formalism}
 	\begin{itemize}[<+->]
@@ -218,6 +217,117 @@
 	\end{enumerate}
 \end{frame}
 
+\begin{frame}{Back to the Theorem}
+	\begin{theorem}[\cite{gottesman-knill}]
+		A quantum circuit using only the following elements can be efficiently simulated on a classical computer:
+		\begin{enumerate}
+			\item Qubits prepared in computational basis states
+			\item Quantum gates from the Clifford group
+			\item Measurements in the computational basis
+		\end{enumerate}
+	\end{theorem}
+	\begin{itemize}
+		\item Take $\ket{\psi} = \ket{0}^{\otimes n}$. Now we can say $S = \langle Z_1, \ldots, Z_n\rangle$.
+		\item Under some action $U\in C_n$ state will evolve to $U\ket{\psi} = UgU^\dagger U\ket{\psi}$ for $g\in S$
+		\item Switch over to describing the change in generators of $S$
+		\item Need to compute $UZ_1U^\dagger,\ldots, UZ_nU^\dagger$
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Back to the Theorem}
+	\begin{exampleblock}{Recap}
+		We have $\ket{\psi} = \ket{0}^{\otimes n}$, $S = \langle Z_1,\ldots , Z_n\rangle$, and $U\in C_n$. We know that $U\ket{\psi} = g'U\ket{\psi}$, so in order to figure out where it evolves to, need to compute the new generators of the space $UV_S$ which are $UZ_1U^\dagger,\ldots, UZ_nU^\dagger$.
+	\end{exampleblock}
+	\begin{columns}
+		\begin{column}{0.7\textwidth}
+			\begin{itemize}
+				\item Only takes $2n+1$ bits to keep track of the generators: 2 for the $n$ Pauli generators, and 1 for the phase of $\pm 1$
+				\item Specifying $\ket{\psi}$ requires all $n$ generators, so $n(2n+1)$ bits
+				\item Updating the generators only takes $O(n)$
+				\item Total cost $O(n^2)$
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\begin{table}
+				\centering
+				\begin{tabular}{c}
+					$\mathbb{1}\longrightarrow$ 00 \\
+					$X\longrightarrow$ 01          \\
+					$Y\longrightarrow$ 10          \\
+					$Z\longrightarrow$ 11
+				\end{tabular}
+				\caption{Pauli Encoding}
+				\label{tab:encoding}
+			\end{table}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[t]{What does this mean?}
+	What makes quantum computers powerful?\pause
+	\begin{warning}
+		\begin{center}
+			Not entanglement!
+		\end{center}
+	\end{warning}\pause
+	\only<3>{Circuits built with the Clifford group don't actually provide us with any more power than a classical computer, despite CNOTs, Hadamards, and phase gates being used to construct purely quantum phenomenon.}
+	\onslide<4->{\begin{columns}
+			\begin{column}{0.2\textwidth}
+				\only<4>{Quantum teleportation}
+				\only<5>{Superdense coding}
+			\end{column}
+			\begin{column}{0.8\textwidth}
+				\begin{center}
+					\only<4>{\begin{quantikz}[row sep=0.8cm]
+							\lstick{$\ket{\psi}$} & \qw & \qw & \ctrl{1}\gategroup[2,steps=5,style={dashed,rounded corners,fill=blue!20, inner xsep=2pt},background, label style={label position=above,yshift=-1.7cm, xshift=0.4cm}]{Alice}   & \gate{H} & \meter{$M_1$}  & \cw & \cwbend{2}    \\
+							\lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \targ{}  & \qw & \meter{$M_2$} & \cwbend{1}           \\
+							\lstick{$\ket{0}$} & \qw      & \targ{} & \qw \gategroup[1,steps=5,style={dashed,rounded corners,fill=green!20, inner xsep=2pt},background, label style={label position=below,xshift=-0.3cm}]{Bob}     & \qw & \qw & \gate{X^{M_2}} & \gate{Z^{M_1}} & \qw \rstick{$\ket{\psi}$}
+						\end{quantikz}}
+					\only<5>{\begin{quantikz}[row sep=0.8cm]
+							\lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \gate{X^a} & \gate{Z^b} & \ctrl{1} & \gate{H} & \meter{} & \cw\rstick{$a$} \\
+							\lstick{$\ket{0}$} & \qw      & \targ{}  & \qw      & \qw      & \targ{}  & \qw      & \meter{} & \cw\rstick{$b$}
+						\end{quantikz}}
+				\end{center}
+			\end{column}
+		\end{columns}}
+\end{frame}
+
+\begin{frame}{Where do we go from here?}
+	\begin{itemize}[<+->]
+		\item Clifford gates aren't enough for universal quantum computation
+		\item Clifford group shown to be $\oplus\bm{\mathsf{L}}$-complete \cite{aaronson}
+		\item Adding \emph{any} 1 or 2-qubit gate\footnote<3->{That doesn't map computational basis states to computational basis states} will turn the Cliffords into a universal set \cite{shi}
+	\end{itemize}
+	\onslide<2->{\begin{center}
+			\includegraphics[width=0.65\textwidth]{complexity.pdf}
+		\end{center}}
+\end{frame}
+
+\begin{frame}{Conclusion}
+	\begin{alertblock}{Assuming}
+		$\bm{\mathsf{BQP}}\neq\bm{\mathsf{P}}\neq\oplus\bm{\mathsf{L}}$
+	\end{alertblock}
+	Strong simulation of quantum computers is \emph{really} hard.
+
+	Clifford group is only capable of solving relatively easy problems (both from classical and quantum POV).
+
+	Quantum entanglement is not the only contributing factor to the power of quantum computers!
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+	\nocite{*}
+	\bibliographystyle{apalike}
+	\bibliography{refs}
+\end{frame}
+
+\begin{frame}[standout]
+	\smiley Thank you!\smiley
+
+	Questions?
+\end{frame}
+
+
 \begin{frame}[t]{Example}
 	\begin{columns}[T,onlytextwidth]
 		\column{0.8\textwidth}
@@ -273,87 +383,6 @@
 			X_1 & \longrightarrow \mathbb{1}\otimes X & Z_1 & \longrightarrow \mathbb{1}\otimes Z
 		\end{align*}}
 	Circuit still performs a swap!
-\end{frame}
-
-\begin{frame}{Back to the Theorem}
-	\begin{theorem}[\cite{gottesman-knill}]
-		A quantum circuit using only the following elements can be efficiently simulated on a classical computer:
-		\begin{enumerate}
-			\item Qubits prepared in computational basis states
-			\item Quantum gates from the Clifford group
-			\item Measurements in the computational basis
-		\end{enumerate}
-	\end{theorem}
-	\begin{itemize}
-		\item Take $\ket{\psi} = \ket{0}^{\otimes n}$. Now we can say $S = \langle Z_1, \ldots, Z_n\rangle$.
-		\item Under some action $U\in C_n$ state will evolve to $U\ket{\psi} = UgU^\dagger U\ket{\psi}$ for $g\in S$
-		\item Switch over to describing the change in generators of $S$
-		\item Need to compute $UZ_1U^\dagger,\ldots, UZ_nU^\dagger$
-	\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Back to the Theorem}
-	\begin{itemize}
-		\item Take $\ket{\psi} = \ket{0}^{\otimes n}$. Now we can say $S = \langle Z_1, \ldots, Z_n\rangle$.
-		\item Under some action $U\in C_n$ state will evolve to $U\ket{\psi} = UgU^\dagger U\ket{\psi}$ for $g\in S$
-		\item Switch over to describing the change in generators of $S$
-		\item Need to compute $UZ_1U^\dagger,\ldots, UZ_nU^\dagger$
-		\item Only takes $2n+1$ bits to keep track of the generators: 2 for the $n$ Pauli generators, and 1 for the phase of $\pm 1$
-		\item Thus to specify $\ket{\psi}$ it takes $n(2n+1)$ bits, and updating the generators only takes $O(n)$
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[t]{What does this mean?}
-	What makes quantum computers powerful?\pause
-	\begin{warning}
-		\begin{center}
-			Not entanglement!
-		\end{center}
-	\end{warning}\pause
-	\only<3>{Circuits built with the Clifford group don't actually provide us with any more power than a classical computer, despite CNOTs, Hadamards, and phase gates being used to construct purely quantum phenomenon.}
-	\onslide<4->{\begin{columns}
-			\begin{column}{0.2\textwidth}
-				\only<4>{Quantum teleportation}
-				\only<5>{Superdense coding}
-			\end{column}
-			\begin{column}{0.8\textwidth}
-				\begin{center}
-					\only<4>{\begin{quantikz}[row sep=0.8cm]
-							\lstick{$\ket{\psi}$} & \qw & \qw & \ctrl{1}\gategroup[2,steps=5,style={dashed,rounded corners,fill=blue!20, inner xsep=2pt},background, label style={label position=above,yshift=-1.7cm, xshift=0.4cm}]{Alice}   & \gate{H} & \meter{$M_1$}  & \cw & \cwbend{2}    \\
-							\lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \targ{}  & \qw & \meter{$M_2$} & \cwbend{1}           \\
-							\lstick{$\ket{0}$} & \qw      & \targ{} & \qw \gategroup[1,steps=5,style={dashed,rounded corners,fill=green!20, inner xsep=2pt},background, label style={label position=below,xshift=-0.3cm}]{Bob}     & \qw & \qw & \gate{X^{M_2}} & \gate{Z^{M_1}} & \qw \rstick{$\ket{\psi}$}
-						\end{quantikz}}
-					\only<5>{\begin{quantikz}[row sep=0.8cm]
-							\lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \gate{X^a} & \gate{Z^b} & \ctrl{1} & \gate{H} & \meter{} & \cw\rstick{$a$} \\
-							\lstick{$\ket{0}$} & \qw      & \targ{}  & \qw      & \qw      & \targ{}  & \qw      & \meter{} & \cw\rstick{$b$}
-						\end{quantikz}}
-				\end{center}
-			\end{column}
-		\end{columns}}
-\end{frame}
-
-\begin{frame}{Where do we go from here?}
-	\begin{itemize}[<+->]
-		\item Clifford gates aren't enough for universal quantum computation
-		\item Clifford group shown to be $\oplus\bm{\mathsf{L}}$-complete \cite{aaronson}
-		\item Adding \emph{any} 1 or 2-qubit gate\footnote<3->{That doesn't map computational basis states to computational basis states} will turn the Cliffords into a universal set \cite{shi}
-	\end{itemize}
-	\onslide<2->{\begin{center}
-			\includegraphics[width=0.65\textwidth]{complexity.pdf}
-		\end{center}}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{References}
-	\nocite{*}
-	\bibliographystyle{apalike}
-	\bibliography{refs}
-\end{frame}
-
-\begin{frame}[standout]
-	\smiley Thank you!\smiley
-
-	Questions?
 \end{frame}
 
 \end{document}
