@@ -1,0 +1,4 @@
+CmdLine {
+  -n3  # (a)^b vs {(a)}^b
+  -n46 # $math$ vs \( math \)
+}
