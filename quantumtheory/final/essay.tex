@@ -49,10 +49,8 @@
 \newcommand{\twonorm}[1][\rho]{c_{2,B} (#1)}
 \newcommand{\twonormE}[1][\rho]{c_{2,B}}
 \newcommand{\dephase}{\mathcal{D}_B}
-\DeclareMathOperator{\diag}{diag}
 \newcommand{\iu}{\mathrm{i}\mkern1mu}
 \newcommand{\e}{\mathrm{e}}
-
 
 
 \titlecontents{section}[1.8pc]
@@ -86,7 +84,7 @@
 
 		\HRule{}\\[0.4cm]
 
-		{\huge\bfseries Final Essay}\\[0.15cm]
+		{\huge\bfseries Final Project}\\[0.15cm]
 
 		\HRule{}\\[1cm]
 
@@ -248,25 +246,6 @@ The fact that we are representing $\rho$ in the eigenbasis of $B$ rather than th
 	where $\mu\coloneqq 1 - \gamma$ is the ``mixedness'' of a state. \Cref{eq:variance-max} shows us that we can think of the variance as composed of two pieces: one which quantifies how much classical uncertainty a state has, and one which quantifies coherent superposition.
 \end{example}
 
-\subsection{2-Fragility}
-In equation (26) of~\cite{dynamic-entropies} the 2-fragility is given to be
-\begin{equation}\label{eq:2fragility}
-	f_2 = -\frac{1}{2}\tr_B\qty(\comm{B}{\rho_{B, 0}}^2)
-\end{equation}
-whereas the general definition of the $n$-fragility is given by
-\begin{equation}\label{eq:nfragility}
-	f_n\coloneqq -\frac{n}{2}\tr_B\qty(\rho_{B, 0}^{n-1}\comm{B}{\rho_{B, 0}}B).
-\end{equation}
-We first show that $f_2$ can be written as \cref{eq:2fragility} starting from the definition given in \cref{eq:nfragility}.
-\begin{align*}
-	f_n & \coloneqq -\tr_B\qty(\rho_{B, 0}\comm{B}{\rho_{B, 0}}B)                                                                                                         \\
-	    & = -\tr_B\qty(\rho_{B, 0}B\rho_{B, 0}B - \rho_{B, 0}^2B^2)                                                                                                       \\
-	    & = -\frac{1}{2}\tr_B\qty(\rho_{B, 0}B\rho_{B, 0}B + \rho_{B, 0}B\rho_{B, 0}B - \rho_{B, 0}^2B^2 - \rho_{B, 0}^2B^2)                                              \\
-	    & = -\frac{1}{2}\tr_B\qty(\rho_{B, 0}B\rho_{B, 0}B + B\rho_{B, 0}B\rho_{B, 0} - \rho_{B, 0}B^2\rho_{B, 0} - B\rho_{B, 0}^2B) \tag{\footnotesize{cyclic property}} \\
-	    & = -\frac{1}{2}\tr_B\qty(\comm{\rho_{B, 0}}{B}^2)
-\end{align*}
-It's worth noting that this identity does not hold for any other $n$. In fact the identity only holds here because $2+2 = 2\cdot 2$. To see this notice the terms in $\rho^{n-1}\comm{B}{\rho}B$ are multiplications of $n+2$ elements\footnote{For example if $n = 3$ we have $\rho^{2}\comm{B}{\rho}B = \rho^2B\rho B - \rho^3B^2$, and hence each term consists of 5 pieces (even if some might be redundant).}, whereas $\comm{\rho}{B}^n$ in general has elements that are multiplications of $2n$ elements.
-
 \subsection{Interacting Systems}
 In this paper there are two main types of interaction that are looked at. First, we have our system $B$ which is brought into contact/interaction with another ancillary system $A$. In full generality the Hamiltonian for this system would be
 \begin{equation*}
@@ -292,31 +271,63 @@ Now this manipulation does not prove that commuting with the Hamiltonian \emph{a
 
 So now we know $\Delta B$ is constant, and by~\cref{eq:variance-max} we can see $\twonormE + \mu = \text{constant}$. So in this case when entanglement goes up, we lose coherence and vice versa. This is a great result, but bad for us since most of the time we want both coherence \emph{and} entanglement when working with quantum technologies.
 
-In the second case, we take $H_A = A$ as before, but now we take $H_B$ to be some arbitrary operator that \emph{does not} commute with $B$. This disallows the manipulation we went through in \cref{sec:commuting-with-time}, so we should expect this to be more complicated. Indeed the situation is, and the important finding is that it's actually possible to both increase coherence and entanglement \emph{at the same time} contrary to what I would have expected\footnote{It seems if we could figure out how to harness this, it would be a major win!}.
+In the second case, we take $H_A = A$ as before, but now we take $H_B$ to be some arbitrary operator that \emph{does not} commute with $B$. This disallows the manipulation we went through in \cref{sec:commuting-with-time}, so we should expect this to be more complicated. Indeed the situation is, and one important finding is that it's actually possible to both increase coherence and entanglement \emph{at the same time} contrary to what I would have expected.\footnote{It seems if we could figure out how to harness this, it would be a major win!} The other major finding is that, to leading order, the ancillary system $A$ (which is taken to be a pure state) loses purity at a rate proportional to the variance $(\Delta B)^2$.
+
+But the case where $A$ is a pure state is quite a special state. The authors take this a step further and take the initial state to be $\rho_A\otimes \rho_B$ where both systems start in mixed, but unentangled states. In this case the analysis is much more complicated and the authors introduce a notion of $n$-fragility defined as
+\begin{equation*}
+	f_n\coloneqq -\frac{n}{2}\tr_B\qty(\rho_{B,0}^{n-1}\comm{B}{\rho_{B,0}}B).
+\end{equation*}
+Using this the authors are able show that a systems variance ``determines its ability to reduce the purity of a system that it interacts with''. Further they identify the 2-fragility as a measure of a systems ability to reduce \emph{it's own} purity as well! This is a very handy characterization as it allows us to understand why some systems have strong interactions with others, and other systems have weaker ones.
+
+\subsubsection{2-Fragility}
+In equation (26) of~\cite{dynamic-entropies} the 2-fragility is given to be
+\begin{equation}\label{eq:2fragility}
+	f_2 = -\frac{1}{2}\tr_B\qty(\comm{B}{\rho_{B, 0}}^2)
+\end{equation}
+whereas the general definition of the $n$-fragility is given by
+\begin{equation}\label{eq:nfragility}
+	f_n\coloneqq -\frac{n}{2}\tr_B\qty(\rho_{B, 0}^{n-1}\comm{B}{\rho_{B, 0}}B).
+\end{equation}
+We first show that $f_2$ can be written as \cref{eq:2fragility} starting from the definition given in \cref{eq:nfragility}.
+\begin{align*}
+	f_n & \coloneqq -\tr_B\qty(\rho_{B, 0}\comm{B}{\rho_{B, 0}}B)                                                                                                         \\
+	    & = -\tr_B\qty(\rho_{B, 0}B\rho_{B, 0}B - \rho_{B, 0}^2B^2)                                                                                                       \\
+	    & = -\frac{1}{2}\tr_B\qty(\rho_{B, 0}B\rho_{B, 0}B + \rho_{B, 0}B\rho_{B, 0}B - \rho_{B, 0}^2B^2 - \rho_{B, 0}^2B^2)                                              \\
+	    & = -\frac{1}{2}\tr_B\qty(\rho_{B, 0}B\rho_{B, 0}B + B\rho_{B, 0}B\rho_{B, 0} - \rho_{B, 0}B^2\rho_{B, 0} - B\rho_{B, 0}^2B) \tag{\footnotesize{cyclic property}} \\
+	    & = -\frac{1}{2}\tr_B\qty(\comm{\rho_{B, 0}}{B}^2)
+\end{align*}
+It's worth noting that this identity does not hold for any other $n$. In fact the identity only holds here because $2+2 = 2\cdot 2$. To see this notice the terms in $\rho^{n-1}\comm{B}{\rho}B$ are multiplications of $n+2$ elements\footnote{For example if $n = 3$ we have $\rho^{2}\comm{B}{\rho}B = \rho^2B\rho B - \rho^3B^2$, and hence each term consists of 5 pieces (even if some might be redundant).}, whereas $\comm{\rho}{B}^n$ in general has elements that are multiplications of $2n$ elements.
+
+
 
 \section{Conclusion}
 
-In this summary we've tried to highlight the best, and most interesting pieces of the paper \emph{The Dynamics of Entropies at the Onset of Interactions}~\cite{dynamic-entropies}. We started out by motivating why one might care about the exchange of quantum resources during processes like quantum computation and quantum communication. In particular to better understand the interactions of quantum systems, but also so we can build more effective technology harnessing these powers.
+In this summary we've tried to highlight the best, and most interesting pieces of the paper \emph{The Dynamics of Entropies at the Onset of Interactions}~\cite{dynamic-entropies}. We started out by motivating why one might care about the exchange of quantum resources during processes like quantum computation and quantum communication. In particular to better understand the interactions of quantum systems, but also so we can build more effective technology harnessing these ideas.
 
-We then introduced some key ideas needed to understand the ideas presented in the paper, and sequentially used them in \cref{ex:qubits} to show how we can dissect a systems variance into two pieces: one pertaining to classical ignorance, and one describing a systems coherence superposition\footnote{How much of a stretch would it be to call this the quantum ignorance? It might just be the symmetry appealing to me, but it does feel like ``quantum ignorance'' isn't a bad way to describe superposition.}.
+We then applied some of these ideas in \cref{ex:qubits} to show how we can dissect a systems variance into two pieces: one pertaining to classical ignorance, and one describing a systems coherent superposition\footnote{How much of a stretch would it be to call this the quantum ignorance? It might just be the symmetry appealing to me, but it does feel like ``quantum ignorance'' isn't a bad way to describe superposition.}. Further, the paper shows how a systems variance affects it's proclivity to reduce an interacting systems purity, and another measure, the 2-fragility, determines how a system might depurify itself.
 
-\subsection{Questions}
+\section{Questions}
+
+\subsection{Hamiltonian for system $B$}
 When working with a the time evolution operator of the form $U(t) = \e^{\iu tA\otimes H_B}$ we take
 \begin{equation*}
 	H_B \coloneqq -\iu\qty(\ketbra{b_x}{b_y} - \ketbra{b_y}{b_x}) = -\iu\mqty[0 & 1 \\ -1 & 0] = \mqty[0 & -\iu \\ \iu & 0] = \sigma_y.
 \end{equation*}
 I was confused here because we're using $\sigma_x$, which I'm assuming denotes the first Pauli matrix $\mqty[0 & 1 \\ 1 & 0]$, but then define the operator $H_B$ in a way that obscures the fact that it's the second Pauli matrix.
 
-\subsection{Applications}
+\subsection{Variance of which observable?}
+The paper characterizes how systems can reduce the purity of systems that come in contact with it, and in particular show how it's related to the variance. This is all well and good, but it seems highly dependent on the observable we choose. If we're talking about the variance in position of system $A$, that somehow decreases the purity of a system it interacts with?
+
+\section{Applications}
 
 Before we end, I'm left with lots of ideas and questions about where this work might apply to.
 
-\subsubsection{Quantum Embezzlement}
+\subsection{Quantum Embezzlement}
 ``Quantum embezzlement'' described in~\cite{embezzlement,self-embezzlement}, is a process that allows one to use a catalyst state to clone a quantum state in a way that does not violate the no-cloning theorem. This process is extremely interesting because it not only goes against a fundamental theorem in the field of quantum information, but it provides a new mechanism for doing something once thought impossible. I would be very much interested in learning more about how our existing quantum resource theories can be made to fit with these new finding (or it's possible there are no existing contradictions). Even viewing this process of embezzlement from a resource theoretic perspective would be very interesting.
 
 As a more direct application of this paper, I would be interested in finding out how the two interacting states in the embezzlement process exchange coherence and entanglement using methods derived in~\cite{dynamic-entropies}. The fact that there is a catalyst state that remains unchanged (physically undetectable at least) through the protocol I would expect that some of it's entanglement is siphoned off and ``given'' to embezzling state. That said of course it would be important to prove or disprove these conjectures, and I think the tools developed here could shed light on the process.
 
-\subsubsection{Quantum Error Correction}
+\subsection{Quantum Error Correction}
 As we know, maintaining coherence in a quantum computer is extremely challenging. Since some of the original work in~\cite{error-correction}, we have seen many new methods and protocols for doing quantum error correction. It would be very interesting to study some of these methods to see how measures of entanglement and coherence change throughout some given circuits. I understand the circuit model of quantum computation is quite different from that of the Hamiltonian model used in this work, but I believe the two are equivalent, and so it should be possible.
 
 \clearpage
