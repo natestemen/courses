@@ -114,14 +114,19 @@ To begin, we first motivate the studies undertaken in~\cite{dynamic-entropies} a
 
 \subsection{Motivation}
 
-The theory of quantum mechanics has barely been around for a century, but it has managed to make it's way into modern life in a large way. Not only that, but it has managed to become one of the most well tested theories in scientific history. That said, since the first talk of quantum computers in the 1980's we haven't seen significant progress towards building one. Not for good reason though, these things are finnicky beasts! That said it's important to try and understand why building a successful quantum computer is so difficult, and what we can do to help. During these times of reflection it is often helpful to look back at moments in history that we might be able to draw similarities to.
+The theory of quantum mechanics has barely been around for a century, but it has managed to sew it's way into the core modern life; from lasers to Magnetic Resonance Imaging, quantum mechanics is here to stay. Not only that, but it has managed to become one of the most well tested theories in scientific history. With success seemingly around every corner, there's still one nut we haven't been able to crack: quantum computing. Since the first talk of quantum computers in the 1980's scientists have been hard at work bringing this technology to fruition. One of the main battles with such finnicky little beasts is coherence. Classical bits we can play catch with, but don't dare to look at a quantum bit or it might have an identity crisis!
+
+Coherence has been studied since the early days of quantum mechanics, and our continued inability to tame it in the lab indicates there's more to understand. When faced with such a situation, it is helpful to look back at moments in history that we can draw similarities to.
 
 When physicists, mathematicians, and natural philosophers\footnote{Perhaps what they would have called themselves?} first studied the dynamics of colliding objects, there were perhaps three major motivating factors:
 \begin{enumerate}
 	\item it's an interesting problem in it's own right
 	\item developing an understanding of the problem can help kickstart technologies harnessing a newfound understanding
-	\item understanding simplified problems are often good stepping stones to developing an understanding of more complicated ones
+	\item understanding a simplified problem is often good stepping stone to developing an understanding of a more complicated one
 \end{enumerate}
+Even though we might today consider the collision of physical bodies to be a relatively simple problem, there are many ways to look at this problem, and one of the most insightful is to think about the exchange of momentum. Now this varies depending on the elasticity of the collision, but understanding how two objects ``exchange'' momentum allows us to figure out what's going on. The particularly insightful thing here is that we're viewing a system as possessing momentum, which then during the collision, exchanges that property with another object before flying apart, or sticking together. With this framework we can build models of how bodies exchange momenta, what the rules of exchange are, and what exchanges are possible.
+
+We do this with quantum bodies as well; usually motivated by the classical intuition. But, can we build theories where the thing being exchanged and swapped around \emph{is} coherence? Are there rules for the exchange of coherence between quantum bodies? If we could understand this, we might find ways to help tame \textbf{decoherence} or take advantage of \textbf{entanglement}. That's where resource theories can come in to help us.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -132,33 +137,34 @@ When physicists, mathematicians, and natural philosophers\footnote{Perhaps what 
 
 
 \subsection{Resource Theories}
-When I think of resources I would normally think about something used to build another thing. Maybe concrete blocks are a resource for building new housing, or wood is a resource to heat your home. Point is, we often think of resources in terms of physical objects, but there is no need to restrict ourselves in this way. In fact one might think of brainpower as being a resource that is used by science to create new understanding. In this way, what we're doing is trying to understand how resources change, and in what ways they are allowed to change. As much as mathematicians and physicists may like it, you can't turn brainpower into coffee.
+When thinking of goods and the exchange of them, it's easy to think of economics, but this idea can be much more powerful as alluded to above. Resource theory is a branch of mathematics that allows us to dissect resources, and in particular their exchange and even the processes of change where one resource might turn into another (maybe we can turn coherence into entanglement?).
 
-In fact, mathematical theories have already been constructed~\cite{mathematical-resources,resource-theory} for studying such ideas and (as the title of this section might hint to) are called \textbf{resource theories}. While the formal construction is quite complicated using ``symmetric monoidal categories'', the ideas are quite simple. In particular the na\"\i ve questions we might want to ask are
+These mathematical theories have already been constructed~\cite{mathematical-resources,resource-theory} for studying such ideas and provide very insightful ways to think about quantum systems in new light. While the formal constructions are quite complicated using the language of category theory and ``symmetric monoidal categories'', the ideas are quite simple. The na\"\i ve questions we might want to ask are
 \begin{itemize}
 	\item how do resources change during allowed processes?
 	\item what are the allowed processes?
 \end{itemize}
-Or, put differently, what are the dynamics of our resources? These questions are encapsulated by category theory because of the way arrows (changes) and composition of arrows is built into categories.
+Or, put differently, what are the dynamics of our resources? These questions are encapsulated by category theory because of the way arrows (changes) and composition of arrows is the language of categories.
 
-Turning out eye to emerging quantum technologies, it might not be so clear how we can actually apply this resource theoretic framework to our field. But again we are thankful to those who have come before us developing quantum resource theories~\cite{quantum-resources} where the main quantum resources we have a coherence, and entanglement. What this means is that we are viewing coherence and entanglement as resources, and using these theories we can study how they change during allowed processes.
+Quantum resource theories have also been developed with both coherence and entanglement as the main ideas in~\cite{quantum-resources}. This means that we are taking coherence and entanglement as resources, and using these theories we can study how they change during interactions.
 
 \subsection{Density Matrices}\label{sec:density-matrices}
 Just briefly let's recall some facts about the density matrix that will be helpful in understanding this paper.
 \begin{definition}
-	Given a basis $\{\ket{\psi_n}\}$ for a Hilbert space $\mathcal{H}$, and corresponding probabilities $\{p_n\}$ for a state to be state $\ket{\psi_n}$, then the \textbf{density matrix} is given by
+	A \textbf{density matrix} is a matrix of the form
 	\begin{equation*}
-		\rho = \sum_n p_n\ketbra{\psi_n}.
+		\rho = \sum_n p_n\ketbra{\psi_n}
 	\end{equation*}
+	where $p_n\in[0,1]$ are probabilities the mixed state $\rho$ is in the pure state $\ket{\psi_n}$ where the states $\{\ket{\psi_n}\}$ form a basis for our Hilbert space $\mathcal{H}$.
 \end{definition}
 The operator/matrix $\rho$ as defined above will always be positive semi-definite\footnote{$\bra{\phi}\rho\ket{\phi}\geq 0$ for all $\ket{\phi}\in\mathcal{H}$.}, Hermitian\footnote{$\rho^\dagger = \rho$.}, and have trace equal to 1\footnote{$\tr\rho = 1$.}. These three properties follow immediately from the above definition, along with the fact that the $p_n$ are probabilities and hence must sum to 1. Lastly recall that if we have an observable $\hat{A}$, then the expectation value with respect to a mixed state $\rho$ is given by $\overline{A} = \tr(\rho\hat{A})$.
 
 \subsection{Entropy}
 The paper is called ``The dynamics of entropies at the onset of interactions'', so it's probably best if we have a good understanding of what the authors mean by entropy.
 
-Let's start with an arbitrary mixed state $\rho$. Because $\rho$ has trace 1, we know $\tr\rho^2\leq 1$ with equality holding if and only if $\rho$ is not in fact mixed, but a pure state $\rho = \ketbra{\psi}$. With this we can define a simple notion of ``purity'' by $\gamma = \tr\rho^2$. If $\rho$ represents an $n$ dimensional system, then $\gamma$ must fall in the range $\gamma\in\qty[\frac{1}{n}, 1]$ where the lowest values represent states that are more mixed, and higher values correspond to states that are more pure. We might also say this as states which are very likely in a handful of pure states.
+Let's start with an arbitrary mixed state $\rho$. Because $\rho$ has trace 1, we know $\tr\rho^2\leq 1$ with equality holding if and only if $\rho$ is not in fact mixed, but a pure state $\rho = \ketbra{\psi}$. With this we can define a simple notion of ``purity'' by $\gamma = \tr\rho^2$. If $\rho$ represents an $n$ dimensional system, then $\gamma$ must fall in the range $\gamma\in\qty[\frac{1}{n}, 1]$ where the lowest values represent states that are more mixed, and higher values correspond to states that are more pure.
 
-A more sophisticated measure of purity or mixedness coming from (classical) information theory would be the Shannon/von Neumann entropy:
+A more sophisticated measure of purity or mixedness coming from (classical) information theory would be the von Neumann entropy:
 \begin{equation*}
 	S(\rho)\coloneqq -\tr(\rho\ln\rho).
 \end{equation*}
@@ -168,34 +174,19 @@ Finally, there is one more notion we must introduce which is used in the paper. 
 \begin{equation*}
 	H_{n, B}(\rho)\coloneqq \frac{1}{1-n}\log(\tr_B\qty[\qty(\tr_A \rho)^n]) = \frac{1}{1-n}\log(\sum_i\lambda_i^n)
 \end{equation*}
-Where $\lambda_i$ are the eigenvalues of $\rho$. While it seems these entropies are not as frequently used, they provide a unifying framework for common entropies one does care about. In fact we have the max-entropy when $n = 0$, the min-entropy when $n\to\infty$, and the Shannon/von Neumann entropy when $n \to 1$.
+Where $\lambda_i$ are the eigenvalues of $\rho$. While it seems these entropies are not as frequently used, they provide a unifying framework for common entropies one does care about. In fact we have the max-entropy when $n = 0$, the min-entropy when $n\to\infty$, and the von Neumann entropy when $n \to 1$.
 
 
 \section{Main Results}
-
-Why would we want a ``resource'' theory?
-What are they good for?
-What are our resources in quantum mechanics?
-quantum things are really hard to control
-introduce coherence
-what does that mean mathematically?
-- density matrix
-- diagonal vs off diagonal elements
-- 2-norm coherence?
-as a resource, we'd like to understand the dynamics partially because it's interesting, but also because we can then better manipulate the resource
-
-
+We start off with a simple calculation of the 2-norm coherence, and then use this to study a two level quantum system.
 
 \subsection{2-Norm Coherence}
-In this section we work through the calculations presented in section 2 of~\cite{dynamic-entropies}.
 Let's start with showing the 2-norm coherence $\twonorm{}$ is the sum of the off diagonal elements squared of $\rho$.
 To start, let's calculate the effect of the identity minus the dephasing operator $\dephase$ on our mixed state $\rho$.
-It's important to note here that the dephasing operator (as the subscript might suggest) depends entirely on the operator $B$, because there is always a basis where $\rho$ is diagonal, and hence $\mathcal{D}_\rho\rho = \rho$.
 \begin{equation*}
 	\qty(\mathbb{1} - \dephase)\rho = \mqty[\rho_{11} & \rho_{12} & \cdots & \rho_{1d} \\ \rho_{21} & \rho_{22} & & \\ \vdots & & \ddots & \\ \rho_{d1} & & & \rho_{dd}] - \mqty[\diagonalmatrix{\rho_{11},\rho_{22},\ddots,\rho_{dd}}] = \mqty[0 & \rho_{12} & \cdots & \rho_{1d} \\ \rho_{21} & 0 & & \\ \vdots & & \ddots & \\ \rho_{d1} & & & 0] \eqqcolon \tilde{\rho}
 \end{equation*}
-Now we need to calculate the norm of this operator $\tilde{\rho}$ using the following norm definition $\norm{X}_2 \coloneqq \sqrt{\tr(X^\dagger X)}$.
-Using the property the property that density matrices are Hermitian referenced in \cref{sec:density-matrices} we can simplify this as $\norm{\tilde{\rho}}_2 = \sqrt{\tr(\tilde{\rho}^2)}$.
+To calculate the norm of this operator, we use the fact that density matrices are Hermitian referenced in \cref{sec:density-matrices} to simplify this as $\norm{\tilde{\rho}}_2 = \sqrt{\tr(\tilde{\rho}^2)}$.
 Now we can calculate the diagonal elements of $\tilde{\rho}^2$ so we can sum them up and get the trace.
 \begin{equation*}
 	\tilde{\rho}^2 = \mqty[0 & \rho_{12} & \cdots & \rho_{1d} \\ \rho_{21} & 0 & & \\ \vdots & & \ddots & \\ \rho_{d1} & & & 0]^2  = \mqty[\dmat{\sum_{i \neq 1 }^d\rho_{1i}\rho_{i1},\sum_{i \neq 2}^d\rho_{2i}\rho_{i2},\ddots, \sum_{i \neq d}^d\rho_{di}\rho_{id}}]
@@ -207,7 +198,7 @@ This expression, with the fact that $\rho_{ij} = \overline{\rho_{ji}}$ allows us
 The fact that we are representing $\rho$ in the eigenbasis of $B$ rather than the ``natural'' basis of $\rho$ where it is diagonal means $\rho$ \emph{is} likely to have off-diagonal elements in the first place. I mention this because I've only ever worked with density matrices in the most ``natural'' bases where things are quite simple.
 
 \begin{example}\label{ex:qubits}
-	To get an idea how some of this machinery is working, let's work with one of the simplest examples: a qubit. This means both our observable $B$ and density matrix $\rho$ are $2\times 2$ matrices, and in particular we can write $B$ as
+	To get familiar with what the 2-norm coherence can do, let's work with one of the simplest examples: a qubit. This means both our observable $B$ and density matrix $\rho$ are $2\times 2$ matrices, and in particular we can write $B$ (in it's eigenbasis) as
 	\begin{equation*}
 		B = b_x\ketbra{b_x} + b_y\ketbra{b_y} = \mqty[b_x & 0 \\ 0 & b_y].
 	\end{equation*}
@@ -239,14 +230,14 @@ The fact that we are representing $\rho$ in the eigenbasis of $B$ rather than th
 	\begin{equation*}
 		(\Delta B)^2 = \frac{1 - \gamma + \twonormE}{2}\qty(b_x - b_y)^2.
 	\end{equation*}
-	The maximally mixed state $\rho = \frac{1}{N}\mathbb{1}$ has purity $\gamma = \frac{1}{N}$, or in our case where $N = 2$, $\frac{1}{2}$. This state possess no off diagonal elements, so conveniently $\twonorm{\rho} = 0$. These observations define $(\Delta B)_\text{max}^2 = \frac{1}{4}\qty(b_x - b_y)^2$. As in~\cite{dynamic-entropies} we can then write
+	The maximally mixed state $\rho = \frac{1}{N}\mathbb{1}$ has purity $\gamma = \frac{1}{N}$, or in our case where $N = 2$, $\frac{1}{2}$. This state possess no off diagonal elements, so conveniently $\twonorm{} = 0$. These observations define $(\Delta B)_\text{max}^2 = \frac{1}{4}\qty(b_x - b_y)^2$. As in~\cite{dynamic-entropies} we can then write
 	\begin{equation}\label{eq:variance-max}
 		\frac{(\Delta B)}{2(\Delta B)_\text{max}^2} = \twonormE + \mu
 	\end{equation}
 	where $\mu\coloneqq 1 - \gamma$ is the ``mixedness'' of a state. \Cref{eq:variance-max} shows us that we can think of the variance as composed of two pieces: one which quantifies how much classical uncertainty a state has, and one which quantifies coherent superposition.
 \end{example}
 
-\subsection{Interacting Systems}
+\subsection{Interacting Systems}\label{sec:interacting-systems}
 In this paper there are two main types of interaction that are looked at. First, we have our system $B$ which is brought into contact/interaction with another ancillary system $A$. In full generality the Hamiltonian for this system would be
 \begin{equation*}
 	H = H^{(A)}_\text{free}\otimes\mathbb{1} + \mathbb{1}\otimes H^{(B)}_\text{free} + H^{(AB)}_\text{interaction}.
@@ -277,7 +268,7 @@ But the case where $A$ is a pure state is quite a special state. The authors tak
 \begin{equation*}
 	f_n\coloneqq -\frac{n}{2}\tr_B\qty(\rho_{B,0}^{n-1}\comm{B}{\rho_{B,0}}B).
 \end{equation*}
-Using this the authors are able show that a systems variance ``determines its ability to reduce the purity of a system that it interacts with''. Further they identify the 2-fragility as a measure of a systems ability to reduce \emph{it's own} purity as well! This is a very handy characterization as it allows us to understand why some systems have strong interactions with others, and other systems have weaker ones.
+Using this the authors are able show that a systems variance ``determines its ability to reduce the purity of a system that it interacts with''. Further they identify the 2-fragility as a measure of a systems ability to reduce \emph{it's own} purity as well! This is a very handy characterization as it allows us to understand why some systems have a decohering effect on systems they interact with. With the 2-fragility playing a particularly important role, we take a moment to show it can be written in a slightly cleaner form below.
 
 \subsubsection{2-Fragility}
 In equation (26) of~\cite{dynamic-entropies} the 2-fragility is given to be
@@ -302,9 +293,7 @@ It's worth noting that this identity does not hold for any other $n$. In fact th
 
 \section{Conclusion}
 
-In this summary we've tried to highlight the best, and most interesting pieces of the paper \emph{The Dynamics of Entropies at the Onset of Interactions}~\cite{dynamic-entropies}. We started out by motivating why one might care about the exchange of quantum resources during processes like quantum computation and quantum communication. In particular to better understand the interactions of quantum systems, but also so we can build more effective technology harnessing these ideas.
-
-We then applied some of these ideas in \cref{ex:qubits} to show how we can dissect a systems variance into two pieces: one pertaining to classical ignorance, and one describing a systems coherent superposition\footnote{How much of a stretch would it be to call this the quantum ignorance? It might just be the symmetry appealing to me, but it does feel like ``quantum ignorance'' isn't a bad way to describe superposition.}. Further, the paper shows how a systems variance affects it's proclivity to reduce an interacting systems purity, and another measure, the 2-fragility, determines how a system might depurify itself.
+In this summary we've tried to highlight the most interesting and most insightful pieces of the paper\footnote{That said I recognize I was not able to cover everything in the paper, not just because there was too much, but because I wasn't able to understand everything either! That's okay with me, because I was able to understand quite lot, and take quite a few important lessons from this paper.} \emph{The Dynamics of Entropies at the Onset of Interactions}~\cite{dynamic-entropies}. We started out by motivating why one might care about the exchange of quantum resources during processes like quantum computation and quantum communication. Armed with the ideas of what quantum resources are we looked towards two level quantum systems in \cref{ex:qubits} to show how we can dissect a systems variance into two pieces: one pertaining to classical ignorance, and one describing a systems coherent superposition\footnote{How much of a stretch would it be to call this the quantum ignorance? It might just be the symmetry appealing to me, but it does feel like ``quantum ignorance'' isn't a bad way to describe superposition.}. With a basic understanding of the tooling we applied the ideas to more complicated quantum systems and eventually found a nice characterization of how coherence and entanglement can be exchanged in \cref{sec:interacting-systems}.
 
 \section{Questions}
 
@@ -313,14 +302,14 @@ When working with a the time evolution operator of the form $U(t) = \e^{\iu tA\o
 \begin{equation*}
 	H_B \coloneqq -\iu\qty(\ketbra{b_x}{b_y} - \ketbra{b_y}{b_x}) = -\iu\mqty[0 & 1 \\ -1 & 0] = \mqty[0 & -\iu \\ \iu & 0] = \sigma_y.
 \end{equation*}
-I was confused here because we're using $\sigma_x$, which I'm assuming denotes the first Pauli matrix $\mqty[0 & 1 \\ 1 & 0]$, but then define the operator $H_B$ in a way that obscures the fact that it's the second Pauli matrix.
+I was confused here because we're using $A = \varepsilon\sigma_x$, which I'm assuming denotes the first Pauli matrix $\smqty[0 & 1 \\ 1 & 0]$, but then define the operator $H_B$ in a way that obscures the fact that it's the second Pauli matrix.
 
 \subsection{Variance of which observable?}
 The paper characterizes how systems can reduce the purity of systems that come in contact with it, and in particular show how it's related to the variance. This is all well and good, but it seems highly dependent on the observable we choose. If we're talking about the variance in position of system $A$, that somehow decreases the purity of a system it interacts with?
 
 \section{Applications}
 
-Before we end, I'm left with lots of ideas and questions about where this work might apply to.
+Before we end, I'm left with a few ideas concerning where this work could be applied.
 
 \subsection{Quantum Embezzlement}
 ``Quantum embezzlement'' described in~\cite{embezzlement,self-embezzlement}, is a process that allows one to use a catalyst state to clone a quantum state in a way that does not violate the no-cloning theorem. This process is extremely interesting because it not only goes against a fundamental theorem in the field of quantum information, but it provides a new mechanism for doing something once thought impossible. I would be very much interested in learning more about how our existing quantum resource theories can be made to fit with these new finding (or it's possible there are no existing contradictions). Even viewing this process of embezzlement from a resource theoretic perspective would be very interesting.
