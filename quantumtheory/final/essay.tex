@@ -110,11 +110,11 @@
 This is a summary/exposition of the article titled \emph{The Dynamics of Entropies at the Onset of Interactions} by~\citeauthor{dynamic-entropies}\marginnote{\footnotesize{Article can be found on the \href{https://arxiv.org/abs/2004.02829}{arXiv}.}} and was completed as a final project for AMATH 673 Advanced Quantum Theory.
 
 \section{Background}
-To begin, we first motivate the studies undertaken in~\cite{dynamic-entropies} as well as review some of the fundamental concepts that we will need to build upon.
+To begin, we first motivate the studies undertaken in~\cite{dynamic-entropies} as well as review some of the fundamental concepts that we will build upon.
 
 \subsection{Motivation}
 
-The theory of quantum mechanics has barely been around for a century, but it has managed to sew it's way into the core modern life; from lasers to Magnetic Resonance Imaging, quantum mechanics is here to stay. Not only that, but it has managed to become one of the most well tested theories in scientific history. With success seemingly around every corner, there's still one nut we haven't been able to crack: quantum computing. Since the first talk of quantum computers in the 1980's scientists have been hard at work bringing this technology to fruition. One of the main battles with such finnicky little beasts is coherence. Classical bits we can play catch with, but don't dare to look at a quantum bit or it might have an identity crisis!
+The theory of quantum mechanics has barely been around for a century, but it has managed to sew it's way into the core modern life; from lasers to Magnetic Resonance Imaging, quantum mechanics is here to stay. Not only that, but it has managed to become one of the most well tested theories in scientific history. With success seemingly around every corner, there's still a major advanced we haven't cracked: quantum computing. Since the first talk of quantum computers in the 1980's scientists have been hard at work bringing this technology to fruition. One of the main battles with such finnicky little beasts is coherence. Classical bits are robust against measurement and being dropped on the ground, but don't dare look at a quantum bit or it might have an identity crisis!
 
 Coherence has been studied since the early days of quantum mechanics, and our continued inability to tame it in the lab indicates there's more to understand. When faced with such a situation, it is helpful to look back at moments in history that we can draw similarities to.
 
@@ -124,9 +124,9 @@ When physicists, mathematicians, and natural philosophers\footnote{Perhaps what 
 	\item developing an understanding of the problem can help kickstart technologies harnessing a newfound understanding
 	\item understanding a simplified problem is often good stepping stone to developing an understanding of a more complicated one
 \end{enumerate}
-Even though we might today consider the collision of physical bodies to be a relatively simple problem, there are many ways to look at this problem, and one of the most insightful is to think about the exchange of momentum. Now this varies depending on the elasticity of the collision, but understanding how two objects ``exchange'' momentum allows us to figure out what's going on. The particularly insightful thing here is that we're viewing a system as possessing momentum, which then during the collision, exchanges that property with another object before flying apart, or sticking together. With this framework we can build models of how bodies exchange momenta, what the rules of exchange are, and what exchanges are possible.
+Even though we might today consider the collision of physical bodies to be a relatively simple problem, there are many ways to look at this problem, and one of the most insightful is to think about the exchange of momenta. Now this varies depending on the elasticity of the collision, but understanding how two objects ``exchange'' momentum allows us to figure out what's going on. The particularly insightful thing here is that we're viewing a system as possessing momentum, which then during the collision, exchanges that property with another object before flying apart, or sticking together. With this framework we can build models of how bodies exchange momenta, what the rules of exchange are, and what exchanges are possible.
 
-We do this with quantum bodies as well; usually motivated by the classical intuition. But, can we build theories where the thing being exchanged and swapped around \emph{is} coherence? Are there rules for the exchange of coherence between quantum bodies? If we could understand this, we might find ways to help tame \textbf{decoherence} or take advantage of \textbf{entanglement}. That's where resource theories can come in to help us.
+We do this with quantum bodies as well; usually motivated by the classical intuition. But, can we build theories where the thing being exchanged and swapped around \emph{is} coherence? Are there rules for the exchange of coherence between quantum bodies? If we could understand this, we might find ways to help tame \textbf{decoherence} or take advantage of \textbf{entanglement}. That's where resource theories come in to play.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -139,14 +139,14 @@ We do this with quantum bodies as well; usually motivated by the classical intui
 \subsection{Resource Theories}
 When thinking of goods and the exchange of them, it's easy to think of economics, but this idea can be much more powerful as alluded to above. Resource theory is a branch of mathematics that allows us to dissect resources, and in particular their exchange and even the processes of change where one resource might turn into another (maybe we can turn coherence into entanglement?).
 
-These mathematical theories have already been constructed~\cite{mathematical-resources,resource-theory} for studying such ideas and provide very insightful ways to think about quantum systems in new light. While the formal constructions are quite complicated using the language of category theory and ``symmetric monoidal categories'', the ideas are quite simple. The na\"\i ve questions we might want to ask are
+These general mathematical theories have been constructed~\cite{mathematical-resources,resource-theory} for studying anything from chemistry to economics. While the formal constructions are quite complicated using the language of category theory and ``symmetric monoidal categories'', the ideas are quite simple. The na\"\i ve questions we might want to ask are
 \begin{itemize}
 	\item how do resources change during allowed processes?
-	\item what are the allowed processes?
+	\item what \emph{are} the allowed processes?
 \end{itemize}
 Or, put differently, what are the dynamics of our resources? These questions are encapsulated by category theory because of the way arrows (changes) and composition of arrows is the language of categories.
 
-Quantum resource theories have also been developed with both coherence and entanglement as the main ideas in~\cite{quantum-resources}. This means that we are taking coherence and entanglement as resources, and using these theories we can study how they change during interactions.
+Quantum resource theories have also been developed with both coherence and entanglement as the star in~\cite{quantum-resources}. This means that we are taking coherence and entanglement as resources, and using these theories we can study how they change and are exchanged during interactions.
 
 \subsection{Density Matrices}\label{sec:density-matrices}
 Just briefly let's recall some facts about the density matrix that will be helpful in understanding this paper.
@@ -155,7 +155,7 @@ Just briefly let's recall some facts about the density matrix that will be helpf
 	\begin{equation*}
 		\rho = \sum_n p_n\ketbra{\psi_n}
 	\end{equation*}
-	where $p_n\in[0,1]$ are probabilities the mixed state $\rho$ is in the pure state $\ket{\psi_n}$ where the states $\{\ket{\psi_n}\}$ form a basis for our Hilbert space $\mathcal{H}$.
+	where $p_n\in[0,1]$ are probabilities the mixed state $\rho$ is in the pure state $\ket{\psi_n}$ where the states $\{\ket{\psi_n}\}$ form a basis for our (finite dimensional) Hilbert space $\mathcal{H}$.
 \end{definition}
 The operator/matrix $\rho$ as defined above will always be positive semi-definite\footnote{$\bra{\phi}\rho\ket{\phi}\geq 0$ for all $\ket{\phi}\in\mathcal{H}$.}, Hermitian\footnote{$\rho^\dagger = \rho$.}, and have trace equal to 1\footnote{$\tr\rho = 1$.}. These three properties follow immediately from the above definition, along with the fact that the $p_n$ are probabilities and hence must sum to 1. Lastly recall that if we have an observable $\hat{A}$, then the expectation value with respect to a mixed state $\rho$ is given by $\overline{A} = \tr(\rho\hat{A})$.
 
@@ -215,7 +215,7 @@ The fact that we are representing $\rho$ in the eigenbasis of $B$ rather than th
 		             & = \rho_{xx}\qty(b_x^2 + b_y^2 - 2b_x b_y) - \rho_{xx}^2\qty(b_x^2 + b_y^2 - 2b_x b_y)                                  \\
 		             & = \qty(\rho_{xx} - \rho_{xx}^2)\qty(b_x - b_y)^2
 	\end{align*}
-	Further, we can actually show that we can write this using both the purity $\gamma\coloneqq\tr(\rho^2)$ and the 2-norm coherence defined in \cref{eq:2norm}.
+	Further, we can show that this can be written using both the purity $\gamma\coloneqq\tr(\rho^2)$ and the 2-norm coherence defined in \cref{eq:2norm}.
 	\begin{align*}
 		\frac{1 - \gamma + \twonormE}{2} & = \frac{1}{2}\qty(1 - \tr(\rho^2) + \twonormE)                                             \\
 		                                 & = \frac{1}{2}\qty(1 - \rho_{xx}^2 - \rho_{yy}^2 - 2\abs{\rho_{xy}}^2 + 2\abs{\rho_{xy}}^2) \\
@@ -258,13 +258,13 @@ In the quantum case the Poisson bracket takes the form $\pb{-}{-}\to\frac{1}{\iu
 	                              & = \sum_{n = 0}^\infty\frac{(\iu t)^n}{n!}\qty(A^n\otimes B^{n+1})                                                     \\
 	                              & = \sum_{n = 0}^\infty\frac{(\iu t)^n}{n!}\qty(A\otimes B)^n\qty(\mathbb{1}\otimes B)  = U(t)\qty(\mathbb{1}\otimes B)
 \end{align*}
-Now this manipulation does not prove that commuting with the Hamiltonian \emph{always} implies an observable will commute with the time evolution operator, but the above can be applied to an arbitrary Hamiltonian $H$ that is time independent. Also it seems like this technically proves $\dv{t}\Delta(\mathbb{1}\otimes B) = 0$, but surely we can make the identification of this without the tensor product with the identity.
+Now this manipulation does not prove that commuting with the Hamiltonian \emph{always} implies an observable will commute with the time evolution operator, but the above can be applied to an arbitrary Hamiltonian $H$ that is \textbf{time independent}. Also it seems like this technically proves $\dv{t}\Delta(\mathbb{1}\otimes B) = 0$, but surely we can make the identification of $\Delta(\mathbb{1}\otimes B)$ with $\Delta B$.
 
-So now we know $\Delta B$ is constant, and by~\cref{eq:variance-max} we can see $\twonormE + \mu = \text{constant}$. So in this case when entanglement goes up, we lose coherence and vice versa. This is a great result, but bad for us since most of the time we want both coherence \emph{and} entanglement when working with quantum technologies.
+So now we know $\Delta B$ is constant, and by~\cref{eq:variance-max} we can see $\twonormE + \mu = \text{constant}$ for a time independent Hamiltonian. In this case when entanglement goes up, we lose coherence and vice versa. This is a great result, but bad for us since most of the time we want both coherence \emph{and} entanglement when working with quantum technologies.
 
-In the second case, we take $H_A = A$ as before, but now we take $H_B$ to be some arbitrary operator that \emph{does not} commute with $B$. This disallows the manipulation we went through in \cref{sec:commuting-with-time}, so we should expect this to be more complicated. Indeed the situation is, and one important finding is that it's actually possible to both increase coherence and entanglement \emph{at the same time} contrary to what I would have expected.\footnote{It seems if we could figure out how to harness this, it would be a major win!} The other major finding is that, to leading order, the ancillary system $A$ (which is taken to be a pure state) loses purity at a rate proportional to the variance $(\Delta B)^2$.
+In the second case, we take $H_A = A$ as before, but now we take $H_B$ to be some arbitrary operator that \emph{does not} commute with $B$. This disallows the manipulation we went through in \cref{sec:commuting-with-time}, so we should expect this to be more complicated. Indeed the situation is, and an important finding is that it's actually possible to both increase coherence and entanglement \emph{at the same time} contrary to what I would have expected.\footnote{This is contrary to what I might have believed because coherence and entanglement are what make quantum mechanics so powerful. Being able to get both increasing a the same time would be a major win for quantum technologies!} The other major finding is that, to leading order, the ancillary system $A$ (which is taken to be a pure state) loses purity at a rate proportional to the variance $(\Delta B)^2$.
 
-But the case where $A$ is a pure state is quite a special state. The authors take this a step further and take the initial state to be $\rho_A\otimes \rho_B$ where both systems start in mixed, but unentangled states. In this case the analysis is much more complicated and the authors introduce a notion of $n$-fragility defined as
+But the case where $A$ is a pure state is quite a special state. The authors take this a step further with initial state $\rho_A\otimes \rho_B$ where both systems start in mixed, but unentangled (with each other) states. In this case the analysis is much more complicated and the authors introduce a notion of $n$-fragility defined as
 \begin{equation*}
 	f_n\coloneqq -\frac{n}{2}\tr_B\qty(\rho_{B,0}^{n-1}\comm{B}{\rho_{B,0}}B).
 \end{equation*}
@@ -293,7 +293,7 @@ It's worth noting that this identity does not hold for any other $n$. In fact th
 
 \section{Conclusion}
 
-In this summary we've tried to highlight the most interesting and most insightful pieces of the paper\footnote{That said I recognize I was not able to cover everything in the paper, not just because there was too much, but because I wasn't able to understand everything either! That's okay with me, because I was able to understand quite lot, and take quite a few important lessons from this paper.} \emph{The Dynamics of Entropies at the Onset of Interactions}~\cite{dynamic-entropies}. We started out by motivating why one might care about the exchange of quantum resources during processes like quantum computation and quantum communication. Armed with the ideas of what quantum resources are we looked towards two level quantum systems in \cref{ex:qubits} to show how we can dissect a systems variance into two pieces: one pertaining to classical ignorance, and one describing a systems coherent superposition\footnote{How much of a stretch would it be to call this the quantum ignorance? It might just be the symmetry appealing to me, but it does feel like ``quantum ignorance'' isn't a bad way to describe superposition.}. With a basic understanding of the tooling we applied the ideas to more complicated quantum systems and eventually found a nice characterization of how coherence and entanglement can be exchanged in \cref{sec:interacting-systems}.
+In this summary we've tried to highlight the most interesting and most insightful pieces of the paper \emph{The Dynamics of Entropies at the Onset of Interactions}~\cite{dynamic-entropies}.\footnote{That said I recognize I was not able to cover everything in the paper, not just because there was too much, but because I wasn't able to understand everything either! That's okay with me, because I was able to understand quite lot, and take quite a few important lessons from this paper.} We started out by motivating why one might care about the exchange of quantum resources during processes like quantum computation and quantum communication. Armed with the ideas of what quantum resources are we looked towards two level quantum systems in \cref{ex:qubits} to show how we can dissect a systems variance into two pieces: one pertaining to classical ignorance, and one describing a systems coherent superposition\footnote{How much of a stretch would it be to call this the quantum ignorance? It might just be the symmetry appealing to me, but it does feel like ``quantum ignorance'' isn't a bad way to describe superposition.}. With a basic understanding of the tooling we applied the ideas to more complicated quantum systems and eventually found a nice characterization of how coherence and entanglement can be exchanged in \cref{sec:interacting-systems}.
 
 \section{Questions}
 
@@ -302,10 +302,10 @@ When working with a the time evolution operator of the form $U(t) = \e^{\iu tA\o
 \begin{equation*}
 	H_B \coloneqq -\iu\qty(\ketbra{b_x}{b_y} - \ketbra{b_y}{b_x}) = -\iu\mqty[0 & 1 \\ -1 & 0] = \mqty[0 & -\iu \\ \iu & 0] = \sigma_y.
 \end{equation*}
-I was confused here because we're using $A = \varepsilon\sigma_x$, which I'm assuming denotes the first Pauli matrix $\smqty[0 & 1 \\ 1 & 0]$, but then define the operator $H_B$ in a way that obscures the fact that it's the second Pauli matrix.
+I was confused here because we're using $A = \varepsilon\sigma_x$, which I'm assuming denotes the first Pauli matrix $\smqty[0 & 1 \\ 1 & 0]$, but then define the operator $H_B$ in a way that obscures the fact that it's the second Pauli matrix. My best guess here is that of course in general $\ket{b_x}$ and $\ket{b_y}$ are not the standard basis, and so generally this is not equal to $\sigma_y$. With that said, isn't it always a change of basis away?
 
 \subsection{Variance of which observable?}
-The paper characterizes how systems can reduce the purity of systems that come in contact with it, and in particular show how it's related to the variance. This is all well and good, but it seems highly dependent on the observable we choose. If we're talking about the variance in position of system $A$, that somehow decreases the purity of a system it interacts with?
+The paper characterizes how systems can reduce the purity of systems that come in contact with it, and in particular show how it's related to the variance. This is all well and good, but it seems highly dependent on the observable we choose. If we have a system $A$ with large variance in \textbf{position} does that mean it decreases the purity of every system it interacts with, or just some particular system where position plays an important role?
 
 \section{Applications}
 
@@ -317,7 +317,7 @@ Before we end, I'm left with a few ideas concerning where this work could be app
 As a more direct application of this paper, I would be interested in finding out how the two interacting states in the embezzlement process exchange coherence and entanglement using methods derived in~\cite{dynamic-entropies}. The fact that there is a catalyst state that remains unchanged (physically undetectable at least) through the protocol I would expect that some of it's entanglement is siphoned off and ``given'' to embezzling state. That said of course it would be important to prove or disprove these conjectures, and I think the tools developed here could shed light on the process.
 
 \subsection{Quantum Error Correction}
-As we know, maintaining coherence in a quantum computer is extremely challenging. Since some of the original work in~\cite{error-correction}, we have seen many new methods and protocols for doing quantum error correction. It would be very interesting to study some of these methods to see how measures of entanglement and coherence change throughout some given circuits. I understand the circuit model of quantum computation is quite different from that of the Hamiltonian model used in this work, but I believe the two are equivalent, and so it should be possible.
+As we know, maintaining coherence in a quantum computer is extremely challenging. Since some of the original work in~\cite{error-correction}, we have seen many new methods and protocols for doing quantum error correction. It would be very interesting to study some of these methods to see how measures of entanglement and coherence change throughout some given circuits. I understand the circuit model of quantum computation is quite different from that of the Hamiltonian model used in this work, but I believe there are ways of translating between the two. As is most often the case, when we're able to understand a concept deeply, we can then build technologies harnessing it. Armed with a better understanding the exchange of coherence and entanglement, hopefully we are a step closer to taming decoherence.
 
 \clearpage
 
