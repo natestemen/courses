@@ -14,3 +14,4 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 ### Winter 2021
  - Quantum Information Processing Devices taught by [Christopher Wilson](https://uwaterloo.ca/electrical-computer-engineering/profile/cc4wilso)
  - Open Quantum Systems taught by [Joseph Emerson](https://services.iqc.uwaterloo.ca/people/profile/jemerson/)
+ - Introduction to Lie Groups and Lie Algebras taught by [Da Rong Cheng](https://sites.google.com/view/daren-cheng)
