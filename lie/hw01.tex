@@ -1,0 +1,61 @@
+\documentclass[boxes,pages]{homework}
+
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate@stemen.email}
+\term{Winter 2020}
+\course{Lie Groups and Lie Algebras}
+\courseid{PMATH 863}
+\hwnum{1}
+\duedate{Thu, Jan 27, 2020 10:00 PM}
+
+\hwname{Assignment}
+\problemname{\#}
+
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\mats}[2]{\mathcal{M}_{#1}(#2)}
+\newcommand{\GL}[2]{\mathsf{GL}(#1;\, #2)}
+\newcommand{\SL}[2]{\mathsf{SL}(#1;\, #2)}
+\newcommand{\U}[1]{\mathsf{U}(#1)}
+\newcommand{\SU}[1]{\mathsf{SU}(#1)}
+\newcommand{\Sp}[1]{\mathsf{Sp}(#1)}
+\newcommand{\Spf}[2]{\mathsf{Sp}(#1;\, #2)}
+
+\begin{document}
+
+\begin{problem}
+	Let $G\subset \GL{n}{\C}$ and $H\subset\GL{n}{\C}$ be matrix Lie groups. Consider the following set of block diagonal matrices.
+	\[
+		\widetilde{G}\coloneqq \qty{\mqty(A & 0 \\ 0 & B)\in\mats{n+m}{\C}\mid A\in G, B\in H}
+	\]
+	Prove that this is a matrix Lie group. Then prove that $\widetilde{G}\simeq G\times H$ as groups and topological spaces, where the product topology is put on $G\times H$.
+\end{problem}
+
+\begin{problem}
+	Let $\alpha\in\R$ be irrational.
+	\begin{parts}
+		\part{Prove that the set $\qty{\e^{2\pi\iu n\alpha}\mid n\in\Z}$ is dense in $S^1$.}
+		\part{Define \[G = \qty{\mqty(\e^{\iu t} & 0 \\ 0 & \e^{\iu\alpha t})\mid t\in\R}.\] Proce that $\overline{G}$, the closure of $G$ in $\mats{2}{\C}$, satisfies \[\overline{G} = \qty{\mqty(\e^{\iu\theta} & 0 \\ 0 & \e^{\iu\phi}) \mid \theta,\phi\in\R}.\]}
+		\part{Is $G$ a matrix Lie group? What about $\overline{G}$.}
+	\end{parts}
+\end{problem}
+
+\begin{solution}
+	The antisymmetry of the Poisson bracket allows us to equivalently prove $\pb{f}{c} = 0$.
+	\begin{align*}
+		\SU{n} & = \pb{f}{\sqrt{c}}\sqrt{c} + \sqrt{c}\pb{f}{\sqrt{c}} \\
+		         \U{n} & = 2\sqrt{c}\pb{f}{\sqrt{c}}                           \\
+		          \mats{n}{\C}& = -2\sqrt{c}\pb{\sqrt{c}}{f}                          \\
+		          \Spf{n}{\R} & = -2\pb{c}{f}                                         \\
+		          \Sp{n}& = 2\pb{f}{c}
+	\end{align*}
+	Since we now have $\pb{f}{c} = 2\pb{f}{c}$ we can subtract $\pb{f}{c}$ from both sides to obtain $\pb{f}{c} = 0$.
+\end{solution}
+
+\end{document}
