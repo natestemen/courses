@@ -1,5 +1,6 @@
-\documentclass[boxes,pages]{homework}
+\documentclass[pages,boxes,color=WildStrawberry]{homework}
 
+\usepackage{pythonhighlight}
 
 \name{Nate Stemen}
 \studentid{20906566}
@@ -8,54 +9,322 @@
 \course{Lie Groups and Lie Algebras}
 \courseid{PMATH 863}
 \hwnum{1}
-\duedate{Thu, Jan 27, 2020 10:00 PM}
+\duedate{Wed, Jan 27, 2020 10:00 PM}
 
 \hwname{Assignment}
 \problemname{\#}
 
-
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
-\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\1}{\mathbb{1}}
+\newcommand{\iu}{\mkern1mu\mathrm{i}\mkern1mu}
+\newcommand{\ju}{\mkern1mu\mathrm{j}\mkern1mu}
+\newcommand{\ku}{\mkern1mu\mathrm{k}\mkern1mu}
 \newcommand{\e}{\mathrm{e}}
 \newcommand{\mats}[2]{\mathcal{M}_{#1}(#2)}
 \newcommand{\GL}[2]{\mathsf{GL}(#1;\, #2)}
 \newcommand{\SL}[2]{\mathsf{SL}(#1;\, #2)}
 \newcommand{\U}[1]{\mathsf{U}(#1)}
 \newcommand{\SU}[1]{\mathsf{SU}(#1)}
+\renewcommand{\O}[1]{\mathsf{O}(#1)}
+\newcommand{\SO}[1]{\mathsf{SO}(#1)}
 \newcommand{\Sp}[1]{\mathsf{Sp}(#1)}
 \newcommand{\Spf}[2]{\mathsf{Sp}(#1;\, #2)}
+\newcommand{\defeq}{\coloneqq}%\stackrel{\text{\tiny def}}{=}}
+\DeclareMathOperator{\vspan}{span}
 
 \begin{document}
 
 \begin{problem}
-	Let $G\subset \GL{n}{\C}$ and $H\subset\GL{n}{\C}$ be matrix Lie groups. Consider the following set of block diagonal matrices.
-	\[
-		\widetilde{G}\coloneqq \qty{\mqty(A & 0 \\ 0 & B)\in\mats{n+m}{\C}\mid A\in G, B\in H}
-	\]
-	Prove that this is a matrix Lie group. Then prove that $\widetilde{G}\simeq G\times H$ as groups and topological spaces, where the product topology is put on $G\times H$.
-\end{problem}
-
-\begin{problem}
-	Let $\alpha\in\R$ be irrational.
-	\begin{parts}
-		\part{Prove that the set $\qty{\e^{2\pi\iu n\alpha}\mid n\in\Z}$ is dense in $S^1$.}
-		\part{Define \[G = \qty{\mqty(\e^{\iu t} & 0 \\ 0 & \e^{\iu\alpha t})\mid t\in\R}.\] Proce that $\overline{G}$, the closure of $G$ in $\mats{2}{\C}$, satisfies \[\overline{G} = \qty{\mqty(\e^{\iu\theta} & 0 \\ 0 & \e^{\iu\phi}) \mid \theta,\phi\in\R}.\]}
-		\part{Is $G$ a matrix Lie group? What about $\overline{G}$.}
-	\end{parts}
+Let $G\subset \GL{n}{\C}$ and $H\subset\GL{n}{\C}$ be matrix Lie groups. Consider the following set of block diagonal matrices.
+\[
+	\widetilde{G}\defeq \qty{\mqty(A & 0 \\ 0 & B)\in\mats{n+m}{\C}\mid A\in G, B\in H}
+\]
+Prove that this is a matrix Lie group. Then prove that $\widetilde{G}\simeq G\times H$ as groups and topological spaces, where the product topology is put on $G\times H$.
 \end{problem}
 
 \begin{solution}
-	The antisymmetry of the Poisson bracket allows us to equivalently prove $\pb{f}{c} = 0$.
+	First we will show this is a matrix Lie group by taking a sequence $\{A_i\}_{i\in\N}\in\widetilde{G}$. The structure of $\widetilde{G}$ allows us to understand each term in this sequence as
+	\begin{equation*}
+		A_i = \mqty(B_i & 0 \\ 0 & C_i).
+	\end{equation*}
+	Thus, every sequence $\{A_i\}_{i\in\N}\in\widetilde{G}$ is comprised of two sequences $\{B_i\}_{i\in\N}\in G$ and $\{C_i\}_{i\in\N}\in H$. The fact that $G$ and $H$ are both Lie groups allow us to conclude $\lim B_i = B \in G$ and $\lim C_i = C\in H$, and thus $\lim A_i = \smqty(B & 0 \\ 0 & C)\in\widetilde{G}$. Thus we conclude $\widetilde{G}$ is indeed a Lie group.
+
+	To show the two groups are isomorphic, take $\phi:\widetilde{G}\to G\times H$ by
+	\begin{equation*}
+		\phi(A) = \phi\qty(\mqty[B & 0 \\ 0 & C])\mapsto (B, C).
+	\end{equation*}
+	First note this is defined on all of $\widetilde{G}$, and is indeed a bijection by the definition of $\widetilde{G}$. Now we'll show it's a homomorphism.
 	\begin{align*}
-		\SU{n} & = \pb{f}{\sqrt{c}}\sqrt{c} + \sqrt{c}\pb{f}{\sqrt{c}} \\
-		         \U{n} & = 2\sqrt{c}\pb{f}{\sqrt{c}}                           \\
-		          \mats{n}{\C}& = -2\sqrt{c}\pb{\sqrt{c}}{f}                          \\
-		          \Spf{n}{\R} & = -2\pb{c}{f}                                         \\
-		          \Sp{n}& = 2\pb{f}{c}
+		\phi(AB) = \phi\qty(\mqty[C           & 0               \\ 0 & D]\mqty[E & 0 \\ 0 & F]) = \phi\qty(\mqty[CE & 0 \\ 0 & DF]) & = (CE, DF) \\
+		\phi(A)\phi(B)  = (C, D)\times (E, F) & \defeq (CE, DF)
 	\end{align*}
-	Since we now have $\pb{f}{c} = 2\pb{f}{c}$ we can subtract $\pb{f}{c}$ from both sides to obtain $\pb{f}{c} = 0$.
+
+	Lastly we must show $\phi$ to be a homeomorphism. First note $\phi^{-1}:G\times H\to \widetilde{G}$ can be defined as $\phi^{-1}((A, B)) = \smqty[A & 0 \\ 0 & B]$, and the continuity of both $\phi$ and $\phi^{-1}$ follow from the continuity of matrix multiplication.
+\end{solution}
+
+\begin{problem}
+Let $\alpha\in\R$ be irrational.
+\begin{parts}
+	\part{Prove that the set $\qty{\e^{2\pi\iu n\alpha}\mid n\in\Z}$ is dense in $S^1$.}\label{part:2a}
+	\part{Define \[G = \qty{\mqty(\e^{\iu t} & 0 \\ 0 & \e^{\iu\alpha t})\mid t\in\R}.\] Prove that $\overline{G}$, the closure of $G$ in $\mats{2}{\C}$, satisfies \[\overline{G} = \qty{\mqty(\e^{\iu\theta} & 0 \\ 0 & \e^{\iu\phi}) \mid \theta,\phi\in\R}.\]}\label{part:2b}
+	\part{Is $G$ a matrix Lie group? What about $\overline{G}$.}\label{part:2c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:2a}
+	First we will show $A\defeq\qty{\e^{2\pi\iu n\alpha}\mid n\in\Z}$ is a group under complex number multiplication.
+	\begin{equation*}
+		\e^{2\pi\iu n\alpha}\e^{2\pi\iu m\alpha} = \e^{2\pi\iu(n + m)\alpha}\in A
+	\end{equation*}
+	The identity is given by taking $n = 0$, and inverses are taking by $-n$ yada yada yada\dots Also note this set/group has cardinality that is countably infinite, because of the irrationality of $\alpha$.
+
+	Now divide $S^1$ into $N$ equally sized bins, as if slicing a pizza. By the pidgeonhole principle, one such slice must contain an infinite number of points. In particular we can find two elements $x, y$ in that such slice so that $\abs{x\cdot y^{-1}}<\varepsilon_N$. We can then use this element $x\cdot y^{-1}$ to generate an $\varepsilon$-net of the unit circle. Because this $\varepsilon$ is dependent on $N$, we can shrink it as small as we want, and hence generate points within any $\varepsilon$ of $S^1$. Thus this set is dense in $S^1$.
+
+	\ref{part:2b}
+	Let's construct two sequences. First take
+	\begin{equation*}
+		g_n = \mqty(\dmat{\e^{\iu(\theta + 2\pi n)}, \e^{\iu\theta\alpha}\e^{\iu 2\pi\alpha n}}) = \mqty(\dmat{\e^{\iu \theta}, \e^{\iu\theta\alpha}\e^{\iu 2\pi\alpha n}}).
+	\end{equation*}
+	Now that the \emph{subsequence} of $g_n$ so that the second term converges to 1. This can always be done by Part \ref{part:2a}. Similarly we will take
+	\begin{equation*}
+		h_n = \mqty(\dmat{\e^{\iu\qty(\frac{\phi + 2\pi n}{\alpha})}, \e^{\iu\alpha\qty(\frac{\phi + 2\pi n}{\alpha})}}) = \mqty(\dmat{\e^{\iu\phi/\alpha}\e^{\iu\beta 2\pi n}, \e^{\iu \phi}}).
+	\end{equation*}
+	We've used $\beta = 1/\alpha$ (which if $\alpha$ is irrational will still be irrational). Again by Part \ref{part:2a} we can find a subsequence of of $h_n$ to converge to $\mqty(\dmat{1, \e^{\iu\phi}})$.
+
+	By multiplying these two sequences together we get all elements like $\mqty(\dmat{\e^{\iu\theta}, \e^{\iu\phi}})$.
+
+	\ref{part:2c}
+	$G$ is not a Lie group because it is not relatively closed in $\mats{2}{\C}$. That said $\overline{G}$ because first it is a subgroup of $\mats{2}{\C}$ and it \emph{is} relatively closed.
+\end{solution}
+
+\begin{problem}
+Let $G$ be a matrix Lie group. The following problems are not necessarily related.
+\begin{parts}
+	\part{Suppose $G$ has a dense abelian subgroup, prove that $G$ itself is abelian.}\label{part:3a}
+	\part{Assume $G$ is connected and let $H$ be a discrete normal subgroup of $G$. Prove that $H$ is contained in the center $Z(G)$ of $G$.}\label{part:3b}
+	\part{Assume $G$ is connected and let $U$ be a neighborhood of the identity $\mathbb{1}$. Prove that every element $A\in G$ can be written as $A = A_1A_2\cdots A_n$ for some $n\in\N$ and $A_1,\ldots,A_n\in U$.}\label{part:3c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:3a}
+	Call the dense subgroup $H$. Take two element $g, h\in G$ which are not in $H$. The density of $H$ lets us write $g$ and $h$ as limits of elements in $H$.
+	\begin{align*}
+		g\cdot h & = \lim_{i\to\infty} g_i \cdot \lim_{j\to\infty} h_j \\
+		         & = \lim_{i,j\to\infty}g_i\cdot h_j                   \\
+		         & = \lim_{i,j\to\infty}h_j\cdot g_i                   \\
+		         & = \lim_{j\to\infty}h_j\cdot\lim_{i\to\infty}g_i     \\
+		         & = h\cdot g
+	\end{align*}
+	A similar analysis can be done if one element is not in $H$, and another is.
+
+	\ref{part:3b}
+	Since $H$ is normal we know $ghg^{-1}\in H$ for al $g\in G$. In particular this must hold for $g = e_G$ the identity in $G$, and hence $h\in H$. By the discreteness of $H$ we know there is a neighborhood $U$ around $h$ such that $U\cap H = \{h\}$. This fact, combined with the continuity of multiplication in Lie groups allows us to say $ghg^{-1}\in U\cap H = \{h\}$. Thus $ghg^{-1} = h$ and by right multiplying by $g$ we have $gh = hg$. This implies $H$ is contained in the center $Z(G)$ of $G$.
+
+	\ref{part:3c}
+	Here we will make use of the fact that any open and closed subgroup $H$ of a connected Lie group $G$ must be equal $H = G$.
+
+	First take $U$ to be the intersection $U\cap U^{-1}$. This is still an open neighborhood of the identity because the inversion map $g\mapsto g^{-1}$ is smooth. Now build the group
+	\begin{equation*}
+		H = \bigcup_{n\in\N}U^n = \qty{u_1\cdot u_2\cdots u_n : u_i\in U \text{ and for some }n\in\N}.
+	\end{equation*}
+	Since each $U^n$ is open, $H$ must also be open because it is the union of open sets.
+
+	To show this set is closed, take and element $b\in\overline{H}$ the closure of $H$. Since $bU^{-1}$ is open, it must intersect $H$ and thus we can find an $h\in H\cap gU^{-1}$. This means $h = gu^{-1}$ for some $u\in U$, and $h = u_1\cdot u_2\cdots u_n$ for some $u_i\in U$. Setting these two representation equal we can say $g = u_1\cdot u_2\cdots u_n\cdot u\in U^{n+1}\subseteq H$. Thus $H$ is closed. Finally using the statement from the beginning of this problem of the solution we conclude that $G$ is generated by $U$.
+\end{solution}
+
+\begin{problem}
+Prove that $\SO{n}$ is connected for all $n\geq 1$.
+\end{problem}
+
+\begin{solution}
+	First note that $\SO{1} = \{\mqty[1]\}$ is connected. Revolutionary.
+
+	Now for any unit vector $v\in\R^{n}$, take $\vb{e}_1$ to be the first standard basis vector and pick $\vb{e}_2$ to be orthogonal to $\vb{e}_1$ and with the property that $v\in\vspan(\vb{e}_1, \vb{e}_2)$. Complete the basis arbitrarily. The angle between $\vb{e}_1$ and $v$ can be computed, and we call it $\phi$. Our path can be constructed as:
+	\begin{equation*}
+		p(t) = \mqty[\phantom{-}\cos{\phi t} & \sin{\phi t} & \\ -\sin{\phi t} & \cos{\phi t} & \\ & & \mathbb{1}_{n-2}]
+	\end{equation*}
+	This is clearly in $\SO{n}$ and is a path that rotates $\vb{e}_1$ to $v$.
+
+	Since the rotation part of the above matrix is in $\SO{2}$, we can do an orientation preserving change of basis (which will also be in $\SO{2}$) to transform the above path into
+	\begin{equation*}
+		\mqty[\dmat{1, R_{\phi t}, \mathbb{1}_{n-3}}] = \mqty[\dmat{1, A}].
+	\end{equation*}
+	Where $A\in\SO{n-1}$. By induction this shows that every element in $\SO{n}$ can be connected to the identity, and hence is connected.
+\end{solution}
+
+\begin{problem}
+An alternative proof of the connectedness of $\GL{n}{\C}$.
+\begin{parts}
+	\part{Let $A, B\in\GL{n}{\C}$. Prove that there are only finitely many $\lambda \in \C$ such that $\det(\lambda A + (1 - \lambda)B) = 0$.}\label{part:5a}
+	\part{Prove that there is a continuous function $\lambda:[0, 1]\to\C$ with $\lambda(0) = 0, \lambda(1) = 1$, such that $A(t) = \lambda(t)A + (1 - \lambda(t))B$ lies in $\GL{n}{\C}$ for all $t\in[0, 1]$. Deduce that $\GL{n}{\C}$ is connected.}\label{part:5b}
+	\part{Were does this argument fail when $\C$ is replaced with $\R$.}\label{part:5c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:5a}
+	First note that the determinant is a continuous function because it can be written as a polynomial in the entries of a matrix. This means there exists a neighborhood around $B$ (and $A$) such that the determinat of $\varepsilon A + (1-\varepsilon)B$ must be approximately the same as the determinant of $B$ (and in particular, nonzero). This fact, together with the determinant being a polynomial allow us to conclude there are only finite number of roots of this function on the line joining $A$ and $B$.
+
+	\ref{part:5b}
+	There always exists a continuous paths connecting any two matrices in $\GL{n}{\C}$ because there are an uncountable number of paths, and only a finite number of points to avoid. Clearly this can be done.
+
+	\ref{part:5c}
+	This argument fails when dealing with $\GL{n}{\R}$ because we cannot ``go around'' the holes because the determinant maps to $\R$ (a one dimensional space with a hole removed is not connected) instead of $\C$ (a two dimensional space with a hole removed is still connected).
+\end{solution}
+
+
+\begin{problem}
+Let $\H$ denote the skew field of quaternions.
+\begin{parts}
+	\part{Let $G$ be the set of unit quaternions. Prove that $G$ is a group.}\label{part:6a}
+	\part{Write and arbitrary quaternion $q = a + b\iu + c\ju + d\ku$ as $q = z + w\ju$, where $z = a + b\iu$ and $w = c + d\iu$ are viewed as complex numbers. Define $F:\H\to\mats{2}{\C}$ by \[F:z + w\ju\mapsto\mqty(z & w \\ -\overline{w} & \overline{z}).\] Prove that $F$ gives a group isomorphism of $G$ onto $\SU{2}$, and that both are homeomorphic to $S^3$.}\label{part:6b}
+	\part{Explain why $G$ ``agrees'' with $\Sp{1} = \Spf{1}{\C}\cap\U{2}$ defined in class.}\label{part:6c}
+	\part{Exhibit a Lie group isomorphism between $\SO{2}$ and $\U{1}$, and prove that both are homeomorphic to $S^1$.}\label{part:6d}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:6a}
+	The identity is given by $e = 1\in\R$, inverses are $q^{-1} = a - b\iu - c\ju - d\ku$. To show this group is closed under multiplication please accept my computer aided proof:
+
+	% \begin{noindent}
+\begin{python}
+from sympy.algebras.quaternion import Quaternion
+from sympy.abc import a, b, c, d, e, f, g, h
+
+q = Quaternion(a, b, c, d)
+r = Quaternion(e, f, g, h)
+
+(q * r).norm().expand().collect([a, b, c, d]).simplify()
+>>> sqrt((a**2 + b**2 + c**2 + d**2)*(e**2 + f**2 + g**2 + h**2))
+\end{python}
+	% \end{noindent}
+
+	Now because both \texttt{q} and \texttt{r} are unit quaternions (something I wasn't able to tell \texttt{sympy}), we know $a^2 + b^2 + c^2 + d^2 = 1 = e^2 + f^2 + g^2 + h^2$. Hence the product also has norm 1.
+
+
+	\ref{part:6b}
+	Let $q = a + b\iu + c\ju + d\ku$ and $r = e + f\iu + g\ju + h\ku$ and note that
+	\begin{align*}
+		q\cdot r & = ae - bf - cg - dh + (af + be + ch - dg)\iu             \\
+		         & \qquad + (ag - bh + ce + df)\ju + (ah + bg - cf + de)\ku
+	\end{align*}
+	Then we have the following very fun function.
+	\begin{equation*}
+		\resizebox{\hsize}{!}{$F\qty(q\cdot r) = \mqty(ae - bf - cg - dh + (af + be + ch - dg)\iu & ag - bh + ce +df + (ah + bg - cf + de)\iu \\ -ag + bh - ce - df + (ah + bg - cf + de)\iu & ae - bf - cg - dh - (af + be + ch - dg)\iu)$}
+	\end{equation*}
+	Now we can try the same taking the product after.
+	\begin{align*}
+		F(q)\cdot F(r) & = \mqty(a + b\iu                                                            & c + d\iu                                  \\ -c + d\iu & a - b\iu)\mqty(e + f\iu & g + h\iu \\ -g + h\iu & e - f\iu) \\
+		               & = \resizebox{.8\hsize}{!}{$\mqty(ae - bf - cg - dh + (af + be + ch - dg)\iu & ag - bh + ce +df + (ah + bg - cf + de)\iu \\ -ag + bh - ce - df + (ah + bg - cf + de)\iu & ae - bf - cg - dh - (af + be + ch - dg)\iu)$}
+	\end{align*}
+	As you can (hopefully) see, these two are equivalent. Hey I'm not the one who suggested this problem\dots
+
+	Apparently that wasn't enough torture for this problem. To show this is a surjection you can write out the condition $AA^\dagger = \mathbb{1}$ for $2\times 2$ complex matrices, along with the fact that $\det A = 1$ to arrive at the conclusion that any matrix in $\SU{2}$ can be written as $\smqty(z & w \\ -\overline{w} & \overline{z})$. This argument can also be made because $AA^\dagger = \mathbb{1}$ which means $A$ has orthonormal columns. If the first column is $(a, b)$, and the second must be orthogonal to that. Together with the fact that the determinant of $A$ must be 1 gives us the second column must be $(-b, a)^\dagger$.
+
+	These are both homeomorphic to $S^3$ by sending a unit quaternion $q = a + b\iu + c\ju + d\ku$ to $(a, b, c, d)\in\R^4\supset S^3$. This is clearly a homeomorphism. I normally wouldn't be so hand wavey\footnote{maybe I would}, but this problem is \emph{way} tedious.
+
+	\ref{part:6c}
+	We've just shown $G$ to be isomorphic to $\SU{2}$, so clearly they're in $\U{2}$. Now we just need to show they're also in $\Spf{1}{\C}$. I tried showing any element in $\SU{2}$ commutes with $\smqty(0 & 1 \\ -1 & 0)$, but that didn't seem to work. I'm out of ideas, and out of time.
+
+	\ref{part:6d}
+	$\SO{2}$ is the matrix Lie group of $2\times 2$ rotation matrices, which can always be specified by an angle $\theta\in[0, 2\pi)$. That is any element $A\in\SO{2}$ can be written as $R_\theta$ for some $\theta$ as previously stated. With this we define $f:\SO{2}\to \U{1}$ by
+	\begin{equation*}
+		f:R_\theta\mapsto\e^{\iu\theta}.
+	\end{equation*}
+	The periodicity of the complex exponential ensure this function is a bijection. To show it's a homomorphism we use the simple geometric fact that rotations about the origin compose by adding the corresponding angles of rotation. That is $R_\alpha\cdot R_\beta = R_{\alpha + \beta}$. Thus $f(R_\alpha R_\beta) = f(R_{\alpha + \beta}) = \e^{\iu (\alpha + \beta)}$ and $f(R_\alpha)f(R_\beta) = \e^{\iu\alpha}\e^{\iu\beta} = \e^{\iu(\alpha + \beta)}$.
+
+	To show $\U{1}$ is homeomorphic to $S^1$, take the map $\e^{\iu x}\mapsto(\cos{x}, \sin{x})$. For $\SO{2}$ take $R_\theta\mapsto (\cos{\theta}, \sin{\theta})$.
+\end{solution}
+
+\begin{problem}
+For $X, Y\in\mats{n}{\C}$, define $F_X(Y)\coloneqq\partial_t|_{t=0}\e^{X + tY}$.
+\begin{parts}
+	\part{Prove that $F_X:\mats{n}{\C}\to\mats{n}{\C}$ is linear.}\label{part:7a}
+	\part{Prove that for all $X, Y\in\mats{n}{\C}$ with $\norm{Y} < 1$, there holds \[\norm{\e^{X + Y} - \e^X - F_X(Y)}\leq C\norm{Y}^2\e^{\norm{X}},\] where $C$ is some constant independent of $X, Y$.}\label{part:7b}
+	\part{Prove that $\exp:X\mapsto\e^X$ defines a continuously differentiable function from $\mats{n}{\C}$ to $\mats{n}{\C}$.}\label{part:7c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:7a}
+	\begin{align*}
+		F_X(Y) & = \pdv{t}\eval{\lim_{n\to\infty}\qty[\e^{X/n}\e^{tY/n}]^n}_{t=0}                                 \\
+		       & = \lim_{n\to\infty}\sum_{m = 1}^{n}\e^{\frac{m}{n}X}\frac{Y}{n}\e^{\frac{n - m}{n}X}             \\
+		       & = \qty(\lim_{n\to\infty}\frac{1}{n}\sum_{m = 1}^{n}\e^{\frac{m}{n}X} Y \e^{\frac{-m}{n}X})\e^{X} \\
+		       & = \int_0^1\e^{xX}Y\e^{(1-x)X}\dd{x}
+	\end{align*}
+	From here it's simple to see $F_X$ is linear.
+
+	\ref{part:7b}
+	\begin{align*}
+		\e^{X + Y} - \e^{X} - F_X(Y) & = \qty(\mathbb{1} + X + Y + \sum_{n = 2}^\infty\frac{(X+Y)^n}{n!})                  \\
+		                             & \qquad - \qty(\mathbb{1} + X + \sum_{n = 2}^\infty\frac{X^n}{n!})                   \\
+		                             & \qquad - \qty(Y + \pdv{t}\eval{\sum_{n = 2}^\infty\frac{(X + tY)^n}{n!}}_{t=0})     \\
+		                             & = \sum_{n=2}^\infty\frac{1}{n!}\qty(X^n - (X+Y)^n - \pdv{t}\eval{(X + tY)^n}_{t=0})
+	\end{align*}
+	Taking the norm of both sides it's clear we can get a factor of $\e^{\norm{X}}$. To get the $\norm{Y}^2$ I think it comes from the fact that there are \emph{never} any $Y^n$ terms for any $n$ coming from the last $F_X$ term. That said I cannot find how to get the two simultaneously. :'(
+
+	\ref{part:7c}
+	Remember $\mats{n}{\C}\cong \C^{n^2}$. Since we defined $\e^{X}$ via a power series, and $(X^m)_{ij}$ is a polynomial in the matrix entries (for all $m$), surely this function is continuously differentable, and in fact, wouldn't it be infinitely differentiable?
+
+	I think this fact can also be seen from the fact that both matrix multiplication and addition are smooth maps, and $\e^{X}$ is a composition of smooth maps, and hence smooth. Perhaps this is not always true though because we have ever increasing number of compositions?
+\end{solution}
+
+\begin{problem}
+Prove that for all $X\in\mats{n}{\C}$, we have \[\lim_{m\to\infty}\qty[\1 + \frac{X}{m}]^m = \e^X.\]
+\end{problem}
+
+\begin{solution}
+	Here we will use the fact that for $\norm{B} < 1/2$ we have
+	\begin{equation*}
+		\log(\1 + B) = B + \order{\norm{B}^2}.
+	\end{equation*}
+	Start by choosing an $m$ large enough so that both $\norm{X/m} < 1/2$ and $\norm{X/m - \1} < 1$ are satisfied. Then by the above identity we have
+	\begin{equation*}
+		\log(\1 + \frac{X}{m}) = \frac{X}{m} + \order{\frac{\norm{X}}{m^2}}.
+	\end{equation*}
+	The second inequality we chose $m$ to satisfy allows us to exponentiate both sides to yield
+	\begin{equation*}
+		\1 + \frac{X}{m} = \exp(\frac{X}{m} + \order{\frac{\norm{X}}{m^2}})
+	\end{equation*}
+	and, therefore
+	\begin{equation*}
+		\qty(\1 + \frac{X}{m})^m = \exp(X + \order{\frac{\norm{X}}{m}}).
+	\end{equation*}
+	Taking the limit, and using the continuity of the exponential we find that
+	\begin{equation*}
+		\lim_{m\to\infty}\qty(\1 + \frac{X}{m})^m = \e^X.
+	\end{equation*}
+\end{solution}
+
+\begin{problem}
+Prove that, even when $X, Y\in\mats{n}{\C}$ do not commute, we still have \[\pdv{t}\eval{\tr(\e^{X + tY})}_{t=0} = \tr(\e^XY).\]
+\end{problem}
+
+\begin{solution}
+	Here we make good use of the Lie product formula.
+	\begin{align*}
+		\pdv{t}\eval{\tr(\e^{X + tY})}_{t=0} & = \pdv{t}\eval{\tr[\lim_{n\to\infty}\qty(\e^{X/n}\e^{tY/n})^n]}_{t=0}                           \\
+		                                     & = \eval{\tr[\lim_{n\to\infty}n\qty(\e^{X/n}\e^{tY/n})^{n-1}\e^{X/n}\e^{tY/n}\frac{Y}{n}]}_{t=0} \\
+		                                     & = \eval{\tr[\lim_{n\to\infty}\qty(\e^{X/n}\e^{tY/n})^nY]}_{t=0}                                 \\
+		                                     & = \eval{\tr(\e^{X+tY}Y)}_{t=0}                                                                  \\
+		                                     & = \tr(\e^{X}Y)                                                                                  \\
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Prove that a compact matrix Lie group has only finitely many connected components.
+\end{problem}
+
+\begin{solution}
+	Take $G$ to be our compact Lie group. Without loss of generality we will think about $G$ as a closed and bounded subset of $\R^n$ for some $n$. Now suppose $G$ has an infinute number of connected components. Because each component must has an element with an open neighborhood around it, the volume of each component is $\varepsilon > 0$. However our closed and bounded region of $\R^n$ has finite volume and cannot fit an infinite number of disjoint open balls.
 \end{solution}
 
 \end{document}
