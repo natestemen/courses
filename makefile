@@ -1,4 +1,5 @@
-DIRS = qip numerical quantumtheory
+DIRS = qip numerical qtheory lie oqs qdevices
+
 .PHONY: clean
 
 clean:
@@ -6,7 +7,7 @@ clean:
 
 build:
 	for dir in $(DIRS); do \
-		cd $$dir; \
+		pushd $$dir; \
 		latexmk -pdf -quiet; \
-		cd ../; \
+		popd; \
 	done
