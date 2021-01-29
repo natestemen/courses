@@ -1,40 +1,15 @@
-\documentclass[pages,boxes,color=WildStrawberry]{homework}
+\documentclass[
+	pages,
+	boxes,
+	color=WildStrawberry
+]{homework}
 
 \usepackage{pythonhighlight}
+\usepackage{macros}
 
-\name{Nate Stemen}
-\studentid{20906566}
-\email{nate@stemen.email}
-\term{Winter 2020}
-\course{Lie Groups and Lie Algebras}
-\courseid{PMATH 863}
+\input{config}
 \hwnum{1}
 \duedate{Wed, Jan 27, 2020 10:00 PM}
-
-\hwname{Assignment}
-\problemname{\#}
-
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\renewcommand{\H}{\mathbb{H}}
-\newcommand{\1}{\mathbb{1}}
-\newcommand{\iu}{\mkern1mu\mathrm{i}\mkern1mu}
-\newcommand{\ju}{\mkern1mu\mathrm{j}\mkern1mu}
-\newcommand{\ku}{\mkern1mu\mathrm{k}\mkern1mu}
-\newcommand{\e}{\mathrm{e}}
-\newcommand{\mats}[2]{\mathcal{M}_{#1}(#2)}
-\newcommand{\GL}[2]{\mathsf{GL}(#1;\, #2)}
-\newcommand{\SL}[2]{\mathsf{SL}(#1;\, #2)}
-\newcommand{\U}[1]{\mathsf{U}(#1)}
-\newcommand{\SU}[1]{\mathsf{SU}(#1)}
-\renewcommand{\O}[1]{\mathsf{O}(#1)}
-\newcommand{\SO}[1]{\mathsf{SO}(#1)}
-\newcommand{\Sp}[1]{\mathsf{Sp}(#1)}
-\newcommand{\Spf}[2]{\mathsf{Sp}(#1;\, #2)}
-\newcommand{\defeq}{\coloneqq}%\stackrel{\text{\tiny def}}{=}}
-\DeclareMathOperator{\vspan}{span}
 
 \begin{document}
 
@@ -90,11 +65,11 @@ Let $\alpha\in\R$ be irrational.
 	\begin{equation*}
 		g_n = \mqty(\dmat{\e^{\iu(\theta + 2\pi n)}, \e^{\iu\theta\alpha}\e^{\iu 2\pi\alpha n}}) = \mqty(\dmat{\e^{\iu \theta}, \e^{\iu\theta\alpha}\e^{\iu 2\pi\alpha n}}).
 	\end{equation*}
-	Now that the \emph{subsequence} of $g_n$ so that the second term converges to 1. This can always be done by Part \ref{part:2a}. Similarly we will take
+	Now that the \emph{subsequence} of $g_n$ so that the second term converges to 1. This can always be done by Part~\ref{part:2a}. Similarly we will take
 	\begin{equation*}
 		h_n = \mqty(\dmat{\e^{\iu\qty(\frac{\phi + 2\pi n}{\alpha})}, \e^{\iu\alpha\qty(\frac{\phi + 2\pi n}{\alpha})}}) = \mqty(\dmat{\e^{\iu\phi/\alpha}\e^{\iu\beta 2\pi n}, \e^{\iu \phi}}).
 	\end{equation*}
-	We've used $\beta = 1/\alpha$ (which if $\alpha$ is irrational will still be irrational). Again by Part \ref{part:2a} we can find a subsequence of of $h_n$ to converge to $\mqty(\dmat{1, \e^{\iu\phi}})$.
+	We've used $\beta = 1/\alpha$ (which if $\alpha$ is irrational will still be irrational). Again by Part~\ref{part:2a} we can find a subsequence of of $h_n$ to converge to $\mqty(\dmat{1, \e^{\iu\phi}})$.
 
 	By multiplying these two sequences together we get all elements like $\mqty(\dmat{\e^{\iu\theta}, \e^{\iu\phi}})$.
 
@@ -178,7 +153,6 @@ An alternative proof of the connectedness of $\GL{n}{\C}$.
 	This argument fails when dealing with $\GL{n}{\R}$ because we cannot ``go around'' the holes because the determinant maps to $\R$ (a one dimensional space with a hole removed is not connected) instead of $\C$ (a two dimensional space with a hole removed is still connected).
 \end{solution}
 
-
 \begin{problem}
 Let $\H$ denote the skew field of quaternions.
 \begin{parts}
@@ -234,7 +208,7 @@ r = Quaternion(e, f, g, h)
 	We've just shown $G$ to be isomorphic to $\SU{2}$, so clearly they're in $\U{2}$. Now we just need to show they're also in $\Spf{1}{\C}$. I tried showing any element in $\SU{2}$ commutes with $\smqty(0 & 1 \\ -1 & 0)$, but that didn't seem to work. I'm out of ideas, and out of time.
 
 	\ref{part:6d}
-	$\SO{2}$ is the matrix Lie group of $2\times 2$ rotation matrices, which can always be specified by an angle $\theta\in[0, 2\pi)$. That is any element $A\in\SO{2}$ can be written as $R_\theta$ for some $\theta$ as previously stated. With this we define $f:\SO{2}\to \U{1}$ by
+	$\SO{2}$ is the matrix Lie group of $2\times 2$ rotation matrices, which can always be specified by an angle $\theta\in[0, 2\pi)$. That is any element $A\in\SO{2}$ can be written as $R_\theta$ for some $\theta$ as previously stated. With this we define $f:\SO{2}\to \U{1}$ by % chktex 9
 	\begin{equation*}
 		f:R_\theta\mapsto\e^{\iu\theta}.
 	\end{equation*}
@@ -305,7 +279,7 @@ Prove that for all $X\in\mats{n}{\C}$, we have \[\lim_{m\to\infty}\qty[\1 + \fra
 \end{solution}
 
 \begin{problem}
-Prove that, even when $X, Y\in\mats{n}{\C}$ do not commute, we still have \[\pdv{t}\eval{\tr(\e^{X + tY})}_{t=0} = \tr(\e^XY).\]
+Prove that, even when $X, Y\in\mats{n}{\C}$ do not commute, we still have \[\pdv{t}\eval{\tr(\e^{X + tY})}_{t=0} = \tr(\e^{X}Y).\]
 \end{problem}
 
 \begin{solution}
@@ -313,7 +287,7 @@ Prove that, even when $X, Y\in\mats{n}{\C}$ do not commute, we still have \[\pdv
 	\begin{align*}
 		\pdv{t}\eval{\tr(\e^{X + tY})}_{t=0} & = \pdv{t}\eval{\tr[\lim_{n\to\infty}\qty(\e^{X/n}\e^{tY/n})^n]}_{t=0}                           \\
 		                                     & = \eval{\tr[\lim_{n\to\infty}n\qty(\e^{X/n}\e^{tY/n})^{n-1}\e^{X/n}\e^{tY/n}\frac{Y}{n}]}_{t=0} \\
-		                                     & = \eval{\tr[\lim_{n\to\infty}\qty(\e^{X/n}\e^{tY/n})^nY]}_{t=0}                                 \\
+		                                     & = \eval{\tr[\lim_{n\to\infty}\qty(\e^{X/n}\e^{tY/n})^{n}Y]}_{t=0}                               \\
 		                                     & = \eval{\tr(\e^{X+tY}Y)}_{t=0}                                                                  \\
 		                                     & = \tr(\e^{X}Y)                                                                                  \\
 	\end{align*}

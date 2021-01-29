@@ -16,3 +16,15 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 
 - Open Quantum Systems taught by [Joseph Emerson](https://services.iqc.uwaterloo.ca/people/profile/jemerson/)
 - Introduction to Lie Groups and Lie Algebras taught by [Da Rong Cheng](https://sites.google.com/view/daren-cheng)
+
+---
+
+## Workflow
+
+All my classes thus far have required us to use Crowdmark to submit homework. In order to submit to crowdmark each homework question must be on a new page. To accomplish this I use the `pages` option on the [latex homework](https://github.com/natestemen/latex-homework/) template I've been working on. Once I'm finished I run
+
+```bash
+pdfseparate hwname.pdf hwname-%d.pdf
+```
+
+This separates the pages into their own document and I can upload them individually. Modern life...
