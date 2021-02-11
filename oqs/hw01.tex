@@ -1,28 +1,77 @@
-\documentclass[boxes,pages]{homework}
+\documentclass[
+	pages,
+	boxes,
+	color=RoyalPurple
+]{homework}
 
 
-\name{Nate Stemen}
-\studentid{20906566}
-\email{nate@stemen.email}
-\term{Winter 2020}
-\course{Theory of Open Quantum Systems}
-\courseid{QIC 845}
+\usepackage{macros}
+\usepackage[footnote,nolist,smaller]{acronym}
+\input{config}
 \hwnum{1}
-\duedate{IDK}
-
-\hwname{Assignment}
-% \problemname{\#}
+\duedate{Mon, Feb 22, 2020 11:59 PM}
 
 
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\iu}{\mathrm{i}\mkern1mu}
-\newcommand{\e}{\mathrm{e}}
+\makeatletter
+\numberwithin{tcb@cnt@prob}{section}
+\makeatother
+
 
 \begin{document}
 
+\begin{acronym}
+    \acro{PVM}{Projection-Valued Measure}
+    \acro{POVM}{Positive Operator-Valued Measure}
+\end{acronym}
+
+\setcounter{section}{2}
+\problemnumber{2}
+
 \begin{problem}
+Show that the reduced state obtained via partial trace is a density operator, i.e., a non-negative operator satisfying $\tr\rho_A = 1$.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\begin{problem}
+Prove that these three pure-state conditions are equivalent.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\problemnumber{5}
+
+\begin{problem}
+Prove the existence of the Schmidt decomposition.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\setcounter{section}{3}
+\problemnumber{1}
+
+\begin{problem}
+Prove the two properties given by Eqns. 3.1.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\begin{problem}
+Apply Naimark's theorem to identify a \ac{PVM} in an extended Hilbert space that generates the trine.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\begin{problem}
+\begin{parts}
+    \part{Verify that the map $E$ defined in terms of projectors onto coherent states in the example above satisfies the postulates of a \ac{POVM}.}\label{part:33a}
+    \part{What is the operational interpretation of $\Pr(X) = \tr(E(X)\rho)$ for this \ac{POVM}, noting that $\alpha = \qty(\expval{q}, \expval{p})$ denotes the expectations of the position $q$ and momentum $p$ operatores in the associated coherent state, and that $\Omega = \R^2$ means we are measuring the position and momentum of some particle?}
+\end{parts}
 \end{problem}
 
 \begin{solution}
