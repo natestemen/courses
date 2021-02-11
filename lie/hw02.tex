@@ -1,0 +1,335 @@
+\documentclass[
+	pages,
+	boxes,
+	color=WildStrawberry
+]{homework}
+
+
+\usepackage{nicefrac}
+\usepackage{cleveref}
+\usepackage{macros}
+\input{config}
+\hwnum{2}
+\duedate{Wed, Feb 10, 2020 10:00 PM}
+
+\begin{document}
+
+\begin{problem}
+A matrix $A$ is called unipotent if $A = \1 + N$ with $N$ nilpotent. Note that $\log A$ is defined whenever $A$ is unipotent since in that case $A - \1$ is nilpotent, and the relevant power series terminates after finitely many terms.
+\begin{parts}
+	\part{Prove that if $A$ is unipotent, then $\log A$, defined using the power series
+		\[
+			\log A = \sum_{k = 1}^{\infty} (-1)^{k + 1}\frac{(A - \1)^{k}}{k},
+		\]
+		is nilpotent, and that $\e^{\log A} = A$.}\label{part:1a}
+	\part{Prove that if $X$ is nilpotent, then $\e^{X}$ is unipotent, and that $\log(\e^X) = X$.}\label{part:1b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	Given $A = \1 + N$ where $N$ is nilpotent we take the index of $N$ to be $n$.
+	First let's expand the series for $\log A$.
+	\begin{align*}
+		\log A & = \sum_{k = 1}^{\infty} (-1)^{k + 1}\frac{(A - \1)^{k}}{k}                   \\
+		       & = \sum_{k = 1}^{\infty} (-1)^{k + 1}\frac{N^{k}}{k}                          \\
+		       & = \sum_{k = 1}^{n-1} (-1)^{k + 1}\frac{N^{k}}{k}                             \\
+		       & = N - \frac{N^2}{2} + \frac{N^3}{3} - \cdots + (-1)^n\frac{N^{n - 1}}{n - 1}
+	\end{align*}
+	To see how this expression is nilpotent take $\qty(\log A)^n$.
+	Using the fact that $A^\ell = 0$ for all $\ell \geq n$ we can see all terms will vanish, because their degree will be greater than or equal $n$.
+
+	\ref{part:1b}
+	Again let's expand the series for $\exp(X)$ where the index of $X$ is again $n$.
+	\begin{equation*}
+		\e^X = \sum_{k = 0}^{\infty}\frac{X^k}{k!} = \1 + \sum_{k = 1}^{n - 1} \frac{X^k}{k!} = \1 + \underbrace{X + \frac{X^2}{2} + \cdots + \frac{X^{n-1}}{(n-1)!}}_{N}
+	\end{equation*}
+	Here we see we can chop off the tail of the exponential and it leaves us with $\e^{X} = \1 + N$ where $N$ is nilpotent by the same argument as above.
+	That is take $N^n$ and the fact that $N^\ell = 0$ for all $\ell \geq n$.
+\end{solution}
+
+\begin{problem}
+\begin{parts}
+	\part{Classify all the one-dimensional and two-dimensional real abstract Lie algebras up to isomorphism.}\label{part:2a}
+	\part{Find at least three non-isomorphic three-dimensional real Lie algebras. (\textit{Start by proving that $\su{2}$ is not isomorphic to $\slie{2}{\R}$.})}\label{part:2b}
+	\part{Prove that $\su{2}$ is isomorphic to $\R^3$ as real Lie algebras, where the Lie algebra structure on the latter is given by the cross product.}\label{part:2c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:2a}
+	The only one dimensional real Lie algebra is (up to isomorphism) the real line $\R$ with addition with Lie bracket given as the commutator (and hence always 0).
+
+	There are two real Lie algebras. The Abelian one with $\comm{X}{Y} = 0$ for all $X, Y\in\mfr{g}$ which can be represented as $\R^2$ under addition. And second we have a Lie algebra with commutation relation $\comm{X}{Y} = X$ where $X$ and $Y$ are a basis for our vector space. Any commutation relation $\comm{X}{Y} = \alpha X + \beta Y$ can be shown to be equivalent to the previous commutation relation by a basis transformation, and hence are still isomorphic.
+
+	\ref{part:2b}
+	First take $\R^3$ with vector addition. This is an Abelian Lie algebra. The second two will be $\su{2}$ and $\slie{2}{\R}$ which we will now prove are not isomorphic.
+
+	First recall the commutation relations for the standard basis of $\slie{2}{\R}$.
+	\begin{align*}
+		\comm{X_1}{X_2} & = X_2 & \comm{X_1}{X_3} & = -X_3 & \comm{X_2}{X_3} & = 2X_1
+	\end{align*}
+	And for $\su{2}$:
+	\begin{align*}
+		\comm{Y_i}{Y_j} = \epsilon_{ijk}Y_k
+	\end{align*}
+	Now note that $\slie{2}{\R}$ can have multiple two-dimensional \emph{closed} subspaces, but $\su{2}$ does not. Given an isomorphism must preserve subspaces, there cannot be an isomoprhism.
+
+	\ref{part:2c}
+	Using the commutation relations above for $\su{2}$, and those of $\R^3$ with the cross product:
+	\begin{align*}
+		\comm{\vb{x}}{\vb{y}} & = \vb{z} & \comm{\vb{x}}{\vb{z}} & = -\vb{y} & \comm{\vb{y}}{\vb{z}} & = \vb{x}
+	\end{align*}
+	Relabeling our basis $\vb{x}\mapsto\vb{x}_1, \vb{y}\mapsto\vb{x}_2, \vb{z}\mapsto\vb{x}_3$ we see we can write these commutation relations as
+	\begin{equation*}
+		\comm{\vb{x}_i}{\vb{x}_j} = \epsilon_{ijk}\vb{x}_k
+	\end{equation*}
+	which are exactly that of $\su{2}$. So send $\vb{x}_i\mapsto Y_i$ for the isomorphism.
+\end{solution}
+
+\begin{problem}
+Define the \emph{n-th generalized Heisenberg group} by
+\[
+	H_n = \qty{ A \in \GL{n}{\R} : A - \1 \text{ is strictly upper triangular} }.
+\]
+\begin{parts}
+	\part{Prove that the Lie algebra of $H_n$ is
+		\[
+			\mfr{h}_n \defeq \qty{X \in \gl{n}{\R} : X \text{ is strictly upper triangular}}.
+		\]}\label{part:3a}
+	\part{Prove that $\exp: \mfr{h}_n \to H_n$ is both injective and surjective.}\label{part:3b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:3a}
+	First note that $H_n$ is connected for all $n$.
+	To see this take the following path $p: [0, 1]\to H_n$ that starts at the identity and brings you to any element in $H_n$:
+	\begin{equation*}
+		p(t)\defeq \mqty[1 & a_{12}t & a_{13}t & \cdots & a_{1n}t \\  & 1 & a_{23}t & & a_{2n}t & \\ & & 1 & & \vdots \\ & & & \ddots & a_{n-1, n}t \\ & & & & 1]
+	\end{equation*}
+	Where below the diagonal we have all 0s.
+	Since we now have a path from every element in $H_n$ to the identity, we can differentiate it at 0 to find the tangent space.
+	\begin{equation*}
+		\eval{\dv{t}p(t)}_{t=0} = \mqty[0 & a_{12} & a_{13} & \cdots & a_{1n} \\  & 0 & a_{23} & & a_{2n} & \\ & & 0 & & \vdots \\ & & & \ddots & a_{n-1, n} \\ & & & & 0]
+	\end{equation*}
+	This shows the tangent space at the identity contains strictly upper triangular matrices. To see it contains \emph{all} strictly upper triangular matrices choose $a_{ij}$ to be the matrix you want. Done.
+
+	\ref{part:3b}
+	First note that any strictly upper triangular matrix is nilpotent. If $A$ is $n\times n$ and strictly upper triangular, the characteristic polynomial of $A$ is $A^n$ and by Cayley-Hamilton we have $A^n = 0$. Thus $A$ is nilpotent. This means the exponential of any element in $\mfr{h}_n$ terminates. For $X\in\mfr{h}_n$
+	\begin{equation*}
+		\e^{X} = \1 + X + \frac{X^2}{2} + \cdots + \frac{X^{n-1}}{(n-1)!}.
+	\end{equation*}
+	From here, I think there is some argument to be made how each entry in the matrix is a polynomial that's not always zero so something must happen. I'm not entirely sure. This homework has been so long.
+\end{solution}
+
+\begin{problem}
+Give, with justification, an example showing that the connectedness of $G$ is necessary for each of the following statements.
+\begin{parts}
+	\part{If $G$ is a connected matrix Lie group with abelian Lie algebra, then $G$ is abelian.}\label{part:4a}
+	\part{If $G$ is a connected matrix Lie group and $\Phi: G \to G$ is a Lie group homomorphism inducing the identity map on $\mfr{g}$, then $\Phi$ is the identity map on $G$.}\label{part:4b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:4a}
+	Let $H$ be any Abelian Lie group and take the product Lie group $G = H\times S_3$ where $S_3$ is the (non-Abelian) symmetric group on 3 elements. Since $S_3$ has 6 elements, the new Lie group $G$ is isomorphic to $G^6$ and hence is not connected. The Lie algebra of $G$ is exactly that of $H$'s because of the discrete structure of $S_3$. Because $H$ is Abelian, it's Lie algebra is too. Hence we've found an Abelian Lie algebra that arrised from a non-Abelian Lie group.
+
+	\ref{part:4b}
+	Take $G = \O{2}$ and $\Phi(A) = \det(A)A$. This is a homomorphism because $\det(AB) = \det(A)\det(B)$, and it induces $\varphi\equiv\id_{\so{2}}$ because of the fact $\det(\e^{X}) = \e^{\tr X} = \e^0 = 1$.
+\end{solution}
+
+\begin{problem}
+Let $G$ be a connected matrix Lie group with Lie algebra $\mfr{g}$, and let $H$ be a connected subgroup. Prove that $H$ is normal if and only if the Lie algebra $\mfr{h}$ of $H$ is an ideal in $\mfr{g}$.
+\end{problem}
+
+\begin{solution}
+	First let $\mfr{h}$ be an ideal in $\mfr{g}$. By definition we have $\ad_g(h)\in\mfr{h}$ for $g\in\mfr{g}$ and $h\in\mfr{h}$. Applying the fact that $\mfr{h}$ is an ideal repeatedly we can conclude $\ad_g^n(h)\in\mfr{h}$ for all $n\in\N$. Then, using the fact that $\mfr{h}$ is a subspace, and hence closed we can say $\e^{\ad_g}(h)\in \mfr{h}$. Now we can use identity proved in lecture relating $\ad$ and $\Ad$ to say $\Ad_{\e^{g}}(h)\in\mfr{h}$. Using the definition of $\Ad$ this means $\e^{g}h\e^{-g}\in\mfr{h}$. Now let's exponentiate both sides, and notice when we exponentiate $\mfr{h}$ we get $H$.
+	\begin{equation*}
+		\exp(\e^{g}h\e^{-g}) = \underbrace{\e^{g}}_{G}\underbrace{\e^{h}}_{X}\underbrace{\e^{-g}}_{G^{-1}} \in \e^{\mfr{h}}
+	\end{equation*}
+	This condition expresses the fact that $\e^{\mfr{g}}$ normalizes $\e^{\mfr{h}}$. To go the last step we notice that $G = \bigcup_{n\in\N}\qty(\e^{\mfr{g}})^n$ and $H = \bigcup_{n\in\N}\qty(\e^{\mfr{h}})^n$.
+
+	Now to go the other direction take $H$ to be a normal subgroup of $G$. This means $h\mapsto ghg^{-1}$ always lands in $H$ for any $g\in G$. The derivative of this map is $\Ad_g:\mfr{h}\to\mfr{h}$. In particular for $X\in\mfr{g}$ we have
+	\begin{equation*}
+		\eval{\dv{t}\Ad_{\e^{tX}}(Y)}_{t=0} = \eval{\e^{tX}Y\e^{-tX}}_{t=0} = \ad_X(Y)\in \mfr{h}
+	\end{equation*}
+	This shows $\mfr{h}$ is an ideal.
+\end{solution}
+
+\begin{problem}
+In the notation of the lecture ``From Lie algebra homomorphism to Lie group homomorphism (II)'', prove that the map $\Phi$ is indeed a group homomorphism. (\textit{For $A, B \in G$, take paths $p_A, p_B :[0,1] \to G$ leading from the identity to $A, B$, respectively. Define a path going from $\1$ to $AB$ by setting
+\[
+	p(t) = \begin{cases}
+		p_A(2t)      & t\in\qty[0, \nicefrac{1}{2}] \\
+		p_B(2t - 1)A & t\in\qty[\nicefrac{1}{2}, 1]
+	\end{cases}
+\]
+Now choose admissible partitions for $p_A$ and $p_B$ and try to construct one for $p$ and compute $\Phi(BA)$.})
+\end{problem}
+
+\begin{solution}
+	Take $a_0, \ldots, a_n$ to be ``working'' partition for $p_A$ and $b_0, \ldots b_m$ to be a ``working'' partition for $p_B$. Take the following partition for $p_{AB}$:
+	\begin{equation*}
+		\frac{a_0}{2}, \ldots, \frac{a_n}{2}, \frac{1}{2} + \frac{b_0}{2}, \ldots, \frac{1}{2} + \frac{b_m}{2}
+	\end{equation*}
+	Now let's compute $\Phi(BA)$.
+	\begin{align*}
+		\Phi(BA) & \defeq f\qty(p(\tfrac{1}{2} + \tfrac{b_m}{2})p(\tfrac{1}{2} + \tfrac{b_{m-1}}{2})^{-1})\cdots f\qty(p(\tfrac{a_1}{2})) \\
+		         & = f\qty(p_B(b_m)A\qty(p_B(b_{m-1})A)^{-1})\cdots f(p_A(a_1))                                                           \\
+		         & = f\qty(p_B(b_m)p_B(b_{m-1})^{-1})\cdots f(p_A(a_1))                                                                   \\
+		         & = \Phi(B)\Phi(A)
+	\end{align*}
+\end{solution}
+
+\begin{problem}
+Let $X \in \mats{n}{\C}$ be a diagonalizable matrix. Prove that $\ad_X$ is a diagonalizable linear operator on $\mats{n}{\C}$. How are the eigenvalues of $\ad_X$ related to those of $X$?
+\end{problem}
+
+\begin{solution}
+	We'll use the following equation to denote the matrix $X$'s eigenvectors and eigenvalues.
+	\begin{equation*}
+		X\vb{x}_i = x_i\vb{x}_i
+	\end{equation*}
+	Similarly we have
+	\begin{equation*}
+		X^\dagger\vb{y}_i = \overline{x_i}\vb{y}_i
+	\end{equation*}
+	for another set of eigenvectors of $X^\intercal$. Because they both form a basis for $\C^n$, the product basis $\vb{x}_i\vb{y}_j^\dagger$ forms a basis for $\mats{n}{\C}$. We can then calculate the effect of $\ad_X$ on each one of these basis elements.
+	\begin{align*}
+		\ad_X(\vb{x}_i \vb{y}_j^\dagger) & = X\vb{x}_i\vb{y}_j^\dagger - \vb{x}_i \vb{y}_j^\dagger X            \\
+		                                 & = x_i\vb{x}_i\vb{y}_j^\dagger - \overline{x_j}\vb{x}_i\vb{y}^\dagger \\
+		                                 & = \qty(x_i - \overline{x_j})\vb{x}_i\vb{y}_j^\dagger
+	\end{align*}
+	This shows that these basis elements $\vb{x}_i\vb{y}_j$ are all eigenvectors of $\ad_X$, and hence $\ad_X$ can be diagonalized with respect to it.
+\end{solution}
+
+\begin{problem}
+Compute $\log(\e^X \e^Y)$ directly using the power series for the exponential and logarithm, and verify that the first few terms are given by
+\[
+	\log(\e^X \e^Y) = X + Y + \frac{1}{2}[X, Y] + \frac{1}{12}[X, [X, Y]] - \frac{1}{12}[Y, [X, Y]] + \ldots
+\]
+\end{problem}
+
+\begin{solution}
+	First let's compute the first few terms of $\e^{X}\e^{Y}$.
+	\begin{align*}
+		\e^{X}\e^{Y} & = \qty(\1 + X + \frac{X^2}{2} + \frac{X^3}{3!} + \cdots)\qty(\1 + Y + \frac{Y^2}{2} + \frac{Y^3}{3!} + \cdots) \\
+		             & = \1 + Y + \frac{Y^2}{2} + \frac{Y^3}{3!} + XY + \frac{XY^2}{2} + X + \frac{X^2}{2} + \frac{X^3}{3!} + \cdots
+	\end{align*}
+	Now we can plug this into the power series for $\log{\e^{X}\e^{Y}}$ and take all the terms of order 3.
+	\begin{align*}
+		\log(\e^{X}\e^{Y}) & = Y + \frac{Y^2}{2} + \frac{Y^3}{3!} + XY + \frac{XY^2}{2} + \frac{X^2Y}{2} + X + \frac{X^2}{2} + \frac{X^3}{3!}  \\
+		                   & \quad - \frac{1}{2}\left(Y^2 + Y^3 + YX + YXY + \frac{YX^2}{2} + \frac{Y^2X}{2} + XY \right.                      \\
+		                   & \qquad \left.+ \frac{XY^2}{2} + X^2 + X^2Y + X^3 + XY^2 + XYX\right)                                              \\
+		                   & = X + Y + \frac{1}{2}\comm{X}{Y} + \frac{1}{12}\comm{X}{\comm{X}{Y}} + \frac{1}{12}\comm{Y}{\comm{Y}{X}} + \cdots
+	\end{align*}
+	How lovely.
+\end{solution}
+
+\begin{problem}
+Let $G$ be a matrix Lie group with Lie algebra $\mfr{g}$.
+\begin{parts}
+	\part{For a subset $K \subset G$, define the centralizer of $K$ in $G$ to be
+	\[
+		Z_G(K) = \{ g \in G\ |\ gk = kg \text{ for all }k \in K \},
+	\]
+	and define the centralizer of $K$ in $\mfr{g}$ to be
+	\[
+		\mfr{z}_{\mfr{g}}(K) = \{ X \in \mfr{g} : \Ad_k(X) = X \text{ for all } k \in K \}.
+	\]
+	Prove that $Z_G(K)$ is a subgroup of $G$, that $\mfr{z}_\mfr{g}(K)$ a subalgebra of $\mfr{g}$, and that $\mfr{z}_{\mfr{g}}(K)$ is the Lie algebra of $Z_G(K)$.}\label{part:9a}
+	\part{For a subset $\mfr{k} \subset \mfr{g}$, define the centralizer of $\mfr{k}$ in $G$ to be
+	\[
+		Z_G(\mfr{k}) = \{ g \in G\ |\ \Ad_g(X) = X\text{ for all }X \in \mfr{k} \},
+	\]
+	and define the centralizer of $K$ in $\mfr{g}$ to be
+	\[
+		\mfr{z}_{\mfr{g}}(\mfr{k}) = \{ X \in \mfr{g}\ |\ [X, Y] = 0 \text{ for all }Y \in \mfr{k} \}.
+	\]
+	Prove that $Z_G(\mfr{k})$ is a subgroup of $G$, that $\mfr{z}_\mfr{g}(\mfr{k})$ a subalgebra of $\mfr{g}$, and that $\mfr{z}_{\mfr{g}}(\mfr{k})$ is the Lie algebra of $Z_G(\mfr{k})$.}\label{part:9b}
+	\part{Let $H$ be an analytic subgroup of $G$, with $\mfr{h}$ its Lie algebra. Prove that $Z_G(H) = Z_G(\mfr{h})$ and $\mfr{z}_{\mfr{g}}(H) = \mfr{z}_{\mfr{g}}(\mfr{h})$.}\label{part:9c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:9a}
+	First we will prove $Z_G(K)$ is a subgroup of $G$. Take two elements $g, h\in Z_G(K)$. Then
+	\begin{equation*}
+		\qty(gh)k = g(hk) = g(kh) = (gk)h = (kg)h = k(gh)
+	\end{equation*}
+	so it's closed under products. The identity is clearly in $Z_G(K)$ because it commutes with everything. Inverses are in this group because we can multiply on both sides of $gk = kg$ by $g^{-1}$ on the left and right to obtain $kg^{-1} = g^{-1}k$. Hence $Z_G(K)$ is a subgroup.
+
+	To show $\mfr{z}_\mfr{g}(K)$ is a subalgebra, take $X, Y \in \mfr{g}$ and we'll show $XY\in\mfr{g}$.
+	\begin{equation*}
+		\Ad_k(XY) = kXYk^{-1} = kXk^{-1}kYk^{-1} = \Ad_k(X)\Ad_k(Y) = XY
+	\end{equation*}
+	Now we can show this subspace is closed under brackets.
+	\begin{equation*}
+		\Ad_k(\comm{X}{Y}) = kXYk^{-1} - kYXk^{-1} = XY - YX = \comm{X}{Y}
+	\end{equation*}
+	So $\mfr{z}_\mfr{g}(K)$ is indeed a subalgebra.
+
+	To show the $\mfr{z}_\mfr{g}(K)$ is the Lie algebra of $Z_G(K)$, take $X\in\mfr{z}_\mfr{g}(K)$. By definition we have $k\e^{tX}k^{-1} = \e^{tX}$ for all $t\in\R$ and $k\in K$. Taking the derivative at 0 on both sides we obtain $kXk^{-1} = X$ which can be rewritten as $kX = Xk$.
+
+	To go the other way, let $Y$ be a matrix such that $\e^{tY}\in Z_G(K)$ for all $t$. Then we have $\e^{tY}k = k\e^{tY}$ for all $k\in K$. The way we defined $\mfr{z}_\mfr{g}(K)$ implies $K$ also contains inverses, so multiply both sides on the right by $k^{-1}$, and hence the Lie algebra of $Z_G(K)$ is indeed $\mfr{z}_\mfr{g}(K)$.
+
+	\ref{part:9b}
+	First we'll show $Z_G(\mfr{k})$ is a subgroup of $G$. The identity element is clearly within the subgroup because it commutes with everything and is it's own inverse. Inverses are within the subgroup because we can multiply both sides of $\Ad_g(X) = gXg^{-1} = X$ on right by $g$ and on the left by $g^{-1}$ to give $X = g^{-1}Xg$. Now take $h = g^{-1}$ and it's easy to see $h$ is in the group. Finally to show closure under products take $g, h\in Z_G(\mfr{k})$. Then $\Ad_{gh}(X) = ghXh^{-1}g^{-1} = gXg^{-1} = X$. Hence a subgroup.
+
+	Now we'll show $\mfr{z}_\mfr{g}(\mfr{k})$ is a subalgebra. If $X, Y\in\mfr{z}_\mfr{g}(\mfr{k})$, then $X$ and $Y$ commute with everything, and in particular with each other: $\comm{X}{Y} = 0$. Hence if $Z$ is any element in the subalgebra we automatically have $\comm{\comm{X}{Y}}{Z} = \comm{0}{Z} = 0$. Hence this is a subalgebra.
+
+	Finally we show there is a Lie correspondence between these two spaces. Let $X$ be a matrix such that $\e^{tX}\in Z_G(\mfr{k})$ for all $t$. By definition we have $g\e^{tX}g^{-1} = \e^{tX}$ which is equivalent to $g\e^{tX} = \e^{tX}g$ for all $g\in G$. If we restrict $g$ to be elements generated by $k\in \mfr{k}$ as $\e^{tk}$, then we can write the above equality as $\e^{tk}\e^{tX} = \e^{tX}\e^{tk}$ which implies $k$ and $X$ commute, and hence in $\mfr{z}_\mfr{g}(\mfr{k})$.
+
+	\ref{part:9c}
+	First take $g\in Z_G(H)$ which implies $gh = hg$ for all $h\in H$. The analyticity of $H$ implies $h = \e^{X_1}\cdots \e^{X_n}$ for some $X_i\in\mfr{h}$, and hence we can rewrite the commuting condition as
+	\begin{equation*}
+		g\qty(\e^{X_1}\cdots \e^{X_n})g^{-1} = \e^{X_1}\cdots \e^{X_n}
+	\end{equation*}
+	And we can expand the exponentials as power series, and push the $g$'s inside each term.
+	\begin{align*}
+		g\qty(\e^{X_1}\cdots \e^{X_n})g^{-1} & = g\qty[\prod_{i = 1}^n\qty(\sum_{n = 0}^\infty\frac{X_i^n}{n!})]g^{-1} \\
+		                                     & = \prod_{i = 1}^n g\qty(\sum_{n = 0}^\infty\frac{X_i^n}{n!})g^{-1}      \\
+		                                     & = \prod_{i = 1}^n \qty(\sum_{n = 0}^\infty \frac{g X_i^n g^{-1}}{n!})   \\
+		                                     & = \prod_{i = 1}^n \qty(\sum_{n = 0}^\infty \frac{X_i^n}{n!})
+	\end{align*}
+	The last equality allows us to imply $gX_i g^{-1} = X_i$ for all $i$ by comparing terms. This shows $Z_G(H) = Z_G(\mfr{h})$.
+
+	Now for the second equality take $X\in\mfr{z}_\mfr{g}(H)$. By definition this implies $kXk^{-1} = X$ for all $k\in H$. Again by analyticity of $H$ we can write any $k$ as $\e^{X_1}\cdots \e^{X_n}$. Note that $kXk^{-1} = X$ holds for all $k$ and in particular $k = \e^{X_i}$ for all $i$. So we have $\e^{X_i}X\e^{-X_i} = X$ and we can exponentiate and move some terms around to obtain $\e^{X_i}\e^{X} = \e{X}\e^{X_i}$ which implies $\comm{X}{X_i} = 0$. Since $k$ was arbitrary and so was $X_i$, this holds for all $k$ and all $X_i$. Hence $\mfr{z}_\mfr{g}(H) = \mfr{z}_\mfr{g}(\mfr{h})$.
+
+\end{solution}
+
+\begin{problem}
+\begin{parts}
+	\part{Prove that every analytic subgroup of $\SU{2}$ is closed. Prove that this is not true for $\SU{3}$.}\label{part:10a}
+	\part{Let $\mfr{a}$ be a subalgebra of the Lie algebra of the Heisenberg group. Prove that $\exp(\mfr{a})$ is an analytic subgroup, and is closed.}\label{part:10b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:10a}
+	Because we've proved $\Sp{1}\cong\SU{2}$ we'll work with the unit quaternions. The Lie algebra of $\Sp{1}$ are the completely imaginary quaternions with no real component. Now take our analytic subgroup $F\subset \Sp{1}$, and $\mfr{f}$ it's Lie algbra.
+
+	If $\dim\mfr{f} = 0$ then $F = \{0\}$ which is clearly closed. If $\dim\mfr{f} = 1$, then there is an imaginary quaternion $a$ such that $\e^{k} = \{\cos\theta + a\sin\theta : 0 \leq \theta < 2\pi\}$, and hence is closed. Now when $\dim\mfr{f} = 2$ we cannot have a subalgebra, and hence there is no analytic subgroup. To see this recall $x_1x_2 = -x_2x_2$\footnote{Because the multiplication of two imaginary quaternions is just like the cross product.} if $\{x_1, x_2\}$ is our basis for $\mfr{f}$. Hence the commutator $\comm{x_1}{x_2} = 2x_1x_2$ is perpendicular to the basis, and hence the basis does not span the space. Finally if $\dim\mfr{f} = 3$, then $k = \Sp{1}$ which is closed.
+
+	To see this is not the case for $\SU{3}$ take the following subalgebra of $\su{3}$ where $\alpha$ is irrational.
+	\begin{equation*}
+		\mfr{a}\defeq\qty{\mqty(\dmat[0]{\iu\varphi,\iu\alpha\varphi,-\iu\varphi(1+\alpha)}) : \varphi\in\R}
+	\end{equation*}
+	This is exactly the irrational rotations of a torus embedded into $\su{3}$. It's left as an exercise to the reader to verify this has the requisite properties.
+
+	\ref{part:10b}
+	First note that for any two elements in the Lie algebra $\mfr{h}$ the second order commutators vanish. Hence the Baker-Campbell-Hausdorff formula allows us to write
+	\begin{equation*}
+		\e^{tX}\e^{tY} = \e^{tX + tY + t^2\comm{X}{Y}}
+	\end{equation*}
+	Because $\mfr{a}$ is a subspace of $\mfr{h}$ it is closed under scalar multiplication and addition, and also closed under the Lie bracket. This allows us to conclude $tX + tY + t^2\comm{X}{Y}\in\mfr{a}$, and hence $\e^{\mfr{a}}$ is a subgroup of the Heisenberg group. To prove analyticity we already have $\mfr{a}$ is a subalgebra of $\mfr{h}$ so we only need to show every element of $\e^{\mfr{a}}$ can be written as $\prod\e^{X_i}$, but that's obvious since we're starting with the Lie algebra.
+
+	To see $\e^{\mfr{a}}$ we'll examine what happens for each possible dimension of $\mfr{a}$. First note that for a general element $A$ in $\mfr{h}$ we have the following exponential
+	\begin{equation}\label{eq:hexp}
+		\e^{tA} = \1 + tA + \frac{t^2}{2}A^2 = \mqty(1 & ta & tb + \frac{t^2}{2}ac \\ 0 & 1 & tc \\ 0 & 0 & 1).
+	\end{equation}
+	If $\dim\mfr{a} = 1$, then we have control over (say) $b$ and the other two are fixed at 0. Whenever we do this it's clear from \cref{eq:hexp} that $\e^\mfr{a}$ is closed. A similar analysis can be done for $\dim\mfr{a} = 2$, and for $\dim\mfr{a} = 3$ we have the entire Heisenberg algebra.
+\end{solution}
+
+\end{document}
