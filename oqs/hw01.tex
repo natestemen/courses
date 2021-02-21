@@ -7,9 +7,17 @@
 
 \usepackage{macros}
 \usepackage[footnote,nolist,smaller]{acronym}
+\usepackage{cleveref}
+\usepackage{todonotes}
 \input{config}
 \hwnum{1}
 \duedate{Mon, Feb 22, 2020 11:59 PM}
+
+\colorlet{Ppink}{WildStrawberry!20}
+\newtcbox{\mafbox}[1][]{on line, math upper,
+boxsep=4pt, left=0pt,right=0pt,top=0pt,bottom=0pt,
+colframe=white,colback=Ppink,
+highlight math style={enhanced}}
 
 
 \makeatletter
@@ -28,10 +36,43 @@
 \problemnumber{2}
 
 \begin{problem}
-Show that the reduced state obtained via partial trace is a density operator, i.e., a non-negative operator satisfying $\tr\rho_A = 1$.
+Show that the reduced state obtained via partial trace is a density operator, i.e., a non-negative operator satisfying $\tr\hat{\rho}_A = 1$.
 \end{problem}
 
 \begin{solution}
+    Take $\hat{\rho}_{AB}$ to be a density operator on Hilbert space $\mathcal{H}_{AB}$. In a (tensor product) basis this looks like
+    \begin{equation*}
+        \hat{\rho}_{AB} = \sum_{i,j,k,\ell}p_{ijk\ell}\ket{a_i}\otimes\ket*{b_j}\bra{a_k}\otimes\bra{b_\ell}
+    \end{equation*}
+    In order to get a condition on it's coefficients $p_{ijk\ell}$ we'll take it's trace and force it to be 1.
+    \begin{align}
+        \tr\hat{\rho}_{AB} & = \sum_{n, m}\bra{a_n}\otimes\bra{b_m}\qty\Big[\hat{\rho}_{AB}]\ket{a_n}\otimes\ket{b_m} \nonumber        \\
+                           & = \sum_{n, m, i, j, k, \ell}p_{ijk\ell}\,\delta_{in}\,\delta_{jm}\,\delta_{kn}\,\delta_{\ell m} \nonumber \\
+                           & = \sum_{i, j}p_{ijij} = 1 \tag{$*$}\label{eq:pcond}
+    \end{align}
+    We'll start by computing $\rho_{A}$ in this basis.
+    \begin{align*}
+        \tr_B\hat{\rho}_{AB} & = \sum_{n}\1\otimes\bra{b_n}\Big[\hat{\rho}_{AB}\Big]\, \1\otimes\ket{b_n}          \\
+                             & = \sum_{n, i, j, k, \ell}p_{ijk\ell}\,\delta_{nj}\,\delta_{\ell n}\ketbra{a_i}{a_k} \\
+                             & = \sum_{n, i, k}p_{inkn}\ketbra{a_i}{a_k}
+    \end{align*}
+    Now we can ensure $\tr\hat{\rho}_A = 1$.
+    \begin{align*}
+        \tr\hat{\rho}_A & = \sum_\ell \bra{a_\ell}\Big[\hat{\rho}_A\Big]\,\ket{a_\ell}    \\
+                        & = \sum_{\ell, n, i, k}p_{inkn}\,\delta_{\ell i}\,\delta_{k\ell} \\
+                        & = \sum_{\ell, n}p_{\ell n \ell n}
+    \end{align*}
+    Hence by \cref{eq:pcond} we can conclude $\tr\hat{\rho}_A = 1$.
+
+    To show $\hat{\rho}_A$ is positive semi-definite we can use the fact that the sum of the diagonal terms of a density operator are both real and positive. Real because density operators are Hermitian and positive because they are probabilities.
+    \begin{align*}
+        \expval{\hat{\rho}_A}{\phi} & = \sum \overline{\phi}_n \bra{a_n}p_{ijkj}\ketbra{a_i}{a_k}\phi_n\ket{a_n}      \\
+                                    & = \sum\abs{\phi_n}^2 p_{ijkj}\,\delta_{ni}\,\delta_{kn}                         \\
+                                    & = \sum_{ij}\underbrace{\abs{\phi_i}^2}_{\in[0,1]} \underbrace{p_{ijij}}_{\in\R} \\
+                                    & \geq \sum_{ij}p_{ijij} = 1 \geq 0
+    \end{align*}
+
+    Hence we've shown the partial trace $\tr_B:\mathrm{L}(H_A\otimes H_B)\to \mathrm{L}(H_A)$ preserves density operators.
 \end{solution}
 
 \begin{problem}
@@ -39,6 +80,34 @@ Prove that these three pure-state conditions are equivalent.
 \end{problem}
 
 \begin{solution}
+    First we'll show $\mafbox{\hat{\rho}^2 = \hat{\rho} \implies \tr\hat{\rho}^2 = 1}$.
+    \begin{align*}
+        \tr\hat{\rho}^2 = \tr\hat{\rho} = 1
+    \end{align*}
+    Next we have $\mafbox{\tr\hat{\rho}^2 = 1 \implies \hat{\rho} = \ketbra{\psi}}$.
+    Let's first calculate $\hat{\rho}^2$ in an othormal basis.
+    \begin{align*}
+        \hat{\rho}^2 & = \qty(\sum_{i = 1}^n p_i\ketbra{i}{i})^2 = \sum_{i = 1}^n p_i\ketbra{i}{i}\sum_{j = 1}^n p_j\ketbra{j}{j} \\
+                     & = \sum_{i,j = 1}^n p_ip_j\ket{i}\braket{i}{j}\bra{j} \tag*{$\mafbox{\braket{i}{j} = \delta_{ij}}$}         \\
+                     & = \sum_{i = 1}^n p_i^2\ketbra{i}{i}
+    \end{align*}
+    Now taking the trace of $\hat{\rho}^2$ we get a condition on the $p_i$'s.
+    \begin{align*}
+        \tr \hat{\rho}^2 & = \sum_{k = 1}^n\bra{k}\hat{\rho}^2\ket{k}               \\
+                         & = \sum_{k,i = 1}^n\bra{k}\qty(p_i^2\ketbra{i}{i})\ket{k} \\
+                         & = \sum_{i = 1}^n p_i^2 = 1
+    \end{align*}
+    So $\sum p_i = 1 = \sum p_i^2$. By basic properties of real numbers, we know $p_i^2 \leq p_i$ when $p_i\in[0, 1]$ and equality only holding when $p_i \in\{0, 1\}$. Using this fact we can write
+    \begin{equation*}
+        \sum_{i = 1}^n p_i^2 \leq \sum_{i = 1}^n p_i
+    \end{equation*}
+    where again equality only holds if $p_i\in\{0, 1\}$ for all $i$. The only way this can be true is if one of the $p_i$'s is 1 and all of the rest are 0. In that case our summation collapses to one term, and we are left with $\hat{\rho} = \ketbra{i}$ as desired.
+
+    Lastly we have $\mafbox{\hat{\rho} = \ketbra{\psi} \implies \hat{\rho}^2 = \hat{\rho}}$.
+    \begin{align*}
+        \hat{\rho}^2 = \qty(\ketbra{\psi})\qty(\ketbra{\psi}) = \ket{\psi}\underbrace{\braket{\psi}}_{1}\bra{\psi} = \ketbra{\psi} = \hat{\rho}
+    \end{align*}
+
 \end{solution}
 
 \problemnumber{5}
@@ -48,6 +117,20 @@ Prove the existence of the Schmidt decomposition.
 \end{problem}
 
 \begin{solution}
+    Let $\{\ket{a_i}\}$ be an orthonormal basis for $H_A$ and $\{\ket{b_i}\}$ be an orthonormal basis for $H_B$. We then know $\ket{a_n}\otimes \ket{b_m}$ forms a basis for $H_{AB} = H_A\otimes H_B$, and hence we can expand any vector $\ket{\psi}\in H_{AB}$ as
+    \begin{equation*}
+        \ket{\psi} = \sum_{ij}\psi_{ij}\ket{a_i}\otimes \ket*{b_j}.
+    \end{equation*}
+    We can think of the coefficients $\psi_{ij}$ as a matrix using the association $\ket{a_i}\otimes\ket*{b_j}\cong \ketbra*{a_i}{b_j}$.\footnote{Using the underlying isomorphism of $U^*\otimes V$ and the space $\Hom(U, V)$ of linear maps from $U$ to $V$.} This operator is then taking an element of $H_B$ to an element of $H_A$. That is we can think of the \emph{vector} $\ket{\psi}$ as a linear map $\ket{\psi}_\mathrm{op}: H_B\to H_A$.
+
+    With this picture in place we can apply the singular decomposition to write
+    \begin{equation*}
+        \ket{\psi}_\mathrm{op} = \sum_{n = 1}^r\lambda_n\ketbra{a_n}{b_n}
+    \end{equation*}
+    where $r$ is the rank of $\ket{\psi}_\mathrm{op}$ the \emph{operator}. Now we can map back into $\ket{\psi}$ again using $\ketbra{a_n}{b_m}\cong \ket{a_n}\otimes \ket{b_m}$ and see we have
+    \begin{equation*}
+        \ket{\psi} = \sum_{n = 1}^r\lambda_n\ket{a_n}\otimes \ket{b_n}.
+    \end{equation*}
 \end{solution}
 
 \setcounter{section}{3}
@@ -58,6 +141,34 @@ Prove the two properties given by Eqns. 3.1.
 \end{problem}
 
 \begin{solution}
+    First we'll show $\sum_\nu E_\nu = \1$.
+    \begin{align*}
+        \sum_\nu E_\nu & = \sum_\nu \tr_B\qty(\Pi_\nu\cdot \1_A\otimes \hat{\rho}_B)                                                           \\
+                       & = \tr_B\!\qty(\sum_\nu\Pi_\nu\cdot \1_A\otimes\hat{\rho}_B)                                                           \\
+                       & = \tr_B\!\qty(\qty[\sum_\nu\Pi_\nu]\cdot \1_A\otimes\hat{\rho}_B) \tag*{$\mafbox{\sum_\nu\Pi_\nu = \1_{A\otimes B}}$} \\
+                       & = \tr_B\!\qty(\1_A\otimes\hat{\rho}_B)                                                                                \\
+                       & = \1_A
+    \end{align*}
+    Now we'll show $E_\nu\geq 0$, but first we need some setup. Since $\Pi_\nu$ is a projector, by the spectral theorem it can be written as
+    \begin{equation*}
+        \Pi_\nu = \sum_{ij}\lambda_{ij}\ketbra{a_i b_j}
+    \end{equation*}
+    where $\lambda_{ij}$ are real and non-negative. We also have $\hat{\rho}_B = \sum p_n\ketbra{b_n}$ and $\1_A = \sum\ketbra{a_n}$.
+    \begin{align*}
+        \Pi_\nu\cdot \1_A\otimes \hat{\rho}_B & = \sum \lambda_{ij} p_n\ket{a_i b_j}\braket{a_i b_j}{a_\ell b_n}\bra{a_\ell b_n} \\
+                                              & = \sum\lambda_{ij}p_n\,\delta_{i\ell}\,\delta_{jn}\ketbra{a_i b_j}{a_\ell b_n}   \\
+                                              & = \sum_{\ell n}\lambda_{\ell n}p_n\ketbra{a_\ell b_n}
+    \end{align*}
+    Now we can take the partial trace over $B$.
+    \begin{align*}
+        \tr_B\qty(\Pi_\nu\cdot \1_A\otimes\hat{\rho}_B) & = \sum \1_A\otimes\bra{b_i}\lambda_{\ell n}p_n\ketbra{a_\ell b_n}\1\otimes\ket{b_i} \\
+                                                        & = \sum \lambda_{\ell n}p_n\ketbra{a_\ell}\,\delta_{in}\,\delta_{ni}                 \\
+                                                        & = \sum_{\ell n}\lambda_{\ell n}p_n\ketbra{a_\ell}
+    \end{align*}
+    Now finally we can can take the expectation values to show $E_\nu$ is positive semi-definite.
+
+
+    I'm a little iffy if this actually works. I feel like there should be a more elegant way to show $E_\nu$ is positive semi-definite, but I can't come up with anything.
 \end{solution}
 
 \begin{problem}
@@ -70,11 +181,13 @@ Apply Naimark's theorem to identify a \ac{PVM} in an extended Hilbert space that
 \begin{problem}
 \begin{parts}
     \part{Verify that the map $E$ defined in terms of projectors onto coherent states in the example above satisfies the postulates of a \ac{POVM}.}\label{part:33a}
-    \part{What is the operational interpretation of $\Pr(X) = \tr(E(X)\rho)$ for this \ac{POVM}, noting that $\alpha = \qty(\expval{q}, \expval{p})$ denotes the expectations of the position $q$ and momentum $p$ operatores in the associated coherent state, and that $\Omega = \R^2$ means we are measuring the position and momentum of some particle?}
+    \part{What is the operational interpretation of $\Pr(X) = \tr(E(X)\rho)$ for this \ac{POVM}, noting that $\alpha = \qty(\expval{q}, \expval{p})$ denotes the expectations of the position $q$ and momentum $p$ operatores in the associated coherent state, and that $\Omega = \R^2$ means we are measuring the position and momentum of some particle?}\label{part:33b}
 \end{parts}
 \end{problem}
 
 \begin{solution}
+    \ref{part:33a}
+    \ref{part:33b}
 \end{solution}
 
 \end{document}
