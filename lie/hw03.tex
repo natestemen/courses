@@ -1,0 +1,241 @@
+\documentclass[
+	pages,
+	boxes,
+	color=WildStrawberry
+]{homework}
+
+
+\usepackage{nicefrac}
+\usepackage{cleveref}
+\usepackage{macros}
+\usepackage{todonotes}
+\input{config}
+\hwnum{3}
+\duedate{Wed, Feb 24, 2020 10:00 PM}
+
+\colorlet{Ppink}{MidnightBlue!20}
+\newtcbox{\mafbox}[1][]{on line, math upper,
+boxsep=4pt, left=0pt,right=0pt,top=0pt,bottom=0pt,
+colframe=white,colback=Ppink,
+highlight math style={enhanced}}
+
+\begin{document}
+
+\begin{problem}
+Let $G$ be a matrix Lie group and $(\Pi, V)$ a representation.
+\begin{parts}
+	\part{Prove that the representation is irreducible if and only if for all $v \in V \setminus \{0\}$ we have
+		\[
+			\vspan_\mathbb{F}\qty{\Pi(A)v : A \in G} = V,
+		\]
+		where $\mathbb{F} = \C$ or $\R$ according to whether the representation is complex or real.}\label{part:1a}
+	\part{Prove that the standard representations of $\SO{n}$, $\SU{n}$, $\SL{n}{\C}$ are irreducible.}\label{part:1b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	I'll use the notation $\F [Gv]$ to denote $\vspan_\mathbb{F}\qty{\Pi(A)v : A \in G}$ which is reminiscent of the notation of a group ring.
+
+	\ref{part:1a}
+	$\mafbox{\Longrightarrow}$
+	Take $(\Pi, V)$ to be irreducible, and suppose $\F[Gv]\neq V$. Then there exists a subspace $W\subseteq V$ not hit by any $\Pi(A)v$ for all $A\in G$. Thus $W^\perp$ is an invariant subspace, and $(\Pi, V)$ is reducible. By contradiction we're done.
+
+	\noindent $\mafbox{\Longleftarrow}$
+	Take $\F[Gv] = V$ for all non-zero $v$ and suppose $(\Pi, V)$ has an irrep $(\Pi|_W, W)$. Then for $w\in W$, then by irreducibility we have $Gw\subseteq W$ and hence $\F[Gw]\subseteq W$. Thus we've found a $v\in V$ such that $\F[Gv] \neq V$ which is a contradiction, and hence $(\Pi, V)$ must be irreducible.
+
+	\ref{part:1b}
+	By~\ref{part:1a} if $\SO{n}$, $\SU{n}$, $\SL{n}{\C}$ were reducible, there would be a vector subspace such that $Gv$ never ``hits''. Without loss of generality we can take $v$ to be a basis element of $\R^n$ or $\C^n$. Since $\SO{n}$ contains all (orientation preserving) change of bases, it surely contains contains rotating $\vb{e}_i$ into $\vb{e}_j$ for all $i$ and $j$. This argument should apply to $\SU{n}$ as well.
+
+	To see this is true for $\SL{n}{\C}$ note that $\SU{n}$ and $\SL{n}{\C}$ have the same dimension ($n^2 - 1$). This fact, together with $\SU{n}\subset \SL{n}{\C}$ and the argument above show the standard representation on $\SL{n}{\C}$ is irreducible.
+\end{solution}
+
+\begin{problem}
+For a smooth function $f$ on $\R^n$ we define $\triangle f \defeq \pdv[2]{f}{x_1} + \cdots + \pdv[2]{f}{x_n}$. Prove that for all $A \in \O{n}$ we have $\triangle (f(Ax)) = (\triangle f)(Ax)$.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+Consider the standard representation of $\SO{2}$ on $\R^2$. Prove that the second statement of Schur's lemma fails. That is, there exists an intertwining map $\R^2 \to \R^2$ which is not a multiple of the identity.
+\end{problem}
+
+\begin{solution}
+	Recall the standard representation of $\SO{2}$ is the function $\lambda:\SO{2}\to\GL{2}{\R}$ defined by $\lambda(A)\vb{x} \defeq A\vb{x}$ for $\vb{x}\in\R^2$. Now our goal is to find a function $\psi:\R^2\to\R^2$ such that $\lambda \circ \psi = \psi\circ \lambda$. Thankfull, 2-dimensional rotations commute, and hence we can pick any $R\in\SO{2}$ to define $\psi_R:\R^2\to \R^2$ as $\psi_R(\vb{x}) = R\vb{x}$.
+
+	Hence we have
+	\begin{equation*}
+		\lambda(A)\psi_R(\vb{x}) = \lambda(A)R\vb{x} = AR\vb{x} = RA\vb{x} = \psi_R(\lambda(A)\vb{x}).
+	\end{equation*}
+\end{solution}
+
+\begin{problem}
+View the Heisenberg group as sitting in $\GL{3}{\C}$ and consider the standard representation on $\C^3$. Determine all invariant subspaces. Is this representation completely reducible?
+\end{problem}
+
+\begin{solution}
+	Let $H$ denote the Heisenberg group and let's run through a computation for the standard representation $\rho: H \to \GL{3}{\C}$.
+	\begin{align*}
+		\rho(h)\vb{x} & = h\vb{x}         \\
+		              & = \mqty(1 & a & b \\ 0 & 1 & c \\ 0 & 0 & 1)\mqty(x \\ y \\ z) \\
+		\mqty(x                           \\ y \\ z) & = \mqty(x + ay + bz         \\ y + cz \\ z)
+	\end{align*}
+	Since this must hold for all $a, b, c \in \R$ we see $z$ and $y$ must be zero. Hence the only invariant subspace is the $x$-axis.
+\end{solution}
+
+\begin{problem}
+Let $V_n' = \vspan_\C\qty{z^k : k = 0, \ldots, n,}$ be the set of polynomials in one complex variable of degree at most $n$. Define an action of $SU(2)$ on $V_n'$ by letting
+\[
+	[\Pi(A)f](z) = \qty(-bz + a)^n f\qty(\frac{\overline{a}z + \overline{b}}{-bz + a}), \text{ for } A = \mqty( a & -\overline{b} \\ b & \overline{a}).
+\]
+\begin{parts}
+	\part{Prove that $\Pi(A)$ does map $V_n'$ to itself for all $A \in \SU{2}$, and that $(\Pi, V_n')$ is indeed a representation of $\SU{2}$.}\label{part:5a}
+	\part{Prove that $V_n'$ is isomorphic to $V_n(\C^2)$ as a representation of $\SU{2}$.}\label{part:5b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:5a}
+
+	\begin{align*}
+		\qty[\Pi(A)\cdot f](z) & = \qty(-bz + a)^n\sum_{m = 0}^n\alpha_m\qty(\frac{\overline{a}z + \overline{b}}{-bz + a})^m \\
+		                       & = \sum_{m = 0}^n\alpha_m\qty(\overline{a}z + \overline{b})^m \qty(-bz + a)^{n - m}\in V_n'
+	\end{align*}
+	Now let $AB = \mqty(a & -\overline{b} \\ b & \overline{a})\mqty(c & -\overline{d} \\ d & \overline{c}) = \mqty(ac - \overline{b}d & -a\overline{d} - \overline{b}\overline{c} \\ bc + \overline{a}d & -b\overline{d} + \overline{a}\overline{c})$ and we'll go through a \emph{very} tedious calculation.\todo{do you wana finish this?}
+	% \begin{align*}
+	% 	\qty[\Pi(AB)\cdot f](z) & = kkhh
+	% \end{align*}
+
+	\ref{part:5b}
+	Take the following intertwining map $\psi:V_n(\C^2)\to V_n'$ defined by
+	\begin{equation*}
+		\sum_{m = 0}^{n} \alpha_m z_1^{m} z_2^{n - m}\xmapsto{\quad\psi\quad} \sum_{m = 0}^{n}\alpha_m z_1^{m}.
+	\end{equation*}
+	In short, we're simply dropping the second complex variable $z_2$. Now we'll show it's actually an intertwining map. Recall we have $(\Pi_n, V_n(\C^2))$ as defined in lecture and $(\Pi, V_n')$ as defined above.
+	\begin{align*}
+		\qty[\Pi_n(A)\cdot g]\smqty(z_1                                                                                                                                                        \\ z_2) & = g\qty(A^{-1}\smqty(z_1 \\ z_2)) = g\smqty(\conj{a}z_1 + \conj{b}z_2 \\ -bz_1 + az_2) \\
+		 & = \sum_{m = 0}^{n}\alpha_m\qty(\conj{a}z_1 + \conj{b}z_2)^{m}\qty(-bz_1 + az_2)^{n - m}                                                                                             \\
+		 & = \smashoperator[r]{\sum_{m, k, \ell = 0}^{n, m, n - m}}\alpha_m \binom{m}{k}\binom{n - m}{\ell}\conj{a}^k(-b)^\ell\conj{b}^{m - k}a^{n - m - \ell}z_1^{k + \ell}z_2^{n - k - \ell}
+	\end{align*}
+	And now applying out intertwining map we get
+	\begin{equation*}
+		\psi\qty(\qty[\Pi_n(A)\cdot g]\smqty(z_1 \\ z_2)) = \smashoperator[r]{\sum_{m, k, \ell = 0}^{n, m, n - m}}\alpha_m \binom{m}{k}\binom{n - m}{\ell}\conj{a}^k(-b)^\ell\conj{b}^{m - k}a^{n - m - \ell}z_1^{k + \ell}
+	\end{equation*}
+	Now let's compute $\Pi(A)\circ \psi$.
+	\begin{align*}
+		\psi\qty(g\smqty(z_1                                                                                                                                                 \\ z_2)) & = \sum_{m = 0}^n\alpha_m z_1^m \\
+		\Pi(A)(\psi(g\smqty(z_1                                                                                                                                              \\ z_2))) & = \sum_{m = 0}^{n}\alpha_m\qty(\conj{a}z_1 + \conj{b})^{m}\qty(-bz_1 + a)^{n - m} \\
+		 & = \smashoperator[r]{\sum_{m, k, \ell = 0}^{n, m, n - m}}\alpha_m \binom{m}{k}\binom{n - m}{\ell}\conj{a}^k(-b)^\ell\conj{b}^{m - k}a^{n - m - \ell}z_1^{k + \ell}
+	\end{align*}
+	This is exactly what we got before, so we conclude $\Pi(A)\circ\psi = \psi\circ \Pi_n(A)$.
+
+	To conclude $\psi$ is a bijection we use the fact that $f\in V_n'$ is completely characterized by it's coefficients $\alpha_i$, and this map preserves the number of available coeffiecients. idk how to argue this, but it's pretty obvious in my opinion this is a bijection.
+
+\end{solution}
+
+\begin{problem}
+Some applications of Schur's lemma. Let $V$ be a complex representation of a compact matrix Lie group $G$.
+\begin{parts}
+	\part{Suppose $V$ is equipped with a $G$-invariant inner product $(\ \cdot\ , \ \cdot\ )$. Let $V_1$ and $V_2$ be irreducible subrepresentations which are non-isomorphic. Prove that $V_1 \perp V_2$ with respect to $(\ \cdot\ , \ \cdot\ )$.}\label{part:6a}
+	\part{Prove that, up to multiplication by a positive real scalar, there is a unique $G$-invariant inner product on $V$.}\label{part:6b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:6a}
+	First because $V$ is a complex representation of a compact Lie group, we know $V$ is similar to a unitary representation $(\tilde{\Pi}, V)$. Unitary representation can be broken down into
+	Suppose $V_1\not\perp V_2$. Then there exists a non-zero vector $v\in V_1\cap V_2 \eqqcolon W$. By the irreducibilty of $V_1$ and $V_2$ we know $Gv\in V_1$ and $Gv\in V_2$, so $Gv\in W$, and $GW\subseteq W$. Hence $W$ is a subrepresentation contradicting the fact that $V_1$ and $V_2$ are irreducible. Thus $V_1\perp V_2$.
+
+	\ref{part:6b}
+	Let $\langle-,-\rangle$ and $(-, -)$ be two inner products on $V$.
+\end{solution}
+
+\begin{problem}
+This problem concerns the irreducible representations of $\U{1}$.
+\begin{parts}
+	\part{For $k \in \Z$, define an action of $\U{1}$ on $\C$ by letting $\Pi_k(g) z = g^k z$. Prove that this defines a representation of $\U{1}$.}\label{part:7a}
+	\part{Prove that every homomorphism $\Pi: \U{1} \to \U{1}$ has the form $\Pi(g) = g^k$ for some $k \in \Z$.}\label{part:7b}
+	\part{Prove that every irreducible representation of $\U{1}$ is isomorphic to $(\Pi_k, \C)$ for some $k \in \Z$.}\label{part:7c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:7a}
+	First, the fact that $\Pi_k$ is a group homomorphism:
+	\begin{equation*}
+		\Pi_k(g_1 g_2) = (g_1 g_2)^k = g_1^k g_2^k = \Pi_k(g_1)\Pi_k(g_2)
+	\end{equation*}
+	Now, to show $\Pi_k$ is continuous let's look at it's kernel. Indeed it's not hard to see $\ker(\Pi_k) = \{\e^{\iu 2\pi n} : n\in \N \}$. This is a closed subgroup of $\U{1}$, so $\Pi_k$ is continuous.
+
+	\ref{part:7b}\todo{do this part}
+	\ref{part:7c}
+	Let $(\tilde{\Pi}, V)$ be an irreducible representation of $\U{1}$. The fact that $\U{1}$ is commutative implies $\GLV{V}$ must be as well:
+	\begin{equation*}
+		\tilde{\Pi}(a)\tilde{\Pi}(b) = \tilde{\Pi}(ab) = \tilde{\Pi}(ba) = \tilde{\Pi}(b)\tilde{\Pi}(a)
+	\end{equation*}
+	The only commutative general linear groups are $\GL{1}{\R}$ and $\GL{1}{\C}$ so $V$ must be one of these. If our representation is into $\GL{1}{\R}$ then it must be of the trivial representation.
+
+	If $V = \GL{1}{\C} = (\C_{\neq 0}, *)$, then every $\tilde{\Pi}(\e^{\iu \theta}\e^{\iu \varphi}) = \tilde{\Pi}(\e^{\iu \theta})\tilde{\Pi}(\e^{\iu \varphi})$ because $\tilde{\Pi}$ is a group homomorphism. This means $\tilde{\Pi}|_{\U{1}}$ must also be a group homomorphism, and by (b) it must be of the form $\Pi_k$.
+\end{solution}
+
+\begin{problem}
+\begin{parts}
+	\part{Prove that $\dim_\C \mathcal{H}_m(\R^3) = 2m + 1$. (\textit{For $f \in V_m(\R^3)$, we may write
+	\[
+		f(x) = \sum_{k = 0}^m \frac{x_1^{k}}{k!} f_k(x_2, x_3),
+	\]
+	where $f_k$ is a homogeneous degree $m - k$ polynomial in $x_2, x_3$. Now use the condition $\triangle f = 0$ to prove that $f$ is completely determined by $f_0$ and $f_1$.})}\label{part:8a}
+	\part{For $\theta \in \R$, define
+		\[
+			R_{\theta} = \mqty(
+			1 & 0 & 0 \\
+			0 & \cos \theta & -\sin\theta \\
+			0 & \sin\theta & \cos \theta
+			),
+		\]
+		and consider the subgroup $T = \qty{R_\theta}_{\theta \in \R}$ of $\O{3}$. Prove that
+		\[
+			\mathcal{H}_T = \qty{f \in \mathcal{H}_m(\R^3) : R_\theta\cdot f = f \text{ for all }\theta \in \R}
+		\]
+		is one-dimensional.}\label{part:8b}
+	\part{Suppose $W$ is an invariant subspace of $\mathcal{H}_m(\R^3)$ with respect to the $\O{3}$ representation. Prove that $W$ contains an element of $\mathcal{H}_T$. (\textit{Start by proving that there exists $f \in W$ with $f(1, 0, 0) \neq 0$, and then consider a suitable integral over $\theta \in [0, 2\pi]$.})}\label{part:8c}
+	\part{Prove that $\mathcal{H}_m(\R^3)$ is an irreducible representation of $\O{3}$.}\label{part:8d}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:8a}
+	We'll start by showing $f\in V_m(\R^3)$ can be written as in the hint. Let $d = \dim V_m(\R^3)$.
+	\begin{align*}
+		f(x, y, z) & = \sum_{i = 0}^{d}\alpha_i x^{a_i}y^{b_i}z^{c_i} \tag*{$\mafbox{a_i + b_i + c_i = m}$}                               \\
+		           & = \sum_{i = 0}^{d}\frac{x^{a_i}}{i!}\,\alpha_i i! y^{b_i}z^{c_i}                                                     \\
+		           & = \sum_{a\in \{a_i\}} \frac{x^{a}}{a!}f_a (y, z) \tag*{$\mafbox{f_{a_i} (y, z)\defeq\alpha_i i! \, y^{b_i}z^{c_i}}$} \\
+		           & = \sum_{k = 0}^{m}\frac{x^k}{k!}f_k(y, z) \tag*{\footnotesize{relabeling and $x$ has $m$ distinct powers}}
+	\end{align*}
+	Now we'll calculate $\laplace{f}$.
+	\begin{equation*}
+		\laplace{f} = \sum_{k = 2}^{m}\frac{x^{k - 2}}{(k - 2)!}f_k(y, z) + \frac{x^k}{k!}\qty(f_k^{(yy)} + f_k^{(zz)}) = 0
+	\end{equation*}
+	This equation tells us that $f_k$ must equal 0 for all $k\geq 2$. This is because the differing powers of $x$ cannot cancel each other, so they must both individually be 0.
+	\ref{part:8b}
+	\ref{part:8c}
+	\ref{part:8d}
+\end{solution}
+
+\begin{problem}
+The action considered in Problem \#8 also allows us to view $\mathcal{H}_m(\R^3)$ as a representation of $\SO{3}$. Does the proof outlined in Problem \#8 show that this representation is irreducible?
+\end{problem}
+
+\begin{problem}
+By Problem \#2, the action $(A\cdot f)(x) = f(A^{-1}x)$ gives rise to representations of $\O{2}$ and $\SO{2}$ on $\mathcal{H}_m(\R^2)$.
+\begin{parts}
+	\part{Prove that $\mathcal{H}_m(\R^2)$ is irreducible as a representation of $\O{2}$.}\label{part:10a}
+	\part{Prove that $\mathcal{H}_m(\R^2)$ is not irreducible as a representation of $\SO{2}$ for $m \geq 2$.}\label{part:10a}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\end{document}
