@@ -54,7 +54,19 @@ For a smooth function $f$ on $\R^n$ we define $\triangle f \defeq \pdv[2]{f}{x_1
 \end{problem}
 
 \begin{solution}
-
+	We're going to do this by components, so let's recall what it means for $A$ to be orthogonal in components.
+	\begin{equation*}
+		\qty[AA^{\intercal}]_{ij} = \sum_{k = 1}^{n}A_{ik}\qty[A^\intercal]_{kj} = \sum_{k = 1}^{n}A_{ik}A_{jk} = \col{i}{A}\cdot \col{j}{A} = \delta_{ij}
+	\end{equation*}
+	Here $\col{i}{A}$ denotes the $i$th column of $A$.
+	\begin{align*}
+		\pdv{x_i}f(Ax)    & = f^{(i)}(Ax)\pdv{x_i}Ax                                 \\
+		                  & = f^{(i)}(Ax)\col{i}{A}                                  \\
+		\pdv[2]{x_i}f(Ax) & = f^{(ii)}(Ax)\col{i}{A}\pdv{x_i}Ax                      \\
+		                  & = f^{(ii)}(Ax)\underbrace{\col{i}{A}\cdot\col{i}{A}}_{1} \\
+		                  & = f^{(ii)}(Ax)
+	\end{align*}
+	From this we conclude $(\laplace{f})(Ax) = \laplace{(f(Ax))}$.
 \end{solution}
 
 \begin{problem}
@@ -102,10 +114,9 @@ Let $V_n' = \vspan_\C\qty{z^k : k = 0, \ldots, n,}$ be the set of polynomials in
 		\qty[\Pi(A)\cdot f](z) & = \qty(-bz + a)^n\sum_{m = 0}^n\alpha_m\qty(\frac{\overline{a}z + \overline{b}}{-bz + a})^m \\
 		                       & = \sum_{m = 0}^n\alpha_m\qty(\overline{a}z + \overline{b})^m \qty(-bz + a)^{n - m}\in V_n'
 	\end{align*}
-	Now let $AB = \mqty(a & -\overline{b} \\ b & \overline{a})\mqty(c & -\overline{d} \\ d & \overline{c}) = \mqty(ac - \overline{b}d & -a\overline{d} - \overline{b}\overline{c} \\ bc + \overline{a}d & -b\overline{d} + \overline{a}\overline{c})$ and we'll go through a \emph{very} tedious calculation.\todo{do you wana finish this?}
-	% \begin{align*}
-	% 	\qty[\Pi(AB)\cdot f](z) & = kkhh
-	% \end{align*}
+	Now let $AB = \mqty(a & -\overline{b} \\ b & \overline{a})\mqty(c & -\overline{d} \\ d & \overline{c}) = \mqty(ac - \overline{b}d & -a\overline{d} - \overline{b}\overline{c} \\ bc + \overline{a}d & -b\overline{d} + \overline{a}\overline{c})$ and we'll go through a \emph{very} tedious calculation.
+
+	Upon second thought I only have a finite amount of time to work on this and I think I'll learn more from other parts.
 
 	\ref{part:5b}
 	Take the following intertwining map $\psi:V_n(\C^2)\to V_n'$ defined by
@@ -144,11 +155,30 @@ Some applications of Schur's lemma. Let $V$ be a complex representation of a com
 
 \begin{solution}
 	\ref{part:6a}
-	First because $V$ is a complex representation of a compact Lie group, we know $V$ is similar to a unitary representation $(\tilde{\Pi}, V)$. Unitary representation can be broken down into
 	Suppose $V_1\not\perp V_2$. Then there exists a non-zero vector $v\in V_1\cap V_2 \eqqcolon W$. By the irreducibilty of $V_1$ and $V_2$ we know $Gv\in V_1$ and $Gv\in V_2$, so $Gv\in W$, and $GW\subseteq W$. Hence $W$ is a subrepresentation contradicting the fact that $V_1$ and $V_2$ are irreducible. Thus $V_1\perp V_2$.
 
+	I understand now just because $V_1\not\perp V_2$ does not imply there is a non-zero vector in their intersection. To recover the proof I think we might be able to argue that because $G$ is compact, it's representation is similar to a unitary one where all subrepresentations are orthogonal.
+
 	\ref{part:6b}
-	Let $\langle-,-\rangle$ and $(-, -)$ be two inner products on $V$.
+	Let $\langle-,-\rangle$ and $(-, -)$ be two inner products on $V$. Define the two following maps $\rho_{\langle,\rangle}: V \to V^*$ and $\rho_{(,)}: V \to V^*$ (where $V^*$ is the dual space of $V$) as
+	\begin{align*}
+		\rho_{\langle,\rangle}(v) & \defeq \langle v, -\rangle \\
+		\rho_{(,)}(v)             & \defeq (v, -)
+	\end{align*}
+	Also take the dual representation $\Pi^*$ as
+	\begin{equation*}
+		\Pi^*(g)\langle v, -\rangle = \langle v, \Pi(g)^\dagger-\rangle
+	\end{equation*}
+	We'll now show both $\rho$ are intertwining maps:
+	\begin{align*}
+		(\Pi^*(g) \circ \rho)(v) & = \Pi^*(g)(\rho(v))    \\
+		                         & = \Pi^*(g)([v, -])     \\
+		                         & = [v, \Pi(g)^\dagger-] \\
+		(\rho\circ \Pi(g))(v)    & = \rho(\Pi(g)(v))      \\
+		                         & = [\Pi(g)v,-]          \\
+		                         & = [v, \Pi(g)^\dagger-]
+	\end{align*}
+	Where I'm using $[-,-]$ to denote either of our two inner products. Now by Schur's lemma $\rho_{\langle,\rangle} = \lambda\rho_{(,)}$. To show $\lambda$ must be real and positive, remember that inner products are positive definite, and so $\underbrace{\langle v, v\rangle}_{\in \R_{\geq 0}} = \lambda\underbrace{(v, v)}_{\in R_{\geq 0}}$. Hence $\lambda \geq 0$.
 \end{solution}
 
 \begin{problem}
@@ -168,7 +198,9 @@ This problem concerns the irreducible representations of $\U{1}$.
 	\end{equation*}
 	Now, to show $\Pi_k$ is continuous let's look at it's kernel. Indeed it's not hard to see $\ker(\Pi_k) = \{\e^{\iu 2\pi n} : n\in \N \}$. This is a closed subgroup of $\U{1}$, so $\Pi_k$ is continuous.
 
-	\ref{part:7b}\todo{do this part}
+	\ref{part:7b}
+	Suppose $\Pi(g) = g^\alpha$ for $\alpha\in\R$. Anything outside of $\R$ might not maintain closure of $\U{1}$ so it's enough to restrict ourselves to $\R$. Write $\alpha = n + d$ where $n\in\Z$ and $d\in[0, 1)$. We can then rewrite $\Pi(g) = g^n g^d$. Unfortunately we cannot continuously define fractional, and irrational powers of $\e^{\iu \theta}$ for all $\theta$ continuosly. This leaves us with $\Pi(g) = g^n$.
+
 	\ref{part:7c}
 	Let $(\tilde{\Pi}, V)$ be an irreducible representation of $\U{1}$. The fact that $\U{1}$ is commutative implies $\GLV{V}$ must be as well:
 	\begin{equation*}
@@ -214,11 +246,31 @@ This problem concerns the irreducible representations of $\U{1}$.
 		           & = \sum_{k = 0}^{m}\frac{x^k}{k!}f_k(y, z) \tag*{\footnotesize{relabeling and $x$ has $m$ distinct powers}}
 	\end{align*}
 	Now we'll calculate $\laplace{f}$.
-	\begin{equation*}
-		\laplace{f} = \sum_{k = 2}^{m}\frac{x^{k - 2}}{(k - 2)!}f_k(y, z) + \frac{x^k}{k!}\qty(f_k^{(yy)} + f_k^{(zz)}) = 0
-	\end{equation*}
-	This equation tells us that $f_k$ must equal 0 for all $k\geq 2$. This is because the differing powers of $x$ cannot cancel each other, so they must both individually be 0.
+	\begin{align*}
+		\laplace{f} & = \sum_{k = 2}^{m}\frac{x^{k - 2}}{(k - 2)!}f_k(y, z) + \sum_{k = 0}^m\frac{x^k}{k!}\qty(f_k^{(yy)} + f_k^{(zz)})                                                                           \\
+		            & = \sum_{k = 0}^{m - 2}\frac{x^k}{k!}\qty[f_{k + 2}(y, z) + f_k^{(yy)} + f_k^{(zz)}] + \frac{x^m}{m!}\qty(f_0^{(yy)} + f_0^{(zz)}) + \frac{x^{m - 1}}{(m - 1)!}\qty(f_1^{(yy)} + f_1^{(zz)}) \\
+		            & = \sum_{k = 0}^{m - 2}\frac{x^k}{k!}\qty[f_{k + 2}(y, z) + f_k^{(yy)} + f_k^{(zz)}]
+	\end{align*}
+	Where the last equality holds because $f_0^{(aa)} = 0$ for $a = y, z$ and similarly for $f_1^{(aa)}$.
+
+	Now in order for this equation to be identically 0 for all $x, y, z$ we must have the bracketed term equal to 0. Taking $k = 0$ and $k = 1$ we have
+	\begin{align*}
+		f_2(y, z) + f_0^{(yy)} + f_0^{(zz)} & = 0 \\
+		f_3(y, z) + f_1^{(yy)} + f_1^{(zz)} & = 0
+	\end{align*}
+	Hence we can ``build'' all $f_i$ from $f_0$ and $f_1$ recursively. This means for an arbitrary $f\in\mathcal{H}_m(\R^3)$ we have to choose a degree $m$ harmonic homogeneous polynomial \emph{and} a degree $m - 1$ harmonic homogeneous polynomial. Choosing the first requires $m + 1$ numbers, and the second $m$, so together we have dimension $2m + 1$.
+
 	\ref{part:8b}
+	First take $\theta = \pi$. Then
+	\begin{equation*}
+		(R_{-\pi})\vb{x} = \mqty(\dmat[0]{1, -1, -1})\mqty(x \\ y \\ z) = \mqty(x \\ -y \\ -z)
+	\end{equation*}
+	So our solutions must be invariant under $y\mapsto -y$ and $z\mapsto -z$. This means only one of $f_0$ or $f_1$ can be non-zero based on the parity of $m$. This means our $f_R\in\mathcal{H}_T$ look like
+	\begin{align*}
+		f_R = f_0(y, z) &  & \text{or} &  & f_R = xf_1(y, z).
+	\end{align*}
+	Now using the fact that $f_R$ is invariant under all $\theta$ we should theoretically be able to show there is only one free parameter, but I cannot today.
+
 	\ref{part:8c}
 	\ref{part:8d}
 \end{solution}
@@ -227,15 +279,22 @@ This problem concerns the irreducible representations of $\U{1}$.
 The action considered in Problem \#8 also allows us to view $\mathcal{H}_m(\R^3)$ as a representation of $\SO{3}$. Does the proof outlined in Problem \#8 show that this representation is irreducible?
 \end{problem}
 
+\begin{solution}
+	Yes.
+\end{solution}
+
 \begin{problem}
 By Problem \#2, the action $(A\cdot f)(x) = f(A^{-1}x)$ gives rise to representations of $\O{2}$ and $\SO{2}$ on $\mathcal{H}_m(\R^2)$.
 \begin{parts}
 	\part{Prove that $\mathcal{H}_m(\R^2)$ is irreducible as a representation of $\O{2}$.}\label{part:10a}
-	\part{Prove that $\mathcal{H}_m(\R^2)$ is not irreducible as a representation of $\SO{2}$ for $m \geq 2$.}\label{part:10a}
+	\part{Prove that $\mathcal{H}_m(\R^2)$ is not irreducible as a representation of $\SO{2}$ for $m \geq 2$.}\label{part:10b}
 \end{parts}
 \end{problem}
 
 \begin{solution}
+	\ref{part:10a}
+
+	\ref{part:10b}
 \end{solution}
 
 \end{document}
