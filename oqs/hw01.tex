@@ -8,7 +8,6 @@
 \usepackage{macros}
 \usepackage[footnote,nolist,smaller]{acronym}
 \usepackage{cleveref}
-\usepackage{todonotes}
 \input{config}
 \hwnum{1}
 \duedate{Mon, Feb 22, 2020 11:59 PM}
@@ -176,6 +175,28 @@ Apply Naimark's theorem to identify a \ac{PVM} in an extended Hilbert space that
 \end{problem}
 
 \begin{solution}
+    We'd like to find a set of operators $\{F_i\}$ such that $F_i F_j = F_i \delta_{ij}$ and $\sum_i F_i = \1$ that are built from the operators $E_\nu$. First recall the trine states:
+    \begin{align*}
+        \ket{\chi_0} & = \ket{0} & \ket{\chi_1} & = \frac{1}{2}\ket{0} - \frac{\sqrt{3}}{2}\ket{1} & \ket{\chi_2} & = \frac{1}{2}\ket{0} + \frac{\sqrt{3}}{2}\ket{1}
+    \end{align*}
+    Now we can calculate the \ac{POVM}s as follows.
+    \begin{align*}
+        E_0 & = \frac{2}{3}\ketbra{\chi_0} = \frac{2}{3}\mqty[1                                                                & 0         \\ 0 & 0] \\
+        E_1 & = \frac{1}{6}\qty(\ketbra{0} - \sqrt{3}\ketbra{0}{1} - \sqrt{3}\ketbra{1}{0} + 3\ketbra{1}) = \frac{1}{6}\mqty[1 & -\sqrt{3} \\ -\sqrt{3} & 3] \\
+        E_2 & = \frac{1}{6}\qty(\ketbra{0} + \sqrt{3}\ketbra{0}{1} + \sqrt{3}\ketbra{1}{0} + 3\ketbra{1}) = \frac{1}{6}\mqty[1 & \sqrt{3}  \\ \sqrt{3} & 3]
+    \end{align*}
+    Now we'll look for a $U$ satisfying $U^\dagger\qty(\1\otimes E_\nu)U$. Indeed we can define (by the positive-ness of $E_\nu$)
+    \begin{equation*}
+        U = \sqrt{E_0}\otimes\vb{e}_0 + \sqrt{E_1}\otimes\vb{e}_1 + \sqrt{E_2}\otimes\vb{e}_2.
+    \end{equation*}
+    Where $\vb{e}_i$ are the standard basis elements of $\C^3$.
+    This is indeed an isometry ($U^\dagger U = \1$) as
+    \begin{align*}
+        U^\dagger U & = \qty(\sqrt{E_0}\otimes\vb{e}_0^\dagger + \sqrt{E_1}\otimes\vb{e}_1^\dagger + \sqrt{E_2}\otimes\vb{e}_2^\dagger)\qty(\sqrt{E_0}\otimes\vb{e}_0 + \sqrt{E_1}\otimes\vb{e}_1 + \sqrt{E_2}\otimes\vb{e}_2) \\
+                    & = E_0\otimes\underbrace{\vb{e}_0^\dagger\vb{e}_0}_{1} + E_1\otimes\vb{e}_1^\dagger\vb{e}_1 + E_2\otimes\vb{e}_2^\dagger\vb{e}_2                                                                          \\
+                    & = E_0 + E_1 + E_2 = \1
+    \end{align*}
+    Thus we take $F_i = U^\dagger(\1\otimes E_i)U$.
 \end{solution}
 
 \begin{problem}
@@ -187,7 +208,31 @@ Apply Naimark's theorem to identify a \ac{PVM} in an extended Hilbert space that
 
 \begin{solution}
     \ref{part:33a}
+    To show $E(X)$ defines a valid \ac{POVM} we need to show
+    \begin{enumerate}
+        \item $E(X)\geq 0$
+        \item $E(\R^2) = 1$
+        \item $E\qty(\bigcup_i X_i) = \sum_i E(X_i)$
+    \end{enumerate}
+    \subsubsection*{1}
+    \begin{equation*}
+        \expval{E(X)}{\psi} = \frac{1}{\pi}\int_X\dd[2]{\alpha}\braket{\psi}{\alpha}\braket{\alpha}{\psi} = \frac{1}{\pi}\int_X\dd[2]{\alpha}\underbrace{\abs{\braket{\alpha}{\psi}}^2}_{\geq 0} \geq 0
+    \end{equation*}
+    This applys for all vectors $\ket{\psi}$, so we conclude $E(X)$ is positive semi-definite.
+    \subsubsection*{2}
+    This point is satisfied by the resolution of the identity given in the example prior to the question:
+    \begin{equation*}
+        E(\R^2) = \frac{1}{\pi}\int_{\R^2}\dd[2]{\alpha}\ketbra{\alpha} = \1
+    \end{equation*}
+    \subsubsection*{3}
+    Because the $X_i$ are disjoint, the additivity of the Lebesgue integral allow us to split the integral into pieces as follows.
+    \begin{equation*}
+        E\qty(\bigcup_i X_i) = \frac{1}{\pi}\int_{\bigcup_i X_i}\dd[2]{\alpha}\ketbra{\alpha} = \sum_i\frac{1}{\pi}\int_{X_i}\dd[2]{\alpha}\ketbra{\alpha} = \sum_{i}E(X_i)
+    \end{equation*}
+    The convergence of the (possibly) infinite sum is guaranteed by first using the above manipulation on the first $n$ sets $X_i$ and then taking the limit.
+
     \ref{part:33b}
+    The operational interpretation of $\Pr(X) = \tr(E(X)\rho)$ is that this is the probability of finding the particle in and maybe around the state space region $X$.
 \end{solution}
 
 \end{document}
