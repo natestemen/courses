@@ -1,0 +1,121 @@
+\documentclass[
+	pages,
+	boxes,
+	color=WildStrawberry
+]{homework}
+
+
+\usepackage{cleveref}
+\usepackage{macros}
+\usepackage{todonotes}
+\input{config}
+\hwnum{4}
+\duedate{Wed, Mar 10, 2020 10:00 PM}
+
+\colorlet{Ppink}{MidnightBlue!20}
+\newtcbox{\mafbox}[1][]{on line, math upper,
+	boxsep=4pt, left=0pt,right=0pt,top=0pt,bottom=0pt,
+	colframe=white,colback=Ppink,
+	highlight math style={enhanced}
+}
+
+\begin{document}
+
+\begin{problem}
+Let $(\sigma, V)$ be a complex representation of $\slie{2}{\C}$. Define $H, X, Y$ as in p.96 of Hall. Let $v \in V \setminus \{0\}$ be an eigenvector of $\sigma(H)$ such that $\sigma(X) v = 0$, and define $v_{k} = \sigma(Y)^k v$ for $k \geq 0$. Prove that
+\[
+	\sigma(X)v_k = k(\lambda - k + 1)v_{k-1}, \text{ for all } k \geq 1.
+\]
+\end{problem}
+
+\begin{problem}
+Let $(\Pi_1, V_1)$, $(\Pi_2, V_2)$ two representations of a matrix Lie group. Prove that $(\Pi_1, V_1)$ is isomorphic to $(\Pi_2, V_2)$ if and only if $(\pi_1, V_1)$ is isomorphic to $(\pi_2, V_2)$, where $(\pi_1, V_1), (\pi_2, V)$ denote the associated Lie algebra representations.
+\end{problem}
+
+\begin{problem}
+Let $V$ be a real or complex representation of a matrix Lie group or Lie algebra.
+\begin{parts}
+	\part{Prove that the dual representation $V^*$ is irreducible if and only if $V$ is irreducible.}
+	\part{Prove that $(V^*)^*$ is isomorphic to $V$ as a representation.}
+	(\textit{Given a subspace $W$ of $V$, its annihilator is the subspace of $V^*$ given by
+		\[
+			W^{0}= \{l \in V^*\ |\ l(w) = 0 \text{ for all }w \in W\}.
+		\]
+		Recall that $(W^{0})^{0}$ under the canonical vector space isomorphism $V \equiv (V^*)^*$, and thus $W \mapsto W^{0}$ establishes a one-to-one correspondence between subspaces of $V$ and those of $V^*$. Look up annihilators if the preceding paragraph is not a review for you.})
+\end{parts}
+\end{problem}
+
+\begin{problem}
+Let $(\Pi_1, V_1), (\Pi_2, V_2)$ be representations of a matrix Lie group $G$. Denote by $\Hom(V_1, V_2)$ the space of linear transformations from $V_1$ to $V_2$. For $T \in \Hom(V_1, V_2)$ and $g \in G$, define
+\[
+	\Pi(g)T = \Pi_2(g) \circ T \circ \Pi_1(g^{-1}).
+\]
+\begin{parts}
+	\part{Prove that $(\Pi, \Hom(V_1, V_2))$ is a representation of $G$.}
+	\part{Prove that $(\Pi, \Hom(V_1, V_2))$ is isomorphic as a representation to $(V_1)^* \otimes V_2$.}
+	\part{Prove that $T \in \Hom(V_1, V_2)$ is an intertwining map with respect to $\Pi_1, \Pi_2$ if and only if $\Pi(g)T = T$ for all $g \in G$.}
+\end{parts}
+\end{problem}
+
+\begin{problem}
+Let $V$ be a finite-dimensional real or complex representation of a matrix Lie group or Lie algebra. The following are not necessarily related.
+\begin{parts}
+	\part{Prove that every non-trivial invariant subspace contains a non-trivial irreducible subrepresentation of $V$.}
+	\part{Suppose $V$ is irreducible and complex. Consider the direct sum representation $V \oplus V$. Prove that every non-trivial invariant subspace $W$ of $V$ is isomorphic (as a represenration) to $V$, and is of the form
+		\[
+			W = \qty{(t_1v, t_2v) : v \in V},
+		\]
+		for some $t_1, t_2 \in \C$ not both zero.}
+\end{parts}
+\end{problem}
+
+\begin{problem}
+Let $V_1, V_2$ be non-isomorphic, irreducible (real or complex) representations of a matrix Lie group or Lie algebra. Consider the direct sum representation $V_1 \oplus V_2$ and regard $V_1, V_2$ as subspaces of $V_1 \oplus V_2$ in the obvious way.
+\begin{parts}
+	\part{Let $W$ be a non-trivial irreducible subrepresentation of $V_1 \oplus V_2$. Prove that $W = V_1$ or $V_2$.}
+	\part{Prove that $V_1, V_2$ are the only non-trivial invariant subspaces of $V_1 \oplus V_2$.}
+\end{parts}
+\end{problem}
+
+\begin{problem}
+Consider the representation $\mathcal{H}_m(\R^3)$ of $\SO{3}$ defined as in the previous assignment, that is, with $\Sigma: \SO{3} \to \GLV{\mathcal{H}_m(\R^3)}$ given by
+\[
+	\Sigma(A)f = f\circ A^{-1}.
+\]
+Denote the associated Lie algebra representation by $\sigma: \so{3} \to \glV{\mathcal{H}_m(\R^3)}$ and extend it to $\so{3}_{\C}$ by complex linearity. Denote the extension by $\widetilde{\sigma}$.
+\begin{parts}
+	\part{Prove that $\so{3}_{\C}$ is isomorphic as a complex Lie algebra to $\slie{2}{\C}$ via
+		\[
+			\varphi:\mqty(
+			0           & 2a\iu   & \iu(b + c) \\
+			-2a\iu      & 0       & c - b      \\
+			-\iu(b + c) & b - c   & 0
+			) \mapsto
+			\mqty(
+			a & b  \\
+			c & -a
+			).
+		\]}
+	\part{Consider the representation $\widetilde{\sigma} \circ \varphi^{-1}$ of $\slie{2}{\C}$. Explain how it follows from the previous assignment and what we did in lecture that $\widetilde{\sigma}\circ \varphi^{-1}$ is isomorphic to $(\pi_{2m}, V_{2m}(\C^2))$.}
+	\part{Verify that $h(x, y, z) = (x + \iu y)^{m}$ is a primitive element. That is, prove that $h \in \mathcal{H}_m(\R^3)$, that it is an eigenvector of $\widetilde{\sigma}(\varphi^{-1}(H))$, and that $\widetilde{\sigma}(\varphi^{-1}(X))h = 0$.}
+	\part{Introducing polar coordinates $x = r\sin s \cos t, y = r\sin s\sin t$ and $z = r\cos s$, prove that for $f \in \mathcal{H}_m(\R^3)$ we have
+		\begin{align*}
+			\widetilde{\sigma}(\varphi^{-1}(H))f & = -2\iu\pdv{f}{t}                                      \\
+			\widetilde{\sigma}(\varphi^{-1}(X))f & = \e^{\iu t}\qty(-\iu \pdv{f}{s} + \cot(s)\pdv{f}{t})  \\
+			\widetilde{\sigma}(\varphi^{-1}(Y))f & = \e^{\iu t}\qty( \iu \pdv{f}{s} + \cot(s)\pdv{f}{t}).
+		\end{align*}}
+\end{parts}
+\end{problem}
+
+\begin{problem}
+Let $\pi: \slie{3}{\C} \to \glV{V}$ be an irreducible complex representation of $\slie{3}{\C}$, and denote by $\pi^*$ the dual representation, acting on $V^*$.
+\begin{parts}
+	\part{Prove that the weights of $\pi^*$ are the negatives of the weights of $\pi$.}
+	\part{Prove that if $\pi$ has highest weight $(m_1, m_2)$, then $\pi^*$ has highest weight $(m_2, m_1)$.}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\end{document}
