@@ -8,6 +8,7 @@
 \usepackage{cleveref}
 \usepackage{macros}
 \usepackage{todonotes}
+\usepackage{tikz-cd}
 \input{config}
 \hwnum{4}
 \duedate{Wed, Mar 10, 2020 10:00 PM}
@@ -28,22 +29,91 @@ Let $(\sigma, V)$ be a complex representation of $\slie{2}{\C}$. Define $H, X, Y
 \]
 \end{problem}
 
+\begin{solution}
+	Let $\sigma(H)v = \lambda v$ and recall the following commutation relations:
+	\begin{align*}
+		\comm{X}{Y} & = H & \comm{H}{Y} & = -2Y
+	\end{align*}
+	Now let's calculate $\sigma(X)v_k$.
+	\begin{align*}
+		\sigma(X)v_k & = \sigma(X)\sigma(Y)^k v                                                                                                                                     \\
+		             & = \qty[\sigma(X)\sigma(Y)]\sigma(Y)^{k-1}v                                                                                                                   \\
+		             & = \qty[\sigma(H) + \sigma(Y)\sigma(X)]\sigma(Y)^{k-1}v \tag*{\tiny $\mafbox{\sigma(H) = \sigma(\comm{X}{Y}) = \sigma(X)\sigma(Y) - \sigma(Y)\sigma(X)}$}     \\
+		             & \shortvdotswithin{=}
+		             & = k\sigma(H)\sigma(Y)^{k-1}v + \sigma(Y)^k \underbrace{\sigma(X)v}_{0}                                                                                       \\
+		             & = k\qty[\sigma(Y)\sigma(H) - 2\sigma(Y)]\sigma(Y)^{k-2}v \tag*{\tiny $\mafbox{-2\sigma(Y) = \sigma(\comm{H}{Y}) = \sigma(H)\sigma(Y) - \sigma(Y)\sigma(H)}$} \\
+		             & \shortvdotswithin{=}
+		             & = k\qty\Big[\sigma(Y)^{k-1}\underbrace{\sigma(H)v}_{\lambda v} - 2(k-1)\underbrace{\sigma(Y)^{k-1}v}_{v_{k-1}}]                                              \\
+		             & = k\qty(\lambda - 2k + 2)v_{k-1}
+	\end{align*}
+	Not sure if the question is incorrect or if I missed something. I cannot see it though.
+\end{solution}
+
 \begin{problem}
-Let $(\Pi_1, V_1)$, $(\Pi_2, V_2)$ two representations of a matrix Lie group. Prove that $(\Pi_1, V_1)$ is isomorphic to $(\Pi_2, V_2)$ if and only if $(\pi_1, V_1)$ is isomorphic to $(\pi_2, V_2)$, where $(\pi_1, V_1), (\pi_2, V)$ denote the associated Lie algebra representations.
+Let $(\Pi_1, V_1)$, $(\Pi_2, V_2)$ two representations of a connected matrix Lie group. Prove that $(\Pi_1, V_1)$ is isomorphic to $(\Pi_2, V_2)$ if and only if $(\pi_1, V_1)$ is isomorphic to $(\pi_2, V_2)$, where $(\pi_1, V_1), (\pi_2, V)$ denote the associated Lie algebra representations.
 \end{problem}
+
+\begin{solution}
+
+\end{solution}
 
 \begin{problem}
 Let $V$ be a real or complex representation of a matrix Lie group or Lie algebra.
 \begin{parts}
-	\part{Prove that the dual representation $V^*$ is irreducible if and only if $V$ is irreducible.}
-	\part{Prove that $(V^*)^*$ is isomorphic to $V$ as a representation.}
+	\part{Prove that the dual representation $V^*$ is irreducible if and only if $V$ is irreducible.}\label{part:3a}
+	\part{Prove that $(V^*)^*$ is isomorphic to $V$ as a representation.}\label{part:3b}
+
 	(\textit{Given a subspace $W$ of $V$, its annihilator is the subspace of $V^*$ given by
 		\[
-			W^{0}= \{l \in V^*\ |\ l(w) = 0 \text{ for all }w \in W\}.
+			W^{0}= \qty{l \in V^* : l(w) = 0 \,\text{ for all }w \in W}.
 		\]
 		Recall that $(W^{0})^{0}$ under the canonical vector space isomorphism $V \equiv (V^*)^*$, and thus $W \mapsto W^{0}$ establishes a one-to-one correspondence between subspaces of $V$ and those of $V^*$. Look up annihilators if the preceding paragraph is not a review for you.})
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	\ref{part:3a}
+	Suppose $V^*$ is an irreducible representation, and let $W\subseteq V$ be an invariant subspace. We can then show $W^0$ is an invariant subspace of $V^*$ by the following.
+	\begin{equation*}
+		\qty(\Pi^*(g)l)(w) = l(\Pi(g^{-1}) w) = l(\tilde{w}) = 0
+	\end{equation*}
+	Where we used the fact that $G\cdot W\subseteq W$ and therefore there must exist a $\tilde{w}$ such that $\tilde{w} = \Pi(g^{-1})w$. Hence $W^0$ is an invariant subspace of $V^*$. Since $V^*$ is an irrep, $W^0 = \qty{\overline{0}}$ or $W^0 = V^*$.
+
+	If $W^0 = V^*$ then \emph{every} linear functional annhilates every vector of $W$ which is only possible when $W = \qty{0}$ the zero vector.
+
+	If $W^0 = \qty{\overline{0}}$ then we want to show $W = V$. We'll do this by contrapositive. So suppose $W \neq V$ is a subspace, and take $\qty{e_i}_{i = 1}^n$ is a basis for $V$ with $W$ spanned by $\qty{e_i}_{i = 1}^m$ with $m < n$. Now define the following linear functional
+	\begin{equation*}
+		f(v) = f\qty(\sum_{i = 1}^n\alpha_i e_i) = \sum_{i = m + 1}^n \alpha_i
+	\end{equation*}
+	This is clearly $\C$-linear and homogeneuous, so indeed an element of the dual space. Thus we've found a linear functional such that $f|_W \equiv 0$. This implies $W^0 \neq \qty{\overline{0}}$. Thus, by contrapositive, $W = V$.
+
+	We've just shown $\mafbox{V^*\text{ irrep }\implies V\text{ irrep}}$, and taking the dual of both sides yields $V^{**}$ irrep $\implies V^*$ irrep. Now using the natural isomorphism of vector spaces $V^{**}\cong V$ we have $\mafbox{V\text{ irrep }\implies V^*\text{ irrep}}$.
+
+	\ref{part:3b}
+	Take the following commutative diagram:
+	\begin{equation*}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			V \arrow{r}{\psi} \arrow[swap]{d}{\Pi(g)} & V^{**} \arrow{d}{\Pi^{**}(g)} \\
+			V \arrow{r}{\psi} & V^{**}
+		\end{tikzcd}
+	\end{equation*}
+	where $\psi: V\to V^{**}$ is defined as $\psi(v)(\phi)\defeq \operatorname{ev}_v(\phi) = \phi(v)$. To show this commutes we'll have to show $\Pi^{**}(g)\circ \psi = \psi \circ \Pi(g)$. First the left hand side where $v\in V$ and $f\in V^*$.
+	\begin{align*}
+		\qty\Big[\qty(\Pi^{**}(g)\circ \psi)(v)](f) & = \qty\Big[\Pi^{**}(g)(\psi(v))](f)             \\
+		                                            & = \qty\Big[\Pi^{**}(g)(\operatorname{ev}_v)](f) \\
+		                                            & = \operatorname{ev}_v(\Pi^{*}(g^{-1})f)         \\
+		                                            & = \qty\Big[\Pi^{*}(g^{-1})f](v)                 \\
+		                                            & = f(\Pi(g)v)
+	\end{align*}
+	And now the left hand side:
+	\begin{align*}
+		\qty\Big[(\psi\circ \Pi(g))(v)](f) & = \psi(\Pi(g)v)(f)               \\
+		                                   & = \operatorname{ev}_{\Pi(g)v}(f) \\
+		                                   & = f(\Pi(g)v)
+	\end{align*}
+
+	$f$ and $v$ are completely arbitrary, so this holds for all $v\in V$ and $f\in V^{*}$. Thus $\psi$ is an intertwining map and we can use Schur's lemma to say $\psi$ is an isomorphism (since it is clearly not 0). Thus $(\Pi, V)\cong (\Pi^{**}, V^{**})$.
+\end{solution}
 
 \begin{problem}
 Let $(\Pi_1, V_1), (\Pi_2, V_2)$ be representations of a matrix Lie group $G$. Denote by $\Hom(V_1, V_2)$ the space of linear transformations from $V_1$ to $V_2$. For $T \in \Hom(V_1, V_2)$ and $g \in G$, define
@@ -51,23 +121,79 @@ Let $(\Pi_1, V_1), (\Pi_2, V_2)$ be representations of a matrix Lie group $G$. D
 	\Pi(g)T = \Pi_2(g) \circ T \circ \Pi_1(g^{-1}).
 \]
 \begin{parts}
-	\part{Prove that $(\Pi, \Hom(V_1, V_2))$ is a representation of $G$.}
-	\part{Prove that $(\Pi, \Hom(V_1, V_2))$ is isomorphic as a representation to $(V_1)^* \otimes V_2$.}
-	\part{Prove that $T \in \Hom(V_1, V_2)$ is an intertwining map with respect to $\Pi_1, \Pi_2$ if and only if $\Pi(g)T = T$ for all $g \in G$.}
+	\part{Prove that $(\Pi, \Hom(V_1, V_2))$ is a representation of $G$.}\label{part:4a}
+	\part{Prove that $(\Pi, \Hom(V_1, V_2))$ is isomorphic as a representation to $(V_1)^* \otimes V_2$.}\label{part:4b}
+	\part{Prove that $T \in \Hom(V_1, V_2)$ is an intertwining map with respect to $\Pi_1, \Pi_2$ if and only if $\Pi(g)T = T$ for all $g \in G$.}\label{part:4c}
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	\ref{part:4a}
+	Here we will heavily rely on the fact that function composition is associative and we can re-bracket function composition any way we like.
+	\begin{align*}
+		\Pi(g_1g_2)T & \defeq \Pi_2(g_1g_2)\circ T \circ \Pi_1\qty((g_1g_2)^{-1})                                         \\
+		             & = \Pi_2(g_1g_2)\circ T \circ \Pi_1\qty(g_2^{-1}g_1^{-1})                                           \\
+		             & = \qty\Big(\Pi_2(g_1)\circ \Pi_2(g_2))\circ T \circ \qty\Big(\Pi_1(g_2^{-1})\circ \Pi_1(g_1^{-1})) \\
+		             & = \Pi_2(g_1)\circ \qty\Big(\Pi_2(g_2)\circ T \circ \Pi_1(g_2^{-1})) \circ \Pi_1(g_1^{-1})          \\
+		             & = \Pi_2(g_1)\circ \qty\Big(\Pi(g_2)T) \circ \Pi_1(g_1^{-1})                                        \\
+		             & = \qty\Big(\Pi(g_1) \circ \Pi(g_2))T
+	\end{align*}
+	\ref{part:4b}
+	Take the map $\rho: V_1^*\otimes V_2 \to \Hom(V_1, V_2)$ defined by $\rho(f\otimes v)(a) \defeq f(a)v$ where $f\in V_1^*, v\in V_2$ and $a\in V_1$. We'll now show the following diagram commutes.
+	\begin{equation*}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			V_1^*\otimes V_2 \arrow{r}{\rho} \arrow[swap]{d}{\Pi_2(g)\circ - \circ \Pi_1(g^{-1})} & \Hom(V_1, V_2) \arrow{d}{\Pi_1^*(g)\otimes \Pi_2(g)} \\
+			V_1^*\otimes V_2 \arrow{r}{\rho} & \Hom(V_1, V_2)
+		\end{tikzcd}
+	\end{equation*}
+	\begin{align*}
+		\qty(\rho\circ \qty\Big[\Pi_1^*(g)\otimes \Pi_2(g)])(f\otimes v)(a) & = \rho\qty[\Pi^{*}_1(g)f\otimes \Pi_2(g)v](a)         \\
+		                                                                    & = f(g^{-1}a)\Pi_2(g)v                                 \\
+		\qty(\qty\Big[\Pi(g)\circ\rho](f\otimes v))(a)                      & = \qty\Big(\Pi_2(g)\circ f(-)v\circ \Pi_1(g^{-1}))(a) \\
+		                                                                    & = \Pi_2(g)v f(g^{-1}a)
+	\end{align*}
+	Where I've used the notation $(\Pi^{*}_1(g)f)(a) = f(g^{-1}a)$ for convenience.
+
+	\ref{part:4c}
+	Take $\Pi_1$ to be isomorphic to $\Pi_2$ with intertwining map $T$. This means the following diagram commutes for all $g\in G$.
+	\begin{equation*}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			V_1 \arrow{r}{T} \arrow[swap]{d}{\Pi_1(g)} & V_2 \arrow{d}{\Pi_2(g)} \\
+			V_1 \arrow{r}{T} & V_2
+		\end{tikzcd}
+	\end{equation*}
+	Or written as an equation we have
+	\begin{equation*}
+		\Pi_2(g)\circ T = T \circ \Pi_1(g)
+	\end{equation*}
+	Now we can compose both sides on the left with $\Pi_1(g^{-1})$.
+	\begin{align*}
+		\Pi_2(g)\circ T \circ \Pi_1(g^{-1}) & = T \circ \Pi_1(g) \circ \Pi_1(g^{-1}) \\
+		                                    & = T \circ \Pi_1(g) \circ \Pi_1(g^{-1}) \\
+		                                    & = T \circ \Pi_1(gg^{-1})               \\
+		                                    & = T \circ \Pi_1(e)                     \\
+		                                    & = T \circ \id_{V_1}                    \\
+		                                    & = T
+	\end{align*}
+	This argument used all equivalences, not implications, so this shows the equivalence.
+\end{solution}
 
 \begin{problem}
 Let $V$ be a finite-dimensional real or complex representation of a matrix Lie group or Lie algebra. The following are not necessarily related.
 \begin{parts}
-	\part{Prove that every non-trivial invariant subspace contains a non-trivial irreducible subrepresentation of $V$.}
+	\part{Prove that every non-trivial invariant subspace contains a non-trivial irreducible subrepresentation of $V$.}\label{part:5a}
 	\part{Suppose $V$ is irreducible and complex. Consider the direct sum representation $V \oplus V$. Prove that every non-trivial invariant subspace $W$ of $V$ is isomorphic (as a represenration) to $V$, and is of the form
 		\[
 			W = \qty{(t_1v, t_2v) : v \in V},
 		\]
-		for some $t_1, t_2 \in \C$ not both zero.}
+		for some $t_1, t_2 \in \C$ not both zero.}\label{part:5b}
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	\ref{part:5a}
+	\ref{part:5b}
+\end{solution}
 
 \begin{problem}
 Let $V_1, V_2$ be non-isomorphic, irreducible (real or complex) representations of a matrix Lie group or Lie algebra. Consider the direct sum representation $V_1 \oplus V_2$ and regard $V_1, V_2$ as subspaces of $V_1 \oplus V_2$ in the obvious way.
@@ -95,17 +221,29 @@ Denote the associated Lie algebra representation by $\sigma: \so{3} \to \glV{\ma
 			a & b  \\
 			c & -a
 			).
-		\]}
-	\part{Consider the representation $\widetilde{\sigma} \circ \varphi^{-1}$ of $\slie{2}{\C}$. Explain how it follows from the previous assignment and what we did in lecture that $\widetilde{\sigma}\circ \varphi^{-1}$ is isomorphic to $(\pi_{2m}, V_{2m}(\C^2))$.}
-	\part{Verify that $h(x, y, z) = (x + \iu y)^{m}$ is a primitive element. That is, prove that $h \in \mathcal{H}_m(\R^3)$, that it is an eigenvector of $\widetilde{\sigma}(\varphi^{-1}(H))$, and that $\widetilde{\sigma}(\varphi^{-1}(X))h = 0$.}
+		\]}\label{part:7a}
+	\part{Consider the representation $\widetilde{\sigma} \circ \varphi^{-1}$ of $\slie{2}{\C}$. Explain how it follows from the previous assignment and what we did in lecture that $\widetilde{\sigma}\circ \varphi^{-1}$ is isomorphic to $(\pi_{2m}, V_{2m}(\C^2))$.}\label{part:7b}
+	\part{Verify that $h(x, y, z) = (x + \iu y)^{m}$ is a primitive element. That is, prove that $h \in \mathcal{H}_m(\R^3)$, that it is an eigenvector of $\widetilde{\sigma}(\varphi^{-1}(H))$, and that $\widetilde{\sigma}(\varphi^{-1}(X))h = 0$.}\label{part:7c}
 	\part{Introducing polar coordinates $x = r\sin s \cos t, y = r\sin s\sin t$ and $z = r\cos s$, prove that for $f \in \mathcal{H}_m(\R^3)$ we have
 		\begin{align*}
 			\widetilde{\sigma}(\varphi^{-1}(H))f & = -2\iu\pdv{f}{t}                                      \\
 			\widetilde{\sigma}(\varphi^{-1}(X))f & = \e^{\iu t}\qty(-\iu \pdv{f}{s} + \cot(s)\pdv{f}{t})  \\
 			\widetilde{\sigma}(\varphi^{-1}(Y))f & = \e^{\iu t}\qty( \iu \pdv{f}{s} + \cot(s)\pdv{f}{t}).
-		\end{align*}}
+		\end{align*}}\label{part:7d}
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	\ref{part:7a}
+	First recall that $\so{3}_\C\cong \so{n;\,\C}$, which if $a, b, c\in\C$ is spanned by elements of the form in the problem statement above.
+	\ref{part:7b}
+	\ref{part:7c}
+	First we show $h\in\mathcal{H}_m(\R^3)$ where $\partial_z^2 h$ is 0.
+	\begin{equation*}
+		\laplace{h} = \partial_x^2 h + \partial_y^2 h = m(m-1)\qty(x + \iu y)^{m-2} - m(m-1)\qty(x + \iu y)^{m-2} = 0
+	\end{equation*}
+	\ref{part:7d}
+\end{solution}
 
 \begin{problem}
 Let $\pi: \slie{3}{\C} \to \glV{V}$ be an irreducible complex representation of $\slie{3}{\C}$, and denote by $\pi^*$ the dual representation, acting on $V^*$.
