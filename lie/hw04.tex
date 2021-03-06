@@ -142,7 +142,7 @@ Let $(\Pi_1, V_1), (\Pi_2, V_2)$ be representations of a matrix Lie group $G$. D
 	Take the map $\rho: V_1^*\otimes V_2 \to \Hom(V_1, V_2)$ defined by $\rho(f\otimes v)(a) \defeq f(a)v$ where $f\in V_1^*, v\in V_2$ and $a\in V_1$. We'll now show the following diagram commutes.
 	\begin{equation*}
 		\begin{tikzcd}[row sep=large, column sep=large]
-			V_1^*\otimes V_2 \arrow{r}{\rho} \arrow[swap]{d}{\Pi_2(g)\circ - \circ \Pi_1(g^{-1})} & \Hom(V_1, V_2) \arrow{d}{\Pi_1^*(g)\otimes \Pi_2(g)} \\
+			V_1^*\otimes V_2 \arrow{r}{\rho} \arrow[swap]{d}{\Pi_1^*(g)\otimes \Pi_2(g)} & \Hom(V_1, V_2) \arrow{d}{\Pi(g)} \\
 			V_1^*\otimes V_2 \arrow{r}{\rho} & \Hom(V_1, V_2)
 		\end{tikzcd}
 	\end{equation*}
@@ -152,7 +152,21 @@ Let $(\Pi_1, V_1), (\Pi_2, V_2)$ be representations of a matrix Lie group $G$. D
 		\qty(\qty\Big[\Pi(g)\circ\rho](f\otimes v))(a)                      & = \qty\Big(\Pi_2(g)\circ f(-)v\circ \Pi_1(g^{-1}))(a) \\
 		                                                                    & = \Pi_2(g)v f(g^{-1}a)
 	\end{align*}
-	Where I've used the notation $(\Pi^{*}_1(g)f)(a) = f(g^{-1}a)$ for convenience.
+	Where I've used the notation $(\Pi^{*}_1(g)f)(a) = f(g^{-1}a)$ for convenience. Hence $\rho$ is an intertwining map.
+
+	To show $\rho$ has an inverse let's look at the function $\tau: \Hom(V_1, V_2)\to V_1^*\otimes V_2$ defined by
+	\begin{equation*}
+		\tau(\varphi) = \sum_{i = 1}^{\dim V_1}e_i^*\otimes \varphi(e_i)
+	\end{equation*}
+	where $\qty{e_i}$ is a basis for $V_1$ and $\qty{e_i^*}$ is the corresponding dual basis. Now we'll show $\tau \circ \rho = \id_{V_1^*\otimes V_2}$ and $\rho\circ\tau = \id_{\Hom(V_1, V_2)}$.
+	\begin{equation*}
+		\rho(\tau(\varphi))(v) = \sum e_i^*(v)\varphi(e_i) = \varphi\qty(\sum e_i^*(v)e_i) = \varphi(v)
+	\end{equation*}
+	\begin{equation*}
+		\tau(\rho(f\otimes v)) = \sum e_i^*\otimes \rho(f\otimes v)(e_i) = \sum e_i^*\otimes f(e_i)v = f\otimes v
+	\end{equation*}
+	Thus $\tau = \rho^{-1}$ and $\rho$ is an isomorphism.
+
 
 	\ref{part:4c}
 	Take $\Pi_1$ to be isomorphic to $\Pi_2$ with intertwining map $T$. This means the following diagram commutes for all $g\in G$.
