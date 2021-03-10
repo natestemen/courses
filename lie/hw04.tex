@@ -9,6 +9,7 @@
 \usepackage{macros}
 \usepackage{todonotes}
 \usepackage{tikz-cd}
+\usepackage{pythonhighlight}
 \input{config}
 \hwnum{4}
 \duedate{Wed, Mar 10, 2020 10:00 PM}
@@ -46,7 +47,7 @@ Let $(\sigma, V)$ be a complex representation of $\slie{2}{\C}$. Define $H, X, Y
 		             & = k\qty\Big[\sigma(Y)^{k-1}\underbrace{\sigma(H)v}_{\lambda v} - 2(k-1)\underbrace{\sigma(Y)^{k-1}v}_{v_{k-1}}]                                              \\
 		             & = k\qty(\lambda - 2k + 2)v_{k-1}
 	\end{align*}
-	Not sure if the question is incorrect or if I missed something. I cannot see it though.
+	Not sure if the question is incorrect or if I missed something. I cannot see it though. I've looked through for at least 2 hours, so if you see my error \emph{please} point it out.
 \end{solution}
 
 \begin{problem}
@@ -207,6 +208,7 @@ Let $V$ be a finite-dimensional real or complex representation of a matrix Lie g
 \begin{solution}
 	\ref{part:5a}
 	\ref{part:5b}
+	Please see the next problem to see why any irreducible subrep of $V\oplus V$ is isomorphic to $V$.
 \end{solution}
 
 \begin{problem}
@@ -216,6 +218,18 @@ Let $V_1, V_2$ be non-isomorphic, irreducible (real or complex) representations 
 	\part{Prove that $V_1, V_2$ are the only non-trivial invariant subspaces of $V_1 \oplus V_2$.}
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	We'll just do part (b) because it implies (a). Let $W$ be a a non-trivial irrep of $V_1\oplus V_2$ and let $\qty{\vb{e}_i^1}$ be a basis for $V_1$ and $\qty{\vb{e}_j^2}$ be a basis for $V_2$ such that $W$ contains some $(\vb{e}_i^1, \vb{e}_j^2)$ for some particular $i$ and $j$. By assignment 3 problem 1 we know
+	\begin{equation*}
+		V = \vspan_\F\qty{\Pi(A)v : A\in G}.
+	\end{equation*}
+	Let's apply this theorem with $v = (\vb{e}_i^1, \vb{e}_j^2)$. Thus \emph{any} irrep that contains non-zero vectors in both vector spaces must equal the entire vector space representation. That said if one of the entries in $(-,-)$ is the zero vector, then we can use the following fact
+	\begin{equation*}
+		\qty\big[\Pi_1\oplus\Pi_2(G)](v, 0) = (\Pi_1(G)v, 0).
+	\end{equation*}
+	Thus $V_1$ and $V_2$ are irreps, and indeed the only ones.
+\end{solution}
 
 \begin{problem}
 Consider the representation $\mathcal{H}_m(\R^3)$ of $\SO{3}$ defined as in the previous assignment, that is, with $\Sigma: \SO{3} \to \GLV{\mathcal{H}_m(\R^3)}$ given by
@@ -249,13 +263,83 @@ Denote the associated Lie algebra representation by $\sigma: \so{3} \to \glV{\ma
 
 \begin{solution}
 	\ref{part:7a}
-	First recall that $\so{3}_\C\cong \so{n;\,\C}$, which if $a, b, c\in\C$ is spanned by elements of the form in the problem statement above.
+	First recall that $\so{3}_\C\cong \so{n;\,\C}$, which if $a, b, c\in\C$ is spanned by elements of the form in the problem statement above. Please take the following computer assisted proof.
+	% \begin{noindent}
+	\begin{python}
+from sympy import Symbol, I, simplify
+from sympy.matrices import Matrix
+from sympy.abc import a, b, c, d, e, f
+
+A = Matrix([
+    [           0, 2 * a * I, I * (b + c)],
+    [  -2 * a * I,         0,       c - b],
+    [-I * (b + c),     b - c,           0]
+])
+B = Matrix([
+    [           0, 2 * d * I, I * (e + f)],
+    [  -2 * d * I,         0,       f - e],
+    [-I * (e + f),     e - f,           0]
+])
+
+def varphi(mat):
+    a = -I * mat[1] / 2
+    b = (mat[7] - I * mat[2]) / 2
+    c = (-I * mat[2] + mat[5]) / 2
+    return Matrix([
+        [-a, b],
+        [ c, a]
+    ])
+
+simplify(varphi(A * B - B * A))\end{python}
+	% \end{noindent}
+	\begin{equation*}
+		\left[\begin{matrix}b f - c e & - 2 a e + 2 b d\\2 a f - 2 c d & - b f + c e\end{matrix}\right]
+	\end{equation*}
+	% \begin{noindent}
+	\begin{python}
+varphi(A) * varphi(B) - varphi(B) * varphi(A)\end{python}
+	%\end{noindent}
+	\begin{equation*}
+		\left[\begin{matrix}b f - c e & - 2 a e + 2 b d\\2 a f - 2 c d & - b f + c e\end{matrix}\right]
+	\end{equation*}
+	I love computers.
+
 	\ref{part:7b}
+	To show $\tilde{\sigma}\circ\varphi^{-1}$ is isomorphic to $(\pi_{2m}, V_{2m}(\C^2))$
+
+
 	\ref{part:7c}
 	First we show $h\in\mathcal{H}_m(\R^3)$ where $\partial_z^2 h$ is 0.
 	\begin{equation*}
 		\laplace{h} = \partial_x^2 h + \partial_y^2 h = m(m-1)\qty(x + \iu y)^{m-2} - m(m-1)\qty(x + \iu y)^{m-2} = 0
 	\end{equation*}
+	Now let's calculate $\tilde{\sigma}$ where $\vb{x} = \mqty[x & y & z]^\intercal$.
+	\begin{align*}
+		\tilde{\sigma}(X)f & = \eval{\dv{t}f(\e^{-tX}\vb{x})}_{t=0}                                                                      \\
+		                   & = \eval{\dv{t}f(\vb{x}(t))}_{t=0}                                                                           \\
+		                   & = \eval{\pdv{f}{x}\pdv{x}{t}}_{t=0} + \eval{\pdv{f}{y}\pdv{y}{t}}_{t=0} + \eval{\pdv{f}{z}\pdv{z}{t}}_{t=0}
+	\end{align*}
+	It's not hard to see that $\eval{\pdv{\vb{x}(t)}{t}}_{t=0} = -X\vb{x}$ and hence we have the following equations for the partials:
+	\begin{align*}
+		\eval{\pdv{x}{t}}_{t=0} & = -(X_{11}x + X_{12}y + X_{13}z)  \\
+		\eval{\pdv{y}{t}}_{t=0} & = -(X_{21}x + X_{22}y + X_{23}z)  \\
+		\eval{\pdv{z}{t}}_{t=0} & = -(X_{31}x + X_{32}y + X_{33}z).
+	\end{align*}
+	Now we can verify $h$ is a eigenvector of $\tilde{\sigma}(\varphi^{-1}(H))$.
+	\begin{equation*}
+		\tilde{\sigma}(\varphi^{-1}(H)) = \tilde{\sigma}\qty(\smqty[0    & 2\iu & 0 \\ -2\iu & 0 & 0 \\ 0 & 0 & 0]) = -2\iu y\pdv{x} + 2\iu x\pdv{y}
+	\end{equation*}
+	Hence
+	\begin{align*}
+		\tilde{\sigma}(\varphi^{-1}(H))h & = -2\iu y m(x + \iu y)^{m-1} - 2xm(x + \iu y)^{m-1} \\
+		                                 & = -2m(x + \iu y)^m = h.
+	\end{align*}
+	And now to show $\tilde{\sigma}(\varphi^{-1}(X))h = 0$.
+	\begin{align*}
+		\tilde{\sigma}(\varphi^{-1}(X))h & = \qty[-\iu z\pdv{x} + z\pdv{y} + (\iu x - y)\pdv{z}]\qty(x + \iu y)^m \\
+		                                 & = -\iu zm(x + \iu y)^{m-1} + \iu zm(x + \iu y)^{m-1} = 0
+	\end{align*}
+
 	\ref{part:7d}
 \end{solution}
 
