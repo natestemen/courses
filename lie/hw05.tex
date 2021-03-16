@@ -24,28 +24,28 @@
 \begin{document}
 
 \begin{problem}
-Consider the adjoint representation of $\mathfrak{sl}(3; \C)$ as a representation of $\mathfrak{sl}(2;\C)$ by restriction to the subalgebra $\mathfrak{g}_1 = \vspan_{\C}\{H_1, X_1, Y_1\} \simeq \mathfrak{sl}(2; \C)$.
+Consider the adjoint representation of $\slie{3}{\C}$ as a representation of $\slie{2}{\C}$ by restriction to the subalgebra $\mfr{g}_1 = \vspan_{\C}\{H_1, X_1, Y_1\} \simeq \slie{2}{\C}$.
 \begin{parts}
-	\part{Decompose this representation as a direct sum of irreducible representations of $\mathfrak{sl}(2; \C)$.}\label{part:1a}
+	\part{Decompose this representation as a direct sum of irreducible representations of $\sl{2}{\C}$.}\label{part:1a}
 	\part{Which isomorphism types appear in the decomposition in (a), and with what multiplicity?}\label{part:1b}
 \end{parts}
 \end{problem}
 
 \begin{problem}
-Recall how we constructed an irreducible complex $\mathfrak{sl}(3;\C)$-representation with highest weight $(1, 1)$ by considering the tensor product representation $\C^3 \otimes (\C^3)^{\ast}$.
+Recall how we constructed an irreducible complex $\slie{3}{\C}$-representation with highest weight $(1, 1)$ by considering the tensor product representation $\C^3 \otimes (\C^3)^*$.
 \begin{parts}
-	\part{Use the same method to construct an irreducible complex $\mathfrak{sl}(3;\C)$-representation with highest weight $(2, 0)$, acting on a subspace of $\C^3 \otimes \C^3$.}\label{part:2a}
+	\part{Use the same method to construct an irreducible complex $\sl{3}{\C}$-representation with highest weight $(2, 0)$, acting on a subspace of $\C^3 \otimes \C^3$.}\label{part:2a}
 	\part{Determine the dimension of this representation, along with all the weights and their multiplicities. (The multiplicity of a weight is the dimension of its weight space.)}\label{part:2b}
-	\part{Decompose $\C^3 \otimes \C^3$, the tensor product of two copies of the standard $\mathfrak{sl}(3; \C)$-representation, into a direct sum of irreducible representations.}\label{part:2c}
+	\part{Decompose $\C^3 \otimes \C^3$, the tensor product of two copies of the standard $\sl{3}{\C}$-representation, into a direct sum of irreducible representations.}\label{part:2c}
 \end{parts}
 \end{problem}
 
 \begin{problem}
-Let $V_{m}(\C^3) = \vspan_{\C}\{z_1^k z_2^l z_3^{m - k - l} \ |\ 0 \leq k + l \leq m\}$ and define $(\Pi_m(A)f)(z) = f(A^{-1}z)$ for $A \in SU(3)$ and $f \in V_m(\C^3)$.
+Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k z_2^l z_3^{m - k - l} \ |\ 0 \leq k + l \leq m}$ and define $(\Pi_m(A)f)(z) = f(A^{-1}z)$ for $A \in \SU{3}$ and $f \in V_m(\C^3)$.
 \begin{parts}
-	\part{Prove that $(\Pi_m, V_m(\C^3))$ is a complex representation of $SU(3)$.}\label{part:3a}
-	\part{Find the weights for $\pi_1$ and $\pi_2$, the $\mathfrak{sl}(3; \C)$-representations associated to $\Pi_1$ and $\Pi_2$, respectively.}\label{part:3b}
-	\part{Prove that $(\pi_1, V_1(\C^3))$ and $(\pi_2, V_2(\C^3))$ are irreducible representations of $\mathfrak{sl}(3; \C)$. What are their highest weights?}\label{part:3c}
+	\part{Prove that $(\Pi_m, V_m(\C^3))$ is a complex representation of $\SU{3}$.}\label{part:3a}
+	\part{Find the weights for $\pi_1$ and $\pi_2$, the $\slie{3}{\C}$-representations associated to $\Pi_1$ and $\Pi_2$, respectively.}\label{part:3b}
+	\part{Prove that $(\pi_1, V_1(\C^3))$ and $(\pi_2, V_2(\C^3))$ are irreducible representations of $\slie{3}{\C}$. What are their highest weights?}\label{part:3c}
 \end{parts}
 \end{problem}
 
@@ -53,31 +53,31 @@ Let $V_{m}(\C^3) = \vspan_{\C}\{z_1^k z_2^l z_3^{m - k - l} \ |\ 0 \leq k + l \l
 \begin{problem}
 In each part below, verify that $\mfr{t}$ is a Cartan subalgebra of $\mfr{g} = \operatorname{Lie}(G)$. Then find the maximal torus in $G$ corresponding to $\mfr{t}$.
 \begin{parts}
-	\part{$G = SO(2n)$; $\mfr{t} = \left\{ \left( \begin{array}{ccccc}0 & \theta_1 &\  & \ & \ \\ -\theta_1 & 0 &\  & \ & \ \\ \ &\ & \ddots & \ &\ \\ \ &\ &\ & 0 & \theta_n\\ \ &\ &\ & -\theta_n & 0 \end{array} \right)\  \Big|\ \theta_i \in \R \right\}$.}\label{part:4a}
-	\part{$G = SO(2n+1)$; $\mfr{t} = \left\{ \left( \begin{array}{cccccc}0 & \theta_1 &\  & \ & \ &\  \\ -\theta_1 & 0 &\  & \ & \ &\ \\ \ &\ & \ddots & \ &\ &\  \\ \ &\ &\ & 0 & \theta_n &\ \\ \ &\ &\ & -\theta_n & 0 &\ \\ \ &\ &\ &\ &\ & 0\end{array} \right)\  \Big|\ \theta_i \in \R \right\}$.}\label{part:4b}
+	\part{$G = \SO{2n}$; $\mfr{t} = \qty{ \smqty(0 & \theta_1 &\  & \ & \ \\ -\theta_1 & 0 &\  & \ & \ \\ \ &\ & \ddots & \ &\ \\ \ &\ &\ & 0 & \theta_n\\ \ &\ &\ & -\theta_n & 0)\  \Big|\ \theta_i \in \R }$.}\label{part:4a}
+	\part{$G = \SO{2n + 1}$; $\mfr{t} = \qty{ \smqty(0 & \theta_1 &\  & \ & \ &\  \\ -\theta_1 & 0 &\  & \ & \ &\ \\ \ &\ & \ddots & \ &\ &\  \\ \ &\ &\ & 0 & \theta_n &\ \\ \ &\ &\ & -\theta_n & 0 &\ \\ \ &\ &\ &\ &\ & 0 )\  \Big|\ \theta_i \in \R }$.}\label{part:4b}
 \end{parts}
 \end{problem}
 
 
 \begin{problem}
 \begin{parts}
-	\part{Let $n \geq 3$ and let $H$ be the set of diagonal matrices in $SO(n)$. Prove that $H$ is a maximal closed abelian subgroup of $SO(3)$, but is not contained in any maximal torus.}\label{part:5a}
-	\part{By contrast, let $H$ be any closed abelian subgroup of $SU(n)$. Prove that $H$ is contained in a maximal torus.}\label{part:5b}
+	\part{Let $n \geq 3$ and let $H$ be the set of diagonal matrices in $\SO{n}$. Prove that $H$ is a maximal closed abelian subgroup of $\SO{3}$, but is not contained in any maximal torus.}\label{part:5a}
+	\part{By contrast, let $H$ be any closed abelian subgroup of $\SU{n}$. Prove that $H$ is contained in a maximal torus.}\label{part:5b}
 \end{parts}
 \end{problem}
 
 \begin{problem}
-Let $T$ be the set of diagonal matrices in $U(n)$ and $W$ its Weyl group. Let $S_n$ be the permutation group of $\{1, \cdots, n\}$ and define an action of $S_n$ on $T$ by
+Let $T$ be the set of diagonal matrices in $\U{n}$ and $W$ its Weyl group. Let $S_n$ be the permutation group of $\qty{1, \ldots, n}$ and define an action of $S_n$ on $T$ by
 \[
-	\sigma \cdot' \diag(u_1, \cdots, u_n) = \diag(u_{\sigma^{-1}(1)}, \cdots, u_{\sigma^{-1}(n)}).
+	\sigma \cdot' \diag(u_1, \ldots, u_n) = \diag(u_{\sigma^{-1}(1)}, \ldots, u_{\sigma^{-1}(n)}).
 \]
-(Here we put a prime in the notation to distinguish this action from the action of $W$ on $T$.) Also, take a generating element $t_0 = \diag(e^{2\pi\sqrt{-1}\theta_1}, \cdots, e^{2\pi\sqrt{-1}\theta_n})$ in $T$.
+(Here we put a prime in the notation to distinguish this action from the action of $W$ on $T$.) Also, take a generating element $t_0 = \diag(\e^{2\pi\iu \theta_1}, \ldots, \e^{2\pi\iu \theta_n})$ in $T$.
 \begin{parts}
 	\part{Given $w \in W$, prove that there exists a unique $\sigma \in S_n$ such that
 		\[
 			w \cdot t_0 = \sigma \cdot' t_0.
 		\]
-		Deduce that $w \cdot t = \sigma \cdot' t$ for all $t  \in T$.}\label{part:6a}
+		Deduce that $w \cdot t = \sigma \cdot' t$ for all $t \in T$.}\label{part:6a}
 	\part{In the notation of part (a), prove that the map $w \mapsto \sigma$ defines an injective homomorphism from $W$ into $S_n$.}\label{part:6b}
 	\part{Prove that the homomorphism in part (b) is also surjective. (Consequently, $W$ is isomorphic to $S_n$.)}\label{part:6c}
 \end{parts}
@@ -86,16 +86,16 @@ Let $T$ be the set of diagonal matrices in $U(n)$ and $W$ its Weyl group. Let $S
 
 
 \begin{problem}
-Let $G$ be a compact connected matrix Lie group. For $g \in G$ recall that $Z_G(g) = \{h \in G\ |\ hg = gh\}$. This is a closed subgroup of $G$.
+Let $G$ be a compact connected matrix Lie group. For $g \in G$ recall that $Z_G(g) = \qty{h \in G : hg = gh}$. This is a closed subgroup of $G$.
 \begin{parts}
 	\part{Prove that the identity component $Z_G(g)_0$ is contained in the union of all maximal tori containing $g$.}\label{part:7a}
-	\part{Specializing to the case $G = SO(3) $ and let $T$ be the maximal torus corresponding to the Cartan subalgebra given in \#4(b). Find $g \in SO(3)$ such that $Z_{G}(g)_{0} = T$ but that $Z_{G}(g)$ is disconnected.}\label{part:7b}
+	\part{Specializing to the case $G = \SO{3} $ and let $T$ be the maximal torus corresponding to the Cartan subalgebra given in \textsf{\textbf{\#4}} (b). Find $g \in \SO{3}$ such that $Z_{G}(g)_{0} = T$ but that $Z_{G}(g)$ is disconnected.}\label{part:7b}
 \end{parts}
 \end{problem}
 
 
 \begin{problem}
-\textit{(A few more applications of the maximal torus theorem.)} Let $G$ be a compact connected matrix Lie group.
+Let $G$ be a compact connected matrix Lie group.
 \begin{parts}
 	\part{Let $f: G \to H$ be a surjective Lie group homomorphism from $G$ onto another compact connected matrix Lie group. Prove that if $T$ is a maximal torus in $G$ then $f(T)$ is a maximal torus in $H$. Deduce that if $H$ is abelian then the restriction $f|_{T}$ is surjective already.}\label{part:8a}
 	\part{Given $g \in G$ and $n \in \N$, prove that there exists $h \in G$ such that $h^n = g$.}\label{part:8b}
