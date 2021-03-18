@@ -26,22 +26,22 @@
 \begin{problem}
 Consider the adjoint representation of $\slie{3}{\C}$ as a representation of $\slie{2}{\C}$ by restriction to the subalgebra $\mfr{g}_1 = \vspan_{\C}\{H_1, X_1, Y_1\} \simeq \slie{2}{\C}$.
 \begin{parts}
-	\part{Decompose this representation as a direct sum of irreducible representations of $\sl{2}{\C}$.}\label{part:1a}
+	\part{Decompose this representation as a direct sum of irreducible representations of $\slie{2}{\C}$.}\label{part:1a}
 	\part{Which isomorphism types appear in the decomposition in (a), and with what multiplicity?}\label{part:1b}
 \end{parts}
 \end{problem}
 
 \begin{problem}
-Recall how we constructed an irreducible complex $\slie{3}{\C}$-representation with highest weight $(1, 1)$ by considering the tensor product representation $\C^3 \otimes (\C^3)^*$.
+Recall how we constructed an irreducible complex $\slie{3}{\C}$ representation with highest weight $(1, 1)$ by considering the tensor product representation $\C^3 \otimes (\C^3)^*$.
 \begin{parts}
-	\part{Use the same method to construct an irreducible complex $\sl{3}{\C}$-representation with highest weight $(2, 0)$, acting on a subspace of $\C^3 \otimes \C^3$.}\label{part:2a}
+	\part{Use the same method to construct an irreducible complex $\slie{3}{\C}$-representation with highest weight $(2, 0)$, acting on a subspace of $\C^3 \otimes \C^3$.}\label{part:2a}
 	\part{Determine the dimension of this representation, along with all the weights and their multiplicities. (The multiplicity of a weight is the dimension of its weight space.)}\label{part:2b}
-	\part{Decompose $\C^3 \otimes \C^3$, the tensor product of two copies of the standard $\sl{3}{\C}$-representation, into a direct sum of irreducible representations.}\label{part:2c}
+	\part{Decompose $\C^3 \otimes \C^3$, the tensor product of two copies of the standard $\slie{3}{\C}$-representation, into a direct sum of irreducible representations.}\label{part:2c}
 \end{parts}
 \end{problem}
 
 \begin{problem}
-Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k z_2^l z_3^{m - k - l} \ |\ 0 \leq k + l \leq m}$ and define $(\Pi_m(A)f)(z) = f(A^{-1}z)$ for $A \in \SU{3}$ and $f \in V_m(\C^3)$.
+Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k\, z_2^l\, z_3^{m - k - l} : 0 \leq k + l \leq m}$ and define $(\Pi_m(A)f)(z) = f(A^{-1}z)$ for $A \in \SU{3}$ and $f \in V_m(\C^3)$.
 \begin{parts}
 	\part{Prove that $(\Pi_m, V_m(\C^3))$ is a complex representation of $\SU{3}$.}\label{part:3a}
 	\part{Find the weights for $\pi_1$ and $\pi_2$, the $\slie{3}{\C}$-representations associated to $\Pi_1$ and $\Pi_2$, respectively.}\label{part:3b}
@@ -53,8 +53,8 @@ Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k z_2^l z_3^{m - k - l} \ |\ 0 \leq k + l
 \begin{problem}
 In each part below, verify that $\mfr{t}$ is a Cartan subalgebra of $\mfr{g} = \operatorname{Lie}(G)$. Then find the maximal torus in $G$ corresponding to $\mfr{t}$.
 \begin{parts}
-	\part{$G = \SO{2n}$; $\mfr{t} = \qty{ \smqty(0 & \theta_1 &\  & \ & \ \\ -\theta_1 & 0 &\  & \ & \ \\ \ &\ & \ddots & \ &\ \\ \ &\ &\ & 0 & \theta_n\\ \ &\ &\ & -\theta_n & 0)\  \Big|\ \theta_i \in \R }$.}\label{part:4a}
-	\part{$G = \SO{2n + 1}$; $\mfr{t} = \qty{ \smqty(0 & \theta_1 &\  & \ & \ &\  \\ -\theta_1 & 0 &\  & \ & \ &\ \\ \ &\ & \ddots & \ &\ &\  \\ \ &\ &\ & 0 & \theta_n &\ \\ \ &\ &\ & -\theta_n & 0 &\ \\ \ &\ &\ &\ &\ & 0 )\  \Big|\ \theta_i \in \R }$.}\label{part:4b}
+	\part{$G = \SO{2n}$; $\mfr{t} = \qty{ \smqty(0 & \theta_1 & & & \\ -\theta_1 & 0 & & & \\ & & \ddots &  & \\  & & & 0 & \theta_n\\ & & & -\theta_n & 0) : \theta_i \in \R }$.}\label{part:4a}
+	\part{$G = \SO{2n + 1}$; $\mfr{t} = \qty{ \smqty(0 & \theta_1 & & & & \\ -\theta_1 & 0 & & & & \\ & & \ddots & & &  \\ & & & 0 & \theta_n & \\ & & & -\theta_n & 0 & \\ & & & & & 0 ) : \theta_i \in \R }$.}\label{part:4b}
 \end{parts}
 \end{problem}
 
@@ -83,16 +83,6 @@ Let $T$ be the set of diagonal matrices in $\U{n}$ and $W$ its Weyl group. Let $
 \end{parts}
 
 \end{problem}
-
-
-\begin{problem}
-Let $G$ be a compact connected matrix Lie group. For $g \in G$ recall that $Z_G(g) = \qty{h \in G : hg = gh}$. This is a closed subgroup of $G$.
-\begin{parts}
-	\part{Prove that the identity component $Z_G(g)_0$ is contained in the union of all maximal tori containing $g$.}\label{part:7a}
-	\part{Specializing to the case $G = \SO{3} $ and let $T$ be the maximal torus corresponding to the Cartan subalgebra given in \textsf{\textbf{\#4}} (b). Find $g \in \SO{3}$ such that $Z_{G}(g)_{0} = T$ but that $Z_{G}(g)$ is disconnected.}\label{part:7b}
-\end{parts}
-\end{problem}
-
 
 \begin{problem}
 Let $G$ be a compact connected matrix Lie group.
