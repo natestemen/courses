@@ -9,7 +9,7 @@
 \usepackage{macros}
 \usepackage{todonotes}
 \usepackage{tikz-cd}
-\usepackage{pythonhighlight}
+\usepackage{booktabs}
 \input{config}
 \hwnum{5}
 \duedate{Wed, Mar 24, 2020 10:00 PM}
@@ -49,6 +49,62 @@ Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k\, z_2^l\, z_3^{m - k - l} : 0 \leq k + 
 \end{parts}
 \end{problem}
 
+\begin{solution}
+	\ref{part:3a}
+	\begin{equation*}
+		\Pi_m(A)\qty(\qty\Big[\Pi_m(B)f])(z) = \qty\Big[\Pi_m(B)f](A^{-1}z) = f(B^{-1}A^{-1}z) = \qty\Big[\Pi_m(AB)f](z)
+	\end{equation*}
+
+	\ref{part:3b}
+	The action of an arbitrary element $X\in\slie{3}{\C}$ under the representation $\pi_m$ is given by
+	\begin{align*}
+		\pi_m(X) & = -\qty(X_{11} z_1 + X_{12}z_2 + X_{13}z_3)\pdv{z_1}    \\
+		         & \quad -\qty(X_{21}z_1 + X_{22}z_2 + X_{23}z_3)\pdv{z_2} \\
+		         & \quad -\qty(X_{31}z_1 + X_{32}z_2 + X_{33}x_3)\pdv{z_3}
+	\end{align*}
+	Thus, for $H_1$ and $H_2$ we have
+	\begin{align*}
+		\pi_m(H_1) & = z_2\pdv{z_2} - z_1\pdv{z_1} \\
+		\pi_m(H_2) & = z_3\pdv{z_3} - z_2\pdv{z_2}
+	\end{align*}
+
+	Take $m = 1$ where $V_1 = \vspan_\C\qty{z_1, z_2, z_3}$. Applying $\pi_1(H_1)$ and $\pi_1(H_2)$ to an arbitrary element $f = az_1 + bz_2 + cz_3$ and ensuring it is an eigenvector yields the following two equations:
+	\begin{align*}
+		(m_1 + 1)az_1 + (m_1 - 1)bz_2 + cm_1z_3 & = 0 \\
+		m_2az_1 + (m_2 + 1)bz_2 + (m_2 - 1)cz_3 & = 0
+	\end{align*}
+	From here we can see there are three weights possible.
+	\begin{table}[h]
+		\centering\begin{tabular}{c c c}
+			Weight    & Eigenvector & Multiplicity \\ \toprule
+			$(1, -1)$ & $bz_2$      & 1            \\
+			$(-1, 0)$ & $az_1$      & 1            \\
+			$(0, 1)$  & $cz_3$      & 1
+		\end{tabular}
+	\end{table}
+
+	Take $m = 2$ where $V_2 = \vspan_\C\qty{z_1^2, z_2^2, z_3^2, z_1z_1, z_1z_3, z_2z_3}$ and we can repeat the process as above with an arbitrary element $f = az_1^2 + bz_2^2 + cz_3^2 + dz_1z_2 + ez_1z_3 + gz_2z_3$.
+	\begin{align*}
+		\pi_2(H_1)f & = -2az_1^2 + 2bz_2^2 - ez_1z_3 + gz_2z_3 \\
+		\pi_2(H_2)f & = -2bz_2^2 + 2cz_3^2 - dz_1z_d + ez_1z_3
+	\end{align*}
+	From here we can read off the weights and eigenvectors, probably much easier than the equation I wrote down for the $m = 1$ case. The table's on the next page\dots
+	\begin{table}[h]
+		\centering\begin{tabular}{c c c}
+			Weight    & Eigenvector & Multiplicity \\ \toprule
+			$(-2, 0)$ & $az_1^2$    & 1            \\
+			$(-2, 2)$ & $bz_2^2$    & 1            \\
+			$(0, 2)$  & $cz_3^2$    & 1            \\
+			$(0, -1)$ & $dz_1z_1$   & 1            \\
+			$(-1, 0)$ & $ez_1z_3$   & 1            \\
+			$(1, 0)$  & $gz_2z_3$   & 1
+		\end{tabular}
+	\end{table}
+
+	\ref{part:3c}
+	hello
+\end{solution}
+
 
 \begin{problem}
 In each part below, verify that $\mfr{t}$ is a Cartan subalgebra of $\mfr{g} = \operatorname{Lie}(G)$. Then find the maximal torus in $G$ corresponding to $\mfr{t}$.
@@ -58,10 +114,52 @@ In each part below, verify that $\mfr{t}$ is a Cartan subalgebra of $\mfr{g} = \
 \end{parts}
 \end{problem}
 
+\begin{solution}
+	\ref{part:4a}
+	First lets verify $\mfr{t}$ is indeed a Cartan subalgebra. The Lie algebra $\so{2n}$ consists of $2n\times 2n$ skew-symmetric matrices, which clearly $\mfr{t}$ is a subset of. In order to show it's a subalgebra, it must be closed under the commutator, but because this is a \emph{Cartan} subalgebra we have the extra condition that $\comm{X}{Y} = 0$ for all $X, Y\in \mfr{t}$. We'll write elements in $\mfr{t}$ in block form using $R_\alpha = \smqty[0 & \alpha \\ -\alpha & 0]$.
+	\begin{align*}
+		\comm{\mqty(\dmat{R_{\theta_1}, \ddots, R_{\theta_n}})}{\mqty(\dmat{R_{\phi_1}, \ddots, R_{\phi_n}})} & = \smqty(\dmat{R_{\theta_1}R_{\phi_1} - R_{\phi_1}R_{\theta_1}, \ddots, R_{\theta_n}R_{\phi_n} - R_{\phi_n}R_{\theta_n}})
+	\end{align*}
+	Now to calculate the terms on the diagonal:
+	\begin{align*}
+		R_{\theta_i}R_{\phi_i} - R_{\phi_i}R_{\theta_i} & = \mqty(0               & \theta_i \\ -\theta_i & 0 )\mqty(0 & \phi_i \\ -\phi_i & 0) - \mqty(0 & \phi_i \\ -\phi_i & 0 )\mqty(0 & \theta_i \\ -\theta_i & 0) \\
+		                                                & = \mqty(-\theta_i\phi_i & 0        \\ 0 & -\theta_i\phi_i) - \mqty(-\theta_i\phi_i & 0 \\ 0 & -\theta_i\phi_i) \\
+		                                                & = \mqty(0               & 0        \\ 0 & 0)
+	\end{align*}
+	Thus everything in $\mfr{t}$ commutes, and is also closed under the bracket/commutator since the zero matrix is skew symmetric.
+
+	Now we must show that anything that commutes with \emph{every} element of $\mfr{t}$ is also in $\mfr{t}$. That is suppose we have some $X\in\so{2n}$ such that $\comm{X}{\mfr{t}} = 0$. Writing things out in coordinates for $C = XA$ and $D = AX$ we have
+	\begin{align*}
+		C_{ij} & = \sum_{k = 1}^{2n}X_{ik}A_{kj} = X_{i,j + 1}A_{j + 1, j} = -\theta_j X_{i, j + 1} \\
+		D_{ij} & = \sum_{k = 1}^{2n}A_{ik}X_{kj} = A_{i, i + 1}X_{i + 1,j} = \theta_j X_{i + 1, j}
+	\end{align*}
+	And these must be equal, so we have
+	\begin{equation}\label{eq:antisym}
+		\theta_i X_{i +1, j} + \theta_j X_{i, j + 1} = 0.
+	\end{equation}
+	When $i = j$ then $X_{i+1, i} + X_{i, i+1} = 0$, which $A$ also satisfies. Since~\cref{eq:antisym} must be satisfied for all $X\in\mfr{t}$, it must be satisfied for $X$ such that $\theta_i = 0$ for all $i\in\Z_n$ except for one $j$ where $\theta_j = 1$. Plugging these into~\cref{eq:antisym} we see $X_{i, j+1} = 0$ for all $i\neq j$. This, combined with the fact that $X\in\so{2n}$ is anti-symmetric shows that $X\in\mfr{t}$.
+
+	Now let's compute the maximal torus corresponding to $\mfr{t}$. It'll be helpful to compute the first few powers of an element of $\mfr{t}$ to get a sense of what's going on.
+	\begin{align*}
+		A^2 & = \mqty(0 & \theta_1 &  &  & \\ -\theta_1 & 0 & & & \\ & & \ddots &  & \\  & & & 0 & \theta_n\\ & & & -\theta_n & 0)^{\!\!\!2} = \mqty(-\theta_1^1 & & & & \\ & -\theta_1^2 & & & \\ & & \ddots & & \\ & & & -\theta_n^2 & \\ & & & & -\theta_n^2) \\
+		A^3 & = \mqty(0 & \theta_1 &  &  & \\ -\theta_1 & 0 & & & \\ & & \ddots &  & \\  & & & 0 & \theta_n\\ & & & -\theta_n & 0)^{\!\!\!3} = \mqty(0 & -\theta_1^3 & & & \\ \theta_1^3 & 0 & & & \\ & & \ddots & & \\ & & & 0 & -\theta_n^3 \\ & & & \theta_n^3 & 0)
+	\end{align*}
+	These give a pretty good hint what the next terms are. Hence we can write
+	\begin{align*}
+		\e^{A} & = \1 + A + A^2 + A^3 + \cdots                                                                       \\
+		       & = \mqty(1 - \theta_1^2 + \theta_1^4 + \cdots & \theta_1 - \theta_1^3 + \theta_1^5 - \cdots &        \\ -\theta_1 + \theta_1^3 - \theta_1^5 + \cdots & 1 - \theta_1^2 + \theta_1^4 + \cdots & \\ & & \ddots) \\
+		       & = \mqty(\cos\theta_1                         & \sin\theta_1                                &   &  & \\ -\sin\theta_1 & \cos\theta_1 & & \\ & & \ddots & & \\ & & & \cos\theta_n & \sin\theta_n \\ & & & -\sin\theta_n & \cos\theta_n)
+	\end{align*}
+	Thus maximal torus in $\SO{2n}$ is (up to isomorphism) $\diag(R_{\theta_1},\ldots,R_{\theta_n})$ where $R_\alpha = \smqty[\phantom{-}\cos\alpha & \sin\alpha \\ -\sin\alpha & \cos\alpha]$.
+
+	\ref{part:4b}
+	The computations performed above are idential for this case, where there is an additional row and column of 0's to work with. Thus the maximal torus of $\SO{2n + 1}$ is  $\diag(R_{\theta_1},\ldots,R_{\theta_n}, \1_{2\times 2})$ which is easily seen to be isomorphic to that of $\SO{2n}$. The $\1_{2\times 2}$ arises from the first term of $\e^{A} = \1 + \cdots$.
+\end{solution}
+
 
 \begin{problem}
 \begin{parts}
-	\part{Let $n \geq 3$ and let $H$ be the set of diagonal matrices in $\SO{n}$. Prove that $H$ is a maximal closed abelian subgroup of $\SO{3}$, but is not contained in any maximal torus.}\label{part:5a}
+	\part{Let $n \geq 3$ and let $H$ be the set of diagonal matrices in $\SO{n}$. Prove that $H$ is a maximal closed abelian subgroup of $\SO{n}$, but is not contained in any maximal torus.}\label{part:5a}
 	\part{By contrast, let $H$ be any closed abelian subgroup of $\SU{n}$. Prove that $H$ is contained in a maximal torus.}\label{part:5b}
 \end{parts}
 \end{problem}
@@ -94,6 +192,11 @@ Let $G$ be a compact connected matrix Lie group.
 \end{problem}
 
 \begin{solution}
+	\ref{part:8a}
+	Since $T$ is connected and compact, and $f$ is a continuous function, $f(T)$ is also connected and compact. Since $f$ is a homomorphism we have $f(a)f(b) = f(ab) = f(ba) = f(b)f(a)$ if $a, b\in T$, and thus $f(T)$ is also commutative and by Theorem 11.2 in Hall, $f(T)$ is a torus. To show $f(T)$ is maximal
+
+	\ref{part:8b}
+	Since $G$ is compact and connected, we know exp: $\mathsf{g}\to G$ is surjective, and hence for all $g\in G$ we can fine an $A\in\mathsf{g}$ such that $g = \e^{A}$. In particular we can also define $h\defeq \e^{A/n}$ so that $h^n = g$.
 \end{solution}
 
 \end{document}
