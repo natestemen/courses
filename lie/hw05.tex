@@ -7,8 +7,7 @@
 
 \usepackage{cleveref}
 \usepackage{macros}
-\usepackage{todonotes}
-\usepackage{tikz-cd}
+\usepackage{qtree}
 \usepackage{booktabs}
 \input{config}
 \hwnum{5}
@@ -81,6 +80,7 @@ Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k\, z_2^l\, z_3^{m - k - l} : 0 \leq k + 
 			$(-1, 0)$ & $az_1$      & 1            \\
 			$(0, 1)$  & $cz_3$      & 1
 		\end{tabular}
+		\caption{Weight Decomposition for $(\pi_1, V_1(\C^3))$}\label{tab:pione}
 	\end{table}
 
 	Take $m = 2$ where $V_2 = \vspan_\C\qty{z_1^2, z_2^2, z_3^2, z_1z_1, z_1z_3, z_2z_3}$ and we can repeat the process as above with an arbitrary element $f = az_1^2 + bz_2^2 + cz_3^2 + dz_1z_2 + ez_1z_3 + gz_2z_3$.
@@ -88,7 +88,7 @@ Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k\, z_2^l\, z_3^{m - k - l} : 0 \leq k + 
 		\pi_2(H_1)f & = -2az_1^2 + 2bz_2^2 - ez_1z_3 + gz_2z_3 \\
 		\pi_2(H_2)f & = -2bz_2^2 + 2cz_3^2 - dz_1z_d + ez_1z_3
 	\end{align*}
-	From here we can read off the weights and eigenvectors, probably much easier than the equation I wrote down for the $m = 1$ case. The table's on the next page\dots
+	From here we can read off the weights and eigenvectors, probably much easier than the equation I wrote down for the $m = 1$ case.
 	\begin{table}[h]
 		\centering\begin{tabular}{c c c}
 			Weight    & Eigenvector & Multiplicity \\ \toprule
@@ -99,10 +99,47 @@ Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k\, z_2^l\, z_3^{m - k - l} : 0 \leq k + 
 			$(-1, 0)$ & $ez_1z_3$   & 1            \\
 			$(1, 0)$  & $gz_2z_3$   & 1
 		\end{tabular}
+		\caption{Weight Decomposition for $(\pi_2, V_2(\C^3))$}\label{tab:pitwo}
 	\end{table}
 
 	\ref{part:3c}
-	hello
+	To show $(\pi_1, V_1(\C^3))$ and $(\pi_2, V_2(\C^3))$ are irreps we will first show they are highest weight cyclic representations. Then using Proposition 6.14 from Hall, and the fact that all representations of $\slie{3}{\C}$ are completely reducible, we can deduce that the aforementioned representations are irreducible.
+
+	For the $m = 1$ case we have highest weight vector $v = cz_3$ with weight $(0, 1)$. This is easily verified (although tedious) by computing $\mu_i - \mu_j = a\alpha_1 + b\alpha_2$ for the weights in \cref{tab:pione}. Thus condition 1 is satisfied. Now we can apply each $X_i$ to $v$ to see if it's annihilated.
+	\begin{align*}
+		\pi_1(X_1)v & = -z_2\pdv{z_1}\qty(cz_3) = 0 \\
+		\pi_1(X_2)v & = -z_3\pdv{z_2}\qty(cz_3) = 0 \\
+		\pi_1(X_2)v & = -z_3\pdv{z_1}\qty(cz_3) = 0
+	\end{align*}
+	Thus we also have condition two that $\pi_1(X_i)v = 0$. Lastly we have to verify $V_1(\C^3)$ is the smallest invariant subspace that contains $v$. We can do this by creating the ``tree'' applying all $\pi_1(Y_i)$. We use the convention of ``left'' means apply $\pi_1(Y_1)$, ``center'' means $\pi_1(Y_2)$ and ``right'' means $\pi_1(Y_3)$.
+
+	\Tree[.$z_3$ [.0 ]
+			[.$z_2$ [.$z_1$ ]
+					[.0 ]
+					[.0 ]]
+			[.$z_1$ [.0 ]
+					[.0 ]
+					[.0 ]]]
+
+	This diagram shows there no invariant subspace containing $v$ that is not the entirety of $V_1(\C^3)$. Thus $(\pi_1, V_1(\C^3))$ is a cyclic representation with highest weight $(0, 1)$ and by the argument given at the outset of~\ref{part:3c} we have an irrep.
+
+	Now take $m = 2$ and we will run through the same process. The highest weight in \cref{tab:pitwo} is $(0, 2)$ again by (tediously) computing $\mu_i - \mu_j = a\alpha_1 + b\alpha_2$ repeatedly. We can now check if $v = cz_3^2$ is annihilated by all $\pi_2(X_i)$.
+	\begin{align*}
+		\pi_2(X_1)v & = -z_2\pdv{z_1}\qty(cz_3^2) = 0 \\
+		\pi_2(X_2)v & = -z_3\pdv{z_2}\qty(cz_3^2) = 0 \\
+		\pi_2(X_2)v & = -z_3\pdv{z_1}\qty(cz_3^2) = 0
+	\end{align*}
+	And again now we need to check if there is a smaller invariant subspace containing $v$.
+
+	\Tree[.$z_3^2$ [.0 ]
+			[.$z_2z_3$ [.$z_1z_3$ [.0 ] [.$z_1z_2$ ] [.$z_1^2$ [.0 ] [.0 ] [.0 ]]]
+					[.$z_2^2$ [.$z_1z_2$ ] [.0 ] [.0 ]]
+					[.$z_1z_2$ ]]
+			[.$z_1z_3$ [.0 ]
+					[.$z_1z_2$ [.$z_1^2$ ] [.0 ] [.0 ]]
+					[.$z_1z_3$ ]]]
+
+	So indeed this representation is highest weight cyclic with weight $(0, 2)$ and is thus irreducible by the above logic.
 \end{solution}
 
 
