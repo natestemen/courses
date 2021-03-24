@@ -23,12 +23,44 @@
 \begin{document}
 
 \begin{problem}
-Consider the adjoint representation of $\slie{3}{\C}$ as a representation of $\slie{2}{\C}$ by restriction to the subalgebra $\mfr{g}_1 = \vspan_{\C}\{H_1, X_1, Y_1\} \simeq \slie{2}{\C}$.
+Consider the adjoint representation of $\slie{3}{\C}$ as a representation of $\slie{2}{\C}$ by restriction to the subalgebra $\mathsf{g}_1 = \vspan_{\C}\{H_1, X_1, Y_1\} \simeq \slie{2}{\C}$.
 \begin{parts}
 	\part{Decompose this representation as a direct sum of irreducible representations of $\slie{2}{\C}$.}\label{part:1a}
 	\part{Which isomorphism types appear in the decomposition in (a), and with what multiplicity?}\label{part:1b}
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	Since the wording of this question is quite confusing, it's helpful to clarify how I interpreted the question. We're working with the representation $\ad\!|_{\mathsf{g}_1}:\mathsf{g}_1\to\mathsf{gl}(\slie{3}{\C}) = \End(\slie{3}{\C})$.
+
+	In order to understand the invariant subspaces of $\ad\!|_{\mathsf{g}_1}$ we first find the eigenvectors of $\ad_{H_1}$ that are annihilated by $\ad_{X_1}$. Indeed the commutation relations easily show we have
+	\begin{align*}
+		\comm{H_1}{X_1} & = 2X_2 & \comm{X_1}{X_1} & = 0 \\
+		\comm{H_1}{Y_2} & = Y_2  & \comm{X_1}{Y_2} & = 0 \\
+		\comm{H_1}{X_3} & = X_3  & \comm{X_1}{X_3} & = 0
+	\end{align*}
+	Now we can apply $\ad_{Y_1}$ to each one of these eigenvectors to better understand the invariant subspaces. I've ignored constants in the following chains for simplicity.
+	\begin{align*}
+		X_1 & \xrightarrow{\comm{Y_1}{X_1}} H_1 \xrightarrow{\comm{Y_1}{H_1}}Y_1 \xrightarrow{\comm{Y_1}{Y_1}} 0 \\
+		Y_2 & \xrightarrow{\comm{Y_1}{Y_2}} Y_3 \xrightarrow{\comm{Y_1}{Y_3}} 0                                  \\
+		X_3 & \xrightarrow{\comm{Y_1}{X_3}} X_2 \xrightarrow{\comm{Y_1}{X_2}} 0                                  \\
+	\end{align*}
+	Hence we have found 3 invariant subspaces.
+
+	\ref{part:1b}
+	Again here is where the wording is very confusing: are we talking about the adjoint representation as a whole, or simply the restriction? All the classmates I talked to thought it was the whole thing. I'll do the whole thing so I don't get points taken off for doing something that wasn't quite asked for, but maybe it was???
+
+	Since the adjoint representation is 8 dimensional, and above we found 7, we need one more. Above we never got the vector $H_2$ so we'll be looking for that. Inspecting the following two commutation relations helps us spot the last:
+	\begin{align*}
+		\ad_{Y_1}(H_1) = 2Y_1 &  & \ad_{Y_1}(H_2) = -Y_2.
+	\end{align*}
+	Thus the last invariant subspace is spanned by $H_1 + 2H_2$. In sum we have
+	\begin{equation*}
+		(\ad, \slie{3}{\C})\cong (\pi_3, V_3(\C^2))\oplus (\pi_2, V_2(\C^2)) \oplus (\pi_2, V_2(\C^2)) \oplus (\pi_1, V_1(\C^2))
+	\end{equation*}
+	And so the multiplicity of 3 is 1, 2 is 2 and 1 is 1.
+\end{solution}
 
 \begin{problem}
 Recall how we constructed an irreducible complex $\slie{3}{\C}$ representation with highest weight $(1, 1)$ by considering the tensor product representation $\C^3 \otimes (\C^3)^*$.
@@ -38,6 +70,53 @@ Recall how we constructed an irreducible complex $\slie{3}{\C}$ representation w
 	\part{Decompose $\C^3 \otimes \C^3$, the tensor product of two copies of the standard $\slie{3}{\C}$-representation, into a direct sum of irreducible representations.}\label{part:2c}
 \end{parts}
 \end{problem}
+
+\begin{solution}
+	\ref{part:2a}
+	Take the product basis of $\C^3\otimes\C^3$, that is $e_i\otimes e_j$ for $i,j\in\qty{1,2,3}$. As a guess we will take $e_1\otimes e_1$ as the starting point to apply $\pi_{2,0}(Y_1)$ and $\pi_{2, 0}(Y_2)$ repeatedly. Branching left indicates $Y_1$ has been applied, and right indicates $Y_2$.
+
+	\Tree[.$e_1\otimes e_1$ [.${e_1\otimes e_2 + e_2\otimes e_1}$
+				[.${e_2\otimes e_2}$ [.0 ]
+							[.${e_2\otimes e_3 + e_3\otimes e_2}$ [.0 ]
+									[.${e_3\otimes e_3}$ [.0 ] [.0 ]]]]
+					[.${e_1\otimes e_3 + e_3\otimes e_1}$
+						[.${e_2\otimes e_3 + e_3\otimes e_2}$ ] [.0 ]]]
+			[.0 ]]
+
+	Thus we have a 6 dimensional representation spanned by the symmetric vectors of $\C^3\otimes\C^3$. We can also find the associated weights by adding together the weights of $e_i$ from the standard representation.
+	\begin{table}[h]
+		\centering\begin{tabular}{r c c}
+			Eigenvector                       & Weight    & Multiplicity \\ \toprule
+			$e_1\otimes e_1$                  & $(2, 0)$  & 1            \\
+			$e_2\otimes e_2$                  & $(-2, 2)$ & 1            \\
+			$e_3\otimes e_3$                  & $(0, -2)$ & 1            \\
+			$e_1\otimes e_2 + e_2\otimes e_1$ & $(0, 1)$  & 1            \\
+			$e_1\otimes e_3 + e_3\otimes e_1$ & $(1, -1)$ & 1            \\
+			$e_2\otimes e_3 + e_3\otimes e_2$ & $(1, 0)$  & 1
+		\end{tabular}
+		\caption{Weights of product representation}\label{tab:prodweights}
+	\end{table}
+	Inspecting \cref{tab:prodweights}, and calculating $\mu_i - \mu_j = a\alpha_1 + b\alpha_2$ we can (tediously) verify that $(2, 0)$ is indeed the highest weight.
+
+
+	\ref{part:2b}
+	Refer to \cref{tab:prodweights}.
+
+	\ref{part:2c}
+	Since the above representation is 6 dimensional, and $\C^3\otimes \C^3$ is 9 dimensional, we need to try and find a representation that lives on the other 3 dimensions. First, note that the ``other'' 3 dimensions are spanned by
+	\begin{align*}
+		e_2\otimes e_1 - e_1\otimes e_2 &  & e_3\otimes e_1 - e_1\otimes e_3 &  & e_3\otimes e_2 - e_2\otimes e_3
+	\end{align*}
+	which are the antisymmetric subspace of $\C^3\otimes \C^3$.\footnote{I wish we learned about symmetric and anti-symmetric powers of vector spaces in this class, because I see them mentioned all over the place when reading material about decomposing representations.} To find what this representation looks like we can again apply $\pi_{2, 0}(Y_i)$ with the same convention as above.
+
+	\Tree[.${e_1\otimes e_2 - e_2\otimes e_1}$ [.0 ] [.${e_3\otimes e_1 - e_1\otimes e_3}$ [.${e_3\otimes e_2 - e_2\otimes e_3}$ [.0 ] [.0 ]] [.0 ]]]
+
+	This tree is exactly that of the standard representation acting on $e_1, e_2, e_3$, and hence we conclude that we have one copy of the standard representation. In final, we have
+	\begin{equation*}
+		(\pi_{2, 0}, \C^3\otimes \C^3)\cong (\pi_{1, 0}\otimes\pi_{1, 0}, \Sym^2(\C^3))\oplus (\pi_{1, 0}, \C^3).
+	\end{equation*}
+	Although I'm wondering if that last factor should be $(\pi_{1, 0}, \bigwedge^2(\C^3))$? I guess they're isomorphic, so maybe it doesn't matter? Would be good to know.
+\end{solution}
 
 \begin{problem}
 Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k\, z_2^l\, z_3^{m - k - l} : 0 \leq k + l \leq m}$ and define $(\Pi_m(A)f)(z) = f(A^{-1}z)$ for $A \in \SU{3}$ and $f \in V_m(\C^3)$.
@@ -72,7 +151,7 @@ Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k\, z_2^l\, z_3^{m - k - l} : 0 \leq k + 
 		(m_1 + 1)az_1 + (m_1 - 1)bz_2 + cm_1z_3 & = 0 \\
 		m_2az_1 + (m_2 + 1)bz_2 + (m_2 - 1)cz_3 & = 0
 	\end{align*}
-	From here we can see there are three weights possible.
+	From here we can see there are three weights possible tabulated in \cref{tab:pione}.
 	\begin{table}[h]
 		\centering\begin{tabular}{c c c}
 			Weight    & Eigenvector & Multiplicity \\ \toprule
@@ -142,7 +221,6 @@ Let $V_{m}(\C^3) = \vspan_{\C}\qty{z_1^k\, z_2^l\, z_3^{m - k - l} : 0 \leq k + 
 	So indeed this representation is highest weight cyclic with weight $(0, 2)$ and is thus irreducible by the above logic.
 \end{solution}
 
-
 \begin{problem}
 In each part below, verify that $\mfr{t}$ is a Cartan subalgebra of $\mfr{g} = \operatorname{Lie}(G)$. Then find the maximal torus in $G$ corresponding to $\mfr{t}$.
 \begin{parts}
@@ -201,6 +279,12 @@ In each part below, verify that $\mfr{t}$ is a Cartan subalgebra of $\mfr{g} = \
 \end{parts}
 \end{problem}
 
+\begin{solution}
+	\ref{part:5a}
+
+	\ref{part:5b}
+\end{solution}
+
 \begin{problem}
 Let $T$ be the set of diagonal matrices in $\U{n}$ and $W$ its Weyl group. Let $S_n$ be the permutation group of $\qty{1, \ldots, n}$ and define an action of $S_n$ on $T$ by
 \[
@@ -216,8 +300,15 @@ Let $T$ be the set of diagonal matrices in $\U{n}$ and $W$ its Weyl group. Let $
 	\part{In the notation of part (a), prove that the map $w \mapsto \sigma$ defines an injective homomorphism from $W$ into $S_n$.}\label{part:6b}
 	\part{Prove that the homomorphism in part (b) is also surjective. (Consequently, $W$ is isomorphic to $S_n$.)}\label{part:6c}
 \end{parts}
-
 \end{problem}
+
+\begin{solution}
+	\ref{part:6a}
+
+	\ref{part:6b}
+
+	\ref{part:6c}
+\end{solution}
 
 \begin{problem}
 Let $G$ be a compact connected matrix Lie group.
@@ -225,12 +316,13 @@ Let $G$ be a compact connected matrix Lie group.
 	\part{Let $f: G \to H$ be a surjective Lie group homomorphism from $G$ onto another compact connected matrix Lie group. Prove that if $T$ is a maximal torus in $G$ then $f(T)$ is a maximal torus in $H$. Deduce that if $H$ is abelian then the restriction $f|_{T}$ is surjective already.}\label{part:8a}
 	\part{Given $g \in G$ and $n \in \N$, prove that there exists $h \in G$ such that $h^n = g$.}\label{part:8b}
 \end{parts}
-
 \end{problem}
 
 \begin{solution}
 	\ref{part:8a}
-	Since $T$ is connected and compact, and $f$ is a continuous function, $f(T)$ is also connected and compact. Since $f$ is a homomorphism we have $f(a)f(b) = f(ab) = f(ba) = f(b)f(a)$ if $a, b\in T$, and thus $f(T)$ is also commutative and by Theorem 11.2 in Hall, $f(T)$ is a torus. To show $f(T)$ is maximal
+	Since $T$ is connected and compact, and $f$ is a continuous function, $f(T)$ is also connected and compact. Since $f$ is a homomorphism we have $f(a)f(b) = f(ab) = f(ba) = f(b)f(a)$ if $a, b\in T$, and thus $f(T)$ is also commutative and by Theorem 11.2 in Hall, $f(T)$ is a torus.
+
+	To show $f(T)$ is maximal in $H$, take $K\subseteq H$ to be a torus containing $f(T)$. Take an element $h\in K$, and by the surjectivity of $f$ we are guaranteed to be able to find a $g\in G$ such that $f(g) = h$. By the second part of the maximal torus theorem, $g$ is contained in \emph{some} maximal torus $T'$ such that $T = xT'x^{-1}$ for some $x\in G$.
 
 	\ref{part:8b}
 	Since $G$ is compact and connected, we know exp: $\mathsf{g}\to G$ is surjective, and hence for all $g\in G$ we can fine an $A\in\mathsf{g}$ such that $g = \e^{A}$. In particular we can also define $h\defeq \e^{A/n}$ so that $h^n = g$.
