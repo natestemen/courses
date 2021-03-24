@@ -283,6 +283,15 @@ In each part below, verify that $\mfr{t}$ is a Cartan subalgebra of $\mfr{g} = \
 	\ref{part:5a}
 
 	\ref{part:5b}
+	Since all $X, Y\in H$ commute, they can be simultaneously diagonalized in some basis. The eigenvalues of a unitary matrix are all unit complex numbers, and hence any element in $H$ can be written as
+	\begin{equation*}
+		X = \diag(\e^{\iu\alpha_1},\ldots, \e^{\iu\alpha_n}).
+	\end{equation*}
+	Since the determinant of $X$ is 1, we have the condition that $\prod_i\e^{\iu\alpha_i} = $ which restricts one $\alpha$ so we have
+	\begin{equation*}
+		X = \diag(\e^{\iu\alpha_1},\ldots, \e^{-\iu \sum_{i = 1}^{n-1}\alpha_i}).
+	\end{equation*}
+	So every $X\in H$ can be specified by $n-1$ complex numbers. Thus $H$ is clearly contained in the maximal torus of $\SU{n}$.
 \end{solution}
 
 \begin{problem}
@@ -322,7 +331,11 @@ Let $G$ be a compact connected matrix Lie group.
 	\ref{part:8a}
 	Since $T$ is connected and compact, and $f$ is a continuous function, $f(T)$ is also connected and compact. Since $f$ is a homomorphism we have $f(a)f(b) = f(ab) = f(ba) = f(b)f(a)$ if $a, b\in T$, and thus $f(T)$ is also commutative and by Theorem 11.2 in Hall, $f(T)$ is a torus.
 
-	To show $f(T)$ is maximal in $H$, take $K\subseteq H$ to be a torus containing $f(T)$. Take an element $h\in K$, and by the surjectivity of $f$ we are guaranteed to be able to find a $g\in G$ such that $f(g) = h$. By the second part of the maximal torus theorem, $g$ is contained in \emph{some} maximal torus $T'$ such that $T = xT'x^{-1}$ for some $x\in G$.
+	To show $f(T)$ is maximal in $H$, take $K\subseteq H$ to be a torus containing $f(T)$. Take an element $h\in K$, and by the surjectivity of $f$ we are guaranteed to be able to find a $g\in G$ such that $f(g) = h$. Since we can write $g = xtx^{-1}$ by Lemma 11.12 in Hall, we have
+	\begin{equation*}
+		h = f(g) = f(xtx^{-1}) = \underbrace{f(x)}_{\in H}\underbrace{f(t)}_{\in f(T)}f(x)^{-1}.
+	\end{equation*}
+	That is, any element $h\in K$ can be decomposed as $h = f(x)f(t)f(x)^{-1}$ which implies $K = yf(T)y^{-1}$, and thus $f(T)$ is maximal.
 
 	\ref{part:8b}
 	Since $G$ is compact and connected, we know exp: $\mathsf{g}\to G$ is surjective, and hence for all $g\in G$ we can fine an $A\in\mathsf{g}$ such that $g = \e^{A}$. In particular we can also define $h\defeq \e^{A/n}$ so that $h^n = g$.
