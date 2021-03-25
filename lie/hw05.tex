@@ -281,17 +281,24 @@ In each part below, verify that $\mfr{t}$ is a Cartan subalgebra of $\mfr{g} = \
 
 \begin{solution}
 	\ref{part:5a}
+	Note that $H$ is the the collection of matrices of the form $\diag(\pm 1, \ldots, \pm 1)$ with an even number of $-1$'s on the diagonal. This can be seen from the maximal torus of $\SO{n}$ shown in the previous problem.
+
+	First we need to show $H$ is a maximal abelian subgroup of $\SO{n}$. Suppose $A\in\SO{n}$ commutes with all $B\in H$. We can write $A$ in canonical form as
+	\begin{equation*}
+		A = \diag(R_1,\ldots, R_k, \pm 1, \ldots, \pm 1)
+	\end{equation*}
+	where there are an even number of $-1$'s and 0's everywhere else. Using the fact that commuting matrices preserve each others' eigenspaces we see $A$ must preserve the eigenspaces of $B$. Since every standard basis vector $\vb{e}_i\in\R^n$ is an eigenvector of $B$, $A$ must map each $A\vb{e}_i = \lambda_i\vb{e}_i$. Thus all the $2\times 2$ block matrices must be plus or minus 1's. Thus $B\in H$.
 
 	\ref{part:5b}
 	Since all $X, Y\in H$ commute, they can be simultaneously diagonalized in some basis. The eigenvalues of a unitary matrix are all unit complex numbers, and hence any element in $H$ can be written as
 	\begin{equation*}
 		X = \diag(\e^{\iu\alpha_1},\ldots, \e^{\iu\alpha_n}).
 	\end{equation*}
-	Since the determinant of $X$ is 1, we have the condition that $\prod_i\e^{\iu\alpha_i} = $ which restricts one $\alpha$ so we have
+	Since the determinant of $X$ is 1, we have the condition that $\prod_i\e^{\iu\alpha_i} = 1$ which restricts one\footnote{And can be made to be the last.} $\alpha_i$ so we have
 	\begin{equation*}
 		X = \diag(\e^{\iu\alpha_1},\ldots, \e^{-\iu \sum_{i = 1}^{n-1}\alpha_i}).
 	\end{equation*}
-	So every $X\in H$ can be specified by $n-1$ complex numbers. Thus $H$ is clearly contained in the maximal torus of $\SU{n}$.
+	So every $X\in H$ can be specified by $n-1$ unit complex numbers. Thus $H$ is clearly contained in the maximal torus of $\SU{n}$.
 \end{solution}
 
 \begin{problem}
@@ -313,10 +320,38 @@ Let $T$ be the set of diagonal matrices in $\U{n}$ and $W$ its Weyl group. Let $
 
 \begin{solution}
 	\ref{part:6a}
+	We have $w\cdot t_0 = xt_0x^{-1} = t'\in T$ and because $t$ and $t'$ only differ by conjugation, they must have the same spectrum, however it's possibly ``rearranged''. This can clearly be done by $\sigma\cdot't_0$, but we need to show it's unique. Suppose we have $\sigma, \tilde{\sigma}\in S_n$ such that $w\cdot t_0 = \sigma\cdot't_0 = \tilde{\sigma}\cdot't_0$. Thus we have
+	\begin{equation*}
+		\diag(\e^{2\pi\iu\theta_{\sigma^{-1}(1)}}, \ldots, \e^{2\pi\iu\theta_{\sigma^{-1}(n)}}) = \diag(\e^{2\pi\iu\theta_{\tilde{\sigma}^{-1}(1)}}, \ldots, \e^{2\pi\iu\theta_{\tilde{\sigma}^{-1}(n)}})
+	\end{equation*}
+	and these must be componentwise equal so
+	\begin{equation*}
+		\e^{2\pi\iu\theta_{\sigma^{-1}(i)}} = \e^{2\pi\iu\theta_{\tilde{\sigma}^{-1}(i)}}.
+	\end{equation*}
+	This implies $\theta_{\sigma^{-1}(i)} = \theta_{\tilde{\sigma}^{-1}(i)} + n$ for some $n\in \Z$, but by the linear independence\footnote{over $\Q$} of $1$ and the $\theta_i$'s, this is only possible if $\sigma^{-1} = \tilde{\sigma}^{-1}$ and thus $n = 0$, and by the bijectivity of elements in $S_n$, $\sigma = \tilde{\sigma}$.
+
+	Since $t_0$ generates, we can always write $t = \lim_{n\to\infty}t_0^{a_n}$ for some subsequence $a_n$ of $\Z$. We then have
+	\begin{equation*}
+		w\cdot t = x\qty[\lim_{n\to\infty}t_0^{a_n}]x^{-1} = \lim_{n\to\infty}xt_0^{a_n}x^{-1} = \lim_{n\to\infty}\qty[\sigma\cdot't_0]^n = \sigma\cdot' t
+	\end{equation*}
 
 	\ref{part:6b}
+	Let $f: W\to S_n$ be the map such that $w\mapsto \sigma$.
+	This map is indeed a homomorphism:
+	\begin{equation*}
+		(w_1w_2)\cdot t = x_1x_2tx_2^{-1}x_1^{-1} = x_2(\sigma_2\cdot't)x_2^{-1} = (\sigma_1\circ \sigma_2)\cdot't
+	\end{equation*}
+	To show this map is an injection, suppose $w_1\mapsto \sigma$ and $w_2\mapsto\sigma$, that is $f(w_1) = f(w_2)$, where they can only be seen as equal if they are equal on all inputs.
+	\begin{align*}
+		f(w_1)\cdot't      & = f(w_2)\cdot't      \\
+		\sigma\cdot't      & = \sigma\cdot't      \\
+		x_1tx_1^{-1}       & = x_2tx_2^{-1}       \\
+		\qty(x_2^{-1}x_1)t & = t\qty(x_2^{-1}x_1)
+	\end{align*}
+	Thus $x_2^{-1}x_1$ commutes with all $t$, and hence is in $T$. This implies $x_2^{-1}x_1$ is modded out of the Weyl group and equals the identity in $W$. Hence $w_1 = w_2$.
 
 	\ref{part:6c}
+	To see that $f$ is surjective, note that we can construct a basis change that swaps any basis vectors around in an element $x$ which we conjugate by in $w\cdot t$. Since there are $n!$ ways to swap around basis vectors, we can surely hit every element of $S_n$.\footnote{I know this is sloppy, but I'm \emph{tired}, and I'm not sure what it is, but the Weyl group doesn't \emph{feel} cool.}
 \end{solution}
 
 \begin{problem}
