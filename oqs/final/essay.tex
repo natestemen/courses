@@ -1,0 +1,103 @@
+\documentclass[11pt,english]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[
+  margin=1.3in,
+  headheight=14pt]{geometry}
+
+
+\usepackage{mathpazo}
+\usepackage{graphicx}
+\usepackage{marginnote}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{babel}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Nathaniel Stemen}
+\rhead{Open Quantum Systems}
+\rfoot{\thepage/\pageref{LastPage}}
+% \usepackage{varioref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[linktocpage]{hyperref}
+\hypersetup{
+  linktoc=all,
+  colorlinks=true,
+  linkcolor=MidnightBlue,
+  filecolor=RubineRed,
+  urlcolor=Bittersweet,
+  citecolor=Fuchsia,
+}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{titletoc}
+\usepackage{natbib}
+\bibliographystyle{unsrtnat}
+\usepackage[nottoc]{tocbibind}
+\usepackage[noabbrev]{cleveref}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\usepackage{../macros}
+
+
+\titlecontents{section}[1.8pc]
+  {\addvspace{3pt}\bfseries}
+  {\contentslabel[\thecontentslabel]{1.8pc}}
+  {}
+  {\quad\thecontentspage}
+
+\titlecontents{subsection}[1.8pc]
+  {\addvspace{1pt}\small}
+  {\thecontentslabel\enspace{}}
+  {}
+  {\quad\thecontentspage}
+
+\titlecontents{subsubsection}[3.2pc]
+  {\addvspace{1pt}\small}
+  {\thecontentslabel\enspace{}}
+  {}
+  {\quad\thecontentspage}
+
+
+\begin{document}
+
+\thispagestyle{plain}
+\begin{center}
+	\textsf{\textbf{\LARGE Twirling and Unitary Designs}}
+\end{center}
+\textbf{Name:} Nate Stemen (20906566) \hspace{\fill} \textbf{Due:} March 31, 2021 \\
+\textbf{Email:} \href{mailto:nate@stemen.email}{\texttt{nate@stemen.email}} \hspace{\fill} \textbf{Course:} AMATH 876
+
+
+\begingroup
+\colorlet{darkblue}{MidnightBlue!10!black}
+\hypersetup{linkcolor=darkblue}
+\tableofcontents
+\endgroup
+
+\setstretch{1.1}
+\vspace{0.5cm}
+
+\section{Introduction}
+Does this work?
+\begin{equation*}
+	\SO{n} = \qty{x^2\in\R}
+\end{equation*}
+
+\cite{designs-and-codes}
+
+\nocite{*}
+
+\clearpage
+
+\bibliography{refs}
+
+\end{document}
