@@ -113,6 +113,45 @@ It'll be helpful to have some concepts defined before we try and understand unit
   Again, this naturally forms a group under matrix multiplication.
 \end{definition}
 
+\section{Twirling}
+
+Let $\mathcal{H}_A$ and $\mathcal{H}_B$ be Hilbert spaces, and denote by $\mathrm{L}(\mathcal{H})$ by the set of linear operators on $\mathcal{H}$.
+Given a quantum channel $\Lambda: \mathrm{L}(\mathcal{H}_A)\to\mathrm{L}(\mathcal{H}_B)$, then we can define twirling $\Lambda$ with respect to the unitary group as
+\begin{equation}
+  \mathcal{T}[\Lambda](\rho)\defeq \int_{\U{n}}U^\dagger\Lambda(U\rho U^\dagger)U\dd{\eta(U)}
+\end{equation}
+where $\eta$ is the unique unitary invariant measure on $\U{n}$ called the Haar measure.
+In fact a Haar measure can be constructed on any locally compact topological group, but we will not go further than the unitary group here.
+To better understand this integral we will have a quick aside on what the Haar measure is, and why it's necessary.
+
+\subsection{\emph{The} Haar Measure}
+The set of all ideal operations that one can perform on $n$ qubits---also known as the Unitary group $\U{n}$---has some very nice properties that allow us to define what integration over it means.
+In particular the group is \emph{compact} which can be seen from the fact that $UU^\dagger = \1$ for all $U\in\U{n}$ and hence the column vectors $U = \mqty[u_1 & \cdots & u_n]$ are orthonormal for all $U$.
+Thus each $U$ is characterized by $n$ points on the surface of a hypersphere.
+This implies, when embedded into $\R^{2n^2}$, $\U{n}$ is a space of finite volume, and by the usual Lebesgue integral in $\R^N$, we can integrate over $\U{n}$.
+That said, this sense of measure inherited from $\R^N$ is not invariant under the action of an element $U\in\U{n}$.
+To make it invariant, we use something similar to ``Weyl's Unitary Trick'' to average measure over the action of each element in $\U{n}$.
+One can then show this is first of all invariant under unitary action\footnote{By multiplication from the left and right.}, and is also the unique up to a complex number.
+
+
+\subsection{A simple example}
+Suppose we have a 2-level quantum system that is in a pure state, say $\ketbra{0}$.
+If we then twirl the identity channel with respect to this state we have the following:
+\begin{align}
+  \mathcal{T}[I](\rho) & = \int_{\U{2}}U^\dagger\rho U\dd{\eta(U)}                          \\
+                       & = \int_{\U{2}}U^\dagger\ketbra{0}U\dd{\eta(U)}                     \\
+                       & = \int_{\U{2}}\qty(U^\dagger\ket{0})\qty\Big(\bra{0}U)\dd{\eta(U)}
+\end{align}
+
+\subsection{Implementing Twirls}
+
+As we've seen twirling quantum channels can yield lots of useful information about a channel and it's properties, but the question of implementing such a thing remains.
+As modern quantum computers stand, doing an arbitrary unitary $U\in\U{n}$ is nearly impossible to do efficiently.
+In~\cite{pseudo-random} the authors find al algorithm to implement a random unitary gate using $\order{n^2 2^{2n}}$ single and double qubit gates.
+Not only is this exponential, but if we had to do this for all unitaries (or even an $\varepsilon$-net for that matter) we would need significantly more compute power than we have now.
+This leads naturally to the question: can we find a finite set of unitaries that ``represent'' or ``simulate'' the entire unitary group?
+If we could such a set that reproduced some of the statistical properties of $\U{n}$, then we might have a way to physically realize a twirl.
+Luckily, mathematicians have been studying the objects we need for sometime, albeit in different contexts, in the form of designs.
 
 \section{Designs}
 
@@ -120,11 +159,21 @@ The original concept of a design came in the form of spherical $t$-designs intro
 In particular the authors were interested in real polynomials whose average over a set of points in real Euclidean space was invariant under \emph{all} orthogonal transformations.
 This notion was shown to be equivalent to sets of $N$ points $x_i\in\R^n$ such that for all real polynomials $f$ of degree $t$ we have
 \begin{equation}
-  \int_{S^{n-1}} f(\chi)\dd{\omega(\chi)} = \frac{1}{N}\sum_{i = 1}^n f(x_i)
+  \int_{S^{n-1}} f(x)\dd{\omega(x)} = \frac{1}{N}\sum_{i = 1}^n f(x_i)
 \end{equation}
 where $S^{n-1}\subset \R^n$ is the $(n-1)$-sphere, and $\dd{\omega}$ is an appropriated normalized measure on $S^{n-1}$.
 In other words, we can find the average values of any polynomial on the sphere by looking at these particular $n$ points.
 
+In~\cite{state-designs} the authors generalized this idea to polynomial functions operating on quantum states $\ket{\psi}$ instead of points in Euclidean space.
+Again in~\cite{exact-approx-designs}, the idea is taken a step further to polynomial function of unitary operators $U$.
+In particular~\cite{exact-approx-designs} gives the following definition.
+\begin{definition}
+  A \textbf{unitary $t$-design} (of dimension $n$) is a finite set $\qty{U_i}_{i = 1}^k\subset\U{n}$ such that for all polynomials $f_{(t, t)}(U)$ of degree $t$ in the matrix elements of $U$, and degree $t$ in the complex conjugate of those matrix elements we have
+  \begin{equation}
+    \int_{\U{n}}f_{(t,t)}(U)\dd{\eta(U)} = \frac{1}{k}\sum_{i = 1}^k f_{(t,t)}(U_i).
+  \end{equation}
+  Here $\eta$ represents the unique unitary invariant measure called the Haar measure on $\U{n}$.
+\end{definition}
 
 \nocite{*}
 
