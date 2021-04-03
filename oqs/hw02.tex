@@ -1,0 +1,79 @@
+\documentclass[
+	pages,
+	boxes,
+	color=RoyalPurple
+]{homework}
+
+
+\usepackage{macros}
+\usepackage[footnote,nolist,smaller]{acronym}
+\usepackage{cleveref}
+\input{config}
+\hwnum{2}
+\duedate{Thur, Apr 8, 2020 11:59 PM}
+
+\colorlet{Ppink}{WildStrawberry!20}
+\newtcbox{\mafbox}[1][]{on line, math upper,
+boxsep=4pt, left=0pt,right=0pt,top=0pt,bottom=0pt,
+colframe=white,colback=Ppink,
+highlight math style={enhanced}}
+
+
+\makeatletter
+\numberwithin{tcb@cnt@prob}{section}
+\makeatother
+
+
+\begin{document}
+
+\setcounter{section}{11}
+% \problemnumber{2}
+
+\begin{problem}
+Prove the Kraus representation theorem in the case $\mathcal{H} = \C^D$.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\begin{problem}
+Show that there is a unitary freedom in choosing the set of Kraus operators associated with any fixed unitary acting on an extended Hilbert space. This is connected with the freedom one has in assigning a state to the auxiliary system in the extended Hilbert space.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\problemnumber{4}
+\begin{problem}
+Generalize the above example of two successive $U_\text{CNOT}$ operations to show that the second transformation can not be modelled by a linear map even when the input state (at time $t = 1$) has no entanglement between systems $A$ and $B$.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\begin{problem}
+Find upper and lower bounds on $p$ from the requirement that the depolarizing channel is a CPTP map.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\setcounter{section}{12}
+\problemnumber{2}
+\begin{problem}
+Determine the full freedom in defining sets of measurement operators $M_{k,j}$ associated with a given POVM $\qty{E_k}$. For example, is the unitary $V$ on $\mathcal{H}_A$ (defined above) the most general map on the output state that is consistent with the Born rule probabilities?
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\setcounter{section}{15}
+\problemnumber{1}
+\begin{problem}
+Assuming that $B_1 = \1_D / \sqrt{D}$ where $\alpha\in\qty{1,\ldots,D^2}$, prove that for any trace-preserving map $\mathcal{E}$ one has $t(\mathcal{E}) = 1$ and $\va{m} = \va{0}$, and, if $\mathcal{E}$ is a unital map, then $t(\mathcal{E}) = 1$ and $\va{m} = \va{n} = \va{0}$.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\end{document}
