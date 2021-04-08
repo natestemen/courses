@@ -6,6 +6,7 @@
 
 
 \usepackage{macros}
+\usepackage{cleveref}
 \usepackage{tikz}
 \usetikzlibrary{quantikz,trees,arrows}
 \input{config}
@@ -29,10 +30,26 @@ highlight math style={enhanced}}
 \setcounter{section}{11}
 
 \begin{problem}
-Prove the Kraus representation theorem in the case $\mathcal{H} = \C^D$.
+Prove the Kraus representation theorem in the case $\mathcal{H} = \C^n$.
 \end{problem}
 
 \begin{solution}
+    Let $\mathcal{E}: \End{\mathcal{H}}\to\End{\mathcal{H}}$ be our channel and assume it has the following operator-sum decomposition
+    \begin{equation}\label{eq:opsum}
+        \mathcal{E}(\rho) = \sum_k A_k\rho A_k^\dagger
+    \end{equation}
+    with $\sum_k A_k^\dagger A_k = \1$. Clearly~\cref{eq:opsum} is linear and it's trace preserving because
+    \begin{equation*}
+        \tr(\mathcal{E}(\rho)) = \sum_k\tr(A_k\rho A_k^\dagger) = \sum_k \tr(A_k^\dagger A_k\rho) = \tr(\qty[\sum_k A_k^\dagger A_k]\rho) = \tr(\rho).
+    \end{equation*}
+    To see~\cref{eq:opsum} is completely positive consider
+    \begin{align*}
+        \qty(\id_A\otimes\mathcal{E})(\rho_{A\mathcal{H}}) & = \sum_k\qty(\1_A\otimes A_k)\rho_{A\mathcal{H}}\qty(\1_A\otimes A_k^\dagger)  \\
+                                                           & = \sum_k \qty(\1_A\otimes A_k)\rho_{A\mathcal{H}}\qty(\1_A\otimes A_k)^\dagger
+    \end{align*}
+    Now since $\qty(\1_A\otimes A_k)\rho_{A\mathcal{H}}\qty(\1_A\otimes A_k)^\dagger \geq 0$ for all $k$ %the same must be true for the sum. This also holds for all systems $A$, and hence the map defined in~\cref{eq:opsum} is a CPTP map.
+
+    To go in the other direction again take $\mathcal{E}$ to be our CPTP map. Since the space of endomorphisms of $\mathcal{H}$ is isomorphic to the space of $n\times n$ matrices $\End{\mathcal{H}}\cong\mats{n}{\C}$ which is in term isomorphic to $\C^{n^2}$ we can treat $\mathcal{E}$ as an $n^2\times n^2$ matrix acting on $\vect{\rho}\in\C^{n^2}$ where $\rho\in\mats{n}{\C}$. From here I'm not totally sure where to go. I would think we should decompose the matrix representaiton of $\mathcal{E}$ using some sort of rank decomposition, but I have no idea how to start getting terms that looks like $A\rho A^\dagger$.
 \end{solution}
 
 \begin{problem}
@@ -42,18 +59,25 @@ Show that there is a unitary freedom in choosing the set of Kraus operators asso
 \begin{solution}
     When deriving the Kraus operator representation we took the evolution of system $A$ to be
     \begin{equation*}
-        \rho_A\to\rho_A' = \tr_B(\mathcal{E}(\rho)) = \tr_B(\hat{U}\rho_A\otimes\rho_B\hat{U}^\dagger)
+        \rho_A\to\rho_A' = \tr_B(\mathcal{E}(\rho_{AB})) = \tr_B(\hat{U}\rho_A\otimes\rho_B\hat{U}^\dagger)
     \end{equation*}
-    and then we explicitly calculated that value in a chosen basis of $\mathcal{H}_B$. That said, there are many bases we could chose to calculate the trace over, and in particular any one is related to another by some unitary operatory $\hat{V}$. Repeating the calculation in a new basis $\qty{\ket{\mu}}$ which is related to the old basis by
+    and then we explicitly calculated that value in a chosen basis of $\mathcal{H}_B$. That said, there are many bases we could chose to calculate the trace over, and in particular any one is related to another by some unitary operatory $V$. Repeating the calculation in a new basis $\qty{\ket{b_i}}$ which is related to the old basis by
     \begin{equation*}
-        \ket{l} = \sum_\mu V_{l \mu}\ket{\mu}.
+        \ket{a_i} = \sum_j V_{ij}\ket{b_j}.
     \end{equation*}
-    The Kraus operators we defined $\hat{A}_{kl}\defeq \sqrt{\lambda_l}\qty(\1\otimes\bra{k})\hat{U}\qty(\1\otimes\ket{l})$ can then be rewritten in this new basis.
+    We can now calculate new Kraus operators with respect to this basis. In what follows I use $\1\otimes\ket{x}$ in full pedantry because the notation in the book thoroughly confused me.
     \begin{align*}
-        \hat{A}_{kl} & =  \sqrt{\lambda_l}\qty(\1\otimes\bra{k})\hat{U}\qty(\1\otimes\ket{l})                                                              \\
-                     & =  \sqrt{\lambda_l}\qty(\1\otimes\qty[\sum_\mu \overline{V_{k\mu}}\bra{\mu}])\hat{U}\qty(\1\otimes\qty[\sum_\nu V_{l\nu}\ket{\nu}]) \\
-                     & = \sqrt{\lambda_l}\sum_{\mu,\nu}\overline{V_{k\mu}}V_{l\nu}\qty(\1\otimes\bra{\mu})\hat{U}\qty(\1\otimes\ket{\nu})
+        \rho_A' & = \sum_i \1\otimes\bra{b_i}U\,\rho_A\otimes\qty[\sum_{j,k,l}\lambda_j V_{jk}\overline{V_{jl}}\ketbra{b_k}{b_l}]U^\dagger \, \1\otimes \ket{b_i}                                              \\
+                & = \sum_{i,j}\qty[\sqrt{\lambda_j}\sum_k V_{jk}\1\otimes\bra{b_i}U\, \1\otimes\ket{b_k}]\rho_A\qty[\sqrt{\lambda_j}\sum_{l}\overline{V_{jl}}\1\otimes\bra{b_l}U^\dagger\, \1\otimes\ket{b_i}] \\
+                & = \sum_{i,j}\hat{B}_{ij}\rho_A\hat{B}_{ij}^\dagger
     \end{align*}
+    Where I've defined $\hat{B}_{ij}\defeq \sqrt{\lambda_j}\sum_{k}V_{jk}\1\otimes \bra{b_i}U\,\1\otimes\ket{b_k}$ whereas in the book/notes we have $\hat{A}_{ij} \defeq\sqrt{\lambda_j}\1\otimes\bra{a_i} U \, \1\otimes\ket{a_j}$. I'll now show these are related by the unitary $V$.
+    \begin{align*}
+        \hat{A}_{ij} & = \sqrt{\lambda_j}\1\otimes\bra{a_i} U \, \1\otimes\ket{a_j}                                                                               \\
+                     & = \sqrt{\lambda_j}\sum_{k, l}\overline{V_{ik}}V_{jl}\1\otimes\bra{b_k}U\,\1\otimes\ket{b_l}                                                \\
+                     & = \sum_k\overline{V_{ik}}\qty[\sqrt{\lambda_j}\sum_l V_{jl}\1\otimes\bra{b_k}U\,\1\otimes \ket{b_l}] = \sum_k\overline{V_{ik}}\hat{B}_{kj}
+    \end{align*}
+    Thus $\hat{A}_{ij}$ are related to the the $\hat{B}_{kl}$ via a unitary transformation.
 \end{solution}
 
 \problemnumber{4}
@@ -104,14 +128,21 @@ Find upper and lower bounds on $p$ from the requirement that the depolarizing ch
     \end{align*}
     To derive bounds on $p$ we need to ensure this \emph{is} a CPTP map and so it must satisfy the completeness relation.
     \begin{align*}
-        \1  = \sum_{a, b = 0}^{D-1}\hat{A}_{a,b}^\dagger\hat{A}_{a,b} & = \abs{1 - p + \frac{p  }{D^2}} \1 + \frac{\abs{p}}{D^2}\sum_{a, b = 1}^{D-1}\qty(X^a Z^b)^\dagger X^a Z^b %         \\
+        \1  = \sum_{a, b = 0}^{D-1}\hat{A}_{a,b}^\dagger\hat{A}_{a,b} & = \qty(1 - p + \frac{p  }{D^2}) \1 + \frac{p}{D^2}\sum_{a, b = 1}^{D-1}\qty(X^a Z^b)^\dagger X^a Z^b %         \\
         %   & = \abs{1 - p + \frac{p  }{D^2}} \1 + \frac{\abs{p}}{D^2}\sum_{a, b = 1}^{D-1}{Z^\dagger}^b {X^\dagger}^{a} X^a Z^b \\
         %   & = \abs{1 - p + \frac{p  }{D^2}} \1 + \frac{\abs{p}}{D^2}(D - 1)\1
     \end{align*}
-    Even without going any further we know that each term must have a positive coefficient since $A^\dagger A \geq 0$ for any operator $A$. The $a, b \neq 0$ term tells us $\abs{p} \geq 0$
-    % \begin{align*}
-
-    % \end{align*}
+    Even without going any further we know that each term must have a positive coefficient since $A^\dagger A \geq 0$ for any operator $A$. The $a, b \neq 0$ term tells us $p \geq 0$, and the first is slightly more complicated.
+    \begin{align*}
+        1 - p + \frac{p}{D^2}    & \geq 0                                           \\
+        p\qty(\frac{1}{D^2} - 1) & \geq -1                                          \\
+        p                        & \leq\frac{-1}{\frac{1}{D^2} - 1}                 \\
+        p                        & \leq \frac{D^2}{D^2 - 1} = 1 + \frac{1}{D^2 - 1}
+    \end{align*}
+    Thus in order for the depolarizing channel to be a CPTP map we must have
+    \begin{equation*}
+        0\leq p \leq 1 + \frac{1}{D^2 - 1}.
+    \end{equation*}
 \end{solution}
 
 \setcounter{section}{12}
@@ -121,6 +152,18 @@ Determine the full freedom in defining sets of measurement operators $M_{k,j}$ a
 \end{problem}
 
 \begin{solution}
+    Suppose we transform the $M_{k, j}$ via a CPTP map. By Kraus's representation theorem this can be done with an operator sum decomposition as
+    \begin{equation*}
+        \widetilde{M}_{k, j} = \sum_{i}A_i M_{k, j} A_i^\dagger.
+    \end{equation*}
+    In order to preserve the Born rule we must leave $\Pr(k)$ invariant so let's check that.
+    \begin{align*}
+        \Pr(k) & = \tr(E_k\rho)                                                                                         \\
+               & = \sum_{j}\tr(\widetilde{M}_{k, j}\rho\widetilde{M}_{k, j}^\dagger)                                    \\
+               & = \sum_{j}\tr(\qty[\sum_{i}A_i M_{k, j}A_i^\dagger]\rho\qty[\sum_{l}A_l M_{k, j}^\dagger A_l^\dagger]) \\
+               & = \sum_{i, j, l}\tr(A_i M_{k, j}A_i^\dagger\rho A_l M_{k, j}A_l^\dagger)
+    \end{align*}
+    This only reduces to $\sum_j \tr(M_{k, j}\rho M_{k, j}^\dagger)$ in the case where there is only one non-zero Kraus operator, which must be unitary. Thus we cannot use an arbitrary CPTP map. I know this doesn't prove we cannot use other linear/nonlinear maps, but I cannot figure out how to show we \emph{can} do those things.
 \end{solution}
 
 \setcounter{section}{15}
@@ -140,7 +183,7 @@ Assuming that $B_1 = \1_D / \sqrt{D}$ where $\alpha\in\qty{1,\ldots,D^2}$, prove
     \end{equation*}
     Using the fact that all the Pauli's are traceless, and hence so are the tensor products.
 
-    Now take $\mathcal{E}$ to be unital in addition, and hence we must show $\mathcal{E}_{\alpha 1} = \va{n} = \va{0}$.
+    Now take $\mathcal{E}$ to be unital in addition to trace preserving, and hence we must show $\mathcal{E}_{\alpha 1} = \va{n} = \va{0}$. Here we will use the fact that a unital map takes the identity channel to the identity channel: $\mathcal{E}(\1) = \1$.
     \begin{equation*}
         \mathcal{E}_{\alpha 1} = \frac{1}{D}\tr(P_\alpha^\dagger\mathcal{E}(\1_D)) = \frac{1}{D}\tr(P_\alpha\1_D) = \frac{1}{D}\tr(P_\alpha) = 0
     \end{equation*}
