@@ -1,0 +1,104 @@
+\documentclass[
+	pages,
+	boxes,
+	color=WildStrawberry
+]{homework}
+
+
+\usepackage{cleveref}
+\usepackage{macros}
+\input{config}
+\hwnum{6}
+\duedate{Sun, Apr 11, 2020 10:00 PM}
+
+\colorlet{Ppink}{MidnightBlue!20}
+\newtcbox{\mafbox}[1][]{on line, math upper,
+	boxsep=4pt, left=0pt,right=0pt,top=0pt,bottom=0pt,
+	colframe=white,colback=Ppink,
+	highlight math style={enhanced}
+}
+
+\begin{document}
+
+\begin{problem}
+Let $G$ by a compact connected matrix Lie group. Given a subset $A$ of $G$, recall that $Z_G(A)\defeq\qty{g\in G : gx = gx \text{ for all } x\in A}$. Also, we write $Z_G(x)$ for $Z_G(\qty{x})$.
+\begin{parts}
+	\part{Prove that every torus is contained in a maximal torus.}\label{part:1a}
+	\part{Let $S$ be a torus and $x\in Z_G(S)$. Prove there exists a maximal torus $T$ in $G$ containing $S\cup \qty{x}$. Deduce $Z_G(S)$ is the union of all maximal tori in $G$ containing $S$.}\label{part:1b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:1a}
+	Let $A$ be a torus in $G$. If $A$ is maximal, it's contained in itlelf $A\subseteq A$, so we're done. Thus assume $A$ is not maximal. By non-maximality of $A$ there exists a torus $T_1$ containing it. If it's maximal we're done, so assume it's not and hence $A\subsetneq T_1$. Repeat this argument with $T_1$ to obtain $T_2$ and so on. That is we have the following chain of strict inclusions:
+	\begin{equation*}
+		A\subsetneq T_1 \subsetneq T_2 \subsetneq T_3 \subsetneq \cdots
+	\end{equation*}
+	We can now pass to the Lie algebra's where we have
+	\begin{equation*}
+		\mathsf{a} \subseteq \mathsf{t}_1 \subseteq \mathsf{t}_2 \subseteq \mathsf{t}_3 \subseteq \cdots \subseteq \mathsf{g} \eqdef \Lie(G).
+	\end{equation*}
+	Since $\mathsf{g}$ is a \emph{finite} dimensional vector space, we cannot have an infinite chain of strict inclusions, so there must exist an $n\in \N$ such that $\mathsf{t}_{n + k} = \mathsf{t}_n$ for all $k\in \N$. However on compacted, connected matrix Lie groups the exponential map is surjective and hence $\exp(\mathsf{t}_i) = T_i$ and
+	\begin{equation*}
+		T_{n + k} = \exp(t_{n + k}) = \exp(\mathsf{t}_n) = T_n
+	\end{equation*}
+	but we had $T_{n} \subsetneq T_{n + k}$ thus we have a contradiction. Hence $A$ is contained in a maximal torus.
+
+	\ref{part:1b}
+
+\end{solution}
+
+\begin{problem}
+Let $G$ be a compact matrix Lie group and $V$ and $W$ irreducible complex representations of $G$, equipped with $G$-invariant innter products $(-, -)_V$ and $(-,-)_W$, respectively, which are linear in the first variable and conjugate linear in the second.
+\begin{parts}
+	\part{Let $\varphi: V \to W$ be an intertwining map. Prove that there exists $\alpha\in\R_{\geq 0}$ such that
+		\begin{equation*}
+			(\varphi(v), \varphi(v'))_W = \alpha(v, v')_V
+		\end{equation*}
+		for all $v, v'\in V$.}\label{part:4a}
+	\part{Imitate the proof of the orthogonality of characters to prove the following orthogonality relations for matrix coefficients: Given $v_1, v_2\in V$ and $w_1, w_2\in W$, there holds
+		\begin{equation*}
+			\int_G(g\cdot v_1, v_2)_V\overline{(g\cdot w_1, w_2)_W}\dd{\mu_G} = \frac{(\varphi(v_1), w_1)_W\overline{(\varphi(v_2), w_2)_W}}{\dim V}[V\cong W]
+		\end{equation*}
+		where $[A]$ is the Iverson bracket and $\varphi: V \to W$ is any intertwining isometry, that is, and intertwining isomoprhism such that the conclusion of part (a) holds with $\alpha = 1$.}\label{part:4b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:4a}
+	By Schur's lemma $\varphi$ is either the 0 map---in which case $\alpha = 0$---or a scalar multiple of the identity. Thus as long as $\varphi$ is not identically 0, then $V$ and $W$ are isomorphic and by Assignment 3 problem 6 there is only one $G$-invariant inner product up to a positive constant.
+	\begin{equation*}
+		(\varphi(v), \varphi(v'))_W = (\beta v, \beta v')_W = \abs{\beta}^2(v, v')_W = \underbrace{\abs{\beta}^2}_{\geq 0}\underbrace{\gamma}_{\geq 0}(v, v')_V
+	\end{equation*}
+	Thus if we take $\alpha \defeq \abs{\beta}^2\gamma$ then the above equation is satisfied.
+	\ref{part:4b}
+\end{solution}
+
+\begin{problem}
+Let $G$ be a compact matrix Lie group.
+\begin{parts}
+	\part{Let $(\Pi, V)$ be a complex representation of $G$ and $\chi$ it's character. Prove that $\abs{\chi(g)} \leq \dim V$, with equality holding if and only if $\Pi(g)$ is multiplication by a scalar. Here $g\in G$ is an arbitrary element.}\label{part:6a}
+	\part{Prove that $g$ belongs to $Z(G)$, the center of $G$, if and only if $\abs{\chi_V(g)} = \dim V$ for every irreducible complex representation $V$ of $G$. Here $\chi_V$ denotes the character of $V$.}\label{part:6b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:6a}
+	The compactness of $G$ implies $(\Pi, V)$ is unitary, and hence $\Pi(g)$ is a normal matrix, with eigenvalues $\e^{\iu\theta_i}$ where $i$ ranges from $1$ to $k \leq \dim V$. Now since the trace is equal to the sum of the eigenvalues we have
+	\begin{equation*}
+		\abs{\chi(g)} = \abs{\sum_{i=1}^k\e^{\iu\theta_i}} \leq \sum_{i=1}^k \abs{\e^{\iu \theta_i}} = \sum_{i=1}^k 1 = k \leq \dim V.
+	\end{equation*}
+	In the case when $\Pi(g)$ has full rank ($k = \dim V$) then it's not hard to see that $\abs{\sum_{i = 1}^{\dim V}\e^{\iu \theta_i}} = \dim V$ implies that all of the $\theta_i$ are equal (up to $2\pi$). We can then rewrite all the eigenvalues as $\e^{\iu\alpha + \iu\tilde{\theta}_i} = \e^{\iu\alpha}\e^{\iu\tilde{\theta}_i}$. Thus $\Pi(g) = \e^{\iu\alpha}\1_V$.
+
+	If $\Pi(g) = \beta\1_V$, then since the representation is unitary $\Pi(g)\Pi(g)^\dagger = \1_V$ which implies $\beta = \e^{\iu\varphi}$. Thus all of the eigenvalues are $\e^{\iu\varphi}$ and since the identity map is full rank $\abs{\chi(g)} = \dim V$.
+
+	\ref{part:6b}
+	Suppose $g\in Z(G)$.
+
+	Now take $\abs{\chi_V(g)} = \dim V$. As we've shown above $\Pi(g)$ must be a multiple of the identity and hence
+	\begin{equation*}
+		\Pi(gx) = \Pi(g)\Pi(x) = \alpha\1_V\Pi(x) = \Pi(x)\alpha\1_V = \Pi(x)\Pi(g) = \Pi(xg)
+	\end{equation*}
+\end{solution}
+
+\end{document}
