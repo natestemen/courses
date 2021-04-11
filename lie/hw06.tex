@@ -24,7 +24,7 @@
 Let $G$ by a compact connected matrix Lie group. Given a subset $A$ of $G$, recall that $Z_G(A)\defeq\qty{g\in G : gx = gx \text{ for all } x\in A}$. Also, we write $Z_G(x)$ for $Z_G(\qty{x})$.
 \begin{parts}
 	\part{Prove that every torus is contained in a maximal torus.}\label{part:1a}
-	\part{Let $S$ be a torus and $x\in Z_G(S)$. Prove there exists a maximal torus $T$ in $G$ containing $S\cup \qty{x}$. Deduce $Z_G(S)$ is the union of all maximal tori in $G$ containing $S$.}\label{part:1b}
+	\part{Let $S$ be a torus, prove $Z_G(S)$ is the union of all maximal tori in $G$ containing $S$.}\label{part:1b}
 \end{parts}
 \end{problem}
 
@@ -45,6 +45,31 @@ Let $G$ by a compact connected matrix Lie group. Given a subset $A$ of $G$, reca
 	but we had $T_{n} \subsetneq T_{n + k}$ thus we have a contradiction. Hence $A$ is contained in a maximal torus.
 
 	\ref{part:1b}
+	Suppose $T$ is a maximal torus containing $S$. Then by definition we have $T\subseteq Z_G(S)$ and hence $Z_G(S)$ contains all maximal tori containing $S$, and also their unions.
+
+	Now take $g\in Z_G(S)$, or written differently as $S\subseteq Z_G(g)$. Since $S$ is a connected, compact matrix Lie group, so is $Z_G(g)_0$. Take $T\subseteq Z_G(g)_0$ to be a maximal torus that contains $S$. Since the exponential map is surjective in this case there must exist an element $X\in\Lie(G)$ such that $\e^{X} = g\in Z_G(g)_0$. This implies $g$ is in the center of $Z_G(g)_0$, and using the fact that the $Z(G)$ is equal to the intersection of all maximal tori we conclude $g\in T$. Thus we've found a torus that contains both $S$ and $g$.
+\end{solution}
+
+\begin{problem}
+\begin{parts}
+	\part{Let $g\in G$. Prove that $Z_G(g)_0$ is the union of all maximal tori in $G$ containing $g$.}\label{part:2a}
+	\part{Specializing to the case $G = \SO{3}$ and let $T$ be the maximal torus corresponding to the Cartain subalgebra given in \#4(b) of Assignment 5. Find $g\in \SO{3}$ such that $Z_G(g)_0 = T$ but that $Z_G(g)$ is disconnected.}\label{part:2b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:2a}
+	See proof to \#1(b) to see that $Z_G(g)_0$ is connected.
+
+	\ref{part:2b}
+	Take $g = \mqty[\dmat{-1, -1, 1}]$.
+\end{solution}
+
+\begin{problem}
+Dont think Imma do this one.
+\end{problem}
+
+\begin{solution}
 
 \end{solution}
 
@@ -71,7 +96,63 @@ Let $G$ be a compact matrix Lie group and $V$ and $W$ irreducible complex repres
 		(\varphi(v), \varphi(v'))_W = (\beta v, \beta v')_W = \abs{\beta}^2(v, v')_W = \underbrace{\abs{\beta}^2}_{\geq 0}\underbrace{\gamma}_{\geq 0}(v, v')_V
 	\end{equation*}
 	Thus if we take $\alpha \defeq \abs{\beta}^2\gamma$ then the above equation is satisfied.
+
 	\ref{part:4b}
+	Let $\Pi$ and $\Sigma$ be the irreps corresponding to $V$ and $W$ respectively. Define the map $L: W \to V$.
+	\begin{equation*}
+		L\defeq \int_G \Pi(g)\circ \varphi^{-1} \circ \Sigma(g)^\dagger \dd{\mu}\!(g)
+	\end{equation*}
+	and note that $\Pi(h) \circ L \circ \Sigma(h^{-1}) = L$ by the invariance of the Haar measure and so $\Pi(h) \circ L = L \circ \Sigma(h)$ and hence $L$ is an intertwining map. By Schur's lemma $L = 0$ or $L = \lambda\1$. When $L = 0$ we can take $\varphi^{-1}(w) = (w, w_1)v_1$ and thus
+	\begin{align*}
+		0 & = (L(w_2), v_2)                                                                   \\
+		  & = \int_G(\Pi(x)\circ \varphi^{-1} \circ \Sigma(x)^\dagger w_2, v_2) \dd{\mu}\!(x) \\
+		  & = \int_G(\Pi(x)(\Sigma(x^{-1})w_2, w_1)v_1, w_1)\dd{\mu}\!(x)                     \\
+		  & = \int_G(\Pi(x) v_1, v_2)(\Sigma(x^{-1})w_2, w_1)\dd{\mu}\!(x)                    \\
+		  & = \int_G(\Pi(x) v_1, v_2)\overline{(\Sigma(x)w_1, w_2)}\dd{\mu}\!(x)
+	\end{align*}
+
+	Now we have the case where $V\cong W$ and $\varphi$ can be treated as a map $\varphi: V\to V$. As above we have $L = \lambda \1$ and taking the trace of both sides we have $\tr(L) = \lambda \dim V = \tr(\varphi)$. Thus
+	\begin{equation*}
+		(L(v_2), v_1) = \frac{\tr(\varphi)}{\dim V}\overline{(v_1, v_2)}.
+	\end{equation*}
+	Similar to above we take $\varphi(v) = (v, w_2)v_1$. so that
+	\begin{align*}
+		\frac{(v_1, w_2)(\overline{(v_2, w_2)})}{\dim V} & = \frac{\tr(\varphi)}{\dim V}\overline{(v_1, w_2)}                \\
+		                                                 & = (L(w_2), v_1)                                                   \\
+		                                                 & = \int_G(\Pi(x)\circ\varphi\circ\Pi(x^{-1})w_2, v_2)\dd{\mu}\!(x) \\
+		                                                 & = \int_G (\Pi(x) v_1, v_2)(w_2, \Pi(x)w_1)\dd{\mu}\!(x)
+	\end{align*}
+	Thus, done. I understand this is probably sloppy.
+\end{solution}
+
+\begin{problem}
+Some character computations.
+\begin{parts}
+	\part{Let $\chi$ denote the character of the irreducible representation $\mathcal{H}_m(\R^3)$ of $\SO{3}$. Compute $\chi(g)$ for $g\in\SO{3}$ of the form
+		\begin{equation*}
+			g = \mqty(1 & 0 & 0 \\ 0 & \cos\theta & -\sin\theta \\ 0 & \sin\theta & \phantom{-}\cos\theta).
+		\end{equation*}}\label{part:5a}
+	\part{Recall the irreducible $\SU{2}$-representations $(\Pi_m, V_m(\C^2))$. Use the character computation to prove that, as representations of $\SU{2}$, we have for non-negative integers $m\geq n$ that
+		\begin{equation*}
+			V_m\otimes V_n\cong V_{m + n}\oplus V_{m + n - 2}\oplus \cdots \oplus V_{m - n + 2} \oplus V_{m - n}
+		\end{equation*}}\label{part:5b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+	\ref{part:5a}
+
+	\ref{part:5b}
+	Let $g = \mqty[\e^{\iu\theta} & 0 \\ 0 & \e^{-\iu\theta}]$ be an element of the maximal torus of $\SU{2}$.
+	\begin{align*}
+		\chi_{V_m\otimes V_n}(g) & = \chi_{m}(g)\chi_n(g)                                                                 \\
+		                         & = \qty(\sum_{k = 0}^m\e^{\iu(m - 2k)\theta})\qty(\sum_{j = 0}^n\e^{\iu(n - 2j)\theta}) \\
+		                         & = \sum_{k, j = 0, 0}^{m, n}\e^{\iu(m + n - 2k - 2j)\theta}                             \\
+		                         & = \sum_{l = 0}^n\sum_{j = p}^{m + n - l}\e^{\iu(m + n - 2k)\theta}                     \\
+		                         & = \sum_{l = 0}^n\sum_{j = 0}^{m + n - 2l}\e^{\iu(m + n - 2l - 2k)\theta}               \\
+		                         & = \sum_{l = 0}^n\chi_{m + n - 2l}(g)
+	\end{align*}
+	This shows the representations are equal, and since every element in $\SU{2}$ can be written as $x = yty^{-1}$ with $t$ in the torus, and characters are class functions this must be true on the whole of $\SU{2}$.
 \end{solution}
 
 \begin{problem}
@@ -93,12 +174,13 @@ Let $G$ be a compact matrix Lie group.
 	If $\Pi(g) = \beta\1_V$, then since the representation is unitary $\Pi(g)\Pi(g)^\dagger = \1_V$ which implies $\beta = \e^{\iu\varphi}$. Thus all of the eigenvalues are $\e^{\iu\varphi}$ and since the identity map is full rank $\abs{\chi(g)} = \dim V$.
 
 	\ref{part:6b}
-	Suppose $g\in Z(G)$.
+	Suppose $g\in Z(G)$. Then $\Pi(g)$ is an intertwining map and by Schur's lemma $\Pi(g) = \alpha\1$ which implies $\abs{\chi_V(g)} = \dim V$ as above.
 
 	Now take $\abs{\chi_V(g)} = \dim V$. As we've shown above $\Pi(g)$ must be a multiple of the identity and hence
 	\begin{equation*}
 		\Pi(gx) = \Pi(g)\Pi(x) = \alpha\1_V\Pi(x) = \Pi(x)\alpha\1_V = \Pi(x)\Pi(g) = \Pi(xg)
 	\end{equation*}
+	Since $G$ is a matrix Lie group $\Pi$ is a faithful representation or isometrically similar to one, so thus we can conclude $gx = xg$.
 \end{solution}
 
 \end{document}
