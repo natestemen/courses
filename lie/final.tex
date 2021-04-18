@@ -1,0 +1,89 @@
+\documentclass[
+	pages,
+	boxes,
+	color=WildStrawberry
+]{homework}
+
+
+\usepackage{cleveref}
+\usepackage{macros}
+\input{config}
+\hwnum{6}
+\duedate{Fri, Apr 23, 2020 10:00 PM}
+
+\colorlet{Ppink}{MidnightBlue!20}
+\newtcbox{\mafbox}[1][]{on line, math upper,
+	boxsep=4pt, left=0pt,right=0pt,top=0pt,bottom=0pt,
+	colframe=white,colback=Ppink,
+	highlight math style={enhanced}
+}
+
+\begin{document}
+
+\begin{problem}
+Recall that the center of a matrix Lie group $G$ is by definition $Z(G)\defeq \qty{g\in G : gh = hg \text{ for all } h\in G}$. Below we let $n\geq 2$.
+\begin{parts}
+	\part{With the help of Schur's lemma, determine the centers of $\U{n}$ and $\SU{n}$. Deduce that $\U{n}$ and $\SU{n}\times\U{1}$ are not isomorphic as Lie groups.}\label{part:1a}
+	\part{Prove that $\U{n}$ and $\SU{n}\times\U{1}$ nonetheless have isomorphic Lie algebras.}\label{part:1b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+\begin{parts}
+	\part{Prove that every element of $\SO{3}$ except the identity belongs to exactly one maximal torus in $\SO{3}$.}\label{part:2a}
+	\part{Consider the following maximal torus in $\SO{3}$:
+		\begin{equation*}
+			T = \qty{\mqty(\cos{\theta} & -\sin{\theta} & 0 \\ \sin{\theta} & \phantom{-}\cos{\theta} & 0 \\ 0 & 0 & 1) : \theta\in\R}
+		\end{equation*}
+		Prove that it's Weyl group is isomorphic to the finite abelian group $\Z_2$.}\label{part:2b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+Recall the $\SU{2}$-representation $V_m(\C^2)$. For $0\leq k \leq m$ we write $f_k(z_1, z_2) = z_1^k z_2^{m - k}$. Prove the following defines an $\SU{2}$ invariant inner product on $V_m(\C^2)$:
+\begin{equation*}
+	\qty(\sum_{k = 0}^m \alpha_k f_k, \sum_{l = 0}^m\beta_l f_l) = \sum_{k = 0}^m k!(m - k)!\alpha_k\overline{\beta_k}.
+\end{equation*}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+Define $V_{1, 1}(\C^3)\defeq \vspan_\C\qty{z_i\overline{z_j} : i, j\in\qty{1,2,3}}$. For $f\in V_{1,1}(\C^3)$ and $A\in \SU{3}$ we let $\Pi_{1,1}(A)\cdot f)(z)\defeq f(A^{-1}z)$. Also, let $\laplace \equiv \sum_{j = 1}^3 \pdv{z_j}\pdv{\overline{z_j}}$ and define $\mathcal{H}_{1,1}(\C^3)\defeq \qty{f\in V_{1, 1}(\C^3) : \laplace{f} = 0}$.
+\begin{parts}
+	\part{Prove that $(\Pi_{1,1}, V_{1,1}(\C^3))$ is a complex representation of $\SU{3}$ and that $\mathcal{H}_{1,1}(\C^3)$ is an invariant subspace.}\label{part:4a}
+	\part{Consider the associated $\slie{3}{\C}$-representation on $\mathcal{H}_{1,1}(\C^3)$. Prove that this is irreducible, and find it's dimension and highest weight.}\label{part:4b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}
+Recall the following basis for $\slie{2}{\R}$ (also for $\slie{2}{\C}$):
+\begin{equation*}
+	H = \mqty(1 & 0 \\ 0 & -1),\quad X = \mqty(0 & 1 \\ 0 & 0),\quad Y = \mqty(0 & 0 \\ 1 & 0)
+\end{equation*}
+\begin{parts}
+	\part{Prove that $\ad_X: \slie{2}{\C} \to \slie{2}{\C}$ is not diagonalizable, while $\ad_A: \gl{n}{\C} \to \gl{n}{\C}$ is diagonalizable for all $A\in \u{n}$. Deduce that $\u{n}$ contains no subalgebra isomorphic to $\slie{2}{\R}$.}\label{part:5a}
+	\part{Prove that the only ideals of $\slie{2}{\R}$ are $\qty{0}$ and $\slie{2}{\R}$. Deduce from this and part (a) that there are no non-trivial Lie algebra homomorphisms from $\slie{2}{\R}$ into $\u{n}$.}\label{part:5b}
+	\part{Deduce from parts (a) and (b) that every finite-dimensional unitary complex representation $(\Pi, V)$ of $\SL{2}{\R}$ is trivial in the sense that $\Pi(A) = \id_V$ for all $A\in \SL{2}{\R}$. You may take for granted that $\SL{2}{\R}$ is connected.}\label{part:5c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\end{document}
