@@ -8,7 +8,8 @@
 \usepackage{cleveref}
 \usepackage{macros}
 \input{config}
-\hwnum{6}
+\hwname{Final Assessment}
+\hwnum{}
 \duedate{Fri, Apr 23, 2020 10:00 PM}
 
 \colorlet{Ppink}{MidnightBlue!20}
@@ -17,6 +18,9 @@
 	colframe=white,colback=Ppink,
 	highlight math style={enhanced}
 }
+
+\theoremstyle{plain}
+\newtheorem{fact}{Fact}
 
 \begin{document}
 
@@ -29,7 +33,37 @@ Recall that the center of a matrix Lie group $G$ is by definition $Z(G)\defeq \q
 \end{problem}
 
 \begin{solution}
+	\ref{part:1a}
+	Let $A\in Z(\U{n})$, then by the definition of $\U{n}$ we can view $A$ as a map taking $\U{n}$ to itself $\U{n}\xrightarrow{\,\,\, A\,\,\,} \U{n}$. Let $\rho: \U{n}\to \GL{n}{\C}$ be the representation defined by $\rho(X) = X$. Then $A$ intertwines $\rho$:
+	\begin{equation*}
+		A\circ\rho(X) = A(\rho(X)) = AX = XA = \rho(X)\circ A.
+	\end{equation*}
+	By Schur's lemma $A$ must then either be $0$ or a scalar multiple of the identity $\1$. The unitary group does not include $0$ so $A = \lambda \1$, and in addition
+	\begin{equation*}
+		AA^\dagger = \lambda \overline{\lambda}\1 = \1 \implies \lambda = \e^{\iu \varphi}.
+	\end{equation*}
+	Thus the center of $\U{n}$ is $\qty{\e^{\iu\varphi}\1 : \varphi\in\R}$ which is isomorphic to $S^1$ the circle group.
 
+	The above argument applies to $\SU{n}$ as well, but we have the extra condition that $\det A = 1$. By properties of the determinant\footnote{$\det(\alpha A) = \alpha^n\det A$ if $A\in\mats{n}{\F}$.} we know $\det A = \e^{\iu n\varphi} = 1$ so the center of $\SU{n}$ is the group of $n$-th roots of unity. The $n$-th roots of unity are known to be isomorphic to $\Z/n\Z$, so we will say $Z(\SU{n}) = \Z/n\Z$.
+
+	Further we have $Z(\SU{n}\times \U{1}) = \Z/n\Z\times S^1$ which is clearly not isomorphic to $S^1$. Now if $\U{n}$ was isomorphic to $\SU{n}\times\U{1}$, then their centers would also be isomorphic, but they are not, so they cannot be isomorphic as groups, and hence Lie groups.
+
+	\ref{part:1b}
+	First we define the following function $\Phi: \SU{n}\times\U{1}\to \U{n}$:
+	\begin{equation*}
+		\Phi(X, \alpha) \defeq \alpha X.
+	\end{equation*}
+	This is surely an element of $\U{n}$ because $\alpha X (\alpha X)^\dagger = \alpha\overline{\alpha}XX^\dagger = \1$. It is also a group homomorphism
+	\begin{equation*}
+		\Phi(X, \alpha)\Phi(Y, \beta) = \alpha X \beta Y = \alpha\beta XY = \Phi(XY, \alpha\beta)
+	\end{equation*}
+	and is clearly continuous since we're just doing scalar multiplication. Thus $\Phi$ is a Lie group homomorphism. To see this map is a surjection, take $X\in\U{n}$ and we will find a pair $(Y, \alpha)\in\SU{n}\times\U{1}$ that hits it. Some inspection yields
+	\begin{align*}
+		Y = \frac{X}{(\det X)^{1/n}} &  & \alpha = 1.
+	\end{align*}
+	Thus $\Phi$ is a surjection. We now show $\Phi$ also has a discrete kernel. If $\Phi(X, \alpha) = \alpha X = \1$, then first $X$ must be diagonal, and hence also in the center of $\SU{n}$. As we found above $Z(\SU{n})\cong\Z/n\Z$, and hence $\ker\Phi$ is discrete.
+
+	By Proposition 3.31 of Hall (page 63), we have $\Lie(\ker\Phi) = \ker\phi$ where $\phi$ is a Lie algebra homomorphism between the Lie algebras of $\SU{n}\times\U{1}$ and $\U{n}$. However, the Lie algebra of a discrete group is trivial, and hence $\ker\phi$ is trivial which implies that $\phi$ is an isomorphism of Lie algebras.
 \end{solution}
 
 \begin{problem}
@@ -59,7 +93,7 @@ Recall the $\SU{2}$-representation $V_m(\C^2)$. For $0\leq k \leq m$ we write $f
 \end{solution}
 
 \begin{problem}
-Define $V_{1, 1}(\C^3)\defeq \vspan_\C\qty{z_i\overline{z_j} : i, j\in\qty{1,2,3}}$. For $f\in V_{1,1}(\C^3)$ and $A\in \SU{3}$ we let $\Pi_{1,1}(A)\cdot f)(z)\defeq f(A^{-1}z)$. Also, let $\laplace \equiv \sum_{j = 1}^3 \pdv{z_j}\pdv{\overline{z_j}}$ and define $\mathcal{H}_{1,1}(\C^3)\defeq \qty{f\in V_{1, 1}(\C^3) : \laplace{f} = 0}$.
+Define $V_{1, 1}(\C^3)\defeq \vspan_\C\qty{z_i\overline{z_j} : i, j\in\qty{1,2,3}}$. For $f\in V_{1,1}(\C^3)$ and $A\in \SU{3}$ we let $(\Pi_{1,1}(A)\cdot f)(z)\defeq f(A^{-1}z)$. Also, let $\laplace \equiv \sum_{j = 1}^3 \pdv{z_j}\pdv{\overline{z_j}}$ and define $\mathcal{H}_{1,1}(\C^3)\defeq \qty{f\in V_{1, 1}(\C^3) : \laplace{f} = 0}$.
 \begin{parts}
 	\part{Prove that $(\Pi_{1,1}, V_{1,1}(\C^3))$ is a complex representation of $\SU{3}$ and that $\mathcal{H}_{1,1}(\C^3)$ is an invariant subspace.}\label{part:4a}
 	\part{Consider the associated $\slie{3}{\C}$-representation on $\mathcal{H}_{1,1}(\C^3)$. Prove that this is irreducible, and find it's dimension and highest weight.}\label{part:4b}
@@ -73,7 +107,7 @@ Define $V_{1, 1}(\C^3)\defeq \vspan_\C\qty{z_i\overline{z_j} : i, j\in\qty{1,2,3
 \begin{problem}
 Recall the following basis for $\slie{2}{\R}$ (also for $\slie{2}{\C}$):
 \begin{equation*}
-	H = \mqty(1 & 0 \\ 0 & -1),\quad X = \mqty(0 & 1 \\ 0 & 0),\quad Y = \mqty(0 & 0 \\ 1 & 0)
+	H = \mqty(1 & \phantom{-}0 \\ 0 & -1),\quad X = \mqty(0 & 1 \\ 0 & 0),\quad Y = \mqty(0 & 0 \\ 1 & 0)
 \end{equation*}
 \begin{parts}
 	\part{Prove that $\ad_X: \slie{2}{\C} \to \slie{2}{\C}$ is not diagonalizable, while $\ad_A: \gl{n}{\C} \to \gl{n}{\C}$ is diagonalizable for all $A\in \u{n}$. Deduce that $\u{n}$ contains no subalgebra isomorphic to $\slie{2}{\R}$.}\label{part:5a}
@@ -83,6 +117,53 @@ Recall the following basis for $\slie{2}{\R}$ (also for $\slie{2}{\C}$):
 \end{problem}
 
 \begin{solution}
+	\ref{part:5a}
+	Since the action of $\ad_X$ is determined entirely on the action on the basis elements we recall those here:
+	\begin{align}\label{eq:commrel}
+		\ad_X(H) = -2X &  & \ad_X(X) = 0 &  & \ad_X(Y) = H
+	\end{align}
+	Since $\ad_X$ is a linear operator on $\slie{2}{\C}$ we can write it as a $3\times 3$ complex matrix if we use the following isomorphism:
+	\begin{align*}
+		Y\to \smqty[1 \\ 0 \\ 0] && H \to \smqty[0 \\ 1 \\ 0] && X \to \smqty[ 0 \\ 0 \\ 1].
+	\end{align*}
+	With this we can treat $\slie{2}{\C}$ like $\C^3$ and hence can compute the matrix representation of $\ad_X$. Indeed a short calculation yields
+	\begin{equation}\label{eq:adx}
+		\ad_X = \mqty[ 0 & 0 & 0 \\ 1 & 0 & 0 \\ 0 & -2 & 0].
+	\end{equation}
+	To see if this matrix is diagonalizable (which maybe you can just tell, but spelling it out more carefully was helpful for me) we can use the following fact.
+	\begin{fact}
+		A matrix is diagonalizable if and only if for every eigenvalue, it's corresponding algebraic and geometric multiplicity are equal.
+	\end{fact}
+	Calculating the characteristic polynomial of~\cref{eq:adx} we find
+	\begin{equation*}
+		\det(\smqty[ 0 & 0 & 0 \\ 1 & 0 & 0 \\ 0 & -2 & 0] - \lambda \1_3) = -\lambda^3
+	\end{equation*}
+	Hence the only eigenvalue is $0$, but~\cref{eq:commrel} shows the only eigenvector with eigenvalue $0$ is $X$. Clearly the eigenspace spanned by $X$ is not three dimensional despite having algebraic multiplicity $3$. Thus $\ad_X$ is diagonalizable.
+
+	To see that $\ad_A$ is diagonalizable
+
+	\ref{part:5b}
+	Let $\mathsf{i}\subseteq\slie{2}{\R}$ be our nonempty ideal. Since it is nonempty it must contain some element of the form
+	\begin{equation}\label{eq:idealelement}
+		\alpha H + \beta X + \gamma Y.
+	\end{equation}
+	Since $\mathsf{i}$ is an ideal we must have $\comm{\slie{2}{\R}}{\mathsf{i}}\subseteq \mathsf{i}$, and in particular we can look at~\cref{eq:idealelement} under $\ad_H$.
+	\begin{equation*}
+		\comm{H}{\alpha H + \beta X + \gamma Y} = \beta\comm{H}{X} + \gamma\comm{H}{Y} = 2\beta X - 2\gamma Y.
+	\end{equation*}
+	Thus there are two cases we must consider: $\alpha = 0$ and $\alpha \neq 0$ where $\mathsf{i}$ contains $H$.
+
+	If $H\in\mathsf{i}$, then by definition of an ideal we must have $\comm{X}{H} = -2X\in\mathsf{i}$ and $\comm{Y}{H} = 2Y\in\mathsf{i}$ and thus $\mathsf{i} = \slie{2}{\R}$.
+
+	If $\alpha = 0$ and the ideal $\mathsf{i}$ only contains elements of the form $\beta X + \gamma Y$, we again must have $\comm{\slie{2}{\R}}{\mathsf{i}}\subseteq \mathsf{i}$ by definition. In particular we can choose to take $\comm{X}{2\beta X - 2\gamma Y} = -2\gamma H$, and hence if $\gamma \neq 0$ then $\mathsf{i}$ must contain $H$. We can then use the argument as above to conclude the ideal is equal to the entire group. If $\gamma = 0$, and the ideal only contains $\beta X$, we can look at $\comm{Y}{\beta X} = -\beta H$ and again if $\beta \neq 0$ then the ideal contains $H$. Thus if all $\alpha, \beta, \gamma = 0$, then $\mathsf{i} = \qty{0}$. Thus we conclude $\slie{2}{\R}$ only contains trivial ideals.
+
+	If $\phi: \slie{2}{\R} \to \u{n}$ is a Lie algebra homomorphism, then we know from class that $\ker\phi\subseteq\slie{2}{\R}$ must be an ideal. From above we know we only have two options for this ideal. First $\ker\phi = \slie{2}{\R}$ in which case \emph{everything} gets sent to $0$ and is trivial. In the second case $\ker\phi = \qty{0}$, and by one of the isomorphism theorems we have
+	\begin{equation*}
+		\slie{2}{\R}/\ker{\phi}\cong\slie{2}{\R}\cong\im{\phi}\subseteq\u{n}.
+	\end{equation*}
+	But as we've shown above $\u{n}$ does not contain any subalgebra isomorphic to $\slie{2}{\R}$ and hence we conclude the only Lie algebra homomorphism from $\slie{2}{\R}$ into $\u{n}$ is the $0$ map.
+
+	\ref{part:5c}
 
 \end{solution}
 
