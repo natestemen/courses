@@ -142,9 +142,9 @@ Define $V_{1, 1}(\C^3)\defeq \vspan_\C\qty{z_i\overline{z_j} : i, j\in\qty{1,2,3
 	\end{equation*}
 	To show this is an invariant subspace we will show that the action of $U\in \SU{3}$ commutes with the action of the Laplacian $\laplace$.
 	\begin{align*}
-		\partial_{\overline{i}}(f(Uz))           & = \sum_{k = 1}^3 \partial_{\overline{i}}f(Uz)\overline{u_{ki}}                          \\
-		\partial_i\partial_{\overline{i}}(f(Uz)) & = \sum_{k, l = 1}^3\partial_i\partial_{\overline{i}}(Uz)\overline{u_{ki}}u_{li}         \\
-		\laplace{\qty\big[f(Uz)]}                & = \sum_{k, l = 1}^3\partial_i\partial_{\overline{i}}(Uz)\delta_{kl} = (\laplace{f})(Uz)
+		\partial_{\overline{i}}(f(Uz))           & = \sum_{k = 1}^3 \partial_{\overline{i}}f(Uz)\overline{u_{ki}}                              \\
+		\partial_i\partial_{\overline{i}}(f(Uz)) & = \sum_{k, l = 1}^3\partial_i\partial_{\overline{i}}f(Uz)\overline{u_{ki}}u_{li}            \\
+		\laplace{\qty\big[f(Uz)]}                & = \sum_{i, k, l = 1}^3\partial_i\partial_{\overline{i}}f(Uz)\delta_{kl} = (\laplace{f})(Uz)
 	\end{align*}
 	Thus if $\laplace{f}(z)\equiv 0$, then $\laplace{f(Uz)} = 0$.
 
