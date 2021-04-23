@@ -7,6 +7,9 @@
 
 \usepackage{cleveref}
 \usepackage{macros}
+\usepackage{booktabs}
+\usepackage{pythonhighlight}
+\usepackage{lscape}
 \input{config}
 \hwname{Final Assessment}
 \hwnum{}
@@ -92,6 +95,47 @@ Recall that the center of a matrix Lie group $G$ is by definition $Z(G)\defeq \q
 	The first way I thought about this problem was to show that rotations around the 3-axis are all maximal tori, but I couldn't figure out how to show they were the \emph{only} maximal tori.
 
 	\ref{part:2b}
+	First note that $T\subseteq N(T)$ almost by definition. Now to calculate what else is in $N(T)$ we need a general paremetrization of elements in $\SO{3}$ and for that we look to the Euler angle decomposition. In particular if $R_z(\theta)$ is a rotation of angle $\theta$ about the $z$-axis, then any element $A\in\SO{3}$ can be written as
+	\begin{equation*}
+		A = R_z(\alpha)R_x(\beta)R_z(\gamma).
+	\end{equation*}
+	Thus we need to figure out for which $\alpha, \beta, \gamma\in[0, 2\pi)$ does $A R_z(\theta) A^\intercal = R_z(\phi)$. Doing the algebra by hand is possible, but thankfully we have computers. % chktex 9
+	% \begin{noindent}
+	\begin{python}
+import sympy as sym
+from sympy.abc import alpha, beta, gamma, theta
+from sympy.matrices import rot_axis1, rot_axis3
+
+r = rot_axis3(alpha) * rot_axis1(beta) * rot_axis3(gamma)
+normalized = sym.simplify(r * rot_axis3(theta) * r.T)\end{python}
+% \end{noindent}
+	Now we have \texttt{normalized}\footnote{I'll include a page with the entire matrix printed, but it's too big (and not very helpful) to put here.} computed as $A R_z(\theta) A^\intercal$ and we know it should look like another $z$-rotation. Thus $[A]_{33} = 1$ because $z$-rotations fix the $z$-axis. We can then access the $[A]_{33}$ element with \texttt{normalized[8]}:
+	% \begin{noindent}
+	\begin{python}
+print(normalized[8])\end{python}
+% \end{noindent}
+	\begin{equation}\label{eq:betagood}
+		\displaystyle \sin^{2}{\left(\beta \right)} \cos{\left(\theta \right)} - \sin^{2}{\left(\beta \right)} + 1
+	\end{equation}
+	Since this must be equal to 1 for all $\theta$ we must have $\beta = 0, \pi$. If $\beta = 0$, then $A$ is purely a rotation around the $z$-axis which we already knew was in $N(T)$. In the case $\beta = \pi$, we can take $\alpha = 0 = \gamma$ to conclude the following matrix is in $N(T)$:
+	\begin{equation}\label{eq:flipx}
+		\mqty[1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1].
+	\end{equation}
+	Since this is clearly not in $T$ (it doesn't have a $+1$ in the bottom right hand corner). Indeed these $\beta$ are the only possible values because of~\cref{eq:betagood}, and we can verify they work with the computer.
+	% \begin{noindent}
+	\begin{python}
+print(normalized.subs( { beta: sym.pi } ))\end{python}
+% \end{noindent}
+	\begin{equation*}
+		\left[\begin{matrix}\cos{\left(\theta \right)} & - \sin{\left(\theta \right)} & 0\\\sin{\left(\theta \right)} & \cos{\left(\theta \right)} & 0\\0 & 0 & 1\end{matrix}\right]
+	\end{equation*}
+	Indeed we have the same thing with $\beta = 0$, but that can be seen more easily from $A = R_z(\alpha)R_x(\beta=0)R_z(\gamma) = R_z(\alpha + \gamma)$.
+
+	Thus the Weyl group $N(T) / T$ contains two elements: one being the identity $[\1]$, and the other from~\cref{eq:flipx} which we will call $[x]$. They have the following multiplicative structure:
+	\begin{align*}
+		[\1] \cdot [\1] = [\1] &  & [\1] \cdot [x] = [x] &  & [x] \cdot [x] = \1
+	\end{align*}
+	This is exactly the structure of $\Z/2\Z$ under the map $[\1]\to [0]$ and $[x]\to [1]$.
 \end{solution}
 
 \begin{problem}
@@ -148,9 +192,64 @@ Define $V_{1, 1}(\C^3)\defeq \vspan_\C\qty{z_i\overline{z_j} : i, j\in\qty{1,2,3
 	\end{align*}
 	Thus if $\laplace{f}(z)\equiv 0$, then $\laplace{f(Uz)} = 0$.
 
-
 	\ref{part:4b}
+	The above representation of $\SU{3}$ gives us a representation of the Lie algebra $\su{3}$, and by complex linearity a representation on the complexification $\su{3}_\C \cong \slie{3}{\C}$ which we can calculate with
+	\begin{equation*}
+		\pi_{1,1}(X) \defeq \dv{t}\eval{\Pi_{1,1}(\e^{tX})}_{t=0}.
+	\end{equation*}
+	Acting on an element $f\in V_{1,1}(\C^3)$ and $z\equiv z(t) = \smqty[z_1(t) \\ z_2(t) \\ z_3(t)]$ we have
+	\begin{align*}
+		\qty\Big[\pi_{1,1}(X)\cdot f](z) & = \dv{t}\eval{f(\e^{-tX}z)}_{t=0}                                                                                       \\
+		                                 & = \pdv{f}{z_1}\eval{\pdv{z_1}{t}}_{t=0} + \pdv{f}{z_2}\eval{\pdv{z_2}{t}}_{t=0} + \pdv{f}{z_3}\eval{\pdv{z_3}{t}}_{t=0} \\
+		                                 & = -\pdv{f}{z_1}\qty(X_{11}z_1 + X_{12}z_2 + X_{13}z_3)                                                                  \\
+		                                 & \qquad - \pdv{f}{z_2}\qty(X_{21}z_1 + X_{22}z_2 + X_{23}z_3)                                                            \\
+		                                 & \qquad - \pdv{f}{z_3}\qty(X_{31}z_1 + X_{32}z_2 + X_{33}z_3)
+	\end{align*}
+	We can now calculate $\pi_{1,1}(X)$ for every basis element of $\slie{3}{\C}$ using the basis defined in Hall on page 142.
+	\begin{equation*}
+		\pi_{1,1}(H_1) = -z_1\pdv{z_1} + z_2\pdv{z_2} \qquad \pi_{1,1}(H_2) = -z_2\pdv{z_2} + z_3\pdv{z_3}      \\
+	\end{equation*}
+	\begin{align*}
+		\pi_{1,1}(X_1) = -z_2\pdv{z_1} &  & \pi_{1,1}(X_2) = -z_3\pdv{z_2} &  & \pi_{1,1}(X_3) = -z_3\pdv{z_1} \\
+		\pi_{1,1}(Y_1) = -z_1\pdv{z_2} &  & \pi_{1,1}(Y_2) = -z_2\pdv{z_3} &  & \pi_{1,1}(Y_3) = -z_1\pdv{z_3}
+	\end{align*}
+	Now, $H_1$ and $H_2$ applied to an arbitrary element of $\mathcal{H}_{1,1}(\C^3)$:
+	\begin{align*}
+		\pi_{1,1}(H_1)\cdot f & = -a_{11}z_1\conj{z_1} - a_{12}z_1\conj{z_2} - a_{13}z_1\conj{z_3} + a_{21}z_2\conj{z_1} + a_{22}z_2\conj{z_2} + a_{23}z_2\conj{z_3}   \\
+		\pi_{1,1}(H_2)\cdot f & =  - a_{21}z_2\conj{z_1} - a_{22}z_2\conj{z_2} - a_{23}z_2\conj{z_3} + a_{31}z_3\conj{z_1} + a_{32}z_3\conj{z_2} + a_{33}z_3\conj{z_3}
+	\end{align*}
+	Where we have to remember $a_{33}$ can be written as $-(a_{11} + a_{22})$ because $f$ is harmonic. From the action of $H_1$ and $H_2$ we can see we have three weight spaces.
+	\begin{table}[h]
+		\centering\begin{tabular}{c c}
+			Vector $v$                                                        & Weight $\mu$ \\ \toprule
+			$a_{11}z_1\conj{z_1} + a_{12}z_1\conj{z_2} + a_{13}z_1\conj{z_3}$ & $(-1, 0)$    \\
+			$a_{21}z_2\conj{z_1} + a_{22}z_2\conj{z_2} + a_{23}z_2\conj{z_3}$ & $(1, -1)$    \\
+			$a_{31}z_3\conj{z_1} + a_{32}z_3\conj{z_2} + a_{33}z_3\conj{z_3}$ & $(0, 1)$
+		\end{tabular}
+		\caption{Weight Spaces for $\mathsf{h} = \vspan(H_1, H_2)$}\label{tab:weightspaces}
+	\end{table}
+	Since we are looking for an \emph{irreducible} representation we will look at the vector subspace with a weight composed of \emph{non-negative} integers. We now check if the associated vector gives us the satisfying conditions to make this representation one of highest weight cyclic. It's not hard to see because $\pi_{1,1}(X_i)$ only involves the partial derivatives of $z_1$ and $z_2$, that all of $\pi_{1,1}(X_i)\cdot v = 0$ for all $i = 1,2,3$.
 
+	We now apply $\pi_{1,1}(Y_i)$ to this vector to see if $v$ ``generates'' the entire vector space.
+	\begin{align*}
+		\pi_{1,1}(Y_1) \cdot v & = 0                                                                \\
+		\pi_{1,1}(Y_2) \cdot v & = -a_{31}z_2\conj{z_1} - a_{32}z_2\conj{z_2} - a_{33}z_2\conj{z_3} \\
+		\pi_{1,1}(Y_3) \cdot v & = -a_{31}z_1\conj{z_1} - a_{32}z_1\conj{z_2} - a_{33}z_1\conj{z_3}
+		% \pi_{1,1}(Y_1)\pi_{1,1}(Y_2)\cdot v & = a_{31}z_1\conj{z_1} + a_{32}z_1\conj{z_2} + a_{33}z_1\conj{z_3}
+	\end{align*}
+	Thus the only invariant subspace containing $v$ is $\mathcal{H}_{1,1}(\C^3)$ itself, and hence this representation is highest weight cyclic. We now use two facts from Hall, and one from class:
+	\begin{fact}[Theorem 10.9, Hall page 275]
+		Every finite-dimensional representation of a semisimple Lie algebra is completely reducible.
+	\end{fact}
+	\begin{fact}[Lecture 65]
+		$\slie{n}{\C}$ is semisimple.
+	\end{fact}
+	\begin{fact}[Proposition 6.14, Hall page 150]
+		Suppose $(\pi, V)$ is a \emph{completely reducible} representation of $\slie{3}{\C}$ that is also a highest weight cyclic. Then $\pi$ is irreducible.
+	\end{fact}
+	Combining all these we see $(\pi_{1,1}, \mathcal{H}_{1,1}(\C^3))$ is indeed irreducible with dimension $8$ and highest weight $(0, 1)$.
+
+	I'll be honest this \emph{feels} wrong (like it should have a higher highest weight), but I really can't find anything wrong.
 \end{solution}
 
 \begin{problem}
@@ -213,7 +312,13 @@ Recall the following basis for $\slie{2}{\R}$ (also for $\slie{2}{\C}$):
 	But as we've shown above $\u{n}$ does not contain any subalgebra isomorphic to $\slie{2}{\R}$ and hence we conclude the only Lie algebra homomorphism from $\slie{2}{\R}$ into $\u{n}$ is the $0$ map.
 
 	\ref{part:5c}
+	Suppose $\Pi:\SL{2}{\R} \to \U{\dim V}$ is a unitary representation, that is $\Pi(A)^\dagger = \Pi(A)$ for all $A \in \SL{2}{\R}$. Using
+	\begin{equation*}
+		\pi(X) \defeq \dv{t}\eval{\Pi(\e^{tX})}_{t=0}
+	\end{equation*}
+	we can pass to the associated Lie algebra representation $\pi: \slie{2}{\R}\to\u{\dim V}$, and by complex linearity of $\pi$ we can pass to the associated representation of the complexification of $\slie{2}{\R}_\C$ as $\pi_\C: \slie{2}{\C} \to \u{\dim V}$. However, as shown above the only Lie algebra homomorphism from $\slie{2}{\C}$ into $\u{\dim V}$ is trivial. Traversing back up the chain to $\Pi$ we find that $\Pi$ must also be trivial, and in order to satisfy the fact that it is a representation it must send the identity to the identity. Therefore $\Pi(A) = \id_V$. Note here we used the fact that $\SL{2}{\R}$ is connected to go to and from the Lie group and Lie algebra representation. In particular because we need that $\Pi$ and $\pi$ to have ``the same'' invariant subspaces.
 
+	Also, Proposition 4.8 in Hall states ``If $G$ is connected and $\pi(X)$ is skew self-adjoint for all $X\in\mfr{g}$, then $\Pi$ is unitary'' which is exactly the case we have here. Although in our case $\pi_\C$ is only skew self-adjoint trivially.
 \end{solution}
 
 \end{document}
