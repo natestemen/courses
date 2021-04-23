@@ -146,7 +146,28 @@ Recall the $\SU{2}$-representation $V_m(\C^2)$. For $0\leq k \leq m$ we write $f
 \end{problem}
 
 \begin{solution}
+	First such an invariant product must exist by Weyl's unitarian\footnote{Is it unitarian or unitary?} trick. Suppose $\langle-|-\rangle$ is an inner product on $V_m(\C^2)$, then we can define a new inner product by averaging over all the elements of $\SU{2}$:
+	\begin{equation}\label{eq:invinner}
+		(f, h) \defeq \int_{\SU{2}}\langle\Pi_m(g)\cdot f \mid \Pi_m(g)\cdot h \rangle \dd\mu(g)
+	\end{equation}
+	This new inner product is manifestly $\SU{2}$ invariant, and as we proved in Assignment 3 problem 6(b), the invariant inner product is unique up to scaling by a positive constant.
 
+	I've written~\cref{eq:invinner} assuming we have a normalized Haar measure that can be defined for all compact\footnote{And maybe locally compact as well?} Lie groups. In particular it is defined to be left invariant, but it is also right invariant.
+
+	Perhaps another way to see such an inner product exists is to use the isomorphism we proved in assignment 1 problem 6(c). That is $\SU{2}\cong\Sp{1}$. Indeed the action of unit quaternions is just a rotation, and simultaneously rotating vectors inside an inner product does not affect the value.
+
+	Now to see if this inner product defined above is \emph{actually} $\SU{2}$-invariant we need to test if $(\Pi_m(g)\cdot f, \Pi_m(g)\cdot h) = (f, h)$ for all $g\in\SU{2}$. Our first step will be to writen out $\Pi_m(g)\cdot f$ for an arbitrary element $f\in V_m(\C^2)$. Here we use the following parametrization of elements $g\in\SU{2}$: $g = \smqty[\alpha & -\conj{\beta} \\ \beta & \conj{\alpha}]$.
+	\begin{align*}
+		\qty\Big[\Pi_m(g)\cdot f](z) & = f(g^{-1}\smqty[z_1                                                                                                                                           \\ z_2]) \\
+		                             & = f\qty(\mqty[\conj{\alpha}                                                                                                                     & \conj{\beta} \\ -\beta & \alpha]\mqty[z_1 \\ z_2]) \\
+		                             & = \sum_{k=0}^m a_k \qty(\conj{\alpha}z_1 + \conj{\beta}z_2)^{k}\qty(-\beta z_1 + \alpha z_2)^{m-k}                                                             \\
+		                             & = \sum_{k,l,p=0}^{m,k,m-k}a_k\binom{k}{l}\binom{m-k}{p}(-1)^{m-k-p}\alpha^p\conj{\alpha}^{k-l}\beta^{m-k-p}\conj{\beta}^{l}z_1^{m-l-p}z_2^{l+p}
+	\end{align*}
+	From here I'd really like to be able to write this as $\sum_{n=0}^m\tilde{a}_n f_n$, but I cannot find a way. I can see that the powers of $z_1$ and $z_2$ are intimately tied to $l + p$, but I cannot figure out how to get rid of the $l$'s and $p$'s.
+
+	If I was able to do this, I would then take $\sum_{k=0}^m k!(m-k)!\tilde{a}_k\conj{\tilde{b}_k}$ and show it's equal to $\sum_{k=0}^m k!(m-k)!a_k\conj{b_k}$. Easier said than done though.
+
+	I also tried acting $A\in\SU{2}$ on a single basis element $f_k$ to try and make this easier, but I \emph{still} couldn't get anywhere.
 \end{solution}
 
 \begin{problem}
@@ -288,7 +309,16 @@ Recall the following basis for $\slie{2}{\R}$ (also for $\slie{2}{\C}$):
 	\end{equation*}
 	Hence the only eigenvalue is $0$, but~\cref{eq:commrel} shows the only eigenvector with eigenvalue $0$ is $X$. Clearly the eigenspace spanned by $X$ is not three dimensional despite having algebraic multiplicity $3$. Thus $\ad_X$ is diagonalizable.
 
-	To see that $\ad_A$ is diagonalizable
+	To see that $\ad_A$ is diagonalizable we will use another fact.
+	\begin{fact}
+		Every skew-hermitian matrix is diagonalizable.
+	\end{fact}
+	Now let $A\vb{x}_i = \lambda_i\vb{x}_i$ with $1 \leq i \leq n$. Even though $\vb{x}_i$ might equal $\vb{x}_j$ we can still have $n$-eigenvectors if they repeat. In particular we can then construct the matrices $\vb{x}_i\vb{x}_j^\dagger$. Applying $\ad_A$ to these we have
+	\begin{equation*}
+		\ad_A(\vb{x}_i\vb{x}_j^\dagger) = A\vb{x}_i\vb{x}_j^\dagger - \vb{x}_i\vb{x}_j^\dagger A = (A\vb{x}_i)\vb{x}_j^\dagger + \vb{x}_i(A\vb{x}_j)^\dagger = (\lambda_i + \conj{\lambda_j})\vb{x}_i\vb{x}_j^\dagger.
+	\end{equation*}
+	Where we now have another eigenvalue $\lambda_i + \conj{\lambda_j}$. Since $\ad_A$ is a linear operator it can be though of as a matrix of size $n^2\times n^2$, and we just found $n^2$ (possibly) distince eigenvectors/values. Hence $\ad_A$ is diagonalizable.
+
 
 	\ref{part:5b}
 	Let $\mathsf{i}\subseteq\slie{2}{\R}$ be our nonempty ideal. Since it is nonempty it must contain some element of the form
