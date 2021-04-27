@@ -1,4 +1,4 @@
-DIRS = qip numerical qtheory lie oqs qdevices
+DIRS = qip numerical qtheory lie oqs
 
 .PHONY: clean
 
