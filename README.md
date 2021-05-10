@@ -21,6 +21,12 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 | Open Quantum Systems      | [Joseph Emerson](https://services.iqc.uwaterloo.ca/people/profile/jemerson/) | [`oqs`](./oqs) | [link](https://natestemen.xyz/latex/open-quantum-systems/) |
 | Lie Groups & Lie Algebras | [Da Rong Cheng](https://sites.google.com/view/daren-cheng)                   | [`lie`](./lie) | [link](https://natestemen.xyz/latex/lie-theory/)           |
 
+### Summer 2021
+
+| Course                                                                                | Professor                                            | Directory      | PDFs                                                        |
+| ------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------- | ----------------------------------------------------------- |
+| [Software Verification using Proof Assistants](https://cs.uwaterloo.ca/~plragde/747/) | [Prabhakar Ragde](https://cs.uwaterloo.ca/~plragde/) | [`swv`](./swv) | [link](https://natestemen.xyz/latex/software-verification/) |
+
 ---
 
 ## Workflow
