@@ -1,0 +1,30 @@
+- https://youtu.be/8ytdSixWfpU
+- https://youtu.be/hjNFq7qUpWY
+- https://youtu.be/Au7L_d_itb4
+- https://youtu.be/Rgw5BI3hfmM
+- https://youtu.be/VYoJ8eiCGCw
+- https://youtu.be/N2YtqRpVCO0
+- https://youtu.be/8G4N2tcNjk0
+- https://youtu.be/I9MC6XuZ76s (Definition of Entanglement and Composite Systems)
+- https://youtu.be/l20y3O_wdTQ (Addendum: On the "Exponential Power" of Computing with Classical Probabilities)
+- https://youtu.be/cMS6YOeBZ9U
+- https://youtu.be/_9u4StD8v80
+- https://youtu.be/0CfdClEVOCs
+- https://youtu.be/R0IenDfY8eU
+- https://youtu.be/kzmNGwnYh3o (Coherent states and continuous outcome POVMs)
+- https://youtu.be/nTEXRP7114A
+- https://youtu.be/AHIfgHDMiL4 (Generalized Transformation and Completely Positive maps)
+- https://youtu.be/Ua2ESjvjkiQ (POVMs and Neumark's dilation theorem)
+- https://youtu.be/_O42VMN2A9k (Stinespring Dilation Theorem and non-Markovianity)
+- https://youtu.be/5Q6ywJEl4ps (Standard Channels (Depolarizing and Pauli-Twirling; Amplitude Damping and the T1 relaxation process))
+- https://youtu.be/MM9iv24sG3o (Standard Channels Continued (Phase Damping and the T2 dephasing process))
+- https://youtu.be/Nz8P5V7q9dI (Quantum Measurement as a Transformation: the Quantum Instrument - part 1)
+- https://youtu.be/y86paNUni0M (Measurement as Quantum Instrument part 2)
+- https://youtu.be/wENWdMZl9xs (The Liouville Dynamical Matrix Representation)
+- https://youtu.be/n-NCuvYq2fA (Some Common Operator Bases)
+- https://youtu.be/sQwX8d9ng2o (The Liouville Hilbert space and Operator Spaces)
+- https://youtu.be/gVfYghcp0qM (The Liouville Representations (continued))
+- https://youtu.be/M1BjRLz0giw (Pauli Transfer Matrix)
+- https://youtu.be/bpjBR3DYles (Vectorization of operators)
+- https://youtu.be/nXB6lhjJnYM (Pauli Channels)
+- https://youtu.be/d20YOOplq6A (Fidelities and Distance Metrics)
