@@ -24,6 +24,9 @@ two = suc (suc zero)
 
 -- PLFA exercise: write out seven.
 
+seven : ℕ
+seven = suc (suc (suc (suc (suc (suc (suc zero))))))
+
 -- Pragma to use decimal notation as shorthand.
 
 {-# BUILTIN NATURAL ℕ #-}
@@ -62,6 +65,15 @@ _ =
 
 -- PLFA exercise: write out the reduction for 3+4 equationally.
 
+_ : 3 + 4 ≡ 7
+_ =
+  begin
+    3 + 4
+  ≡⟨⟩
+    (suc ( suc (suc zero))) + (suc (suc (suc ( suc zero))))
+  ≡⟨⟩
+    7
+  ∎
 
 -- Multiplication.
 
@@ -82,14 +94,19 @@ _ =
 -- Define exponentiation (m raised to the power n).
 
 _^_ : ℕ → ℕ → ℕ
-zero ^ zero = one
-suc n ^ zero = one
+n ^ zero = 1
 n ^ suc m = n * n ^ m
 
 
 -- One test for exponentiation (you should write others).
 
 _ : 2 ^ 3 ≡ 8
+_ = refl
+
+_ : 5 ^ 3 ≡ 125
+_ = refl
+
+_ : 0 ^ 0 ≡ 1
 _ = refl
 
 -- Monus (subtraction for naturals, bottoms out at zero).
@@ -149,7 +166,9 @@ bin-two = bits x1 x0  -- 10 in binary
 -- Define increment (add one).
 
 inc : Bin-ℕ → Bin-ℕ
-inc m = {!!}
+inc bits = bits x1
+inc (m x0) = m x1
+inc (m x1) = (inc m) x0
 
 -- An example/test of increment (you should create others).
 
@@ -171,17 +190,28 @@ dbl zero = zero
 dbl (suc m) = suc (suc (dbl m))
 
 tob : ℕ → Bin-ℕ
-tob m = {!!}
+tob zero = bits
+tob (suc n) = inc (tob n)
+
+-- really want to say tob 2n = tob (N) x0 and tob (2n + 1) = tob (n) x1 but that's not working
 
 fromb : Bin-ℕ → ℕ
-fromb n = {!!}
+fromb bits = 0
+fromb (n x0) = 2 * fromb n
+fromb (n x1) = suc ( 2 * fromb n )
 
 -- A couple of examples/tests (you should create others).
 
 _ : tob 6 ≡ bits x1 x1 x0
 _ = refl
 
+_ : tob 13 ≡ bits x1 x1 x0 x1
+_ = refl
+
 _ : fromb (bits x1 x1 x0) ≡ 6
+_ = refl
+
+_ : fromb (bits x1 x1 x0 x1) ≡ 13
 _ = refl
 
 -- 747 exercise: BinAdd (2 points)
@@ -190,12 +220,21 @@ _ = refl
 -- Hint: use recursion on both m and n.
 
 _bin-+_ : Bin-ℕ → Bin-ℕ → Bin-ℕ
-m bin-+ n = {!!}
+n bin-+ bits = n
+bits bin-+ (m x0) = m x0
+(n x0) bin-+ (m x0) = ( n bin-+ m ) x0
+(n x1) bin-+ (m x0) = ( n bin-+ m ) x1
+bits bin-+ (m x1) = m x1
+(n x0) bin-+ (m x1) = ( n bin-+ m ) x1
+(n x1) bin-+ (m x1) = ( inc ( n bin-+ m ) ) x0
 
 -- Tests can use to/from, or write out binary constants as below.
 -- Again: write more tests!
 
 _ : (bits x1 x0) bin-+ (bits x1 x1) ≡ (bits x1 x0 x1)
+_ = refl
+
+_ : (bits x1 x1 x1) bin-+ (bits x1 x0 x0) ≡ (bits x1 x0 x1 x1)
 _ = refl
 
 -- That's it for now, but we will return to binary notation later.
