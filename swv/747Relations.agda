@@ -5,7 +5,7 @@ module 747Relations where
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong; sym) -- added sym
 open import Data.Nat using (ℕ; zero; suc; _+_)
-open import Data.Nat.Properties using (+-comm)
+open import Data.Nat.Properties using (+-comm; +-suc)
 
 -- The less-than-or-equal-to relation.
 
@@ -183,10 +183,14 @@ data _<_ : ℕ → ℕ → Set where
 -- Order of arguments changed from PLFA, to match ≤-trans.
 
 <-trans : ∀ {m n p : ℕ} → m < n → n < p → m < p
-<-trans m<n n<p = {!!}
+<-trans z<s (s<s n<p) = z<s
+<-trans (s<s m<n) (s<s n<p) = s<s (<-trans m<n n<p)
 
 -- 747/PLFA exercise: Trichotomy (2 points)
 -- Prove that either m < n, m ≡ n, or m > n for all m and n.
+
+suc-≡ : ∀ {m n : ℕ} → m ≡ n → suc m ≡ suc n
+suc-≡ m≡n = {!   !}
 
 data Trichotomy (m n : ℕ) : Set where
   is-< : m < n → Trichotomy m n
@@ -194,7 +198,13 @@ data Trichotomy (m n : ℕ) : Set where
   is-> : n < m → Trichotomy m n
 
 <-trichotomy : ∀ (m n : ℕ) → Trichotomy m n
-<-trichotomy m n = {!!}
+<-trichotomy zero zero = is-≡ refl
+<-trichotomy zero (suc n) = is-< z<s
+<-trichotomy (suc m) zero = is-> z<s
+<-trichotomy (suc m) (suc n) with <-trichotomy m n
+... | is-< x = is-< (s<s x)
+... | is-≡ x = is-≡ (suc-≡ x)
+... | is-> x = is-> (s<s x)
 
 -- PLFA exercise: show +-mono-<.
 
@@ -206,22 +216,26 @@ data Trichotomy (m n : ℕ) : Set where
 -- 747/PLFA exercise: LEtoLTS (1 point)
 
 ≤-<-to : ∀ {m n : ℕ} → m ≤ n → m < suc n
-≤-<-to m≤n = {!!}
+≤-<-to z≤n = z<s
+≤-<-to (s≤s m≤n) = s<s (≤-<-to m≤n)
 
 -- 747/PLFA exercise: LEStoLT (1 point)
 
 ≤-<--to′ : ∀ {m n : ℕ} → suc m ≤ n → m < n
-≤-<--to′ sm≤n = {!!}
+≤-<--to′ (s≤s sm≤n) = ≤-<-to sm≤n
+
 
 -- 747/PLFA exercise: LTtoSLE (1 point)
 
 ≤-<-from : ∀ {m n : ℕ} → m < n → suc m ≤ n
-≤-<-from m<n = {!!}
+≤-<-from z<s = s≤s z≤n
+≤-<-from (s<s m<n) = s≤s (≤-<-from m<n)
 
 -- 747/PLFA exercise: LTStoLE (1 point)
 
 ≤-<-from′ : ∀ {m n : ℕ} → m < suc n → m ≤ n
-≤-<-from′ m<sn = {!!}
+≤-<-from′ z<s = z≤n
+≤-<-from′ (s<s m<sn) = ≤-<-from m<sn
 
 -- PLFA exercise: use the above to give a proof of <-trans that uses ≤-trans.
 
@@ -273,7 +287,14 @@ o+e≡o (suc x) en = suc (e+e≡e x en)
 -- 747/PLFA exercise: OPOE (2 points)
 -- Prove that the sum of two odds is even.
 -- Hint: You will need to define another theorem and prove both
---       by mutual induction, as with the theorems above.         
+--       by mutual induction, as with the theorems above.
+
+double-suc-even : ∀ {m : ℕ}
+  → even m
+  -------------
+  → even (suc (suc m))
+
+double-suc-even em = suc (suc em)
 
 o+o≡e : ∀ {m n : ℕ}
   → odd m
@@ -281,7 +302,7 @@ o+o≡e : ∀ {m n : ℕ}
   --------------
   → even (m + n)
 
-o+o≡e om on = {!!}
+o+o≡e (suc m) (suc n) = {!   !}
 
 
 -- For remarks on which of these definitions are in the standard library, see PLFA.
