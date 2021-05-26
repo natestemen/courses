@@ -190,7 +190,7 @@ data _<_ : ℕ → ℕ → Set where
 -- Prove that either m < n, m ≡ n, or m > n for all m and n.
 
 suc-≡ : ∀ {m n : ℕ} → m ≡ n → suc m ≡ suc n
-suc-≡ m≡n = {!   !}
+suc-≡ m≡n rewrite m≡n = refl
 
 data Trichotomy (m n : ℕ) : Set where
   is-< : m < n → Trichotomy m n
@@ -289,12 +289,12 @@ o+e≡o (suc x) en = suc (e+e≡e x en)
 -- Hint: You will need to define another theorem and prove both
 --       by mutual induction, as with the theorems above.
 
-double-suc-even : ∀ {m : ℕ}
+suc-even : ∀ {m n : ℕ}
   → even m
-  -------------
-  → even (suc (suc m))
+  → even n
+  → even (suc (m + suc n)) ≡ even (suc (suc (m + n)))
 
-double-suc-even em = suc (suc em)
+suc-even {m} {n} em en rewrite +-suc m n = refl
 
 o+o≡e : ∀ {m n : ℕ}
   → odd m
@@ -302,7 +302,7 @@ o+o≡e : ∀ {m n : ℕ}
   --------------
   → even (m + n)
 
-o+o≡e (suc m) (suc n) = {!   !}
+o+o≡e (suc a) (suc b) rewrite suc-even a b = suc (suc (e+e≡e a b))
 
 
 -- For remarks on which of these definitions are in the standard library, see PLFA.
