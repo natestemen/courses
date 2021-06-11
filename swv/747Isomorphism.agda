@@ -5,7 +5,7 @@ module 747Isomorphism where
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong; cong-app; sym) -- added last
 open Eq.≡-Reasoning
-open import Data.Nat using (ℕ; zero; suc; _+_)
+open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
 open import Data.Nat.Properties using (+-comm; +-suc; +-identityʳ) -- added last
 
 -- Function composition.
@@ -156,10 +156,27 @@ record _≲_ (A B : Set) : Set where
 open _≲_
 
 ≲-refl : ∀ {A : Set} → A ≲ A
-≲-refl = {!!}
+≲-refl =
+  record
+    {  to = λ z → z
+    ;  from = λ z → z
+    ;  from∘to = λ x → refl
+    }
 
 ≲-trans : ∀ {A B C : Set} → A ≲ B → B ≲ C → A ≲ C
-≲-trans A≲B B≲C = {!!}
+≲-trans A≲B B≲C =
+  record
+    { to      = λ{x → to   B≲C (to   A≲B x)}
+    ; from    = λ{y → from A≲B (from B≲C y)}
+    ; from∘to = λ{x →
+        begin
+          from A≲B (from B≲C (to B≲C (to A≲B x)))
+        ≡⟨ cong (from A≲B) (from∘to B≲C (to A≲B x)) ⟩
+          from A≲B (to A≲B x)
+        ≡⟨ from∘to A≲B x ⟩
+          x
+        ∎}
+     }
 
 ≲-antisym : ∀ {A B : Set}
   → (A≲B : A ≲ B)
@@ -169,7 +186,22 @@ open _≲_
     -------------------
   → A ≃ B
 
-≲-antisym A≲B B≲A to≡from from≡to = {!!}
+≲-antisym A≲B B≲A to≡from from≡to =
+  record
+    { to      = to A≲B
+    ; from    = from A≲B
+    ; from∘to = from∘to A≲B
+    ; to∘from = λ{y →
+        begin
+          to A≲B (from A≲B y)
+        ≡⟨ cong (to A≲B) (cong-app from≡to y) ⟩
+          to A≲B (to B≲A y)
+        ≡⟨ cong-app to≡from (to B≲A y) ⟩
+          from B≲A (to B≲A y)
+        ≡⟨ from∘to B≲A y ⟩
+          y
+        ∎}
+    }
 
 -- Tabular reasoning for embedding.
 
@@ -204,9 +236,14 @@ open ≲-Reasoning
 ≃-implies-≲ : ∀ {A B : Set}
   → A ≃ B
     -----
-  → A ≲ B  
+  → A ≲ B
 
-≃-implies-≲ a≃b = {!!}
+≃-implies-≲ (mk-≃ to₁ from₁ from∘to₁ to∘from₁) =
+  record
+    { to = to₁
+    ; from = from₁
+    ; from∘to = from∘to₁
+    }
 
 -- PLFA exercise: propositional equivalence (weaker than embedding).
 
@@ -222,14 +259,14 @@ open _⇔_ -- added
     -----
   → A ⇔ A
 
-⇔-refl = {!!}
+⇔-refl = record { to = λ z → z ; from = λ z → z }
 
 ⇔-sym : ∀ {A B : Set}
   → A ⇔ B
     -----
   → B ⇔ A
 
-⇔-sym A⇔B = {!!}
+⇔-sym A⇔B = record { to = from A⇔B ; from = to A⇔B }
 
 ⇔-trans : ∀ {A B C : Set}
   → A ⇔ B
@@ -237,7 +274,11 @@ open _⇔_ -- added
     -----
   → A ⇔ C
 
-⇔-trans A⇔B B⇔C = {!!}
+⇔-trans A⇔B B⇔C =
+  record
+    { to = λ z → to B⇔C (to A⇔B z)
+    ; from = λ z → from A⇔B (from B⇔C z)
+    }
 
 -- 747/PLFA extended exercise: Canonical bitstrings.
 -- Modified and extended from Bin-predicates exercise in PLFA Relations.
@@ -259,16 +300,23 @@ dbl (suc n) = suc (suc (dbl n))
 -- You may also copy over any theorems that prove useful.
 
 inc : Bin-ℕ → Bin-ℕ
-inc n = {!!}
+inc bits = bits x1
+inc (m x0) = m x1
+inc (m x1) = (inc m) x0
 
 tob : ℕ → Bin-ℕ
-tob n = {!!}
+tob zero = bits
+tob (suc n) = inc (tob n)
 
 dblb : Bin-ℕ → Bin-ℕ
-dblb n = {!!}
+dblb bits = bits
+dblb (m x0) = (dblb m) x0
+dblb (m x1) = (inc (dblb m)) x0
 
 fromb : Bin-ℕ → ℕ
-fromb n = {!!}
+fromb bits = 0
+fromb (n x0) = 2 * fromb n
+fromb (n x1) = suc ( 2 * fromb n )
 
 -- The reason that we couldn't prove ∀ {n : Bin-ℕ} → tob (fromb n) ≡ n
 -- is because of the possibility of leading zeroes in a Bin-ℕ value.
@@ -305,7 +353,10 @@ _ = [zero]
 _ : Can (bits x1 x0)
 _ = [pos] ([bitsx1] [x0])
 
--- The Bin-predicates exercise in PLFA Relations gives three properties of canonicity. 
+one-implies-can : ∀ {n : Bin-ℕ} → One n → Can n
+one-implies-can on = [pos] on
+
+-- The Bin-predicates exercise in PLFA Relations gives three properties of canonicity.
 -- The first is that the increment of a canonical number is canonical.
 
 -- Most of the work is done in the following lemma.
@@ -314,14 +365,17 @@ _ = [pos] ([bitsx1] [x0])
 -- The increment of a canonical number has a leading one.
 
 one-inc : ∀ {n : Bin-ℕ} → Can n → One (inc n)
-one-inc cn = {!!}
+one-inc [zero] = [bitsx1]
+one-inc ([pos] [bitsx1]) = [bitsx1] [x0]
+one-inc ([pos] (on [x0])) = on [x1]
+one-inc ([pos] (on [x1])) = one-inc ([pos] on) [x0]
 
 -- The first canonicity property is now an easy corollary.
 
 -- 747/PLFA exercise: OneInc (1 point)
 
 can-inc : ∀ {n : Bin-ℕ} → Can n → Can (inc n)
-can-inc cn = {!!}
+can-inc cn = [pos] (one-inc cn)
 
 -- The second canonicity property is that converting a unary number
 -- to binary produces a canonical number.
@@ -329,7 +383,8 @@ can-inc cn = {!!}
 -- 747/PLFA exercise: CanToB (1 point)
 
 to-can : ∀ (n : ℕ) → Can (tob n)
-to-can n = {!!}
+to-can zero = [zero]
+to-can (suc n) = can-inc (to-can n)
 
 -- The third canonicity property is that converting a canonical number
 -- from binary and back to unary produces the same number.
@@ -343,33 +398,73 @@ to-can n = {!!}
 -- for numbers with a leading one.
 
 dblb-x0 : ∀ {n : Bin-ℕ} → One n → dblb n ≡ n x0
-dblb-x0 on = {!!}
+dblb-x0 [bitsx1] = refl
+dblb-x0 (on [x0]) rewrite dblb-x0 on = refl
+dblb-x0 (on [x1]) rewrite dblb-x0 on = refl
+
+dblb-x1 : ∀ {n : Bin-ℕ} → One n → inc (dblb n) ≡ n x1
+dblb-x1 [bitsx1] = refl
+dblb-x1 (on [x0]) rewrite dblb-x0 on = refl
+dblb-x1 (on [x1]) rewrite dblb-x0 on = refl
 
 -- We can now prove the third property for numbers with a leading one.
 
 -- 747/PLFA exercise: OneToFrom (3 points)
 
+dbl-addition : ∀ {n : ℕ} → dbl n ≡ n + n
+dbl-addition {zero} = refl
+dbl-addition {suc n} rewrite +-suc n n | dbl-addition {n} = refl
+
+dblb∘inc : ∀ (m : Bin-ℕ) → dblb (inc m) ≡ inc (inc (dblb m))
+dblb∘inc bits = refl
+dblb∘inc (m x0) = refl
+dblb∘inc (m x1) rewrite dblb∘inc m = refl
+
+to∘dbl : ∀ (m : ℕ) → tob (dbl m) ≡ dblb (tob m)
+to∘dbl zero = refl
+to∘dbl (suc m) rewrite dblb∘inc (tob m) | to∘dbl m = refl
+
 one-to∘from : ∀ {n : Bin-ℕ} → One n → tob (fromb n) ≡ n
-one-to∘from on = {!!}
+one-to∘from [bitsx1] = refl
+one-to∘from {.(n x0)} (_[x0] {n} on) rewrite +-identityʳ (fromb n)
+  | sym (dblb-x0 {n} on)
+  | sym (dbl-addition {fromb n})
+  | to∘dbl (fromb n)
+  | one-to∘from {n} on = refl
+one-to∘from (_[x1] {n} on) rewrite +-identityʳ (fromb n)
+  | sym (dblb-x1 {n} on)
+  | sym (dbl-addition {fromb n})
+  | to∘dbl (fromb n)
+  | one-to∘from {n} on = refl
 
 -- The third property is now an easy corollary.
 
 -- 747/PLFA exercise: CanToFrom (1 point)
 
 can-to∘from : ∀ {n : Bin-ℕ} → Can n → tob (fromb n) ≡ n
-can-to∘from cn = {!!}
+can-to∘from [zero] = refl
+can-to∘from ([pos] x) = one-to∘from x
 
 -- 747/PLFA exercise: OneUnique (2 points)
 -- Proofs of positivity are unique.
 
 one-unique : ∀ {n : Bin-ℕ} → (x y : One n) → x ≡ y
-one-unique x y = {!!}
+one-unique [bitsx1] [bitsx1] = refl
+one-unique (ox [x0]) (oy [x0])
+  with one-unique ox oy
+... | refl = refl
+one-unique (ox [x1]) (oy [x1])
+  with one-unique ox oy
+... | refl = refl
 
 -- 747/PLFA exercise: CanUnique (1 point)
 -- Proofs of canonicity are unique.
 
 can-unique : ∀ {n : Bin-ℕ} → (x y : Can n) → x ≡ y
-can-unique x y = {!!}
+can-unique [zero] [zero] = refl
+can-unique ([pos] cx) ([pos] cy)
+  with one-unique cx cy
+... | refl = refl
 
 -- Do we have an isomorphism between ℕ (unary) and canonical binary representations?
 -- Can is not a set, but a family of sets, so it doesn't quite fit
@@ -385,8 +480,33 @@ data CanR : Set where
 
 -- 747/PLFA exercise: IsoNCanR (3 points)
 
+-- 747 exercise: FromInc (1 point)
+
+from∘inc : ∀ (m : Bin-ℕ) → fromb (inc m) ≡ suc (fromb m)
+from∘inc bits = refl
+from∘inc (m x0) = refl
+from∘inc (m x1) rewrite +-identityʳ (fromb (inc m))
+  | +-identityʳ (fromb m)
+  | from∘inc m
+  | +-suc (fromb m) (fromb m) = refl
+
+-- 747 exercise: FromToB (1 point)
+
+from∘tob : ∀ (m : ℕ) → fromb (tob m) ≡ m
+from∘tob zero = refl
+from∘tob (suc m) rewrite from∘inc (tob m) | from∘tob m = refl
+
 iso-ℕ-CanR : ℕ ≃ CanR
-iso-ℕ-CanR = {!!}
+to      iso-ℕ-CanR          n  = wrap (tob n) (to-can n)
+from    iso-ℕ-CanR (wrap bin cbin) = fromb bin
+from∘to iso-ℕ-CanR          n  = from∘tob n
+to∘from iso-ℕ-CanR (wrap bin cbin)
+  with to-can (fromb bin) | can-to∘from cbin
+... |  tcfbin             | ctfcbin
+  rewrite
+    ctfcbin
+  | can-unique cbin tcfbin
+  = refl
 
 -- Can we get an isomorphism between ℕ and some binary encoding,
 -- without the awkwardness of non-canonical values?
