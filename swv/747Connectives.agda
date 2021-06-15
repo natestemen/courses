@@ -38,7 +38,7 @@ record _⇔_ (A B : Set) : Set where
   field
     to   : A → B
     from : B → A
-open _⇔_ 
+open _⇔_
 
 -- You may copy over the various reasoning modules if you wish.
 
@@ -48,7 +48,7 @@ open _⇔_
 
 data _×_ (A : Set) (B : Set) : Set where
 
-  ⟨_,_⟩ : 
+  ⟨_,_⟩ :
       A
     → B
       -----
@@ -126,7 +126,11 @@ to∘from ×-assoc ⟨ x , ⟨ x₁ , x₂ ⟩ ⟩ = refl
 -- Show A ⇔ B is isomorphic to (A → B) × (B → A).
 
 iff-iso-if-onlyif : ∀ {A B : Set} → A ⇔ B ≃ (A → B) × (B → A)
-iff-iso-if-onlyif = {!!}
+_≃_.to         iff-iso-if-onlyif record { to = to ; from = from } = ⟨ to , from ⟩
+to   (_≃_.from iff-iso-if-onlyif            ⟨ A→B , B→A ⟩)        = A→B
+from (_≃_.from iff-iso-if-onlyif            ⟨ A→B , B→A ⟩)        = B→A
+from∘to        iff-iso-if-onlyif record { to = to ; from = from } = refl
+to∘from        iff-iso-if-onlyif            ⟨ A→B , B→A ⟩         = refl
 
 -- Logical True is a type with one member (unit)
 
@@ -136,8 +140,8 @@ data ⊤ : Set where
     --
     ⊤
 
--- η-⊤ : ∀ (w : ⊤) → tt ≡ w
--- η-⊤ w = {!!}
+η-⊤ : ∀ (w : ⊤) → tt ≡ w
+η-⊤ tt = refl
 
 ⊤-count : ⊤ → ℕ
 ⊤-count tt = 1
@@ -205,13 +209,31 @@ infix 1 _⊎_
 -- Sum is commutative up to isomorphism.
 
 ⊎-comm : ∀ {A B : Set} → A ⊎ B ≃ B ⊎ A
-⊎-comm = {!!}
+to ⊎-comm (inj₁ x) = inj₂ x
+to ⊎-comm (inj₂ x) = inj₁ x
+from ⊎-comm (inj₁ x) = inj₂ x
+from ⊎-comm (inj₂ x) = inj₁ x
+from∘to ⊎-comm (inj₁ x) = refl
+from∘to ⊎-comm (inj₂ x) = refl
+to∘from ⊎-comm (inj₁ x) = refl
+to∘from ⊎-comm (inj₂ x) = refl
 
 -- 747/PLFA exercise: SumAssocIso (1 point)
 -- Sum is associative up to isomorphism.
 
 ⊎-assoc : ∀ {A B C : Set} → (A ⊎ B) ⊎ C ≃ A ⊎ (B ⊎ C)
-⊎-assoc = {!!}
+to ⊎-assoc (inj₁ (inj₁ x)) = inj₁ x
+to ⊎-assoc (inj₁ (inj₂ x)) = inj₂ (inj₁ x)
+to ⊎-assoc (inj₂ x) = inj₂ (inj₂ x)
+from ⊎-assoc (inj₁ x) = inj₁ (inj₁ x)
+from ⊎-assoc (inj₂ (inj₁ x)) = inj₁ (inj₂ x)
+from ⊎-assoc (inj₂ (inj₂ x)) = inj₂ x
+from∘to ⊎-assoc (inj₁ (inj₁ x)) = refl
+from∘to ⊎-assoc (inj₁ (inj₂ x)) = refl
+from∘to ⊎-assoc (inj₂ x) = refl
+to∘from ⊎-assoc (inj₁ x) = refl
+to∘from ⊎-assoc (inj₂ (inj₁ x)) = refl
+to∘from ⊎-assoc (inj₂ (inj₂ x)) = refl
 
 -- Logical False is the empty type ("bottom", "empty").
 
@@ -237,13 +259,19 @@ uniq-⊥ h ()
 -- Empty is the left unit of sum up to isomorphism.
 
 ⊎-identityˡ : ∀ {A : Set} → ⊥ ⊎ A ≃ A
-⊎-identityˡ = {!!}
+to ⊎-identityˡ (inj₂ x) = x
+from ⊎-identityˡ x = inj₂ x
+from∘to ⊎-identityˡ (inj₂ x) = refl
+to∘from ⊎-identityˡ x = refl
 
 -- 747/PLFA exercise: EmptyRightIdSumIso (1 point)
 -- Empty is the right unit of sum up to isomorphism.
 
 ⊎-identityʳ : ∀ {A : Set} → A ⊎ ⊥ ≃ A
-⊎-identityʳ = {!!}
+to ⊎-identityʳ (inj₁ x) = x
+from ⊎-identityʳ x = inj₁ x
+from∘to ⊎-identityʳ (inj₁ x) = refl
+to∘from ⊎-identityʳ x = refl
 
 -- Logical implication (if-then) is... the function type constructor!
 -- Eliminating an if-then (modus ponens) is function application.
@@ -325,7 +353,7 @@ _≲_.to ⊎-distrib-× (inj₂ x) = ⟨ (inj₂ x) , (inj₂ x) ⟩
 _≲_.from ⊎-distrib-× ⟨ inj₁ x , inj₁ x₁ ⟩ = inj₁ ⟨ x , x₁ ⟩
 _≲_.from ⊎-distrib-× ⟨ inj₁ x , inj₂ x₁ ⟩ = inj₂ x₁
 _≲_.from ⊎-distrib-× ⟨ inj₂ x , x₁ ⟩ = inj₂ x
-_≲_.from∘to ⊎-distrib-× (inj₁ ⟨ x , x₁ ⟩) = refl 
+_≲_.from∘to ⊎-distrib-× (inj₁ ⟨ x , x₁ ⟩) = refl
 _≲_.from∘to ⊎-distrib-× (inj₂ x) = refl
 
 -- Think of a counterexample to show the above isn't an isomorphism.
@@ -333,12 +361,18 @@ _≲_.from∘to ⊎-distrib-× (inj₂ x) = refl
 -- 747/PLFA exercise: ImpProdRightDist (1 point)
 
 ×-distrib-→ : ∀ {A B C : Set} → (C → (A × B)) ≃ (C → A) × (C → B)
-×-distrib-→ = {!!}
+to ×-distrib-→ f = ⟨ (λ c →   proj₁ (f c)) , (λ c → proj₂ (f c)) ⟩
+from ×-distrib-→ f = λ c → ⟨ proj₁  f c , proj₂  f c ⟩
+from∘to ×-distrib-→ = λ { c→a×b → extensionality λ c → η-× (c→a×b c) }
+to∘from ×-distrib-→ = λ { ⟨ c→a , c→b ⟩ → refl }
 
 -- 747/PLFA exercise: ImpSumLeftDist (1 point)
 
 ⊎-distrib-→ : ∀ {A B C : Set} → ((A ⊎ B) → C) ≃ (A → C) × (B → C)
-⊎-distrib-→ = {!!}
+to ⊎-distrib-→ f = ⟨ (λ a →  f (inj₁ a)) , (λ b → f (inj₂ b)) ⟩
+from ⊎-distrib-→ f = λ { (inj₁ a) → (proj₁ f a) ; (inj₂ b) → (proj₂ f b) }
+from∘to ⊎-distrib-→ = λ { a⊎b→c → extensionality λ { (inj₁ a) → refl ; (inj₂ b) → refl } }
+to∘from ⊎-distrib-→ = λ { ⟨ a→c , b→c ⟩ → refl }
 
 -- PLFA exercise: a weak distributive law.
 -- ⊎-weak-× : ∀ {A B C : Set} → (A ⊎ B) × C → A ⊎ (B × C)
@@ -349,7 +383,8 @@ _≲_.from∘to ⊎-distrib-× (inj₂ x) = refl
 -- A disjunct of conjuncts implies a conjunct of disjuncts.
 
 ⊎×-implies-×⊎ : ∀ {A B C D : Set} → (A × B) ⊎ (C × D) → (A ⊎ C) × (B ⊎ D)
-⊎×-implies-×⊎ A×B⊎C×D = {!!}
+⊎×-implies-×⊎ (inj₁ ⟨ a , b ⟩) = ⟨ inj₁ a , inj₁ b ⟩
+⊎×-implies-×⊎ (inj₂ ⟨ c , d ⟩) = ⟨ inj₂ c , inj₂ d ⟩
 
 -- PLFA exercise: Is the converse true? If so, prove it; if not, give a counterexample.
 
