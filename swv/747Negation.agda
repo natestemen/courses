@@ -2,8 +2,8 @@ module 747Negation where
 
 -- Library
 
-open import Relation.Binary.PropositionalEquality using (_≡_; refl) -- added last
-open import Data.Nat using (ℕ; zero; suc) 
+open import Relation.Binary.PropositionalEquality using (_≡_; cong; refl) -- added last
+open import Data.Nat using (ℕ; zero; suc)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.Product using (_×_; proj₁; proj₂)
@@ -79,7 +79,7 @@ postulate
 
 -- Two proofs of ⊥ → ⊥ which look different but are the same
 -- (assuming extensionality).
-   
+
 id : ⊥ → ⊥
 id x = x
 
@@ -113,18 +113,31 @@ data _<_ : ℕ → ℕ → Set where
 -- Show ¬ (4 < 3).
 
 ¬4<3 : ¬ (4 < 3)
-¬4<3 = {!!}
+¬4<3 (s<s (s<s (s<s ())))
 
 -- 747/PLFA exercise: LTIrrefl (1 point)
 -- < is irreflexive (never reflexive).
 
+¬-suc : ∀ { m n : ℕ} → ¬ (m < n) → ¬ (suc m < suc n)
+¬-suc ¬m<n (s<s x) = ¬m<n x
+
 ¬n<n : ∀ (n : ℕ) → ¬ (n < n)
-¬n<n n = {!!}
+¬n<n zero = λ ()
+¬n<n (suc n) = ¬-suc (¬n<n n)
 
 -- 747/PLFA exercise: LTTrich (3 points)
 -- Show that strict inequality satisfies trichotomy,
 -- in the sense that exactly one of the three possibilities holds.
 -- Here is the expanded definition of trichotomy.
+
+suc-injective : ∀ {m n : ℕ} → suc m ≡ suc n → m ≡ n
+suc-injective refl = refl
+
+suc-≡ : ∀ {m n : ℕ} → m ≡ n → suc m ≡ suc n
+suc-≡ m≡n rewrite m≡n = refl
+
+inv-s<s : ∀ {m n : ℕ} → suc m < suc n → m < n
+inv-s<s (s<s m<n) = m<n
 
 data Trichotomy (m n : ℕ) : Set where
   is-< : m < n → ¬ m ≡ n → ¬ n < m → Trichotomy m n
@@ -132,7 +145,13 @@ data Trichotomy (m n : ℕ) : Set where
   is-> : n < m → ¬ m ≡ n → ¬ m < n → Trichotomy m n
 
 <-trichotomy : ∀ (m n : ℕ) → Trichotomy m n
-<-trichotomy m n = {!!}
+<-trichotomy zero zero = is-≡ refl (λ ()) (λ ())
+<-trichotomy zero (suc n) = is-< z<s (λ ()) (λ ())
+<-trichotomy (suc m) zero = is-> z<s (λ ()) (λ ())
+<-trichotomy (suc m) (suc n) with <-trichotomy m n
+... | is-< m<n ¬m≡n ¬n<m = is-< (s<s m<n)   (λ sucm≡sucn → ¬m≡n (suc-injective sucm≡sucn)) (λ sucn<sucm → ¬n<m (inv-s<s sucn<sucm))
+... | is-≡ m≡n ¬m<n ¬n<m = is-≡ (suc-≡ m≡n) (λ sucm<sucn → ¬m<n (inv-s<s sucm<sucn))       (λ sucn<sucm → ¬n<m (inv-s<s sucn<sucm))
+... | is-> n<m ¬m≡n ¬m<n = is-> (s<s n<m)   (λ sucm≡sucn → ¬m≡n (suc-injective sucm≡sucn)) (λ sucm<sucn → ¬m<n (inv-s<s sucm<sucn))
 
 -- PLFA exercise: one of DeMorgan's Laws as isomorphism
 -- ⊎-dual-× : ∀ {A B : Set} → ¬ (A ⊎ B) ≃ (¬ A) × (¬ B)
