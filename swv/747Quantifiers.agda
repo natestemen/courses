@@ -3,7 +3,7 @@ module 747Quantifiers where
 -- Library
 
 import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; refl)
+open Eq using (_≡_; cong; sym; refl)
 open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _≤_; z≤n; s≤s) -- added ≤
 open import Relation.Nullary using (¬_)
 open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩) -- added proj₂
@@ -52,14 +52,21 @@ open _⇔_
 
 ∀-distrib-× : ∀ {A : Set} {B C : A → Set} →
   (∀ (x : A) → B x × C x) ≃ (∀ (x : A) → B x) × (∀ (x : A) → C x)
-∀-distrib-× = {!!}
+∀-distrib-× =
+  record
+    { to = λ →× → ⟨ proj₁ ∘ →× , proj₂ ∘ →× ⟩
+    ; from = λ →×→ a → ⟨ proj₁ →×→ a , proj₂ →×→ a ⟩
+    ; from∘to = λ x → refl
+    ; to∘from = λ y → refl
+    }
 
 -- 747/PLFA exercise: SumForAllImpForAllSum (1 point)
 -- Show that a disjunction of foralls implies a forall of disjunctions.
 
 ⊎∀-implies-∀⊎ : ∀ {A : Set} {B C : A → Set} →
-  (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x)  →  ∀ (x : A) → B x ⊎ C x
-⊎∀-implies-∀⊎ ∀B⊎∀C = {!!}
+  (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x) → ∀ (x : A) → B x ⊎ C x
+⊎∀-implies-∀⊎ (inj₁ →b) a = inj₁ (→b a)
+⊎∀-implies-∀⊎ (inj₂ →c) a = inj₂ (→c a)
 
 -- Existential quantification can be defined as a pair:
 -- a witness and a proof that the witness satisfies the property.
@@ -102,28 +109,46 @@ syntax ∃-syntax (λ x → B) = ∃[ x ] B
   → ∃[ x ] B x
     ---------------
   → C
-∃-elim f e = {!!}
+∃-elim f ⟨ x , x₁ ⟩ = f x x₁
 
 -- This is a generalization of currying (from Connectives).
 -- currying : ∀ {A B C : Set} → (A → B → C) ≃ (A × B → C)
 
 ∀∃-currying : ∀ {A : Set} {B : A → Set} {C : Set}
   → (∀ x → B x → C) ≃ (∃[ x ] B x → C)
-∀∃-currying = {!!}
+∀∃-currying =
+  record
+    { to      =  λ{ f → λ{ ⟨ x , y ⟩ → f x y }}
+    ; from    =  λ{ g → λ{ x → λ{ y → g ⟨ x , y ⟩ }}}
+    ; from∘to =  λ{ f → refl }
+    ; to∘from =  λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
+    }
 
 -- 747/PLFA exercise: ExistsDistSum (2 points)
 -- Show that existentials distribute over disjunction.
 
 ∃-distrib-⊎ : ∀ {A : Set} {B C : A → Set} →
   ∃[ x ] (B x ⊎ C x) ≃ (∃[ x ] B x) ⊎ (∃[ x ] C x)
-∃-distrib-⊎ = {!!}
+∃-distrib-⊎ {A} {B} {C} = record
+  { to = front
+  ; from = back
+  ; from∘to = λ { ⟨ _ , inj₁ _ ⟩ → refl ; ⟨ _ , inj₂ _ ⟩ → refl}
+  ; to∘from = λ { (inj₁ ⟨ _ , _ ⟩) → refl ; (inj₂ ⟨ _ , _ ⟩) → refl}
+  }
+ where
+   front : ∃[ x ] (B x ⊎ C x) → ∃[ x ] B x ⊎ ∃[ x ] C x
+   front ⟨ a , inj₁ x ⟩ = inj₁ ⟨ a , x ⟩
+   front ⟨ a , inj₂ y ⟩ = inj₂ ⟨ a , y ⟩
+   back : ∃[ x ] B x ⊎ ∃[ x ] C x → ∃[ x ] (B x ⊎ C x)
+   back (inj₁ ⟨ x , y ⟩) = ⟨ x , inj₁ y ⟩
+   back (inj₂ ⟨ x , y ⟩) = ⟨ x , inj₂ y ⟩
 
 -- 747/PLFA exercise: ExistsProdImpProdExists (1 point)
 -- Show that existentials distribute over ×.
 
 ∃×-implies-×∃ : ∀ {A : Set} {B C : A → Set} →
   ∃[ x ] (B x × C x) → (∃[ x ] B x) × (∃[ x ] C x)
-∃×-implies-×∃ = {!!}
+∃×-implies-×∃ ⟨ a , ⟨ fst , snd ⟩ ⟩ = ⟨ ⟨ a , fst ⟩ , ⟨ a , snd ⟩ ⟩
 
 -- An existential example: revisiting even/odd.
 
@@ -154,14 +179,20 @@ data odd where
 even-∃ : ∀ {n : ℕ} → even n → ∃[ m ] (    m * 2 ≡ n)
 odd-∃  : ∀ {n : ℕ} →  odd n → ∃[ m ] (1 + m * 2 ≡ n)
 
-even-∃ e = {!!}
-odd-∃ e = {!!}
+even-∃ even-zero = ⟨ zero , refl ⟩
+even-∃ (even-suc x) with odd-∃ x
+... | ⟨ m , refl ⟩ = ⟨ suc m , refl ⟩
+
+odd-∃ (odd-suc x) with even-∃ x
+... | ⟨ m , refl ⟩ = ⟨ m , refl ⟩
 
 ∃-even : ∀ {n : ℕ} → ∃[ m ] (    m * 2 ≡ n) → even n
 ∃-odd  : ∀ {n : ℕ} → ∃[ m ] (1 + m * 2 ≡ n) →  odd n
 
-∃-even e = {!!}
-∃-odd  e = {!!}
+∃-even ⟨ zero , refl ⟩ =  even-zero
+∃-even ⟨ suc m , refl ⟩ = even-suc (∃-odd ⟨ m , refl ⟩)
+
+∃-odd  ⟨ m , refl ⟩ = odd-suc (∃-even ⟨ m , refl ⟩)
 
 -- PLFA exercise: what if we write the arithmetic more "naturally"?
 -- (Proof gets harder but is still doable).
@@ -170,14 +201,82 @@ odd-∃ e = {!!}
 -- An alternate definition of y ≤ z.
 -- (Optional exercise: Is this an isomorphism?)
 
+≤-refl : ∀ {n : ℕ}
+    -----
+  → n ≤ n
+
+≤-refl {zero} = z≤n
+≤-refl {suc n} = s≤s ≤-refl
+
++-identityʳ : ∀ (m : ℕ) → m + zero ≡ m
++-identityʳ zero = refl
++-identityʳ (suc m) rewrite +-identityʳ m = refl
+
++-identityᴸ : ∀ (m : ℕ) → zero + m ≡ m
++-identityᴸ m = refl
+
++-suc : ∀ (m n : ℕ) → m + suc n ≡ suc (m + n)
++-suc zero n = refl
++-suc (suc m) n rewrite +-suc m n = refl
+
+suc-either-way : ∀ (m n : ℕ) → m + suc n ≡ suc m + n
+suc-either-way zero n = refl
+suc-either-way (suc m) n rewrite +-suc m n = refl
+
++1-suc : ∀ (m : ℕ) → suc m ≡ m + 1
++1-suc zero = refl
++1-suc (suc m) rewrite +1-suc m = refl
+
++-comm : ∀ (m n : ℕ) → m + n ≡ n + m
++-comm zero n rewrite +-identityʳ n = refl
++-comm (suc m) n rewrite +-suc n m | +-comm m n = refl
+
+suc-comm : ∀ (m n : ℕ) → suc (m + n) ≡ n + suc m
+suc-comm zero zero = refl
+suc-comm zero (suc n) rewrite +1-suc n = refl
+suc-comm (suc m) n rewrite +-comm n (suc (suc m)) = refl
+
++-monoʳ-≤ : ∀ (m p q : ℕ)
+  → p ≤ q
+    -------------
+  → m + p ≤ m + q
+
++-monoʳ-≤ zero p q p≤q = p≤q
++-monoʳ-≤ (suc m) p q p≤q = s≤s (+-monoʳ-≤ m p q p≤q)
+
++-monoˡ-≤ : ∀ (m n p : ℕ)
+  → m ≤ n
+    -------------
+  → m + p ≤ n + p
+
++-monoˡ-≤ m n p m≤n rewrite +-comm m p | +-comm n p = +-monoʳ-≤ p m n m≤n
+
 ∃-≤ : ∀ {y z : ℕ} → ( (y ≤ z) ⇔ ( ∃[ x ] (y + x ≡ z) ) )
-∃-≤ = {!!}
+∃-≤ {y} {z} = record
+  { to = g
+  ; from = f
+  }
+ where
+  g : ∀ { m n : ℕ } → (m ≤ n) → (∃[ x ] ( x + m ≡ n))
+  g {m} {n} z≤n rewrite sym (+-identityʳ n) = ⟨ n , refl ⟩
+  g (s≤s {m} {n} m≤n) = ?
+  f : _
+  f ⟨ zero , refl ⟩ rewrite +-identityʳ y = ≤-refl
+  f ⟨ suc x , refl ⟩ = +-monoˡ-≤  0 (suc x) y z≤n
 
 -- The negation of an existential is isomorphic to a universal of a negation.
 
+open import Data.Empty using (⊥-elim)
+
 ¬∃≃∀¬ : ∀ {A : Set} {B : A → Set}
   → (¬ ∃[ x ] B x) ≃ ∀ x → ¬ B x
-¬∃≃∀¬ = {!!}
+¬∃≃∀¬ =
+  record
+    { to = λ ¬∃B a Ba → ¬∃B ⟨ a , Ba ⟩
+    ; from = λ{∀¬B ⟨ a , Ba ⟩ → ∀¬B a Ba}
+    ; from∘to = λ ¬∃B → extensionality (⊥-elim ∘ ¬∃B)
+    ; to∘from = λ ∀¬B → refl
+    }
 
 -- 747/PLFA exercise: ExistsNegImpNegForAll (1 point)
 -- Existence of negation implies negation of universal.
@@ -186,7 +285,7 @@ odd-∃ e = {!!}
   → ∃[ x ] (¬ B x)
     --------------
   → ¬ (∀ x → B x)
-∃¬-implies-¬∀ ∃¬B = {!!}
+∃¬-implies-¬∀ ⟨ a , ¬Ba ⟩ ∀B = ¬Ba (∀B a)
 
 -- The converse cannot be proved in intuitionistic logic.
 
