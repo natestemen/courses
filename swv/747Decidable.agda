@@ -3,7 +3,7 @@ module 747Decidable where
 -- Library
 
 import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; refl; sym) -- added sym
+open Eq using (_≡_; refl; sym; cong) -- added sym
 open Eq.≡-Reasoning
 open import Data.Nat using (ℕ; zero; suc; _≤_; z≤n; s≤s)
 open import Data.Product using (_×_) renaming (_,_ to ⟨_,_⟩)
@@ -129,16 +129,21 @@ _ = refl
 -- You will need these helper functions as we did above.
 
 ¬z<z : ¬ (zero < zero)
-¬z<z = {!!}
+¬z<z = λ ()
 
 ¬s<s : ∀ {m n : ℕ} → ¬ (m < n) → ¬ (suc m < suc n)
-¬s<s = {!!}
+¬s<s ¬m<n = λ { (s<s sucm<sucn) → ¬m<n sucm<sucn }
 
 ¬s<z : ∀ {n : ℕ} → ¬ (suc n < zero)
-¬s<z = {!!}
+¬s<z = λ ()
 
 _<?_ : ∀ (m n : ℕ) → Dec (m < n)
-m <? n = {!!}
+zero <? zero = no (λ ())
+zero <? suc n = yes z<s
+suc m <? zero = no (λ ())
+suc m <? suc n with m <? n
+... | yes m<n = yes (s<s m<n)
+... | no  m<n = no (¬s<s m<n)
 
 -- Some tests.
 
@@ -155,7 +160,12 @@ _ = refl
 -- Decidable equality for natural numbers.
 
 _≡ℕ?_ : ∀ (m n : ℕ) → Dec (m ≡ n) -- split m,n
-m ≡ℕ? n = {!!}
+zero ≡ℕ? zero = yes refl
+zero ≡ℕ? suc n = no (λ ())
+suc m ≡ℕ? zero = no (λ ())
+suc m ≡ℕ? suc n with m ≡ℕ? n
+... | yes m≡n = yes (cong suc m≡n)
+... | no ¬m≡n = no λ { refl → ¬m≡n refl }
 
 -- Reusing ≤ᵇ and proofs of equivalence with ≤ to decide ≤.
 
@@ -198,7 +208,7 @@ fromWitnessFalse {A} {no x} ¬a = tt
 -- Agda standard library definitions for use of these.
 
 True : ∀ {A : Set} → (D : Dec A) → Set
-True Q = T ⌊ Q ⌋ 
+True Q = T ⌊ Q ⌋
 
 False : ∀ {A : Set} → (D : Dec A) → Set
 False Q = T (isNo Q)
@@ -240,7 +250,7 @@ infixr 5 _⊎-dec_
 _⊎-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⊎ B)
 yes x ⊎-dec y = yes (inj₁ x)
 no x ⊎-dec yes x₁ = yes (inj₂ x₁)
-no x ⊎-dec no x₁ = no (λ { (inj₁ a) → x a ; (inj₂ b) → x₁ b}) 
+no x ⊎-dec no x₁ = no (λ { (inj₁ a) → x a ; (inj₂ b) → x₁ b})
 
 
 not : Bool → Bool
@@ -267,13 +277,19 @@ no x →-dec y = yes λ a → ⊥-elim (x a)
 -- Erasure relates boolean and decidable operations.
 
 ∧-× : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∧ ⌊ y ⌋ ≡ ⌊ x ×-dec y ⌋
-∧-× da db = {!!}
+∧-× (yes x) (yes x₁) = refl
+∧-× (yes x) (no x₁) = refl
+∧-× (no x) (yes x₁) = refl
+∧-× (no x) (no x₁) = refl
 
 ∨-× : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∨ ⌊ y ⌋ ≡ ⌊ x ⊎-dec y ⌋
-∨-× da db = {!!}
+∨-× (yes x) db = refl
+∨-× (no x) (yes x₁) = refl
+∨-× (no x) (no x₁) = refl
 
 not-¬ : ∀ {A : Set} (x : Dec A) → not ⌊ x ⌋ ≡ ⌊ ¬? x ⌋
-not-¬ da = {!!}
+not-¬ (yes x) = refl
+not-¬ (no x) = refl
 
 -- 747/PLFA exercise: iff-erasure.
 
@@ -284,10 +300,16 @@ false iff true = false
 false iff false = true
 
 _⇔-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⇔ B)
-da ⇔-dec db = {!!}
+yes x ⇔-dec yes x₁ = yes record { to = λ _ → x₁ ; from = λ _ → x }
+yes x ⇔-dec no x₁ = no (λ z → x₁ (to z x))
+no x ⇔-dec yes x₁ = no (λ z → x (from z x₁))
+no x ⇔-dec no x₁ = yes record { to  = λ y → ¬¬-intro y x ; from = λ z → ¬¬-intro z x₁ }
 
-iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋ 
-iff-⇔ da db = {!!}
+iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋
+iff-⇔ (yes x) (yes x₁) = refl
+iff-⇔ (yes x) (no x₁) = refl
+iff-⇔ (no x) (yes x₁) = refl
+iff-⇔ (no x) (no x₁) = refl
 
 -- Proof by reflection.
 -- Or, getting Agda to construct proofs at compile time.

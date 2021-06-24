@@ -10,8 +10,8 @@ Things are listed here: https://cs.uwaterloo.ca/~plragde/747/Assignments.html, b
 | `747Isomorphism.agda` | June 7   | &#x2705; |
 | `747Connectives.agda` | June 14  | &#x2705; |
 | `747Negation.agda`    | June 17  | &#x2705; |
-| `747Quantifiers.agda` | June 21  |          |
-| `747Decidable.agda`   | June 24  |          |
+| `747Quantifiers.agda` | June 21  | &#x2705; |
+| `747Decidable.agda`   | June 24  | &#x2705; |
 | `747Lists.agda`       | July 1   |          |
 | `747Lambda.agda`      | July 7   |          |
 | `747Properties.agda`  | July 13  |          |
