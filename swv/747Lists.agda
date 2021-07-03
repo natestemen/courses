@@ -38,7 +38,7 @@ record _⇔_ (A B : Set) : Set where
   field
     to   : A → B
     from : B → A
-open _⇔_ 
+open _⇔_
 
 
 -- Polymorphic lists (parameterized version).
@@ -136,15 +136,21 @@ _ = refl
 
 reverse-++-commute : ∀ {A : Set} (xs ys : List A)
  → reverse (xs ++ ys) ≡ reverse ys ++ reverse xs
-reverse-++-commute xs ys = {!!}
+reverse-++-commute []  ys  rewrite ++-identityʳ (reverse ys) = refl
+reverse-++-commute (x ∷ xs) ys rewrite reverse-++-commute xs ys
+  | ++-assoc (reverse ys) (reverse xs) [ x ] = refl
 
 -- 747/PLFA exercise: RevInvol (1 point)
 -- Reverse is its own inverse.
 -- Changed from PLFA to make xs explicit.
 
+reverse-single : ∀ {A : Set} (x : List A) → length x ≡ 1 → reverse x ≡ x
+reverse-single [ x ] lx≡1 = refl
+
 reverse-involutive : ∀ {A : Set} (xs : List A)
  → reverse (reverse xs) ≡ xs
-reverse-involutive xs = {!!}
+reverse-involutive [] = refl
+reverse-involutive (x ∷ xs) rewrite reverse-++-commute (reverse xs) [ x ] | reverse-involutive xs = refl
 
 -- Towards more efficient reverse (linear time vs quadratic)
 -- Shunt is a generalization of reverse.
@@ -201,7 +207,8 @@ _ = refl
 
 map-compose : ∀ {A B C : Set} (f : A → B) (g : B → C) (xs : List A)
  → map (g ∘ f) xs ≡ (map g ∘ map f) xs
-map-compose f g xs = {!!}
+map-compose f g []  = refl
+map-compose f g (x ∷ xs) rewrite map-compose f g xs = refl
 
 -- 747/PLFA exercise: MapAppendComm (1 point)
 -- The map of an append is the append of maps.
@@ -209,7 +216,8 @@ map-compose f g xs = {!!}
 
 map-++-commute : ∀ {A B : Set} (f : A → B) (xs ys : List A)
  →  map f (xs ++ ys) ≡ map f xs ++ map f ys
-map-++-commute f xs ys = {!!}
+map-++-commute f []  ys = refl
+map-++-commute f (x ∷ xs) ys rewrite map-++-commute f xs ys = refl
 
 -- PLFA exercise: map over trees
 -- Here is a definition of trees with
@@ -252,7 +260,8 @@ _ = refl
 
 foldr-++ : ∀ {A B : Set} (_⊗_ : A → B → B) (e : B) (xs ys : List A) →
   foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ (foldr _⊗_ e ys) xs
-foldr-++ _⊗_ e xs ys = {!!}
+foldr-++ _⊗_ e [] ys = refl
+foldr-++ _⊗_ e (x ∷ xs) ys = cong (x ⊗_) (foldr-++ _⊗_ e xs ys)
 
 -- 747/PLFA exercise: MapIsFoldr (1 point)
 -- Show that map can be expressed as a fold.
@@ -260,7 +269,8 @@ foldr-++ _⊗_ e xs ys = {!!}
 
 map-is-foldr : ∀ {A B : Set} (f : A → B) (xs : List A) →
   map f xs ≡ foldr (λ x rs → f x ∷ rs) [] xs
-map-is-foldr f xs = {!!}
+map-is-foldr f [] = refl
+map-is-foldr f (x ∷ xs) = cong (f x ∷_) (map-is-foldr f xs)
 
 -- PLFA exercise: write a fold for trees
 
@@ -346,16 +356,30 @@ foldr-monoid-++ xs ys rewrite foldr-++ _⊗_ id xs ys = foldr-monoid xs (foldr _
 --   foldl _⊗_ e [ x , y , z ]  =  ((e ⊗ x) ⊗ y) ⊗ z
 
 foldl : ∀ {A B : Set} → (B → A → B) → B → List A → B
-foldl _⊗_ e xs = {!!}
+foldl _⊗_ e [] = e
+foldl _⊗_ e (x ∷ xs) = foldl _⊗_ (e ⊗ x) xs
 
 -- 747/PLFA exercise: FoldrMonFoldl (2 points)
 -- Show that foldr and foldl compute the same value on a monoid
 -- when the base case is the identity.
 -- Hint: generalize to when the base case is an arbitrary value.
 
-foldl-r-mon : ∀ {A : Set} → {{m : IsMonoid A}} →
-  ∀ (xs : List A) → foldl _⊗_ id xs ≡ foldr _⊗_ id xs
-foldl-r-mon xs = {!!}
+
+foldl-r-mon-helper : ∀ {A : Set} {{m : IsMonoid A}}
+  → ∀ (xs : List A) (y : A)
+  → foldl _⊗_ y xs ≡ y ⊗ foldl _⊗_ id xs
+foldl-r-mon-helper [] y rewrite identityʳ y = refl
+foldl-r-mon-helper (x ∷ xs) y rewrite identityˡ x
+  | foldl-r-mon-helper xs (y ⊗ x)
+  | assoc y x (foldl _⊗_ id xs)
+  | foldl-r-mon-helper xs x = refl
+
+foldl-r-mon : ∀ {A : Set} → {{m : IsMonoid A}}
+  → ∀ (xs : List A)  → foldl _⊗_ id xs ≡ foldr _⊗_ id xs
+foldl-r-mon      []  = refl
+foldl-r-mon (x ∷ xs) rewrite identityˡ x
+  | foldl-r-mon-helper xs x
+  | foldl-r-mon xs = refl
 
 -- Inductively-defined predicates over lists
 
@@ -443,7 +467,7 @@ Decidable : ∀ {A : Set} → (A → Set) → Set
 Decidable {A} P  =  ∀ (x : A) → Dec (P x)
 
 All? : ∀ {A : Set} {P : A → Set} → Decidable P → Decidable (All P)
-All? P? [] = yes [] 
+All? P? [] = yes []
 All? P? (x ∷ xs) with P? x | All? P? xs
 All? P? (x ∷ xs) | yes p | yes p₁ = yes (p ∷ p₁)
 All? P? (x ∷ xs) | yes p | no ¬p = no (λ { (x ∷ x₁) → ¬p x₁})

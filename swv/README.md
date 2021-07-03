@@ -12,7 +12,7 @@ Things are listed here: https://cs.uwaterloo.ca/~plragde/747/Assignments.html, b
 | `747Negation.agda`    | June 17  | &#x2705; |
 | `747Quantifiers.agda` | June 21  | &#x2705; |
 | `747Decidable.agda`   | June 24  | &#x2705; |
-| `747Lists.agda`       | July 1   |          |
+| `747Lists.agda`       | July 1   | &#x2705; |
 | `747Lambda.agda`      | July 7   |          |
 | `747Properties.agda`  | July 13  |          |
 | `747More.agda`        | July 19  |          |
