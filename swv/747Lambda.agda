@@ -4,7 +4,7 @@ module 747Lambda where
 
 open import Relation.Binary.PropositionalEquality using (_≡_; _≢_; refl)
 open import Data.Bool using (T; not)
-open import Data.String using (String; _≟_) 
+open import Data.String using (String; _≟_)
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Relation.Nullary using (Dec; yes; no; ¬_)
@@ -40,7 +40,7 @@ data Term : Set where
   `_                      :  Id → Term            -- variable
   ƛ_⇒_                    :  Id → Term → Term     -- lambda (abstraction)
   _·_                     :  Term → Term → Term   -- application
-  `zero                   :  Term     
+  `zero                   :  Term
   `suc_                   :  Term → Term
   case_[zero⇒_|suc_⇒_]    :  Term → Term → Id → Term → Term
   μ_⇒_                    :  Id → Term → Term     -- fixpoint for recursion
@@ -83,14 +83,19 @@ fourᶜ = plusᶜ · twoᶜ · twoᶜ
 -- Alas, refinement will not help, and there is no way (yet) to write tests.
 
 mul : Term
-mul = {!!}
+mul = μ "*" ⇒ ƛ "m" ⇒ ƛ "n" ⇒
+        case ` "m"
+          [zero⇒ `zero
+          |suc "m" ⇒ plus · ` "n" · (` "*" · ` "m" · ` "n")
+          ]
 
 -- 747/PLFA exercise: ChurchMul (1 point)
 -- Write multiplication for Church numbers.
 -- Use of plusᶜ is optional! fixpoint is not needed.
 
 mulᶜ : Term
-mulᶜ = {!!}
+mulᶜ = ƛ "m" ⇒ ƛ "n" ⇒ ƛ "s" ⇒ ƛ "z" ⇒
+         ` "m" · (` "n" · ` "s") · ` "z"
 
 -- These definitions let us avoid some backticks and quotes.
 
@@ -122,7 +127,7 @@ plus′ = μ′ + ⇒ ƛ′ m ⇒ ƛ′ n ⇒
   n  =  ` "n"
 
 -- PLFA exercise: use the new notation to define multiplication.
-  
+
 -- Bound variables, free variables, closed terms, open terms, alpha renaming.
 
 -- Values.
@@ -142,7 +147,7 @@ data Value : Term → Set where
       --------------
     → Value (`suc V)
 
--- Substitution is important in defining reduction. 
+-- Substitution is important in defining reduction.
 -- Defined here only for closed terms (simpler).
 
 infix 9 _[_:=_]
@@ -263,6 +268,19 @@ begin_ : ∀ {M N}
   → M —↠ N
 begin M—↠N = M—↠N
 
+_⟶⟨⟩_ : ∀ M {N}
+      → M —↠ N
+      → M —↠ N
+M ⟶⟨⟩ MN = MN
+
+_-↠⟨_⟩_ : ∀ L {M N}
+        → L —↠ M
+        → M —↠ N
+        → L —↠ N
+L -↠⟨ L ∎ ⟩ MN = MN
+_-↠⟨_⟩_ K {M} {N} (_—→⟨_⟩_ K {L} KL LM) MN =
+  K —→⟨ KL ⟩ L -↠⟨ LM ⟩ MN
+
 -- An alternate definition which makes "reflexive-transitive closure" more obvious.
 
 data _—↠′_ : Term → Term → Set where
@@ -287,7 +305,47 @@ data _—↠′_ : Term → Term → Set where
 -- Why is it not an isomorphism?
 
 ms1≤ms2 : ∀ {M N} → (M —↠ N) ≲ (M —↠′ N)
-ms1≤ms2 = {!!}
+ms1≤ms2 = record
+    { to   = there M N
+    ; from = back M N
+    ; from∘to = comp M N
+    }
+  -- it's not working :cry:
+  where
+    there : ∀ {M N}
+      → M —↠ N
+      → M —↠′ N
+    there (M ∎) = refl′
+    there (_—→⟨_⟩_ L {M} {N} LM MN) = trans′ (step′ LM) (there M N MN)
+
+    back : ∀ M N
+        → M —↠′ N
+        → M —↠ N
+    back M M refl′ = begin M ∎
+    back M N (step′ MN) = begin M —→⟨ MN ⟩ N ∎
+    back L N (trans′ {L} {M} {N} LM MN) =
+      L -↠⟨ back L M LM ⟩ (back M N MN)
+
+    comp : ∀ M N
+            → (x : M —↠ N)
+            → back M N (there M N x) ≡ x
+    comp M M (M ∎) = refl
+    comp L N (_—→⟨_⟩_ L {M} {N} LM MN) =
+      ≡-begin
+        back L N (there L N (L —→⟨ LM ⟩ MN))
+      ≡⟨⟩
+        back L N (trans′ (step′ LM) (there M N MN))
+      ≡⟨⟩
+        (L -↠⟨ back L M (step′ LM) ⟩ (back M N (there M N MN)))
+      ≡⟨⟩
+        (L -↠⟨ L —→⟨ LM ⟩ M ∎ ⟩ (back M N (there M N MN)) )
+      ≡⟨⟩
+        (L —→⟨ LM ⟩ M -↠⟨ M ∎ ⟩ (back M N (there M N MN)))
+      ≡⟨⟩
+        (L —→⟨ LM ⟩ (back M N (there M N MN)))
+      ≡⟨ cong (L —→⟨ LM ⟩_) (comp M N MN) ⟩
+        (L —→⟨ LM ⟩ MN)
+      ≡∎
 
 -- Determinism means we avoid having to worry about confluence.
 
@@ -427,7 +485,7 @@ data _∋_⦂_ : Context → Id → Type → Set where
     → Γ ∋ x ⦂ A
       ------------------
     → Γ , y ⦂ B ∋ x ⦂ A
-    
+
 -- Providing the string inequality proofs required by S
 -- can be annoying, and computed proofs can be lengthy.
 -- We use the proof by reflection technique described in chapter Decidable
@@ -557,13 +615,13 @@ nope₂ (⊢ƛ (⊢` ∋x · ⊢` ∋x′))  =  contradiction (∋-injective ∋
 -- Show that your mul above is well-typed.
 
 ⊢mul : ∀ {Γ} → Γ ⊢ mul ⦂ `ℕ ⇒ `ℕ ⇒ `ℕ
-⊢mul = {!!}
+⊢mul = ⊢μ (⊢ƛ (⊢ƛ (⊢case (⊢` (S′ Z)) ⊢zero (⊢plus · ⊢` (S′ Z) · (⊢` (S′ (S′ (S′ Z))) · ⊢` Z · ⊢` (S′ Z))))))
 
 -- 747/PLFA exercise: MulCTyped (2 points)
 -- Show that your mulᶜ above is well-typed.
 
 ⊢mulᶜ : ∀ {Γ A} → Γ  ⊢ mulᶜ ⦂ Ch A ⇒ Ch A ⇒ Ch A
-⊢mulᶜ = {!!}
+⊢mulᶜ = ⊢ƛ (⊢ƛ (⊢ƛ (⊢ƛ (⊢` (S′ (S′ (S′ Z))) · (⊢` (S′ (S′ Z)) · ⊢` (S′ Z)) · ⊢` Z))))
 
 -- Unicode:
 
