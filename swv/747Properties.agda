@@ -135,17 +135,31 @@ progress (⊢μ m:a) = step β-μ
 -- of the progress theorem directly.
 
 progress-iso : ∀ {M} → Progress M ≃ Value M ⊎ ∃[ N ](M —→ N)
-progress-iso = {!!}
+_≃_.to progress-iso = {!   !}
+_≃_.from progress-iso = {!   !}
+_≃_.from∘to progress-iso = {!   !}
+_≃_.to∘from progress-iso = {!   !}
 
 progress′ : ∀ M {A} → ∅ ⊢ M ⦂ A → Value M ⊎ ∃[ N ](M —→ N)
-progress′ m m:a = {!!}
+progress′ (` x) (⊢` x₁) = {!   !}
+progress′ (ƛ x ⇒ m) (⊢ƛ m:a) = {!  !}
+progress′ (m · m₁) (m:a · m:a₁) = {!   !}
+progress′ `zero ⊢zero = {!   !}
+progress′ (`suc m) (⊢suc m:a) = {!   !}
+progress′ case m [zero⇒ m₁ |suc x ⇒ m₂ ] (⊢case m:a m:a₁ m:a₂) = {!   !}
+progress′ (μ x ⇒ m) (⊢μ m:a) = {!   !}
 
 -- 747/PLFA exercise: ValueEh (1 point)
 -- Write a function to decide whether a well-typed term is a value.
 -- Hint: reuse theorems proved above to do most of the work.
 
 value? : ∀ {A M} → ∅ ⊢ M ⦂ A → Dec (Value M)
-value? m:a = {!!}
+value? (⊢ƛ m:a) = yes V-ƛ
+value? (m:a · m:a₁) = no (λ ())
+value? ⊢zero = yes V-zero
+value? (⊢suc m:a) = does (value? m:a) because {!   !}
+value? (⊢case m:a m:a₁ m:a₂) = no (λ ())
+value? (⊢μ m:a) = no (λ ())
 
 -- Preservation: types are preserved by reduction.
 
@@ -317,7 +331,7 @@ data Finished (N : Term) : Set where
 data Steps (L : Term) : Set where
 
   steps : ∀ {N}
-    → L —↠ N  
+    → L —↠ N
     → Finished N
       ----------
     → Steps L
@@ -634,21 +648,36 @@ unstuck : ∀ {M A}
   → ∅ ⊢ M ⦂ A
     -----------
   → ¬ (Stuck M)
-unstuck m:a = {!!}
+unstuck (⊢ƛ m:a) = {! m:a !}
+unstuck (m:a · m:a₁) = {!   !}
+unstuck ⊢zero = {!   !}
+unstuck (⊢suc m:a) = {!   !}
+unstuck (⊢case m:a m:a₁ m:a₂) = {!   !}
+unstuck (⊢μ m:a) = {!   !}
 
 preserves : ∀ {M N A}
   → ∅ ⊢ M ⦂ A
   → M —↠ N
     ---------
   → ∅ ⊢ N ⦂ A
-preserves m:a msn = {!!}
+preserves (⊢ƛ m:a) (.(ƛ _ ⇒ _) ∎) = {!   !}
+preserves (m:a · m:a₁) msn = {!   !}
+preserves ⊢zero msn = {!   !}
+preserves (⊢suc m:a) msn = {!   !}
+preserves (⊢case m:a m:a₁ m:a₂) msn = {!   !}
+preserves (⊢μ m:a) msn = {!   !}
 
 wttdgs : ∀ {M N A}
   → ∅ ⊢ M ⦂ A
   → M —↠ N
     -----------
   → ¬ (Stuck N)
-wttdgs m:a msn = {!!}
+wttdgs (⊢ƛ m:a) (.(ƛ _ ⇒ _) ∎) = {!   !}
+wttdgs (m:a · m:a₁) msn = {!   !}
+wttdgs ⊢zero msn = {!   !}
+wttdgs (⊢suc m:a) msn = {!   !}
+wttdgs (⊢case m:a m:a₁ m:a₂) msn = {!   !}
+wttdgs (⊢μ m:a) msn = {!   !}
 
 -- PLFA exercise: give an ill-typed term that does get stuck.
 
