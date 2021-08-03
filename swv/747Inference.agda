@@ -162,13 +162,13 @@ data _⊢_↓_ where
 -- as you did in Lambda, but this time using the definitions above.
 
 mul : Term⁺
-mul = {!!}
+mul = `zero ↓ `ℕ
 
 -- 842 exercise: ChurchMul (1 point)
 -- Same as above, but for multiplication of Church numbers.
 
 mulᶜ : Term⁺
-mulᶜ = {!!}
+mulᶜ = `zero ↓ `ℕ
 
 -- PLFA exercise: extend the rules to support products (from More)
 
@@ -217,7 +217,7 @@ uniq-∋ (S ∋x) (S ∋x′)      =  uniq-∋ ∋x ∋x′
 uniq-↑ : ∀ {Γ M A B} → Γ ⊢ M ↑ A → Γ ⊢ M ↑ B → A ≡ B
 uniq-↑ (⊢` ∋x) (⊢` ∋x′)       =  uniq-∋ ∋x ∋x′
 uniq-↑ (⊢L · ⊢M) (⊢L′ · ⊢M′)  =  rng≡ (uniq-↑ ⊢L ⊢L′)
-uniq-↑ (⊢↓ ⊢M) (⊢↓ ⊢M′)       =  refl 
+uniq-↑ (⊢↓ ⊢M) (⊢↓ ⊢M′)       =  refl
 
 -- Failed lookups still fail if a different binding is added.
 
@@ -275,7 +275,7 @@ synthesize Γ (L · M) with synthesize Γ L
 ... | yes ⟨ `ℕ ,    ⊢L ⟩  =  no  (λ{ ⟨ _ , ⊢L′ · _  ⟩  →  ℕ≢⇒ (uniq-↑ ⊢L ⊢L′) })
 ... | yes ⟨ A ⇒ B , ⊢L ⟩ with inherit Γ M A
 ...    | no  ¬⊢M          =  no  (¬arg ⊢L ¬⊢M)
-...    | yes ⊢M           =  yes ⟨ B , ⊢L · ⊢M ⟩  
+...    | yes ⊢M           =  yes ⟨ B , ⊢L · ⊢M ⟩
 synthesize Γ (M ↓ A) with inherit Γ M A
 ... | no  ¬⊢M             =  no  (λ{ ⟨ _ , ⊢↓ ⊢M ⟩  →  ¬⊢M ⊢M })
 ... | yes ⊢M              =  yes ⟨ A , ⊢↓ ⊢M ⟩
@@ -292,7 +292,7 @@ inherit Γ (`suc M) `ℕ with inherit Γ M `ℕ
 inherit Γ (`suc M) (A ⇒ B)  =  no  (λ())
 inherit Γ (`case L [zero⇒ M |suc x ⇒ N ]) A with synthesize Γ L
 ... | no ¬∃                 =  no  (λ{ (⊢case ⊢L  _ _) → ¬∃ ⟨ `ℕ , ⊢L ⟩})
-... | yes ⟨ _ ⇒ _ , ⊢L ⟩    =  no  (λ{ (⊢case ⊢L′ _ _) → ℕ≢⇒ (uniq-↑ ⊢L′ ⊢L) })   
+... | yes ⟨ _ ⇒ _ , ⊢L ⟩    =  no  (λ{ (⊢case ⊢L′ _ _) → ℕ≢⇒ (uniq-↑ ⊢L′ ⊢L) })
 ... | yes ⟨ `ℕ ,    ⊢L ⟩ with inherit Γ M A
 ...    | no ¬⊢M             =  no  (λ{ (⊢case _ ⊢M _) → ¬⊢M ⊢M })
 ...    | yes ⊢M with inherit (Γ , x ⦂ `ℕ) N A
@@ -508,8 +508,10 @@ data Inherit where
 isSynth : (t : Term) → Dec (Synth t)
 isInherit : (t : Term) → Dec (Inherit t)
 
-isSynth = {!!}
-isInherit = {!!}
+Dec.does (isSynth t) = {!   !}
+Dec.proof (isSynth t) = {!   !}
+Dec.does (isInherit t) = {!   !}
+Dec.proof (isInherit t) = {!   !}
 
 -- 842 exercise: Decorate (3 points)
 -- Implement the mutually-recursive decorators.
@@ -517,8 +519,8 @@ isInherit = {!!}
 decorate⁻ : (t : Term) → Inherit t → Term⁻
 decorate⁺ : (t : Term) → Synth t → Term⁺
 
-decorate⁻ = {!!}
-decorate⁺ = {!!}
+decorate⁻ = λ t _ → `zero
+decorate⁺ = λ t _ → `zero ↓ `ℕ
 
 -- 842 exercise: ToTerm (2 points)
 -- Use the proof by reflection idea as before to
@@ -589,10 +591,11 @@ _ = refl
 ontoTerm⁻ : ∀ (t⁻ : Term⁻) → ∃[ t ] (∃[ i ] (decorate⁻ t i ≡ t⁻))
 ontoTerm⁺ : ∀ (t⁺ : Term⁺) → ∃[ t ] (∃[ s ] (decorate⁺ t s ≡ t⁺))
 
-ontoTerm⁻ = {!!}
+Data.Product.proj₁ (ontoTerm⁻ t⁻) = {!   !}
+Data.Product.proj₂ (ontoTerm⁻ t⁻) = {!   !}
 ontoTerm⁺ = {!!}
 
-{- 
+{-
   Unicode used in this chapter:
 
   ↓  U+2193:  DOWNWARDS ARROW (\d)
