@@ -23,9 +23,9 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 
 ### Summer 2021
 
-| Course                                                                                | Professor                                            | Directory      | PDFs                                                        |
-| ------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------- | ----------------------------------------------------------- |
-| [Software Verification using Proof Assistants](https://cs.uwaterloo.ca/~plragde/747/) | [Prabhakar Ragde](https://cs.uwaterloo.ca/~plragde/) | [`swv`](./swv) | [link](https://natestemen.xyz/latex/software-verification/) |
+| Course                                                                                | Professor                                            | Directory      |
+| ------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------- |
+| [Software Verification using Proof Assistants](https://cs.uwaterloo.ca/~plragde/747/) | [Prabhakar Ragde](https://cs.uwaterloo.ca/~plragde/) | [`swv`](./swv) |
 
 ---
 
