@@ -27,6 +27,18 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 | ------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------- |
 | [Software Verification using Proof Assistants](https://cs.uwaterloo.ca/~plragde/747/) | [Prabhakar Ragde](https://cs.uwaterloo.ca/~plragde/) | [`swv`](./swv) |
 
+## Year 2 (2021-2022)
+
+### Fall 2021
+
+| Course                                                                                                                                   | Professor         | Interest                                                                                                                                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Applied Crypto](https://djao.math.uwaterloo.ca/w/CO_487:_Applied_Cryptography_%28Winter_2016%29)                                        | David Jao         | Looks like a really interesting course, and a great intro to crypto, but rather unlikely to benefit me too much if I keep doing QI stuff. Idk though hard to say, it could be a good start if I go into QI crypto stuff.                  |
+| PSI QFT 1                                                                                                                                | Daniel Wohns      | I've always wanted to learn some QFT, and getting to do it at PI would be sweet, but it will definitely require to dust off some physics chops. Would be helpful if I want to do mathematical physics type stuff                          |
+| [Smooth Manifolds](https://web.archive.org/web/20210702035202/https://www.math.uwaterloo.ca/~karigian/teaching/pmath465-f20-outline.pdf) | Spiro Karigiannis | I mean this is just something I kinda feel like I should do to help build up my foundational pure math knowledge. I feel like it might get pretty technical, but also help me understand Lie theory better.                               |
+| [Category O](https://bwebster.notion.site/bwebster/Category-O-c7a1eb10f3f44d75b3b7b77fa2e97b8a)                                          | Ben Webster       | Would help me deepen my Lie/representation theory knowledge a lot. Could be cool to apply some of this knowledge to QI or see where it's been applied. Builds on previous course I took. Highly abstract and seems advanced very quickly. |
+| [Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/)                                                                   | John Watrous      | If I want to continue in QI I feel like this is probably the most important class to take. Will almost definitely do this one unless I'm talked out of it.                                                                                |
+
 ---
 
 ## Workflow
