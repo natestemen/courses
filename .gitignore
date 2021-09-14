@@ -11,3 +11,4 @@
 *.toc
 *.pdf
 *.agdai
+.DS_Store
