@@ -12,5 +12,5 @@
 *.pdf
 *.agdai
 .DS_Store
-gr/lectures/*
-settings.json
+gr/lectures
+.vscode
