@@ -1,4 +1,4 @@
-[submodule "numerical/numerical"]
-	path = numerical/numerical
+[submodule "num/numerical"]
+	path = num/numerical
 	url = git@github.com:natestemen/numerical.git
 	branch = main
