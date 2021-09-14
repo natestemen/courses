@@ -8,11 +8,11 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 
 ### Fall 2020
 
-| Course                                                                                                                                     | Professor                                                       | Directory                  | PDFs                                                          |
-| ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------- |
+| Course                                                                                                                                     | Professor                                                       | Directory      | PDFs                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- | -------------- | ------------------------------------------------------------- |
 | Numerical Analysis                                                                                                                         | [Hans De Sterck](http://www.hansdesterck.net/)                  | [`num`](./num) | [link](https://natestemen.xyz/latex/numerical-analysis/)      |
-| [Advanced Quantum Theory](https://uwaterloo.ca/physics-of-information-lab/teaching/advanced-quantum-theory-amath-473673-phys454-fall-2020) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`aqt`](.aqt)          | [link](https://natestemen.xyz/latex/quantum-theory/)          |
-| [Quantum Info. Processing](http://cleve.iqc.uwaterloo.ca/qic710/index.html)                                                                | [Richard Cleve](http://cleve.iqc.uwaterloo.ca/)                 | [`qip`](./qip)             | [link](https://natestemen.xyz/latex/quantum-info-processing/) |
+| [Advanced Quantum Theory](https://uwaterloo.ca/physics-of-information-lab/teaching/advanced-quantum-theory-amath-473673-phys454-fall-2020) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`aqt`](.aqt)  | [link](https://natestemen.xyz/latex/quantum-theory/)          |
+| [Quantum Info. Processing](http://cleve.iqc.uwaterloo.ca/qic710/index.html)                                                                | [Richard Cleve](http://cleve.iqc.uwaterloo.ca/)                 | [`qip`](./qip) | [link](https://natestemen.xyz/latex/quantum-info-processing/) |
 
 ### Winter 2021
 
