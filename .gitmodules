@@ -2,6 +2,3 @@
 	path = num/numerical
 	url = git@github.com:natestemen/numerical.git
 	branch = main
-[submodule "numerical"]
-	path = num/numerical
-	url = git@github.com:natestemen/numerical.git
