@@ -37,11 +37,11 @@
 	\begin{columns}
 		\begin{column}{0.3\textwidth}
 			\begingroup
-				\tiny
-				\begin{prob}
-					Recall that when $M$ and $N$ are smooth manifolds, $\phi: M \to N$ is a diffeomorphism, and $p$ is a point in $M$, there is an induced map on the tangent spaces $T_p\phi: T_p(M) \to T_{\phi(p)}(N)$ as defined in lecture.
-					Show that $T_p\phi$ is linear.
-				\end{prob}
+			\tiny
+			\begin{prob}
+				Recall that when $M$ and $N$ are smooth manifolds, $\phi: M \to N$ is a diffeomorphism, and $p$ is a point in $M$, there is an induced map on the tangent spaces $T_p\phi: T_p(M) \to T_{\phi(p)}(N)$ as defined in lecture.
+				Show that $T_p\phi$ is linear.
+			\end{prob}
 			\endgroup
 		\end{column}
 		\begin{column}{0.7\textwidth}
@@ -49,15 +49,15 @@
 				Recall how the map $T_p\phi$ is defined:
 				\begin{align*}
 					T_p\phi: T_p(M) & \longrightarrow T_{\phi(p)}(N) \\
-					\xi & \longmapsto \xi \circ \phi^*
+					\xi             & \longmapsto \xi \circ \phi^*
 				\end{align*}
 				With $f\in \mathcal{F}(\phi(p))$ we use the induced map $\phi^*$ as follows.
 				\begin{align*}
-					\qty\big[T_p\phi(\alpha \xi_1 + \beta \xi_2)](f\,) & = \qty\Big[(\alpha\xi_1 + \beta\xi_2)\circ \phi^*](f\,) \\
-					& = (\alpha\xi_1 + \beta\xi_2)\qty\big(f\circ\phi) \\
-					& = \alpha (\xi_1 \circ f \circ \phi) + \beta(\xi_2 \circ f \circ \phi) \\
-					& = \alpha (\xi_2 \circ \phi^*)(f\,) + \beta (\xi_2 \circ \phi^*)(f\,) \\
-					& = \alpha \qty\big[T_p\phi(\xi_1)](f\,) + \beta \qty\big[T_p(\xi_2)](f\,)
+					\qty\big[T_p\phi(\alpha \xi_1 + \beta \xi_2)](f\,) & = \qty\Big[(\alpha\xi_1 + \beta\xi_2)\circ \phi^*](f\,)                  \\
+					                                                   & = (\alpha\xi_1 + \beta\xi_2)\qty\big(f\circ\phi)                         \\
+					                                                   & = \alpha (\xi_1 \circ f \circ \phi) + \beta(\xi_2 \circ f \circ \phi)    \\
+					                                                   & = \alpha (\xi_2 \circ \phi^*)(f\,) + \beta (\xi_2 \circ \phi^*)(f\,)     \\
+					                                                   & = \alpha \qty\big[T_p\phi(\xi_1)](f\,) + \beta \qty\big[T_p(\xi_2)](f\,)
 				\end{align*}
 			\end{solution}
 		\end{column}
