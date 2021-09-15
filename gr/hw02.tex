@@ -1,0 +1,47 @@
+\documentclass{homework}
+
+\usepackage{cleveref}
+\usepackage{macros}
+
+\input{config}
+\hwnum{3}
+\duedate{Wed, Sep 15, 2021 9:00 PM}
+
+\begin{document}
+
+In this lecture we saw three important topics:
+\begin{enumerate}
+	\item The physicists definition of the tangent space,\label{it:phys}
+	\item the geometric definition of the tangent space,\label{it:geo}
+	\item and the cotangent space.\label{it:cotangent}
+\end{enumerate}
+
+\paragraph{\Cref{it:phys}:} The physicist's definition of the tangent space is probably the one I've interacted with the most during my training as a math/physics student, but not usually the most enlightening (for me).
+With this definition we take a tangent vector to be maps that eat charts and spits out coefficent vectors in $\R^n$.
+We then have that added condition that when we have two coefficient vectors $(\eta^1,\ldots, \eta^n)$ via chart $\alpha$ and $(\nu^1,\ldots,\nu^n)$ via chart $\beta$, then they can be related by
+\begin{equation*}
+	\nu^i = \sum_{j = 1}^n \eval{\pdv{\tilde{x}^i}{x^j}}_{x = \beta(p)}\eta^j
+\end{equation*}
+where $\tilde{x}^i = \phi^i(x)$ and $\phi = \beta\circ\alpha^{-1}$.
+
+\paragraph{\Cref{it:geo}:} The geometric definition of the tangent space is probably the thing most of us initially picture when thinking of tangent spaces because it's built up the definition of tangent vectors we learn first!
+In particular we take the equivalence class of paths through a point with distinct ``velocity vectors''.
+We also (\emph{importantly}) saw how $T_p(M)^\text{(geo)}$ and $T_p(M)^\text{(alg)}$ are isomorphic with the following map:
+\begin{align*}
+	\overline{\gamma}: \mathcal{F}(p) & \longrightarrow \R \\
+	f & \longmapsto \eval{\dv{t}(f\circ \gamma)}_{t = 0}.
+\end{align*}
+
+\paragraph{\Cref{it:cotangent}:} The cotangent space is the simplest on this list to define:
+\begin{equation*}
+	T_p^*(M) \defeq (T_p(M))^*.
+\end{equation*}
+That is, the cotangent space is the dual of the tangent space.
+This is a natural space to look at first because dual spaces are usually interesting, but also because given a function germ $f\in \mathcal{F}(p)$, we immediately have an element of the cotangent space as follows:
+\begin{align*}
+	\dd{f}: T_p(M) & \longrightarrow \R \\
+	\xi & \longmapsto \xi(f).
+\end{align*}
+This looks very much like the evaluation map we use to show a vector space $V$ and it's double dual $V^{**}$ are naturally isomorphic.
+
+\end{document}
