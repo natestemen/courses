@@ -1,0 +1,64 @@
+% !TEX program = xelatex
+\documentclass[11pt,aspectratio=1610]{beamer}
+
+\usetheme[
+    background=light,
+    numbering=fraction,
+    block=fill,
+    progressbar=frametitle
+]{metropolis}
+
+\usepackage{physics}
+\usepackage{tcolorbox}
+\newtcolorbox{prob}{colback=green!5!white,colframe=green!75!black}
+\usefonttheme[onlymath]{serif}
+\newcommand{\GL}[2]{\mathsf{GL}(#1;\, #2)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\1}{\mathbb{1}}
+\DeclareMathOperator{\id}{id}
+
+
+\title{General Relativity Exam Problem 2}
+% \subtitle{Is the induced map on tangent spaces linear?}
+\date{Sep 16, 2021}
+\author{Nate Stemen (he/they)}
+\institute{AMATH 875}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Problem Statement}
+	\large
+	\begin{prob}
+		Compute $T_{\id}(\GL{n}{\R})$.
+	\end{prob}
+\end{frame}
+
+\begin{frame}{Solution}
+	\begin{columns}
+		\begin{column}{0.25\textwidth}
+			\begingroup
+			\tiny
+			\begin{prob}
+				Compute $T_{\id}(\GL{n}{\R})$.
+			\end{prob}
+			\endgroup
+		\end{column}
+		\begin{column}{0.75\textwidth}
+			\begin{solution}
+				Recall $\GL{n}{\R}$ is defined as the \emph{group} of invertible $n\times n$ real matrices.
+				Let $\gamma$ be a path in $\GL{n}{\R}$ that passes through the identity (matrix).
+				To first order, in a neighborhood of the identity, we can approximate this path as $\id + t X$ for $t\in \R$ and $X\in\R^{n\times n}$.
+				Differentiating we find $\dv{t}\gamma(t) = X$, where $X$ is arbitrary. Thus we have
+				\begin{equation*}
+					T_{\id}(\GL{n}{\R}) = \R^{n \times n} \cong \R^{n^2}
+				\end{equation*}
+			\end{solution}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+\end{document}
