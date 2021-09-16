@@ -9,6 +9,8 @@
 *.blg
 *.run.xml
 *.toc
+*.snm
+*.nav
 *.pdf
 *.agdai
 .DS_Store
