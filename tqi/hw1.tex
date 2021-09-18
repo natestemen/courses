@@ -1,0 +1,134 @@
+\documentclass[boxes,pages,color=SeaGreen]{homework}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate@stemen.email}
+\term{Fall 2021}
+\course{Theory of Quantum Information}
+\courseid{QIC 820}
+\hwnum{1}
+\duedate{Oct 8, 2021}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+\usepackage{relsize}
+\usepackage{macros}
+
+%-----------------------------------------------------------------------------%
+% Macros
+%-----------------------------------------------------------------------------%
+
+\newcommand{\tinyspace}{\mspace{1mu}}
+\renewcommand{\vec}{\operatorname{vec}}
+\newcommand{\I}{\mathbb{1}}
+\newcommand{\reg}[1]{\mathsf{#1}}
+\renewcommand{\t}{{\scriptscriptstyle\mathsf{T}}}
+
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\U}{\mathcal{U}}
+\renewcommand{\P}{\mathcal{P}}
+
+\newcommand{\Lin}{\mathrm{L}}
+\newcommand{\Trans}{\mathrm{T}}
+\newcommand{\Pos}{\mathrm{Pos}}
+\newcommand{\Herm}{\mathrm{Herm}}
+\newcommand{\Channel}{\mathrm{C}}
+\newcommand{\Unitary}{\mathrm{U}}
+\newcommand{\Density}{\mathrm{D}}
+\newcommand{\CP}{\mathrm{CP}}
+
+
+\begin{document}
+
+\begin{problem}
+Let $\X$ and $\Y$ be complex Euclidean spaces and let
+$\Phi\in\CP(\X,\Y)$ be a completely positive map.
+Prove that there exists an operator $B\in\Lin(\X\otimes\Z,\Y)$, for some
+choice of a complex Euclidean space $\Z$, such that
+\[
+    \Phi(X) = B (X \otimes \I_{\Z}) B^{\ast}
+\]
+for all $X\in\Lin(\X)$.
+Identify a condition on the operator $B$ that is equivalent to $\Phi$
+preserving trace.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\X$ and $\Y$ be complex Euclidean spaces, let $\Phi\in\Trans(\X,\Y)$
+be a positive (but not necessarily completely positive) map, and let
+$\Delta\in\Channel(\Y)$ denote the completely dephasing channel with
+respect to the space $\Y$.
+Prove that $\Delta\Phi$ is completely positive.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\X$ and $\Y$ be complex Euclidean spaces and let $\Sigma$ be an
+alphabet.
+Suppose further that $\eta:\Sigma\rightarrow\Pos(\X)$ is a function
+satisfying
+\[
+    \sum_{a\in\Sigma} \eta(a) \in \Density(\X),
+\]
+which is to say that $\eta$ represents an \emph{ensemble of states},
+and $u\in\X\otimes\Y$ is a purification of the average state of this
+ensemble:
+\[
+    \tr_{\Y}( u u^{\ast} ) = \sum_{a\in\Sigma} \eta(a).
+\]
+Prove that there exists a measurement $\mu:\Sigma\rightarrow\Pos(\Y)$ for
+which
+\[
+    \eta(a) = \tr_{\Y} \bigl((\I_{\X}\otimes\mu(a))u u^{\ast}\bigr)
+\]
+for all $a\in\Sigma$.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\X$, $\Y$, and $\Z$ be complex Euclidean spaces and let
+$\Phi\in\Channel(\X,\Y\otimes\Z)$ be a channel.
+Prove that the following two statements are equivalent:
+\begin{parts}
+    \part
+    There exists a complex Euclidean space $\W$, a state
+    $\sigma\in\Density(\Y\otimes\W)$, and a channel
+    $\Psi\in\Channel(\W\otimes\X,\Z)$ so that
+    \[
+        \Phi(X) = \bigl(\I_{\mathsmaller{\Lin(\Y)}} \otimes
+        \Psi\bigr)(\sigma\otimes X)
+    \]
+    for all $X\in\Lin(\X)$.\label{part:4a}
+
+    \part
+    There exists a density operator $\rho\in\Density(\Y)$ for which
+    \[
+        \tr_{\Z}(J(\Phi)) = \rho \otimes \I_{\X}.
+    \]\label{part:4b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:4a}
+    \ref{part:4b}
+\end{solution}
+
+\end{document}
