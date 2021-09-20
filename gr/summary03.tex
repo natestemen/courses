@@ -1,0 +1,53 @@
+\documentclass{homework}
+
+\usepackage{cleveref}
+\usepackage{macros}
+
+\input{config}
+\hwnum{4}
+\duedate{Sun, Sep 19, 2021 11:59 PM}
+
+\begin{document}
+
+In this lecture we saw three important topics:
+\begin{enumerate}
+	\item the introduction of differential forms and the exterior algebra\label{it:forms}
+	\item derivations on the exterior algebra,\label{it:derivation}
+	\item and the basic idea of a cohomology theory\label{it:cohomology}
+\end{enumerate}
+
+\paragraph{\Cref{it:forms}:}
+My main takeaway for the question of ``what is a differential form?'' is\dots, well basically just an antisymmetric tensor!
+More formally a differential $k$-form is a tensor of rank $(0, k)$ which is antisymmetric.
+By antisymmetric we mean for $\nu: T_p(M)_r\to \R$ then
+\begin{equation*}
+	\nu(\xi_1, \ldots, \xi_i, \ldots, \xi_j, \ldots \xi_k) = - \nu(\xi_1, \ldots, \xi_j,\ldots, \xi_i, \ldots, \xi_k).
+\end{equation*}
+We use the following notation for the space of differential $k$-forms:
+\begin{equation*}
+	\Lambda_k(p) \defeq AT_p(M)_k,
+\end{equation*}
+where $A$ is the antisymmetrization operator which pulls out the antisymmetric part of any tensor.
+We can then define a product on $\Lambda_k(p)$ which we call the wedge product which takes a $k$-form, and an $\ell$-form into a $(k + \ell)$-form.
+This product can be extended to $\Lambda(p) \defeq \bigoplus_{i = 0}^n \Lambda_i(p)$ and turns this into an algebra which is called the exterior algebra.
+Very importantly, we can then extend these concepts from only existing at points $p\in M$, to existing on the entire manifold.
+We use $\Lambda(M)$ to denote ``differential form fields'' on the entire manifold (which is still an algebra).
+
+\paragraph{\Cref{it:derivation}:}
+With an algebra structure on $\Lambda(M)$ we can ask what are the derivations on such an algebra.
+Nicely enough, we actually have one we've been working with that turns out to be an \emph{anti-derivation}:
+\begin{align*}
+	\dd{} : \Lambda(M) & \longrightarrow \Lambda(M)                                                            \\
+	f                  & \longmapsto \dd{f}\quad\text{where }f\in\Lambda_0(M)\text{ and }\dd{f}\in\Lambda_1(M) \\
+	\dd{x_i}           & \longmapsto 0\quad\text{for all }i.
+\end{align*}
+
+\paragraph{\Cref{it:cohomology}:}
+Without getting too much into it (because I don't understand it well enough, nor did we get too into it), a cohomology theory is an attempt to classify differentiable manifolds.
+To do this we use the fact that it's easier to tell if two abelian groups are isomorphic than it is two manifolds are diffeomorphic.
+Therefore, we construct\footnote{This word \emph{construct} is doing a \textbf{lot} of heavy lifting.} a map from smooth manifolds to abelian groups such that if the image of two manifolds are not isomorphic, then the manifolds must not have been diffeomorphic.
+This helps us classify manifolds up to a ``global topology''.
+We then also saw how this cohomology can be seen as a functor from the category of smooth manifolds $\mathsf{Smooth}$ to the category of Abelian groups $\mathsf{Ab}$.
+This birds eye perspective allows us to see many similarities between seeemingly disparate fields.
+
+\end{document}
