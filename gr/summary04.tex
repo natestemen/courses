@@ -1,0 +1,42 @@
+\documentclass{homework}
+
+\usepackage{cleveref}
+\usepackage{macros}
+
+\input{config}
+\hwnum{5}
+\duedate{Wed, Sep 22, 2021 11:59 PM}
+
+\begin{document}
+
+In this lecture we saw two important topics:
+\begin{enumerate}
+	\item the inner derivation on the algebra of completely antisymmetric differential forms\label{it:inner}
+	\item the definition of the Lie derivative\label{it:lie}
+\end{enumerate}
+
+As we saw in the last lecture, the exterior derivative $\dd : \Lambda^k(M)\to\Lambda^{k+1}(M)$ gave us a way to differentiate rank $(0, k)$ covariant tensors.
+That said, in order to do more advanced physics, and presumably general relativity, we need a way to differentiate more advance objects, such as any rank $(a, b)$ tensor with respect to any other.
+To this end we construct the inner derivation $\iota_X :\Lambda^k(M)\to \Lambda^{k-1}(M)$ and use it in conjunction with the exterior derivative to arrive at a definition of derivative that is general enough to handle our wildest dreams.
+
+\paragraph{\Cref{it:inner}:}
+We first \emph{define} the inner derivation to send $0$-forms to 0, and $1$-forms to a $0$-form under $\omega\mapsto \iota_\xi(\omega) = \omega(\xi)$ where $\xi$ is vector field defined on our manifold $M$.
+With this definition we then saw the way this map works if $\gamma\in\Lambda^k(M)$ then we have
+\begin{equation*}
+	\iota_\xi(\gamma)(\eta_1,\ldots,\eta_{k-1}) = \gamma(\xi,\eta_1,\ldots,\eta_{k-1}).
+\end{equation*}
+Some call this map a contraction as we are simply using $\xi$ as the first positional argument.
+
+\paragraph{\Cref{it:lie}:}
+We now have a map that raises the degree of the form (the exterior derivative $\dd$), and a map that lowers the degree (the interior/inner derivative $\iota_\xi$).
+Our goal is to construct a degree-0 derivation on $\Lambda(M)$ such that it extends the notion of derivative, and aligns with our previous notions of directional derivatives on functions (0-forms).
+This goal is accomplished by taking
+\begin{equation*}
+	\mathcal{L}_\xi\defeq \dd\circ\iota_\xi + \iota_\xi\circ\dd.
+\end{equation*}
+Well indeed this does what we want, but if we define the Lie derivative this way, then it won't actually be defined on all tensor fields because $\dd$ and $\iota_\xi$ are not defined on all tensor fields.
+Hence we go back to our roots and the first definition of the derivative we encounter: the Newton-Leibniz definition of a derivative.
+There are some complications here since a tensor field at a point $p$ and a nearby point $p + \varepsilon$ cannot be subtracted due to living in completely different spaces.
+The first way I thought this would be solved is via parallel transport, and maybe that's what Achim is doing, but using a slightly different language of ``flows'' instead.
+
+\end{document}
