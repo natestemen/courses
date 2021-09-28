@@ -1,0 +1,40 @@
+\documentclass{homework}
+
+\usepackage{cleveref}
+\usepackage{macros}
+
+\input{config}
+\hwnum{6 \& 7}
+\duedate{Wed, Sep 29, 2021 11:59 PM}
+
+\begin{document}
+
+In these two lectures we added structure to our manifold so it becomes a more familiar place upon which we can do physics.
+To start we first introduced the notion of orientability which is a requirement that the normal vector to a manifold varies continuously around the manifold $M$ (and that it's uniquely defined at every point).
+A classic example of non-orientability is the M\"obius strip.
+Now if $M$ is orientable we can define integration of a top form $\omega$ using a chart $\alpha$ and our pre-existing notion of integration on $\R^n$.
+\begin{equation*}
+	\int_M \omega \defeq \int_{\alpha(M)}f(x)\dd{x}^1\dd{x}^2\cdots\dd{x}^n
+\end{equation*}
+This is exactly why we introduced the notion of $k$-forms, as they are the things that we integrate over.
+An important theorem of differential geometry is that of Stokes' Theorem:
+\begin{equation*}
+	\int_M\dd{\omega} = \int_{\partial M}\omega
+\end{equation*}
+where $\omega\in\Lambda_{n-1}(M)$ and $\partial M$ is the boundary of $M$.
+We then went on to show how many of the theorems we saw in calculus and multi-variable calculus can all be derived from Stokes's Theorem.
+
+In lecture 7 we add another piece to our manifold: a metric, which we define to be rank $(0, 2)$\footnote{This implies covariance, right?} tensor.
+A metric is serious business, and it adds lots of structure which gives us the ability to measure other things.
+For example the metric makes it possible to measure angles, volumes, and curvature which we'll need in the future for GR.
+We also saw how the metric $g_{\mu\nu}$ yields the Hodge star operator $\star: \Lambda_p \to \Lambda_{n - p}$ and in turn also a duality between the domain and range.
+This Hodge star also turns $\Lambda_p$ into a Hilbert space which we know and love from quantum.
+And finally---through a few steps---we can define the Laplacian $\laplace: \Lambda_p \to \Lambda_p$ and hence formulate wave equations on our manifold!
+This is exciting because lots of physics is formulated in terms of wave equations.
+
+We then used some of these new tools to show how Maxwell's equations can be formulated using exterior derivatives and the Hodge star:
+\begin{align*}
+	\dd{F} & = 0 & \delta F & = \star j.
+\end{align*}
+
+\end{document}
