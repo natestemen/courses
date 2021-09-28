@@ -45,6 +45,8 @@
 
 \begin{document}
 
+All references to theorem/propositions/etc. are references to Watrous's book.
+
 \begin{problem}
 Let $\X$ and $\Y$ be complex Euclidean spaces and let
 $\Phi\in\CP(\X,\Y)$ be a completely positive map.
@@ -59,6 +61,29 @@ preserving trace.
 \end{problem}
 
 \begin{solution}
+    By Proposition 2.18 we know that $\Phi^*$ is also a completely positive map $\Phi^*\in\CP(\Y, \X)$.
+    Now, using the Stinespring representation of $\Phi^*$ and Theorem 2.22, there exists an $A\in \Lin(\Y, \X\otimes\Z)$ such that
+    \begin{equation*}
+        \Phi^*(Y) = \tr_\Z(AYA^*).
+    \end{equation*}
+    Using the fact that $(\Phi^*)^* = \Phi$, and Equation 2.72 which gives us the dual representation of a Strinespring map we have
+    \begin{equation*}
+        \Phi(X) = \Phi^{**}(X) = A^*(X\otimes\I_\Z)A.
+    \end{equation*}
+    Finally, taking $B = A^*$ we see first $B\in\Lin(\X\otimes\Z, \Y)$ and indeed
+    \begin{equation*}
+        \Phi(X) = B (X \otimes \I_{\Z}) B^*.
+    \end{equation*}
+    {\color{SeaGreen}\rule{\textwidth}{.5pt}}
+
+    \noindent
+    To derive a condition on $B$ such that $\Phi$ preserves trace we set $\tr(X) = \tr(\Phi(X))$.
+    \begin{align*}
+        \tr(X) = \tr(\Phi(X)) & = \tr(B(X\otimes\I_\Z)B^*)            \\
+                              & = \tr_\X(\tr_\Z(B^*B(X\otimes\I_\Z))) \\
+                              & = \tr(\tr_\Z(B^*B)X)
+    \end{align*}
+    Thus, in order for this mapping to preserve trace we must have $\tr_\Z(B^*B) = \I_\X$.
 \end{solution}
 
 %-----------------------------------------------------------------------------%
