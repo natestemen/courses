@@ -1,0 +1,73 @@
+% !TEX program = xelatex
+\documentclass[11pt,aspectratio=1610,xcolor=dvipsnames]{beamer}
+
+\usetheme[
+    background=light,
+    numbering=fraction,
+    block=fill,
+    progressbar=frametitle
+]{metropolis}
+
+\usepackage{physics}
+\usepackage{bbm}
+\usepackage[most]{tcolorbox}
+\newtcolorbox{prob}{colback=green!5!white,colframe=green!75!black}
+\colorlet{LightLavender}{Lavender!40!}
+\usefonttheme[onlymath]{serif}
+\newcommand{\GL}[2]{\mathsf{GL}(#1\,; #2)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\defeq}{\stackrel{\text{\tiny def}}{=}}
+\DeclareMathOperator{\id}{id}
+
+
+\newcommand{\problemstatement}{Does the topology on Minkowski space agree with the ``metric topology'' induced by the metric $\eta_{\mu\nu} = \smqty[-1 & & &  \\ & \phantom{+}1 & & \\ & & \phantom{+}1 & \\ & & & \phantom{+}1]$?}
+\title{General Relativity Exam Problem 3}
+\date{Sep 30, 2021}
+\author{Nate Stemen (he/they)}
+\institute{AMATH 875}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Problem Statement}
+	\large
+	\begin{prob}
+		\problemstatement
+	\end{prob}
+\end{frame}
+
+\begin{frame}{What is Minkowski space?}
+	% \begin{definition}[Minkowski Space]
+	% 	$\R\times\R^3 = \R^{1,3}$
+	% \end{definition}
+	\begin{definition}[Metric Space]
+		A \emph{metric space} is a pair $(M, d)$ where $M$ is a set, and $d: M \times M \to \R$ is a function satisfying
+		\begin{itemize}
+			\item $d(x, y) = 0$ if and only if $x = y$,
+			\item $d(x, y) = d(y, x)$, and
+			\item $d(x, z) \leq d(x, y) + d(y, z)$.
+		\end{itemize}
+	\end{definition}
+	\pause
+	\begin{definition}[Open Balls]
+		For any $x\in M$ and $r > 0$, we define the open ball of radius $r$ to be
+		\begin{equation*}
+			B(x; r) = \qty{y\in M : d(x, y) < r}.
+		\end{equation*}
+	\end{definition}
+	% \begin{itemize}[<+->]
+	% 	\item $\R^{n\times n} \cong \R^{n^2}$ is trivially a manifold
+	% 	\item $\GL{n}{\R}\subset \R^{n\times n}$
+	% 	\item $\det: \R^{n\times n} \to \R$ is a continuous function
+	% 	\item $\GL{n}{\R} = \det^{-1}\qty(\R\setminus\qty{0})$
+	% 	\item Thus $\GL{n}{\R}$ is an open subset of a smooth manifold
+	% \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\huge THIS PRESENTATION IS NOT YET COMPLETE.
+\end{frame}
+\end{document}
