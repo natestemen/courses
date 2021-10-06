@@ -1,5 +1,12 @@
 \documentclass[boxes,pages,color=SeaGreen]{homework}
 
+\hypersetup{
+    colorlinks=true,
+    urlcolor=SeaGreen!60!black,
+    linkcolor=Bittersweet
+}
+\newcommand{\collab}[1]{\footnote{\href{mailto:#1}{\texttt{#1}}}}
+
 \name{Nate Stemen}
 \studentid{20906566}
 \email{nate@stemen.email}
@@ -75,7 +82,7 @@ preserving trace.
     \begin{equation*}
         \Phi(X) = B (X \otimes \I_{\Z}) B^*.
     \end{equation*}
-    {\color{SeaGreen}\rule{\textwidth}{.5pt}}
+    {\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
     \noindent
     To derive a condition on $B$ such that $\Phi$ preserves trace we set $\tr(X) = \tr(\Phi(X))$.
@@ -87,9 +94,9 @@ preserving trace.
     Thus, in order for this mapping to preserve trace we must have $\tr_\Z(B^*B) = \I_\X$.
 
     Perhaps a simpler way of seeing this is using the fact that $\Phi$ preserving trace is equivalent to $\Phi^*$ being a unital map.
-    Thus using \cref{eq:adjoint} we have the following.
+    Thus using \cref{eq:adjoint} we have
     \begin{equation*}
-        \Phi^*(\1_\Y) = \tr_\Z(B^*\1_\Y B) = \tr_\Z(B^* B) = \1_\X
+        \Phi^*(\1_\Y) = \tr_\Z(B^*\1_\Y B) = \tr_\Z(B^* B) = \1_\X.
     \end{equation*}
 \end{solution}
 
@@ -104,6 +111,35 @@ Prove that $\Delta\Phi$ is completely positive.
 \end{problem}
 
 \begin{solution}
+    Let $\X = \C^\Sigma$ and $\Y = \C^\Gamma$ with $E_{a,b}$ being the standard basis for $\Lin(\X)$ and $\tilde{E}_{a,b}$ be the standard basis for $\Lin(\Y)$.
+    First, the Choi representation of $\Phi$ can be expanded:
+    \begin{align*}
+        J(\Phi) & = \sum_{a,b\in\Sigma}\Phi(E_{a,b})\otimes E_{a,b}                                        \\
+                & = \sum_{a,b\in\Sigma}\qty[\sum_{c,d\in\Gamma}\alpha_{c,d}\tilde{E}_{c,d}]\otimes E_{a,b} \\
+                & = \sum_{\substack{a,b\in\Sigma                                                           \\ c,d\in\Gamma}}\alpha_{c,d}\tilde{E}_{c,d}\otimes E_{a,b}
+    \end{align*}
+    We can now use the fact that $J(\Delta\Phi) = \qty[\Delta\otimes\1_\X]J(\Phi)$ to write the Choi representation of $J(\Delta\Phi)$.
+    \begin{align*}
+        J(\Delta\Phi) & = \qty[\Delta\otimes\1_\X]J(\Phi) \\
+                      & = \sum_{\substack{a,b\in\Sigma    \\ c,d\in\Gamma}}\alpha_{c,d}\Delta(\tilde{E}_{c,d})\otimes E_{a,b} \\
+                      & = \sum_{\substack{a,b\in\Sigma    \\ c\in\Gamma}}\alpha_{c,c}\tilde{E}_{c,c}\otimes E_{a,b}
+    \end{align*}
+    With this we now aim to use Theorem 2.22 to prove $\Delta\Phi$ is completely positive by showing $J(\Delta\Phi)\in\Pos(\Y\otimes\X)$.
+    First we derive a condition on the $\alpha_{c,d}$ coefficients using the fact that $\Phi$ is a positive map.
+    Let $\qty{\ket{c}}_{c\in\Gamma}$ be a basis for $\Y$, and since $E_{a,b}$ is a positive operator, so should $\Phi(E_{a,b})$.
+    \begin{equation*}
+        \ev{\Phi(E_{a,b})}{\tilde{c}} = \ev{\sum_{c,d\in\Gamma}\alpha_{c,d}\tilde{E}_{c,d}}{\tilde{c}} = \sum_{c,d\in\Gamma}\alpha_{c,d}\braket{\tilde{c}}{c}\braket{d}{\tilde{c}} = \sum_{c,d\in\Gamma}\alpha_{c,d}\delta_{\tilde{c},c}\delta_{d,\tilde{c}} = \alpha_{\tilde{c},\tilde{c}}
+    \end{equation*}
+    Thus for all $c\in\Gamma$ we have $\alpha_{c,c} \geq 0$.
+
+    Now take $\qty{\ket{c}\otimes\ket{a}}_{\substack{a\in\Sigma \\ c\in\Gamma}}$ to be a basis for $\Y\otimes\X$.
+    We can now check if $J(\Delta\Phi)\in\Pos(\Y\otimes\X)$ by showing $\bra{c}\otimes\bra{a}J(\Delta\Phi)\ket{c}\otimes\ket{a}\geq 0$.
+    \begin{align*}
+        \bra{\tilde{c}}\otimes\bra{\tilde{a}}J(\Delta\Phi)\ket{\tilde{c}}\otimes\ket{\tilde{a}} & = \sum_{\substack{a,b\in\Sigma \\ c\in\Gamma}}\alpha_{c,c}\bra{\tilde{c}}\otimes\bra{\tilde{a}}\, \tilde{E}_{c,c}\otimes E_{a,b}\,\ket{\tilde{c}}\otimes\ket{\tilde{a}} \\
+                                                                                                & = \sum_{\substack{a,b\in\Sigma \\ c\in\Gamma}}\alpha_{c,c}\braket{\tilde{c}}{c}\braket{c}{\tilde{c}}\braket{\tilde{a}}{a}\braket{b}{\tilde{a}} \\
+                                                                                                & = \alpha_{\tilde{c},\tilde{c}}
+    \end{align*}
+    Since we've already shown $\alpha_{c,c} \geq 0$ for all $c\in\Gamma$, this shows that $J(\Delta\Phi)$ is positive semidefinite by extending this argument to linear combinations of the basis elements.
 \end{solution}
 
 %-----------------------------------------------------------------------------%
@@ -129,8 +165,44 @@ which
 \]
 for all $a\in\Sigma$.
 \end{problem}
+\noindent Solution completed in collaboration with Alev Orfi,\collab{akborfi@uwaterloo.ca} and Muhammad Usman Farooq.\collab{mu7faroo@uwaterloo.ca}
+
+{\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
 \begin{solution}
+    The fact that $\vec:\Lin(\X,\Y)\to\Y\otimes\X$ is a bijection allows us to find an operator $A\in\Lin(\Y, \X)$ such that $\vec(A) = u$.
+    We thus have
+    \begin{equation*}
+        \tr_\Y(uu^*) = \sum_{a\in\Sigma}\eta(a) = AA^*
+    \end{equation*}
+    using $\tr_\Y(\vec(C)\vec(B)^*) = CB^*$ for $C, B\in\Lin(\Y, \X)$.
+    Combining Exercise 3 which says $\im(P)\subseteq\im(P + Q)$ for $P, Q\in\Pos(\X)$ and the fact that $\eta(A)\in\Pos(\X)$, we can write $\im(\eta(a))\subseteq\im(\sum\eta(a)) = \im(AA^*)\subseteq\im(A)$.
+    Now, we need a lemma---Lemma 2.30 from Watrous.
+    \begin{lemma}
+        For $D\in\Lin(\Y, \X)$ we have the following equality of sets.
+        \begin{equation*}
+            \qty{P\in\Pos(\X) : \im(P)\subseteq\im(D)} = \qty{DQD^* : Q\in\Pos(\X)}
+        \end{equation*}
+    \end{lemma}
+    Thus since $\eta(a)\in\Pos(\X)$ and $\im(\eta(a)) \subseteq \im(A)$, we can find a $Q_a\in\Pos(\X)$ such that $\eta(a) = AQ_aA^*$.
+    In particular since the transpose is a positive map $Q_a^\intercal$ is also positive and we take as definition $\mu(a) \defeq Q_a^\intercal$.
+
+    We now show $\mu: \Sigma \to \Pos(\X)$ is indeed a measurement.
+    We've already shown $\mu(a)$ to be a positive semi-definite operator on $\X$, so we need to show $\mu$ resolves the identity.
+    \begin{equation*}
+        \sum_{a\in\Sigma}\eta(a) = \sum_{a\in\Sigma}A\mu(a)^\intercal A^* = A\qty[\sum_{a\in\Sigma}\mu(a)^\intercal]A^* = AA^*
+    \end{equation*}
+    This last equality follows from the definition of $A$, and in order for it to hold we must have $\sum_{a\in\Sigma}\mu(a)^\intercal = \I_\X$.
+    Taking the transpose of both sides we have the required summation.
+
+    Lastly we must show these $\mu(a)$ relate to $\eta(a)$ in the proper way.
+    \begin{align*}
+        \eta(a) & = A\mu(a)^\intercal A^*                              \\
+                & = \tr_\Y\qty[\vec(A\mu(a)^\intercal)\vec(A)^*]       \\
+                & = \tr_\Y\qty[\vec(\1_\X A\mu(a)^\intercal)\vec(A)^*] \\
+                & = \tr_\Y\qty[(\1_X\otimes \mu(a))\vec(A)\vec(A)^*]   \\
+                & = \tr_\Y\qty[(\1_X\otimes \mu(a))uu^*]
+    \end{align*}
 \end{solution}
 
 %-----------------------------------------------------------------------------%
