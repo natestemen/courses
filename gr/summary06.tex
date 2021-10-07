@@ -1,0 +1,48 @@
+\documentclass{homework}
+
+\usepackage{cleveref}
+\usepackage{macros}
+
+\input{config}
+\hwnum{8 \& 9}
+\duedate{Wed, Oct 6, 2021 11:59 PM}
+
+\begin{document}
+
+In these lectures we dive deeper into understanding the ``shape'' of our manifold.
+As we saw last time, definining a metric $g_{\mu\nu}(x)$ allows us to measure infinitesimal distances which can be extended to finite distance.
+With a measure of distance one can study how closely (or not) the pythagorean theorem holds.
+This gives some notion of shape, but we'd like to understand it further.
+To this end we thought about what happens when you move a vector around on the sphere, and in particular how one can move it in such a way so that it faces a different direction upon returning it to it's starting point.
+All despite transporting the vector in such a way that it is aligned with the latitudes/longitudes.
+
+We thus try and understand shape through studying the derivative of vectors, and we started with defining the \emph{covariant derivative}.
+\begin{align*}
+	\nabla : T(M)\times T(M) & \longrightarrow T(M)       \\
+	(\eta, \xi)              & \longmapsto \nabla_\xi\eta
+\end{align*}
+This derivative must obey the two following conditions.
+\begin{align*}
+	\nabla_{f\xi}\eta & = f\nabla_\xi\eta \quad \text{for all }f\in\mathcal{F}(M) \\
+	\nabla_\xi(f\eta) & = \eta \nabla_\xi f + f\nabla_\xi\eta
+\end{align*}
+We see we have the familiar Leibniz rule in the second condition.
+This derivative does all sorts of complicated things in coordinates, involving Christoffel symbols, but we will not go into it here, besides to say here is the action of the covariant derivative in a given chart:
+\begin{equation*}
+	\nabla_{\!\!\pdv{x^i}}\pdv{x^j} = \Gamma^k_{\phantom{k}ij}(x)\pdv{x^k}.
+\end{equation*}
+
+We can then define a version of this derivative known as the absolute covariant derivative without the ``direction'' vector which we simply denote $\nabla$ without the subscript.
+A neat fact about this is that $\nabla\eta(\xi) = \nabla_\xi\eta$.
+With such machinery we are able to understand what parallel transport means.
+If we have a path $\gamma:\R\to M$, then a vector field $\eta$ is auto-paralllel along $\gamma$ if $\nabla_{\dot{\gamma}}\eta = 0$.
+That is, the vector field doesn't change under parallel transport along $\gamma$.
+
+We can then define a \emph{geodesic}, or shortest path between two points as follows.
+Let $\gamma:[0,1] \to M$ be a path.
+If $\nabla_{\dot{\gamma}}\dot{\gamma} = 0$, then $\gamma$ is a geodesic.
+With this, and out picture from the start of moving vectors around a sphere, we can see how we might be able to use these ideas to understand the shape of $M$.
+
+We then got into all sorts of stuff about curvature, and torsion that I'm feeling pretty lost on.
+
+\end{document}
