@@ -40,6 +40,7 @@
 \newcommand{\V}{\mathcal{V}}
 \newcommand{\U}{\mathcal{U}}
 \renewcommand{\P}{\mathcal{P}}
+% \newcommand{\standardmat}[2]{_{#1}^{\scriptstyle #2}}
 
 \newcommand{\Lin}{\mathrm{L}}
 \newcommand{\Trans}{\mathrm{T}}
@@ -228,11 +229,66 @@ Prove that the following two statements are equivalent:
         \tr_{\Z}(J(\Phi)) = \rho \otimes \I_{\X}.
     \]\label{part:4b}
 \end{parts}
+\vspace{-25pt}
 \end{problem}
+\noindent Solution completed in collaboration with Mohammad Ayyash,\collab{mmayyash@uwaterloo.ca} and Nicholas Zutt.\collab{nzutt@uwaterloo.ca}
+
+{\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
 \begin{solution}
-    \ref{part:4a}
-    \ref{part:4b}
+    \hyperref[part:4a]{(a) $\implies$ (b)}
+    To start let us take $\X = \C^\Sigma, \Y = \C^\Gamma$ and $\W = \C^\Pi$.
+    We can now expand $\sigma$ in the tensor product basis of $\Density(\Y\otimes\W)$ as
+    \begin{equation}\label{eq:sigma}
+        \sigma = \sum_{\substack{c,d\in\Gamma \\ e,f \in\Pi}}\sigma_{c,d,e,f}\standmat{c,d}{\Y} \otimes \standmat{e,f}{\W}.
+    \end{equation}
+    Where we use $\standmat{a,b}{\V}$ to be the standard matrix on space $\V$.
+    This allows us to expand $\Phi$ as follows.
+    \begin{equation*}
+        \Phi(X) = \sum_{\substack{c,d\in\Gamma \\ e,f\in\Pi}} \sigma_{c,d,e,f}\standmat{c,d}{\Y} \otimes \Psi(\standmat{e,f}{\W}\otimes X)
+    \end{equation*}
+    Now we compute the Choi representation of $\Phi$, and then trace out $\Z$.
+    If there are no limits on the summation, assume it is the same limits as the previous summation \emph{with} limits.
+    \begin{equation*}
+        J(\Phi) = \sum_{\substack{a,b\in\Sigma \\ c,d\in\Gamma \\ e,f\in\Pi}}\sigma_{c,d,e,f}\standmat{c,d}{\Y}\otimes \Psi(\standmat{e,f}{\W}\otimes\standmat{a,b}{\X})\otimes \standmat{a,b}{\X} \\
+    \end{equation*}
+    \begin{align*}
+        \tr_\Z(J(\Phi)) & = \sum\sigma_{c,d,e,f}\standmat{c,d}{\Y}\otimes \tr\qty[\Psi(\standmat{e,f}{\W}\otimes\standmat{a,b}{\X})]\otimes \standmat{a,b}{\X}                                                                    \\
+                        & = \sum\sigma_{c,d,e,f}\standmat{c,d}{\Y}\otimes \tr\qty[\standmat{e,f}{\W}\otimes\standmat{a,b}{\X}]\otimes \standmat{a,b}{\X}       &  & \text{\footnotesize ($\Psi$ preserves trace)}                 \\
+                        & = \sum\sigma_{c,d,e,f}\standmat{c,d}{\Y}\otimes \tr\qty[\standmat{e,f}{\W}]\tr\qty[\standmat{a,b}{\X}]\otimes \standmat{a,b}{\X}     &  & \text{\footnotesize ($\tr(A\otimes B) = \tr A \tr B$)}        \\
+                        & = \sum\sigma_{c,d,e,f}\,\,\delta_{e,f}\delta_{a,b}\,\,\standmat{c,d}{\Y}\otimes \standmat{a,b}{\X}                                   &  & \text{\footnotesize ($\tr\standmat{a,b}{\V} = \delta_{a,b}$)} \\
+                        & = \sum_{\substack{a\in\Sigma                                                                                                                                                                            \\ c,d\in\Gamma \\ e\in\Pi}}\sigma_{c,d,e,e}\standmat{c,d}{\Y}\otimes \standmat{a,a}{\X} \\
+                        & = \sum_{\substack{c,d\in\Gamma                                                                                                                                                                          \\ e\in\Pi}}\sigma_{c,d,e,e}\standmat{c,d}{\Y}\otimes \qty[\sum_{a\in\Sigma}\standmat{a,a}{\X}] = \tr_\W(\sigma)\otimes\1_\X
+    \end{align*}
+    The last step follows from taking the trace of \cref{eq:sigma}:
+    \begin{equation*}
+        \tr_\W(\sigma) = \sum_{\substack{c,d\in\Gamma \\ e,f \in\Pi}}\sigma_{c,d,e,f}\standmat{c,d}{\Y} \otimes \tr\qty[\standmat{e,f}{\W}] = \sum_{\substack{c,d\in\Gamma \\ e \in\Pi}}\sigma_{c,d,e,e}\standmat{c,d}{\Y}
+    \end{equation*}
+    Thus taking $\rho\defeq\tr_\W(\sigma)$ we have $\tr_\Z(J(\Phi)) = \rho\otimes\1_\X$.
+    The fact that $\rho\in\Density(\Y)$ follows from the fact that the trace is completely positive, and clearly $\tr(\rho) = \tr(\tr_\W(\sigma)) = \tr_{\Y\otimes\W}(\sigma) = 1$.
+
+    \noindent\hyperref[part:4b]{(b) $\implies$ (a)}
+    Let $u \in \Y\otimes \W \otimes \X$ be a purification of $\rho\otimes\1_\X$.
+    That is $\tr_\W(uu^*) = \rho\otimes \1_X = \tr_\Z(J(\Phi))$.
+    Further we have $\tr_{\W\otimes \X}(uu^*) = \dim(\X) \cdot \rho = \tr_\X\tr_\Z(J(\Phi)) = \tr_{\Z\otimes\X}(J(\Phi))$.
+    Proposition 2.29 with $P = J(\Phi)$ gives us the existence of a channel $\Lambda\in\Channel(\W\otimes\X, \Z\otimes\X)$ such that
+    \begin{equation*}
+        \qty(\1_{\Lin(\Y)}\otimes\Lambda)(uu^*) = J(\Phi).
+    \end{equation*}
+    We can now use
+    \begin{equation*}
+        \Phi(X) = \tr_\X\qty\big(J(\Phi)(\1_{\Y\otimes\Z}\otimes X^\intercal))
+    \end{equation*}
+    to recover the action of $\Phi$ from the Choi representation.
+    \begin{align*}
+        \Phi(X) = \tr_\X\qty\Big[\qty\big([\1_\Y\otimes\Lambda](uu^*))\qty\big(\1_{\Y\otimes\Z}\otimes X^\intercal)]
+    \end{align*}
+    We can now trace out $\X$ after applying $\Lambda$ to give a channel $\Psi\defeq \tr_\X\circ\,\Lambda$ which is an element of $\Channel(\W\otimes\X, \Z)$.
+    This allows us to write the final form of $\Phi$ as
+    \begin{equation*}
+        \Phi(X) = \qty\big(\1_\Y\otimes\Psi)(\underbrace{\tr_\X(uu^*)}_{\sigma}\otimes X^\intercal).
+    \end{equation*}
+    I have no idea how to get rid of the tranpose.
 \end{solution}
 
 \end{document}
