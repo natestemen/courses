@@ -1,0 +1,179 @@
+\documentclass[boxes,pages,color=SeaGreen]{homework}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=SeaGreen!60!black,
+    linkcolor=Bittersweet
+}
+\newcommand{\collab}[1]{\footnote{\href{mailto:#1}{\texttt{#1}}}}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate@stemen.email}
+\term{Fall 2021}
+\course{Theory of Quantum Information}
+\courseid{QIC 820}
+\hwnum{2}
+\duedate{Nov 5, 2021}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+\usepackage{relsize}
+\usepackage{macros}
+\usepackage{cleveref}
+
+%-----------------------------------------------------------------------------%
+% Macros
+%-----------------------------------------------------------------------------%
+
+\renewcommand{\vec}{\operatorname{vec}}
+
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\U}{\mathcal{U}}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\Fid}{\operatorname{F}}
+
+\newcommand{\Lin}{\mathrm{L}}
+\newcommand{\Trans}{\mathrm{T}}
+\newcommand{\Pos}{\mathrm{Pos}}
+\newcommand{\Herm}{\mathrm{Herm}}
+\newcommand{\Channel}{\mathrm{C}}
+\newcommand{\Unitary}{\mathrm{U}}
+\newcommand{\Density}{\mathrm{D}}
+\newcommand{\CP}{\mathrm{CP}}
+
+\newcommand{\triplenorm}[1]{
+  \lvert\!\lvert\!\lvert #1 
+  \rvert\!\rvert\!\rvert}
+
+\newcommand{\bigtriplenorm}[1]{
+  \bigl\lvert\!\bigl\lvert\!\bigl\lvert #1 
+  \bigr\rvert\!\bigr\rvert\!\bigr\rvert}
+
+\newcommand{\Bigtriplenorm}[1]{
+  \Bigl\lvert\!\Bigl\lvert\!\Bigl\lvert #1 
+  \Bigr\rvert\!\Bigr\rvert\!\Bigr\rvert}
+
+\newcommand{\biggtriplenorm}[1]{
+  \biggl\lvert\!\biggl\lvert\!\biggl\lvert #1 
+  \biggr\rvert\!\biggr\rvert\!\biggr\rvert}
+
+\newcommand{\Biggtriplenorm}[1]{
+  \Biggl\lvert\!\Biggl\lvert\!\Biggl\lvert #1 
+  \Biggr\rvert\!\Biggr\rvert\!\Biggr\rvert}
+
+\begin{document}
+
+
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Suppose that $\X$ and $\Y$ are complex Euclidean spaces and $M\in\Lin(\Y,\X)$
+is a given operator.
+Define a map $\Phi\in\Trans(\X\oplus\Y)$ as
+\[
+    \Phi\mqty(
+    X & Z \\
+    W & Y
+    ) = \mqty(
+    X & 0 \\
+    0 & Y
+    )
+\]
+for all $X\in\Lin(\X)$, $Y\in\Lin(\Y)$, $Z\in\Lin(\Y,\X)$, and
+$W\in\Lin(\X,\Y)$ (i.e., $\Phi$ zeroes out the off-diagonal blocks of a
+$2\times 2$ block operator of the form suggested in the equation), and
+consider the semidefinite program
+\[
+    \qty(
+    \Phi,
+    \frac{1}{2}\mqty(0 & M \\ M^* & 0),
+    \mqty(\1_{\X} & 0 \\ 0 & \1_{\Y})
+    ).
+\]
+
+\begin{parts}
+    \part
+    Express the primal and dual problems associated with this semidefinite
+    program in simple, human-readable terms.
+    (There is no single, well-defined answer to this part of the problem---just
+    do your best to make the primal and dual problems look as simple and
+    elegant as possible.)\label{part:1a}
+
+    \part
+    Prove that strong duality holds for this semidefinite program.\label{part:1b}
+
+    \part
+    What is the optimal value of this semidefinite program?\label{part:1c}
+
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:1a}
+    \ref{part:1b}
+    \ref{part:1c}
+\end{solution}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\X$ be a complex Euclidean space, and define
+\[
+    \delta(P,Q) = \sqrt{\tr(P) + \tr(Q) - 2 \Fid(P,Q)}
+\]
+for all positive semidefinite operators $P,Q\in\Pos(\X)$.
+Prove that $\delta$ satisfies these three properties:
+\begin{parts}
+    \part
+    $\delta(P,Q) \geq 0$ for all $P,Q\in\Pos(\X)$, with $\delta(P,Q) = 0$ if
+    and only if $P = Q$.\label{part:2a}
+    \part
+    $\delta(P,Q) = \delta(Q,P)$ for all $P,Q\in\Pos(\X)$.\label{part:2b}
+    \part
+    $\delta(P,Q) \leq \delta(P,R) + \delta(R,Q)$
+    for all $P,Q,R\in\Pos(\X)$.\label{part:2c}
+\end{parts}
+(These are the three defining properties of a \emph{metric}.)
+
+Hint: to prove that property (c) holds, first prove that if
+$\Y$ is a complex Euclidean space with $\dim(\Y)\geq\dim(\X)$,
+and $u\in\X\otimes\Y$ is any vector satisfying $\tr_{\Y}(u u^{\ast}) = P$,
+then
+\[
+    \delta(P,Q) = \min_{v\in\X\otimes\Y}\qty\big{\norm{u - v} : \tr_{\Y}(v v^*) = Q}.
+\]
+\end{problem}
+
+\begin{solution}
+    \ref{part:2a}
+    \ref{part:2b}
+    \ref{part:2c}
+\end{solution}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\Phi\in\Trans(\X,\Y)$ be a map, for complex Euclidean spaces $\X$ and
+$\Y$.
+Prove that
+\[
+    \triplenorm{\Phi}_1 =
+    \max_{\rho_0,\rho_1\in\Density(\X)}
+    \norm{
+        \qty\big( \1_{\Y} \otimes \sqrt{\rho_0} ) J(\Phi)
+        \qty\big( \1_{\Y} \otimes \sqrt{\rho_1} )}_1.
+\]
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\end{document}
