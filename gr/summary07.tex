@@ -8,5 +8,42 @@
 \duedate{Wed, Oct 20, 2021 11:59 PM}
 
 \begin{document}
+In these two lectures we further pursue the study of understanding the shape of our manifold.
+Recall we have curvature map:
+\begin{equation*}
+	R: \xi_1, \xi_2, \xi_3 \longrightarrow R(\xi_1, \xi_2)\xi_3 = \qty(\nabla_{\xi_1}\nabla_{\xi_2} - \nabla_{\xi_2}\nabla_{\xi_1} - \nabla_{\comm{\xi_1}{\xi_2}})\xi_3
+\end{equation*}
+where we can see $R\in T^1_3(M)$ using the pairing
+\begin{equation*}
+	R(\omega, \xi_1, \xi_2, \xi_3) \defeq \langle\omega,R(\xi_1,\xi_2)\xi_3\rangle = \omega(R(\xi_1,\xi_2)\xi_3).
+\end{equation*}
+This tensor can then be described by a 4-dimensional array of numbers using some chart and the $\pdv{x^i}$ and $\dd{x^i}$ bases.
+These numbers satisfy the two following properties known as the Bianchi identities.
+\begin{align}\label{eq:bianchi}
+	\sum_{jkl}R^i_{\phantom{i}jkl} = 0 &  & \sum_{klm}R^i_{\phantom{i}jkl;m} = 0
+\end{align}
+Where the sum's are over cyclic permutations of the indices, and the semicolon denotes the covariant derivative.
+There are also important contractions of the curvature tensor, namely the Ricci tensor $R_{jl}\defeq R^i_{\phantom{i}jil}$ and the scalar curvature: $R\defeq g^{jl}R_{jl}$.
+
+With two ways of specifying the shape of a manifold---the first threw a metric, and second using a connection---we can ask about the relationship between them.
+Part of this characterization was given in the following theorem.
+\begin{theorem}
+	For each (pseudo) Riemannian manifold $(M, g)$ there exists a unique $\nabla$ that is torsionless \emph{and} compatible with $g$ ($\nabla g = 0$). This connection $\nabla$ is called the Levi-Civita connection.
+\end{theorem}
+We can then study these object taking arbitrary vector fields that form bases at each point in both $(1,0)$ and $(0,1)$ forms.
+These, together with a new derivative---the absolute exterior derivative $D$---can be used to write the Bianchi identities we saw in \cref{eq:bianchi} as
+\begin{align*}
+	D\Theta^i = \Omega^i_{\phantom{i}j}\wedge \theta^j &  & D\Omega^i_{\phantom{i}j} = 0.
+\end{align*}
+
+We then shift to thinking about when manifolds describe the same spacetime.
+This happens when there is a map $\phi: (M, g)\to(M, g')$ such that $T\phi_*(g) = g'$.
+Since all this math is for the express purpose of modeling spacetime and we cannot distinguish spacetimes based on mathematical charts, we only care about metrics that are unique up to isometric-ism.\footnote{This isn't the right word, is it?}
+We then have a Riemannian structure $\Xi$ that is an equivalence class of pairs $(M,g)$.
+With this idea we then delved into the question of being able to detect and distinguish Riemannian structures using spectral geometry.
+This involves studying the spectrum of the Laplacian $\laplace$ and repeatedly using the Hodge decomposition:
+\begin{equation*}
+	\Lambda_p = \dd\Lambda_{p-1}\oplus\delta\Lambda_{p+1}\oplus\Lambda^0_p.
+\end{equation*}
 
 \end{document}
