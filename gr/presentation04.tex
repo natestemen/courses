@@ -11,6 +11,8 @@
 \usepackage[most]{tcolorbox}
 \newtcolorbox{prob}{colback=green!5!white,colframe=green!75!black}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\SO}{\mathsf{SO}}
+\newcommand{\GL}[2]{\mathsf{GL}(#1\,;#2)}
 \newcommand{\defeq}{\stackrel{\text{\tiny def}}{=}}
 
 
@@ -32,10 +34,42 @@
 	\end{prob}
 \end{frame}
 
+\begin{frame}{Recall}
+	\begin{itemize}
+		\item Let $(M, g)$ and $(N, h)$ be two (pseudo) Riemannian manifolds.
+		\item Let $f:M\to N$ be a diffeomorphism.
+	\end{itemize}
+	\pause
+	\begin{exampleblock}{Pullback of metric tensor}
+		We can pull back the metric on $N$ to one on $M$ by precomposition:
+		\begin{equation*}
+			f^* h \defeq h(f(-), f(-)).
+		\end{equation*}
+	\end{exampleblock}
+	\pause
+	\begin{definition}[Isometry]
+		If $f$ satisfies $f^*h = g$, then $f$ is called an isometry.
+	\end{definition}
+\end{frame}
 
-\begin{frame}
-	\Huge
-	I'm still working on the presentation!
+\begin{frame}{Our Manifolds}
+	\begin{alertblock}{Setup}
+		Take $M = N = \R^n$, and equip $M$ with the standard Euclidean metric $g = \ip{-}{-}$, and $N$ with $h = \ip{A\cdot -}{A\cdot -}$ where $A\in\SO(n)$ is a rotation.
+	\end{alertblock}
+	\pause
+	\begin{itemize}[<+->]
+		\item Think of this as $\R^n$ and a rotated copy $A\cdot \R^n$.
+		\item Define $f:M\to N$ by $v\mapsto A^\intercal \cdot v$.
+		\item $(f^*h)(a, b) \defeq h(f(a), f(b)) = \ip{A A^\intercal\, a}{A A^\intercal\, b} = \ip{a}{b} = g(a, b)$.
+		\item $a$ and $b$ are arbitrary, thus $f^* h = g$, and $f$ is an isometry (as expected).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Extensions}
+	\begin{itemize}
+		\item This works for any $A\in\GL{n}{\R}$ where we define $f$ by $f(v) = A^{-1}\cdot v$ instead of transpose.
+		\item Can also be generalized to flows on manifolds, and often Lie groups\footnote{Manifolds with a group structure that is compatible with the differential structure.} generate flows.
+	\end{itemize}
 \end{frame}
 
 \end{document}
