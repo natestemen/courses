@@ -1,4 +1,4 @@
-DIRS = qip numerical qtheory lie oqs
+DIRS = aqt num qip oqs lie tqi gr
 
 .PHONY: clean
 
