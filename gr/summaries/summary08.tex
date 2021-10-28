@@ -2,6 +2,12 @@
 
 \usepackage{cleveref}
 \usepackage{macros}
+\usepackage{tensor}
+
+\newcommand{\psifield}{\tensor{\psi}{_{(i)}^{a\ldots b}_{c\ldots d}}}
+\newcommand{\psifieldder}{\tensor{\psi}{_{(i)}^{a\ldots b}_{c\ldots d;e}}}
+
+\newtheorem*{principle}{Action Principle}
 
 \input{config}
 \hwnum{12 \& 13}
@@ -9,4 +15,38 @@
 
 \begin{document}
 
+In these lectures we start doing things that seem --- and sound --- like physics.
+In particular we begin thinking about how matter and light behave on curved spacetimes.
+
+We start with the \emph{action principle} from classical mechanics that we are familiar, and reformulate it on a general manifold with curvature specified by a metric $g$.
+\begin{principle}
+    A theory of matter fields is specified by Lagrangian function $L$ (scalar function of the matter fields $\psifield$), their first covariant derivatives, and the metric $g$.
+    \begin{equation*}
+        L(\psi) = L^{\mathrm{(matter)}}\qty(\qty{\psifield}, \qty{\psifieldder}, g)
+    \end{equation*}
+    If $B\subset M$ is some compact subset of our manifold, take the action to be
+    \begin{equation*}
+        S[\psi]\defeq \int_B L(\psi)\sqrt{g}\dd[4]{x}.
+    \end{equation*}
+    Extrapolating from classical mechanics where physical fields $\psi$ are extremal points of the action we have
+    \begin{equation*}
+        \fdv{S[\psi]}{\psi} = 0.
+    \end{equation*}
+\end{principle}
+Without fully defining the functional derivative $\fdv{\psi}$ we can massage the last equation to read $\eval{\pdv{S[\psi]}{\lambda}}_{\lambda = 0} = 0$ where $\lambda$ is a parameter is a small number that keeps track of the deformation of $\psi$.
+
+With some familiar machinery for those with experience with Lagrangian mechanics we can now write down the ``Euler-Lagrange equations''.
+\begin{equation*}
+    \pdv{L}{\psifield} - \qty(\pdv{L}{\psifieldder})_{;e} = 0
+\end{equation*}
+With this we now have ways to calculate the equations of motions of matter fields (and hence particles) on curved spacetimes!
+
+We proceed to then study the classical analogs of matter, namely energy and momentum.
+In classical mechanics symmetries of these things were given to us by Noether's theorem, but in a general curved spacetime we don't have the luxury of things like translations invariance!
+Instead we consider automorphisms of the manifold $\phi: M \to M$ such that $\phi^*(g) = g$.
+These often arrise as infinitesimal symmetries which can be extended to symmetries in a finite volume of spacetime.
+A vector field $\xi$ is said to be a ``Killing vector field'' (in $B$) if $L_\xi(g) = 0$ in all of $B\subset M$.
+These Killing vector fields allow us to study concepts like momentum as an incompressible liquid on our manifold that flows.
+In particular it allows us to make statements like ``as much momentum flows into a volume $B$ as much flows out''.
+The energy-momentum tensor was also defined, but it's very confusing.
 \end{document}
