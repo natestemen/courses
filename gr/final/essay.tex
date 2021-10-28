@@ -1,0 +1,119 @@
+\documentclass[11pt,english]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[
+  margin=1.3in,
+  headheight=14pt]{geometry}
+
+
+\usepackage{mathpazo}
+\usepackage{graphicx}
+\usepackage{marginnote}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{babel}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Nate Stemen}
+\rhead{General Relativity for Cosmology}
+\rfoot{\thepage/\pageref{LastPage}}
+\usepackage{varioref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[linktocpage]{hyperref}
+\hypersetup{
+  linktoc=all,
+  colorlinks=true,
+  linkcolor=MidnightBlue,
+  filecolor=RubineRed,
+  urlcolor=Bittersweet,
+  citecolor=Fuchsia,
+}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage{titletoc}
+\usepackage{natbib}
+\bibliographystyle{unsrtnat}
+\usepackage[nottoc]{tocbibind}
+\usepackage[noabbrev]{cleveref}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\newcommand{\twonorm}[1][\rho]{c_{2,B} (#1)}
+\newcommand{\twonormE}[1][\rho]{c_{2,B}}
+\newcommand{\dephase}{\mathcal{D}_B}
+\newcommand{\iu}{\mathrm{i}\mkern1mu}
+\newcommand{\e}{\mathrm{e}}
+
+
+\titlecontents{section}[1.8pc]
+  {\addvspace{3pt}\bfseries}
+  {\contentslabel[\thecontentslabel]{1.8pc}}
+  {}
+  {\quad\thecontentspage}
+
+\titlecontents{subsection}[1.8pc]
+  {\addvspace{1pt}\small}
+  {\thecontentslabel\enspace{}}
+  {}
+  {\quad\thecontentspage}
+
+\titlecontents{subsubsection}[3.2pc]
+  {\addvspace{1pt}\small}
+  {\thecontentslabel\enspace{}}
+  {}
+  {\quad\thecontentspage}
+
+\begin{document}
+
+\begin{titlepage}
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+	\begin{center}
+
+		\textsc{\LARGE University of Waterloo}\\[1.5cm]
+
+		\textsc{\large AMATH 875 --- General Relativity for Cosmology}\\[0.75cm]
+
+		\HRule{}\\[0.4cm]
+
+		{\huge\bfseries Final Essay}\\[0.15cm]
+
+		\HRule{}\\[1cm]
+
+		{\large
+		\textbf{Name:} Nathaniel Stemen (20906566)\hspace{\fill} \textbf{Due:} December 15, 2020 \\
+		\textbf{Email:} \href{mailto:nate@stemen.email}{\texttt{nate@stemen.email}} \hspace{\fill} \textbf{Professor:} Achim Kempf
+		}
+
+		\vfill
+		\includegraphics[width=0.8\textwidth]{uwlogo.jpg}\\[1cm]
+	\end{center}
+\end{titlepage}
+
+\begingroup
+\colorlet{darkblue}{MidnightBlue!10!black}
+\hypersetup{linkcolor=darkblue}
+\tableofcontents
+\endgroup
+
+\setstretch{1.1}
+
+\vspace{0.5cm}
+
+\section{Background}
+
+\cite{inverse-problems}
+
+\clearpage
+
+\bibliography{refs}
+
+\end{document}
