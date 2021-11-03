@@ -8,5 +8,42 @@
 \duedate{Wed, Nov 3, 2021 11:59 PM}
 
 \begin{document}
+% problem given to me by Hank (the TA) who suggested if you can do this, you should feel pretty comfortable manipulating tensors and indices, and all these tools we've been using.
+% problem statement:
+% given you have the levi-civita connection and the relation between Christoffel symbols \Gamma and the metric g, write derive the Riemann curvature tensor in terms of g
+We start lecture 14 by discussing when the metric can be written in a somewhat simpler form than it's full $4\times 4$ glory.
+In particular we are interested in ``separating out'' the time component $g_{00}$ as $[g] = \smqty(g_{00} & 0 \\ 0 & g_{xy})$.
+We showed this is only possible if we have a \emph{static} space-time: that is we have a time-like Killing field $\xi$ such that
+\begin{equation}\label{eq:frob}
+    \xi\wedge\dd{\xi} = 0.
+\end{equation}
+Given \cref{eq:frob} we can find suitable coordinates to zero out $g_{0i}$ and $g_{i0}$ for $i>0$.
+
+We next attempt to derive the equations of motion given a Lagrangian (or action) setting $\fdv{S}{g_{\mu\nu}} = 0$, however due to how we defined the energy-momentum tensor, that would yield $\frac{1}{2}T^{\mu\nu}\sqrt{g} = 0$.
+This is not helpful as it implies the universe has no matter.
+To remedy this situation we have to use an effective action that has additional terms induced from the quantum effects of matter.
+How this is done is not quite clear, but in the end with a much more complicated action.
+\begin{equation*}
+    S_\text{eff}[g,\psi] = \int_M\qty(L^\text{matter} + L^\text{matter}_{\substack{\text{quantum} \\ \text{effects}}} + c_1 + c_2 R + c_3\order{R^2})\sqrt{g}\dd[4]{x}
+\end{equation*}
+Here $c_1$ represents the vacuum energy, and $c_2R$ and higher order terms represent the change of the vacuum energy due to curvature.
+With just $c_1$ and $c_2$ we can try and vary te action and again calculate $\fdv{S_\text{eff}}{g_{\mu\nu}} = 0$ and after a tedious calculation we obtain the Einstein equation:
+\begin{equation*}
+    R^{\mu\nu} - \frac{1}{2}g^{\mu\nu}R - \underbrace{8\pi G c_1}_{\Lambda} g^{\mu\nu} = 8\pi GT^{\mu\nu}.
+\end{equation*}
+
+This is all great, but when we calculate the cosmological constant $\Lambda$ theoretically and compare to experimental values we are off by over 100 orders of magnitude.
+As Achim says ``this is the worst physical prediction ever''.
+
+We then ask a similar question to how we started: ``how can we write the metric in a simpler form, namely $g_{\mu\nu}(x) = \eta_{\mu\nu}$?''
+We can do this by taking a particular orthonormal frame, or tetrad $\qty{\theta_\mu}$, $\qty{e_\mu}$ such that for all $p\in M$ we have $g(e_\mu, e_\nu) = \eta_{\mu\nu}$.
+Mathematically these are always guaranteed to exist, and are unique up to local Lorentz transformations.
+With such a tetrad we can then reexpress everything we've been doing, but have the convenience of working with the metric $\eta_{\mu\nu}$ at every point instead of something possibly much more complicated.
+We can then vary the action (without the cosmological constant) with respect to $\theta^\mu$ to obtain a new equation of motion expressed in terms of $H_{\alpha\beta\gamma} \defeq \star\qty(\theta^\alpha\wedge\theta^\beta\wedge\theta^\gamma)$.
+\begin{equation*}
+    -\frac{1}{2}H_{\mu\nu\rho}\wedge\Omega^{\nu\rho} = 8\pi G\star T_\mu
+\end{equation*}
+I'm still wrapping my head around why this is useful, but it seems as though this process is exactly what we do in E\&M when allow our phase symmetry to take on a global dependence on $x$.
+This also allows us to more easily generalize GR.
 
 \end{document}
