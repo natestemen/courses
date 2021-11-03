@@ -22,6 +22,9 @@
 \usepackage{relsize}
 \usepackage{macros}
 \usepackage{cleveref}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{todonotes}
 
 %-----------------------------------------------------------------------------%
 % Macros
@@ -70,6 +73,7 @@
 \begin{document}
 
 
+\def\arraystretch{1.2}
 
 %-----------------------------------------------------------------------------%
 
@@ -115,8 +119,65 @@ consider the semidefinite program
 \end{parts}
 \end{problem}
 
+\noindent Solution completed in collaboration with Alev Orfi,\collab{akborfi@uwaterloo.ca} and Muhammad Usman Farooq.\collab{mu7faroo@uwaterloo.ca}
+
+{\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
+
 \begin{solution}
     \ref{part:1a}
+    Given the nice form of $\Phi$ we can start by doing some algebra to simplify the program.
+    Starting with the definition of a semidefinite program we have
+    \begin{center}
+        \begin{tabular}{rl}
+            $\underset{X}{\text{maximize}}$: & $\left\langle \frac{1}{2}\smqty(0 & M \\ M^* & 0), X\right\rangle$ \\ \cmidrule(lr{1em}){2-2}
+            \multirow{2}{*}{subject to:}     & $\Phi(X) = \smqty(\1_\X           & 0 \\ 0 & \1_\Y)$                         \\
+                                             & $X\in\Pos(\X\oplus\Y)$.
+        \end{tabular}
+    \end{center}
+    Taking $X = \smqty(A & B \\ C & D)$ together with the condition that $\Phi(X) = \smqty(A & 0 \\ 0 & D) = \smqty(\1_\X & 0 \\ 0 & \1_\Y)$ we see that $A = \1_\X$ and $B = \1_\Y$.
+    Since $X\in\Pos(\X)$ it must also be hermitian ($X = X^*$), and hence $C = B^*$ making $X = \smqty(\1_\X & B \\ B^* & \1_\Y)$.
+    We can now expand out the inner product we are trying to maximize as follows (temporarily omitting the $\frac{1}{2}$):
+    \begin{align*}
+        \left\langle\smqty(0 & M                                               \\ M^* & 0), \smqty(\1_\X & B \\ B^* & \1_\Y)\right\rangle & = \tr\qty[\smqty(MB^* & M \\ M^* & M^*B)] \\
+                             & = \tr(MB^*) + \tr(M^*B)                         \\
+                             & = \langle B, M\rangle + \langle B^*, M^*\rangle
+    \end{align*}
+    This allows us to rewrite the primal problem as
+    \begin{center}
+        \begin{tabular}{rl}
+            $\underset{B}{\text{maximize}}$: & $\frac{1}{2}\langle B, M\rangle + \frac{1}{2}\langle B^*, M^*\rangle$     \\ \cmidrule(lr{1em}){2-2}
+            \multirow{2}{*}{subject to:}     & $\smqty(\1_\X                                                         & B \\ B^* & \1_Y) \in \Pos(\X\oplus\Y)$                         \\
+                                             & $B\in\Lin(\Y, \X)$.
+        \end{tabular}
+    \end{center}
+    In order to understand the dual problem we have to first know what $\Phi^*$ is.
+    This can be calculated by the definition of a adjoint map: $\langle\Phi(X), Y\rangle = \langle X, \Phi^*(Y)\rangle$.
+    \begin{align*}
+        \langle\Phi\smqty(X & Z \\ W & Y), \smqty(A & B \\ C & D)\rangle & = \tr(\smqty(X^*A & \cdot \\ \cdot & Y^*D)) = \tr(X^*A) + \tr(Y^*D) = \langle X, A\rangle + \langle Y , D \rangle \\
+        \langle\smqty(X     & Z \\ W & Y), \Phi^*\smqty(A & B \\ C & D)\rangle & = \tr(\smqty(X^*A' + W^*C' & \cdot \\ \cdot & Z^*B' + Y^*D'))
+    \end{align*}
+    In order for this to be equal to $\tr(X^*A) + \tr(Y^*D)$ we must have $A' = A$, $D' = D$, as well as $C' = 0 = B'$.
+    This gives us the action of $\Phi^*$ as $\Phi^*\smqty(A & B \\ C & D) = \smqty(A & 0 \\ 0 & D)$ and hence $\Phi = \Phi^*$.
+
+    To simplify the dual problem we first write it in it's full generality:
+    \begin{center}
+        \begin{tabular}{rl}
+            $\underset{Y}{\text{minimize}}$: & $\left\langle \smqty(\1_\X        & 0 \\ 0 & \1_\Y), Y\right\rangle$ \\ \cmidrule(lr{1em}){2-2}
+            \multirow{2}{*}{subject to:}     & $\Phi(Y) \geq \frac{1}{2}\smqty(0 & M \\ M^* & 0)$    \\
+                                             & $Y\in\Herm(\X\oplus \Y)$.
+        \end{tabular}
+    \end{center}
+    With a little bit of algebra, together with the fact that $Y\in\Herm(\X\oplus\Y)$ this problem transforms to
+    \begin{center}
+        \begin{tabular}{rl}
+            $\underset{A, D}{\text{minimize}}$: & $\tr(A) + \tr(D)$                 \\ \cmidrule(lr{1em}){2-2}
+            \multirow{2}{*}{subject to:}        & $\smqty(A         & -\frac{1}{2}M \\ -\frac{1}{2}M^* & D)\in\Pos(\X\oplus \Y)$    \\
+                                                & $A\in\Herm(\X)$                   \\
+                                                & $D\in\Herm(\Y)$.
+        \end{tabular}
+    \end{center}
+    \todo{Should $A,D\in\Pos(\X/\Y)$?}
+
     \ref{part:1b}
     \ref{part:1c}
 \end{solution}
@@ -153,8 +214,25 @@ then
 
 \begin{solution}
     \ref{part:2a}
+    By the symmetry of $\delta$ (proved next) we can without loss of generality take $\tr(P)\geq \tr(Q)$.
+    Then, because $\tr(X) \geq 0$ for all $X\in\Pos(\X)$ we have
+    \begin{align*}
+        \qty(\sqrt{\tr(P)} - \sqrt{\tr(Q)})^2 & = \tr(P) + \tr(Q) - 2\sqrt{\tr(P)\tr(Q)} \geq 0 \\
+        \tr(P) + \tr(Q)                       & \geq 2\sqrt{\tr(P)\tr(Q)}                       \\
+                                              & \geq 2\Fid(P, Q) \tag{Proposition 3.12:6}
+    \end{align*}
+    By the last inequality we have that the radicand is greater than or equal to 0, and hence $\delta(P, Q) \geq 0$.
+    In order for $\delta(P, Q) = 0$, we must have both $\tr(P) = \tr(Q)$ and $Q = \lambda P$ again by proposition 3.12:6.
+    Then we have $\tr(P) = \tr(\lambda P) = \lambda \tr(P)$ and hence $\lambda = 1$ implying $P = Q$.
+
     \ref{part:2b}
+    The symmetry of $\delta$ follows immediately from Proposition 3.12:2.
+    \begin{equation*}
+        \delta(P, Q) = \sqrt{\tr(P) + \tr(Q) - 2\Fid(P, Q)} = \sqrt{\tr(Q) + \tr(P) - 2\Fid(Q, P)} = \delta(Q, P)
+    \end{equation*}
+
     \ref{part:2c}
+
 \end{solution}
 
 %-----------------------------------------------------------------------------%
@@ -171,6 +249,10 @@ Prove that
         \qty\big( \1_{\Y} \otimes \sqrt{\rho_1} )}_1.
 \]
 \end{problem}
+
+\noindent Solution completed in collaboration with Mohammad Ayyash,\collab{mmayyash@uwaterloo.ca} and Nicholas Zutt.\collab{nzutt@uwaterloo.ca}
+
+{\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
 \begin{solution}
 
