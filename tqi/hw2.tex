@@ -226,12 +226,22 @@ then
     Then we have $\tr(P) = \tr(\lambda P) = \lambda \tr(P)$ and hence $\lambda = 1$ implying $P = Q$.
 
     \ref{part:2b}
-    The symmetry of $\delta$ follows immediately from Proposition 3.12:2.
+    The symmetry of $\delta$ follows immediately from Proposition 3.12:2 which states that $\Fid(P, Q) = \Fid(Q, P)$.
     \begin{equation*}
         \delta(P, Q) = \sqrt{\tr(P) + \tr(Q) - 2\Fid(P, Q)} = \sqrt{\tr(Q) + \tr(P) - 2\Fid(Q, P)} = \delta(Q, P)
     \end{equation*}
 
     \ref{part:2c}
+    \todo{prove the hint}
+
+    With the hint proved, let $p, q, r\in\X\otimes\Y$ be a purifications of $P$, $Q$ and $R$ respectively.
+    \begin{align*}
+        \delta(P, Q) & = \min_{q}\qty{\norm{p - q}}                                 \\
+                     & = \min_{q}\qty{\norm{p - q - r + r}}                         \\
+                     & \leq \min_{q}\qty{\norm{p - r} + \norm{r - q}}               \\
+                     & \leq \min_{r}\qty{\norm{p - r}} + \min_{q}\qty{\norm{r - q}} \\
+                     & = \delta(P, R) + \delta(R, Q)
+    \end{align*}
 
 \end{solution}
 
