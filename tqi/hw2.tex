@@ -54,24 +54,8 @@
   \lvert\!\lvert\!\lvert #1 
   \rvert\!\rvert\!\rvert}
 
-\newcommand{\bigtriplenorm}[1]{
-  \bigl\lvert\!\bigl\lvert\!\bigl\lvert #1 
-  \bigr\rvert\!\bigr\rvert\!\bigr\rvert}
-
-\newcommand{\Bigtriplenorm}[1]{
-  \Bigl\lvert\!\Bigl\lvert\!\Bigl\lvert #1 
-  \Bigr\rvert\!\Bigr\rvert\!\Bigr\rvert}
-
-\newcommand{\biggtriplenorm}[1]{
-  \biggl\lvert\!\biggl\lvert\!\biggl\lvert #1 
-  \biggr\rvert\!\biggr\rvert\!\biggr\rvert}
-
-\newcommand{\Biggtriplenorm}[1]{
-  \Biggl\lvert\!\Biggl\lvert\!\Biggl\lvert #1 
-  \Biggr\rvert\!\Biggr\rvert\!\Biggr\rvert}
 
 \begin{document}
-
 
 \def\arraystretch{1.2}
 
@@ -256,7 +240,8 @@ Prove that
     \max_{\rho_0,\rho_1\in\Density(\X)}
     \norm{
         \qty\big( \1_{\Y} \otimes \sqrt{\rho_0} ) J(\Phi)
-        \qty\big( \1_{\Y} \otimes \sqrt{\rho_1} )}_1.
+        \qty\big( \1_{\Y} \otimes \sqrt{\rho_1} )
+    }_1.
 \]
 \end{problem}
 
@@ -265,7 +250,57 @@ Prove that
 {\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
 \begin{solution}
+    We begin with a lemma.
+    \begin{lemma}
+        Let $\X = \C^\Sigma$ and $\Y = \C^\Pi$ be complex euclidean spaces.
+        For all $A, B\in\Lin(\X)$ and $\Phi\in\Trans(\X, \Y)$ we have
+        \begin{equation*}
+            \qty(\1_\Y\otimes A^\intercal)J(\Phi)\qty(\1_\Y\otimes\overline{B}) = \qty(\Phi\otimes\1_{\Lin(\X)})(\vec(A)\vec(B)^*).
+        \end{equation*}
+    \end{lemma}
+    \begin{proof}
+        We start by expanding the Choi matrix using the definition: $J(\Phi) = \sum_{a,b\in\Sigma}\Phi(E_{a,b})\otimes E_{a,b}$.
+        \begin{equation*}
+            \qty(\1_\Y\otimes A^\intercal)J(\Phi)\qty(\1_\Y\otimes\overline{B}) = \sum_{a,b\in\Sigma}\Phi(E_{a,b})\otimes A^\intercal E_{a,b}\overline{B}
+        \end{equation*}
+        Let's calculate $A^\intercal E_{a,b}\overline{B}$ expanding $A$ and $B$ in the standard basis as $A = \sum_{a,b\in\Sigma}\alpha_{a,b}E_{a,b}$ and $B = \sum_{a,b\in\Sigma}\beta_{a,b}E_{a,b}$.
+        \begin{align*}
+            A^\intercal E_{a,b}\overline{B} & = \qty[\sum_{c,d\in\Sigma}\alpha_{d,c}E_{c,d}]E_{a,b}\qty[\sum_{e,f\in\Sigma}\overline{\beta_{e,f}}E_{e,f}] \\
+                                            & = \sum_{c,d,e,f\in\Sigma}\alpha_{d,c}\overline{\beta_{e,f}}\,E_{c,d}\,E_{a,b}\,E_{e,f}                      \\
+                                            & = \sum_{c,f\in\Sigma}\alpha_{a,c}\overline{\beta_{b,f}}E_{c,f}
+        \end{align*}
+        Thus together we have
+        \begin{align*}
+            \qty(\1_\Y\otimes A^\intercal)J(\Phi)\qty(\1_\Y\otimes\overline{B}) & = \sum_{a,b,c,f\in\Sigma}\alpha_{a,c}\,\overline{\beta_{b,f}}\;\Phi(E_{a,b})\otimes E_{c,f}                               \\
+                                                                                & = \qty(\Phi\otimes\1_{\Lin(\X)})\qty[\sum_{a,b,c,f\in\Sigma}\alpha_{a,c}\,\overline{\beta_{b,f}}\;E_{a,b}\otimes E_{c,f}]
+        \end{align*}
+        We we must show the argument to $\Phi\otimes\1_{\Lin(\X)}$ is equal to $\vec(A)\vec(B)^*$.
+        \begin{align*}
+            \sum_{a,b,c,f\in\Sigma}\alpha_{a,c}\,\overline{\beta_{b,f}}\;E_{a,b}\otimes E_{c,f} & = \qty[\sum_{a,c\in\Sigma}\alpha_{a,c}\;e_a\otimes e_c]\qty[\sum_{b,f\in\Sigma}\overline{\beta_{b,f}}\;e_b^*\otimes e_f^*] \\
+                                                                                                & = \qty[\sum_{a,c\in\Sigma}\alpha_{a,c}\;e_a\otimes e_c]\qty[\sum_{b,f\in\Sigma}\beta_{b,f}\;e_b\otimes e_f]^*              \\
+                                                                                                & = \vec(A)\vec(B)^*
+        \end{align*}
+        As desired.
+    \end{proof}
+    By Proposition 3.44:1 we know the completely bounded trace norm can be written $\triplenorm{\Phi}_1 = \max\qty{\norm{(\Phi\otimes\1_{\Lin(\X)})(uv^*)}_1: u,v\in\mathcal{S}(\X\otimes\X)}$.
+    Applying the above lemma to this statement transforms it to
+    \begin{equation*}
+        \triplenorm{\Phi}_1 = \max_{A,B\in\Lin(\X)}\qty{\norm{\qty(\1_\Y\otimes A^\intercal)J(\Phi)\qty(\1_\Y\otimes\overline{B})}_1 : \norm{A}_2 = 1 = \norm{B}_2}
+    \end{equation*}
+    because $\vec(A)\in\mathcal{S}(\X\otimes\X)$ implies $\sqrt{\sum_{a,b\in\Sigma}\alpha_{a,b}^2} = 1$ which is exactly the expression for $\norm{A}_2$.
+    Applying the polar decomposition to $A$ (and $B$) we have $A = UP$ where $U\in\Unitary(\X)$ and $P\in\Pos(\X)$.
+    Using the fact that $\norm{X}_2 = \sqrt{\tr(X^*X)}$ we have
+    \begin{equation*}
+        1 = \norm{A}_2 = \tr(A^*A) = \tr(P^*U^*UP) = \tr(P^*P).
+    \end{equation*}
+    Since the unitary component does not affect the norm $\norm{\cdot}_2$, we are ranging over positive semi-definite operators $\rho \defeq P^*P$ such that $\tr \rho = 1$.
+    That is, the maxium is attained when ranging over density operators.
+    We can then express $A$ in terms of this density operator as $A = \sqrt{\rho}$.
 
+    Using all these facts, together with the fact that $\sqrt{\rho}^\intercal$ can always be written as $\sqrt{\rho'}$ we have the desired equality:
+    \begin{equation*}
+        \triplenorm{\Phi}_1 = \max_{\rho_0,\rho_1\in\Density(\X)} \norm\Big{\qty(\1_\Y\otimes\sqrt{\rho_0})J(\Phi)\qty(\1_\Y\otimes\sqrt{\rho_1})}.
+    \end{equation*}
 \end{solution}
 
 \end{document}
