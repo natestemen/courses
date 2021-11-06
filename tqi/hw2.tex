@@ -201,9 +201,10 @@ then
     By the symmetry of $\delta$ (proved next) we can without loss of generality take $\tr(P)\geq \tr(Q)$.
     Then, because $\tr(X) \geq 0$ for all $X\in\Pos(\X)$ we have
     \begin{align*}
-        \qty(\sqrt{\tr(P)} - \sqrt{\tr(Q)})^2 & = \tr(P) + \tr(Q) - 2\sqrt{\tr(P)\tr(Q)} \geq 0 \\
-        \tr(P) + \tr(Q)                       & \geq 2\sqrt{\tr(P)\tr(Q)}                       \\
-                                              & \geq 2\Fid(P, Q) \tag{Proposition 3.12:6}
+        \qty(\sqrt{\tr(P)} - \sqrt{\tr(Q)})^2  & \geq 0                                    \\
+        \tr(P) + \tr(Q) - 2\sqrt{\tr(P)\tr(Q)} & \geq 0                                    \\
+        \tr(P) + \tr(Q)                        & \geq 2\sqrt{\tr(P)\tr(Q)}                 \\
+                                               & \geq 2\Fid(P, Q) \tag{Proposition 3.12:6}
     \end{align*}
     By the last inequality we have that the radicand is greater than or equal to 0, and hence $\delta(P, Q) \geq 0$.
     In order for $\delta(P, Q) = 0$, we must have both $\tr(P) = \tr(Q)$ and $Q = \lambda P$ again by proposition 3.12:6.
@@ -216,7 +217,16 @@ then
     \end{equation*}
 
     \ref{part:2c}
-    \todo{prove the hint}
+    We start by proving the hint.
+    Let $u\in\X\otimes\Y$ be a purification of $P$.
+    \begin{align*}
+        \delta(P, Q)^2 & = \min_v\qty{\langle u - v, u - v\rangle: \tr_\Y(vv^*) = Q}        \\
+                       & = \min_v \qty{\norm{u}^2 + \norm{v}^2 - 2\Re(\langle u, v\rangle)} \\
+                       & = \tr(P) + \tr(Q) - 2\max_v\qty{\Re(\langle u, v\rangle)}          \\
+                       & \leq \tr(P) + \tr(Q) - 2\max_v\qty{\abs{\langle u, v\rangle}}      \\
+                       & = \tr(P) + \tr(Q) - 2\Fid(P, Q) \tag{\small Uhlmann's theorem}
+    \end{align*}
+    Thus in order for the hint to be true (which it has to, that would be illegal otherwise) we must have $\max_v\qty{\Re(\langle u, v\rangle)} = \max_v\qty{\abs{\langle u, v \rangle}}$ which I cannot see why must be true.
 
     With the hint proved, let $p, q, r\in\X\otimes\Y$ be a purifications of $P$, $Q$ and $R$ respectively.
     \begin{align*}
