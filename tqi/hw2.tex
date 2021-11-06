@@ -160,10 +160,35 @@ consider the semidefinite program
                                                 & $D\in\Herm(\Y)$.
         \end{tabular}
     \end{center}
-    \todo{Should $A,D\in\Pos(\X/\Y)$?}
+    First we redefine $\tilde{A} = \frac{1}{2}A$ and $\tilde{D} = \frac{1}{2}D$.
+    We can also show $\tilde{A}\in\Pos(\X)$ as follows.
+    Since $T = \smqty(\tilde{A} & - M \\ -M^* & \tilde{D})\in\Pos(\X\oplus\Y)$ we know $x^*Tx\geq 0$ for all $x\in\X\oplus\Y$.
+    In particular this is true for $x = \smqty(x_0 \\ 0)$ and $x = \smqty(0 \\ y_0)$ separately.
+    This shows $x_0^*\tilde{A}x_0 \geq 0$ for all $x_0\in\X$ and $y_0^*\tilde{D}y_0 \geq 0$ for all $y_0\in\Y$.
+    Thus our final dual problem has simplified to
+    \begin{center}
+        \begin{tabular}{rl}
+            $\underset{A, D}{\text{minimize}}$: & $\frac{1}{2}\tr(A) + \frac{1}{2}\tr(D)$      \\ \cmidrule(lr{1em}){2-2}
+            \multirow{2}{*}{subject to:}        & $\smqty(A                               & -M \\ -M^* & D)\in\Pos(\X\oplus \Y)$    \\
+                                                & $A\in\Pos(\X)$                               \\
+                                                & $D\in\Pos(\Y)$.
+        \end{tabular}
+    \end{center}
 
     \ref{part:1b}
+    We can now apply Lemma 3.18 to our primal problem.
+    This means $\smqty(\1_\X & B \\ B^* & \1_\Y)\in\Pos(\X\oplus\Y)$ if and only if $B = \sqrt{\1_\X}K\sqrt{\1_\Y} = K$ for some $K\in\Lin(\Y,\X)$ with $\norm{K}\leq 1$.
+    Thus $B$ is bounded $\norm{B} \leq 1$ and since $M$ is fixed $\alpha$ (optimum value for primal problem) must be finite.
+    In order to use Slater's theorem for semidefinite programs I need to show there exists a $Y\in\Herm(\X\oplus\Y)$ such that $\Phi^*(Y) \geq \frac{1}{2}\smqty(0 & M \\ M^* & 0)$.
+    That is we need to show for $A\in\Herm(\X)$ and $D\in\Herm(\Y)$ that
+    \begin{equation*}
+        \Phi\smqty(A & B \\ C & D) - \frac{1}{2}\smqty(0 & M \\ M^* & 0) \approx \smqty(A & - M \\ -M^* & D) \in \Pos(\X\oplus\Y).
+    \end{equation*}
+    I've used $\approx$ to get rid of the halves.
+    This if the exact condition we have in the dual problem, but I'm stuck as to where to go from here.
+
     \ref{part:1c}
+    The optimal value for this semidefinite program is the spectral norm: $\norm{M}_1$.
 \end{solution}
 
 %-----------------------------------------------------------------------------%
@@ -304,7 +329,7 @@ Prove that
         1 = \norm{A}_2 = \tr(A^*A) = \tr(P^*U^*UP) = \tr(P^*P).
     \end{equation*}
     Since the unitary component does not affect the norm $\norm{\cdot}_2$, we are ranging over positive semi-definite operators $\rho \defeq P^*P$ such that $\tr \rho = 1$.
-    That is, the maxium is attained when ranging over density operators.
+    That is, the maximum is attained when ranging over density operators.
     We can then express $A$ in terms of this density operator as $A = \sqrt{\rho}$.
 
     Using all these facts, together with the fact that $\sqrt{\rho}^\intercal$ can always be written as $\sqrt{\rho'}$ we have the desired equality:
