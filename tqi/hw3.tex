@@ -1,0 +1,162 @@
+\documentclass[boxes,pages,color=SeaGreen]{homework}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=SeaGreen!60!black,
+    linkcolor=Bittersweet
+}
+\newcommand{\collab}[1]{\footnote{\href{mailto:#1}{\texttt{#1}}}}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate@stemen.email}
+\term{Fall 2021}
+\course{Theory of Quantum Information}
+\courseid{QIC 820}
+\hwnum{3}
+\duedate{Nov 23, 2021}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+\usepackage{relsize}
+\usepackage{macros}
+\usepackage{cleveref}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{todonotes}
+
+%-----------------------------------------------------------------------------%
+% Macros
+%-----------------------------------------------------------------------------%
+
+\newcommand{\tinyspace}{\mspace{1mu}}
+\renewcommand{\vec}{\operatorname{vec}}
+\renewcommand{\op}[1]{\operatorname{#1}}
+
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\U}{\mathcal{U}}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\Fid}{\operatorname{F}}
+\newcommand{\reg}[1]{\mathsf{#1}}
+
+\newcommand{\Lin}{\mathrm{L}}
+\newcommand{\Trans}{\mathrm{T}}
+\newcommand{\Pos}{\mathrm{Pos}}
+\newcommand{\Herm}{\mathrm{Herm}}
+\newcommand{\Channel}{\mathrm{C}}
+\newcommand{\Unitary}{\mathrm{U}}
+\newcommand{\Density}{\mathrm{D}}
+\newcommand{\CP}{\mathrm{CP}}
+
+\newcommand{\triplenorm}[1]{
+  \lvert\!\lvert\!\lvert #1 
+  \rvert\!\rvert\!\rvert}
+
+
+\begin{document}
+
+% \def\arraystretch{1.2}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\reg{X}$, $\reg{Y}$ and $\reg{Z}$ be registers.
+Prove that, for any state of these registers, the following two inequalities
+are true:
+\begin{parts}
+    \part
+    $\op{I}(\reg{X},\reg{Y}\mathbin{:}\reg{Z}) +
+        \op{I}(\reg{Y}\mathbin{:}\reg{Z}) \geq \op{I}(\reg{X}\mathbin{:}\reg{Z})$.\label{part:1a}
+    \part
+    $\op{I}(\reg{X},\reg{Y} : \reg{Z})
+        \leq \op{I}(\reg{Y}:\reg{X},\reg{Z}) + 2\op{H}(\reg{X})$.\label{part:1b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:1a}
+    \ref{part:1b}
+\end{solution}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\X$ be a complex Euclidean space,
+let $\Sigma$ be an alphabet,
+let $p\in\P(\Sigma)$ be a probability vector, and
+let $\{\rho_a\,:\,a\in\Sigma\}\subseteq\Density(\X)$ be a collection of
+states.
+Prove that, for every state $\sigma\in\Density(\X)$, we have
+\[
+    \sum_{a\in\Sigma} p(a) \mathrm{D}(\rho_a \| \sigma)
+    = \sum_{a\in\Sigma} p(a) \mathrm{D}(\rho_a \| \rho) +
+    \mathrm{D}(\rho \| \sigma),
+\]
+where
+\[
+    \rho = \sum_{a\in\Sigma} p(a) \rho_a.
+\]
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\reg{X}$ and $\reg{Y}$ be registers, let $\Sigma$ be an alphabet,
+let $p\in\P(\Sigma)$ be a probability vector, let
+$\{\sigma_a\,:\,a\in\Sigma\}\subseteq\Density(\X)$ and
+$\{\xi_a\,:\,a\in\Sigma\}\subseteq\Density(\Y)$ be collections of density
+operators, and define $\rho\in\Density(\X\otimes\Y)$ as
+\begin{displaymath}
+    \rho = \sum_{a\in\Sigma} p(a)\tinyspace\sigma_a\otimes\xi_a.
+\end{displaymath}
+States that can be expressed in this way are called \emph{separable states},
+and will be discussed in the fourth part of the course---but nothing from
+that part of the course is needed to solve this problem.
+
+\begin{parts}
+    \part
+    Prove that
+    $\op{I}(\reg{X}\mathbin{:}\reg{Y})_{\rho} \leq \op{H}(p)$.\label{part:3a}
+    \part
+    Prove that
+    \[
+        \op{H}(\rho) \geq \sum_{a\in\Sigma} p(a) \op{H}(\sigma_a)
+        + \op{H}\Biggl(\sum_{a\in\Sigma} p(a)\tinyspace\xi_a\Biggr).
+    \]\label{part:3b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:3a}
+    \ref{part:3b}
+\end{solution}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\reg{X}$ be a register having alphabet $\Sigma$, and also let
+$\reg{Y}$ and $\reg{Z}$ be registers (having arbitrary alphabets we need
+not name).
+Let $\{\sigma_a\,:\,a\in\Sigma\}\subseteq\Density(\Y\otimes\Z)$
+be a collection of density operators, let $p\in\P(\Sigma)$ be a probability
+vector, and define $\rho\in\Density(\X\otimes\Y\otimes\Z)$ as
+\[
+    \rho = \sum_{a\in\Sigma} p(a) \ketbra{a} \otimes \sigma_a.
+\]
+Prove that, with respect to the state $\rho$, one has
+\[
+    \op{I}(\reg{X},\reg{Y} : \reg{Z})
+    \leq \op{I}(\reg{Y}:\reg{X},\reg{Z}) + \op{H}(\reg{X}).
+\]
+\end{problem}
+
+\end{document}
