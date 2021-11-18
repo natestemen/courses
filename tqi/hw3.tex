@@ -5,7 +5,9 @@
     urlcolor=SeaGreen!60!black,
     linkcolor=Bittersweet
 }
-\newcommand{\collab}[1]{\footnote{\href{mailto:#1}{\texttt{#1}}}}
+\newcommand{\collab}[1]{
+    \footnote{\href{mailto:#1}{\texttt{#1}}}
+}
 
 \name{Nate Stemen}
 \studentid{20906566}
@@ -43,6 +45,9 @@
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\Fid}{\operatorname{F}}
 \newcommand{\reg}[1]{\mathsf{#1}}
+\newcommand{\ent}{\operatorname{H}}
+\newcommand{\mutIn}[2]{\operatorname{I}(#1 : #2)}
+\newcommand{\smalltag}[1]{\tag*{\footnotesize (#1)}}
 
 \newcommand{\Lin}{\mathrm{L}}
 \newcommand{\Trans}{\mathrm{T}}
@@ -52,6 +57,7 @@
 \newcommand{\Unitary}{\mathrm{U}}
 \newcommand{\Density}{\mathrm{D}}
 \newcommand{\CP}{\mathrm{CP}}
+\newcommand{\relEn}{\mathrm{D}}
 
 \newcommand{\triplenorm}[1]{
   \lvert\!\lvert\!\lvert #1 
@@ -70,8 +76,8 @@ Prove that, for any state of these registers, the following two inequalities
 are true:
 \begin{parts}
     \part
-    $\op{I}(\reg{X},\reg{Y}\mathbin{:}\reg{Z}) +
-        \op{I}(\reg{Y}\mathbin{:}\reg{Z}) \geq \op{I}(\reg{X}\mathbin{:}\reg{Z})$.\label{part:1a}
+    $\op{I}(\reg{X},\reg{Y} : \reg{Z}) +
+        \op{I}(\reg{Y} : \reg{Z}) \geq \op{I}(\reg{X} : \reg{Z})$.\label{part:1a}
     \part
     $\op{I}(\reg{X},\reg{Y} : \reg{Z})
         \leq \op{I}(\reg{Y}:\reg{X},\reg{Z}) + 2\op{H}(\reg{X})$.\label{part:1b}
@@ -80,7 +86,30 @@ are true:
 
 \begin{solution}
     \ref{part:1a}
+    First note that the mutual information is symmetric in it's arguments.
+    This property is inherited from the symmetry of the von Neumann entropy for a compound register.
+    \begin{equation*}
+        \mutIn{\reg{X}}{\reg{Y}} = \ent(\reg{X}) + \ent(\reg{Y}) - \ent(\reg{X}, \reg{Y}) =  \ent(\reg{Y}) + \ent(\reg{X}) - \ent(\reg{Y}, \reg{X}) = \mutIn{\reg{Y}}{\reg{X}}
+    \end{equation*}
+    Corollary 5.37 tells us that $\mutIn{\reg{X}}{\reg{Z}} \leq \mutIn{\reg{X}}{\reg{Y},\reg{Z}}$, and hence all we need to show is $\mutIn{\reg{Y}}{\reg{Z}} \geq 0$.
+    By the subadditivity of the von Neumann entropy we have $\ent(\reg{Y}, \reg{Z}) \leq \ent(\reg{Y}) + \ent(\reg{Z})$ and hence
+    \begin{align*}
+        \ent(\reg{Y}) + \ent(\reg{Z})                          & \geq \ent(\reg{Y}, \reg{Z}) \\
+        \ent(\reg{Y}) + \ent(\reg{Z}) - \ent(\reg{Y}, \reg{Z}) & \geq 0                      \\
+        \mutIn{\reg{Y}}{\reg{Z}}                               & \geq 0.
+    \end{align*}
+    This fact, together with Corollary 5.37 Proves \ref{part:1a}.
+
     \ref{part:1b}
+    In this part we use both the subadditivity of the von Neumann entropy, together with Theorem 5.25 which states $\ent(\reg{X}) \leq \ent(\reg{Y}) + \ent(\reg{X}, \reg{Y})$.
+    \begin{align*}
+        \mutIn{\reg{X}, \reg{Y}}{\reg{Z}} & \defeq \ent(\reg{X}, \reg{Y}) + \ent(\reg{Z}) - \ent(\reg{X}, \reg{Y}, \reg{Z})                                                         \\
+                                          & \leq \ent(\reg{X}) + \ent(\reg{Y}) + \ent(\reg{Z}) - \ent(\reg{X}, \reg{Y}, \reg{Z}) \smalltag{subadditivity}                           \\
+                                          & \leq \ent(\reg{X}) + \ent(\reg{Y}) + \qty\Big[\ent(\reg{X}) + \ent(\reg{X}, \reg{Z})] - \ent(\reg{X}, \reg{Y}, \reg{Z}) \smalltag{5.25} \\
+                                          & = \ent(\reg{Y}) + \ent(\reg{X}, \reg{Z}) - \ent(\reg{Y}, \reg{X}, \reg{Z}) + 2\ent(\reg{X}) \smalltag{symmetry of $\ent$}               \\
+                                          & = \mutIn{\reg{Y}}{\reg{X},\reg{Z}} + 2\ent(\reg{X})
+    \end{align*}
+    So there we go.
 \end{solution}
 
 %-----------------------------------------------------------------------------%
