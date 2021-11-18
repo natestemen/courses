@@ -47,3 +47,9 @@ pdfseparate hwname.pdf hwname-%d.pdf
 ```
 
 This separates the pages into their own document and I can upload them individually. Modern life...
+
+A command to run to see which homeworks have given me the most trouble... kind of.
+
+```
+git log --name-only --pretty=format: | sort | uniq -c | sort -nr
+```
