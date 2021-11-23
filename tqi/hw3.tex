@@ -19,12 +19,8 @@
 \hwname{Assignment}
 
 \usepackage{physics}
-\usepackage{relsize}
 \usepackage{macros}
 \usepackage{cleveref}
-\usepackage{multirow}
-\usepackage{booktabs}
-\usepackage{todonotes}
 
 %-----------------------------------------------------------------------------%
 % Macros
@@ -63,8 +59,6 @@
 
 
 \begin{document}
-
-% \def\arraystretch{1.2}
 
 %-----------------------------------------------------------------------------%
 
@@ -155,12 +149,12 @@ where
 \begin{problem}
 Let $\reg{X}$ and $\reg{Y}$ be registers, let $\Sigma$ be an alphabet,
 let $p\in\P(\Sigma)$ be a probability vector, let
-$\{\sigma_a\,:\,a\in\Sigma\}\subseteq\Density(\X)$ and
-$\{\xi_a\,:\,a\in\Sigma\}\subseteq\Density(\Y)$ be collections of density
+$\{\sigma_a : a\in\Sigma\}\subseteq\Density(\X)$ and
+$\{\xi_a : a\in\Sigma\}\subseteq\Density(\Y)$ be collections of density
 operators, and define $\rho\in\Density(\X\otimes\Y)$ as
-\begin{displaymath}
+\begin{equation*}
     \rho = \sum_{a\in\Sigma} p(a)\tinyspace\sigma_a\otimes\xi_a.
-\end{displaymath}
+\end{equation*}
 States that can be expressed in this way are called \emph{separable states},
 and will be discussed in the fourth part of the course---but nothing from
 that part of the course is needed to solve this problem.
@@ -168,12 +162,12 @@ that part of the course is needed to solve this problem.
 \begin{parts}
     \part
     Prove that
-    $\op{I}(\reg{X}\mathbin{:}\reg{Y})_{\rho} \leq \op{H}(p)$.\label{part:3a}
+    $\op{I}(\reg{X} : \reg{Y})_{\rho} \leq \op{H}(p)$.\label{part:3a}
     \part
     Prove that
     \[
         \op{H}(\rho) \geq \sum_{a\in\Sigma} p(a) \op{H}(\sigma_a)
-        + \op{H}\Biggl(\sum_{a\in\Sigma} p(a)\tinyspace\xi_a\Biggr).
+        + \op{H}\qty(\sum_{a\in\Sigma} p(a)\tinyspace\xi_a).
     \]\label{part:3b}
 \end{parts}
 \end{problem}
@@ -184,7 +178,48 @@ that part of the course is needed to solve this problem.
 
 \begin{solution}
     \ref{part:3a}
+    By the definition of mutual information we have $\op{I}(\reg{X} : \reg{Y}) \defeq \ent(\reg{X}) + \ent(\reg{Y}) - \ent(\reg{X}, \reg{Y})$ and the fact we are making this calculation with respect to $\rho$ we have $\ent(\reg{X}, \reg{Y}) = \ent(\rho)$.
+    We can then write the mutual information as $\op{I}(\reg{X} : \reg{Y}) = \ent(\rho[X]) = \ent(\rho[Y]) - \ent(\rho)$.
+
+    Let's now spectral decompose each $\sigma_a$ as $\sigma_a = \sum_{b\in\Gamma} \lambda_{ab}\ketbra{\psi_{ab}}$ where we've taken $\X = \C^\Gamma$.
+    We can now calculate the associated terms of $\op{I}(\reg{X} : \reg{Y})$.
+    Here we use a fact proved in question 4 about the upper bound of
+    \begin{align*}
+        \ent(\rho[X]) & = \ent\!\qty(\sum_{a \in \Sigma} p(a) \sigma_a) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\sigma_a) \\
+        \ent(\rho[Y]) & = \ent\!\qty(\sum_{a \in \Sigma} p(a) \xi_a)    \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\xi_a)
+    \end{align*}
+    Finally for the last term we have
+    \begin{equation*}
+        \ent(\rho) = \ent\!\qty(\sum_{\substack{a \in \Sigma \\ b \in \Gamma}} p(a) \lambda_{ab} \ketbra{\psi_{ab}} \otimes \xi_a) = \sum_{a,b} \ent\!\qty\Big(p(a) \lambda_{ab} \xi_a).
+    \end{equation*}
+    We can now use Equation 5.98 in the book which states $\ent(\alpha P) = \alpha\ent(P) - \alpha\log(\alpha)\tr(P)$ to pull the constants out.
+    \begin{align*}
+        \sum_{a,b} \ent\!\qty\Big(p(a) \lambda_{ab} \xi_a) & = \sum_{a,b} p(a) \lambda_{ab}\ent(\xi_a) - p(a) \lambda_{ab}\log(p(a)\lambda_{ab})\tr(\xi_a)                                                                                                           \\
+                                                           & = \sum_{a,\colorbox{SeaGreen!30}{\footnotesize$b$}} p(a) \colorbox{SeaGreen!30}{$\lambda_{ab}$}\ent(\xi_a) - p(a) \colorbox{SeaGreen!30}{$\lambda_{ab}$}\log(p(a)) - p(a)\lambda_{ab}\log(\lambda_{ab})
+    \end{align*}
+    The highlighted terms vanish (with the sum on $b$) because $\tr(\sigma_a) = \sum_b \lambda_{ab} = 1$.
+    \begin{align*}
+        \ent(\rho) & = \sum_{a \in \Sigma} p(a) \ent(\xi_a) - p(a) \log(p(a)) - p(a)\sum_{b} \lambda_{ab} \log(\lambda_{ab}) \\
+                   & = \sum_{a \in \Sigma} p(a)\ent(\xi_a) + \ent(p) + p(a)\ent(\sigma_a)
+    \end{align*}
+    We can now put together all of the terms as follows.
+    \begin{align*}
+        \op{I}(\reg{X} : \reg{Y})_\rho & \defeq \ent(\rho[X]) + \ent(\rho[Y]) - \ent(\rho)                                                                  \\
+                                       & \leq \ent(p) + \qty[\sum_{a \in \Sigma} p(a)\ent(\sigma_a)] + \ent(p) + \qty[\sum_{a \in \Sigma} p(a) \ent(\xi_a)] \\
+                                       & \qquad \qquad - \ent(p) - \sum_{a \in \Sigma} p(a)\ent(\xi_a) + p(a)\ent(\sigma_a)                                 \\
+                                       & = \ent(p)
+    \end{align*}
+
     \ref{part:3b}
+    In the previous part we showed
+    \begin{equation*}
+        \ent(\rho) = \ent(p) + \sum_{a \in \Sigma} p(a)\ent(\xi_a) + p(a)\ent(\sigma_a)
+    \end{equation*}
+    and hence to show $\ent(\rho) \geq \sum_{a \in \Sigma} p(a)\ent(\sigma_a) + \ent\!\qty\big(\sum_{a \in \Sigma} p(a) \xi_a)$ we must prove
+    \begin{equation*}
+        \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\xi_a) \geq \ent\qty(\sum_{a \in \Sigma} p(a) \xi_a)
+    \end{equation*}
+    which we prove in problem 4.
 \end{solution}
 
 %-----------------------------------------------------------------------------%
