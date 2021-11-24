@@ -183,23 +183,26 @@ that part of the course is needed to solve this problem.
 
     Let's now spectral decompose each $\sigma_a$ as $\sigma_a = \sum_{b\in\Gamma} \lambda_{ab}\ketbra{\psi_{ab}}$ where we've taken $\X = \C^\Gamma$.
     We can now calculate the associated terms of $\op{I}(\reg{X} : \reg{Y})$.
-    Here we use a fact proved in question 4 about the upper bound of
+    Here we use a fact that $\ent(\sum_{a \in \Sigma} p(a) \rho_a) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\rho_a)$ for $p\in\mathcal{P}(\Sigma)$ and $\rho_a$ density operators.
+    To see a proof of such fact, please see my collaborators Nicholas Zutt's write up.
     \begin{align*}
         \ent(\rho[X]) & = \ent\!\qty(\sum_{a \in \Sigma} p(a) \sigma_a) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\sigma_a) \\
         \ent(\rho[Y]) & = \ent\!\qty(\sum_{a \in \Sigma} p(a) \xi_a)    \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\xi_a)
     \end{align*}
     Finally for the last term we have
-    \begin{equation*}
-        \ent(\rho) = \ent\!\qty(\sum_{\substack{a \in \Sigma \\ b \in \Gamma}} p(a) \lambda_{ab} \ketbra{\psi_{ab}} \otimes \xi_a) = \sum_{a,b} \ent\!\qty\Big(p(a) \lambda_{ab} \xi_a).
-    \end{equation*}
+    \begin{align*}
+        \ent(\rho) & = \ent\!\qty(\sum_{\substack{a \in \Sigma                                                                                                  \\ b \in \Gamma}} p(a) \lambda_{ab} \ketbra{\psi_{ab}} \otimes \xi_a) \\
+                   & \geq \sum_{a \in \Sigma} p(a) \ent\!\qty(\sum_{b \in \Gamma} \lambda_{ab}\ketbra{\psi_{ab}} \otimes \xi_a) \tag*{\footnotesize(Concavity)} \\
+                   & = \sum_{a,b} p(a) \ent\!\qty(\lambda_{ab} \xi_a).
+    \end{align*}
     We can now use Equation 5.98 in the book which states $\ent(\alpha P) = \alpha\ent(P) - \alpha\log(\alpha)\tr(P)$ to pull the constants out.
     \begin{align*}
-        \sum_{a,b} \ent\!\qty\Big(p(a) \lambda_{ab} \xi_a) & = \sum_{a,b} p(a) \lambda_{ab}\ent(\xi_a) - p(a) \lambda_{ab}\log(p(a)\lambda_{ab})\tr(\xi_a)                                                                                                           \\
-                                                           & = \sum_{a,\colorbox{SeaGreen!30}{\footnotesize$b$}} p(a) \colorbox{SeaGreen!30}{$\lambda_{ab}$}\ent(\xi_a) - p(a) \colorbox{SeaGreen!30}{$\lambda_{ab}$}\log(p(a)) - p(a)\lambda_{ab}\log(\lambda_{ab})
+        \sum_{a,b} p(a) \ent\!\qty(\lambda_{ab} \xi_a) & = \sum_{a,b} p(a) \lambda_{ab}\ent(\xi_a) - p(a) \lambda_{ab}\log(p(a)\lambda_{ab})\tr(\xi_a)                                                                                                           \\
+                                                       & = \sum_{a,\colorbox{SeaGreen!30}{\footnotesize$b$}} p(a) \colorbox{SeaGreen!30}{$\lambda_{ab}$}\ent(\xi_a) - p(a) \colorbox{SeaGreen!30}{$\lambda_{ab}$}\log(p(a)) - p(a)\lambda_{ab}\log(\lambda_{ab})
     \end{align*}
     The highlighted terms vanish (with the sum on $b$) because $\tr(\sigma_a) = \sum_b \lambda_{ab} = 1$.
     \begin{align*}
-        \ent(\rho) & = \sum_{a \in \Sigma} p(a) \ent(\xi_a) - p(a) \log(p(a)) - p(a)\sum_{b} \lambda_{ab} \log(\lambda_{ab}) \\
+        \ent(\rho) & \geq \sum_{a \in \Sigma} p(a) \ent(\xi_a) - p(a) \log(p(a)) - p(a)\sum_{b} \lambda_{ab} \log(\lambda_{ab}) \\
                    & = \sum_{a \in \Sigma} p(a)\ent(\xi_a) + \ent(p) + p(a)\ent(\sigma_a)
     \end{align*}
     We can now put together all of the terms as follows.
