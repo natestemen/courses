@@ -66,19 +66,26 @@ are true:
 
 \begin{solution}
     \ref{part:1a}
-    First note that the mutual information is symmetric in it's arguments.
-    This property is inherited from the symmetry of the von Neumann entropy for a compound register.
+    First note that the mutual information is symmetric with respect to it's arguments.
+    This property is inherited from the symmetry of the von Neumann entropy for a compound register: $\ent(\reg{X}, \reg{Y}) = \ent(\reg{Y}, \reg{X})$.
     \begin{equation*}
         \mutIn{\reg{X}}{\reg{Y}} = \ent(\reg{X}) + \ent(\reg{Y}) - \ent(\reg{X}, \reg{Y}) =  \ent(\reg{Y}) + \ent(\reg{X}) - \ent(\reg{Y}, \reg{X}) = \mutIn{\reg{Y}}{\reg{X}}
     \end{equation*}
-    Corollary 5.37 tells us that $\mutIn{\reg{X}}{\reg{Z}} \leq \mutIn{\reg{X}}{\reg{Y},\reg{Z}}$, and hence all we need to show is $\mutIn{\reg{Y}}{\reg{Z}} \geq 0$.
-    By the subadditivity of the von Neumann entropy we have $\ent(\reg{Y}, \reg{Z}) \leq \ent(\reg{Y}) + \ent(\reg{Z})$ and hence
+    We also have the ability to permute registers inside either argument to the mutual information.
+    \begin{equation*}
+        \mutIn{\reg{X}}{\reg{Y}, \reg{Z}} = \ent(\reg{X}) + \ent(\reg{Y}, \reg{Z}) - \ent(\reg{X}, \reg{Y}, \reg{Z}) = \ent(\reg{X}) + \ent(\reg{Z}, \reg{Y}) - \ent(\reg{X}, \reg{Z}, \reg{Y}) = \mutIn{\reg{X}}{\reg{Z}, \reg{Y}}
+    \end{equation*}
+    Using these properties along with corollary 5.37 which says $\mutIn{\reg{A}}{\reg{B},\reg{C}} \geq \mutIn{\reg{A}}{\reg{C}}$ we have the following manipulation.
+    \begin{align*}
+        \mutIn{\reg{X}, \reg{Y}}{\reg{Z}} = \mutIn{\reg{Z}}{\reg{X}, \reg{Y}} = \mutIn{\reg{Z}}{\reg{Y}, \reg{X}} \geq \mutIn{\reg{Z}}{\reg{X}} = \mutIn{\reg{X}}{\reg{Z}}
+    \end{align*}
+    To complete the proof of the desired inequality, we now need to show $\mutIn{\reg{Y}}{\reg{Z}} \geq 0$ which follows from the subadditivity of the von Neumann entropy.
     \begin{align*}
         \ent(\reg{Y}) + \ent(\reg{Z})                          & \geq \ent(\reg{Y}, \reg{Z}) \\
         \ent(\reg{Y}) + \ent(\reg{Z}) - \ent(\reg{Y}, \reg{Z}) & \geq 0                      \\
         \mutIn{\reg{Y}}{\reg{Z}}                               & \geq 0.
     \end{align*}
-    This fact, together with Corollary 5.37 Proves \ref{part:1a}.
+    This completes the proof.
 
     \ref{part:1b}
     In this part we use both the subadditivity of the von Neumann entropy, together with Theorem 5.25 which states $\ent(\reg{X}) \leq \ent(\reg{Y}) + \ent(\reg{X}, \reg{Y})$.
