@@ -26,6 +26,9 @@
 % Macros
 %-----------------------------------------------------------------------------%
 
+% \theoremstyle{definition}
+\newtheorem*{fact}{Fact}
+
 \newcommand{\tinyspace}{\mspace{1mu}}
 \renewcommand{\op}[1]{\operatorname{#1}}
 
@@ -244,6 +247,44 @@ Prove that, with respect to the state $\rho$, one has
 {\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
 \begin{solution}
+    To prove this inequality we will first calculate the needed entropies.
+    \begin{align*}
+        \ent(\reg{X})          & = \ent(\rho[\reg{X}]) = \ent\!\qty(\sum_{a \in \Sigma} p(a)\ketbra{a}) = \ent(p)                                                                         \\
+        \ent(\reg{Y})          & = \ent(\rho[\reg{Y}]) = \ent\!\qty(\sum_{a \in \Sigma} p(a)\tr(\ketbra{a})\otimes \tr_\Z\sigma_a) = \ent\!\qty(\sum_{a \in \Sigma} p(a) \tr_\Z \sigma_a) \\
+        \ent(\reg{Z})          & = \ent(\rho[\reg{Z}]) = \ent\!\qty(\sum_{a \in \Sigma} p(a)\tr(\ketbra{a})\otimes \tr_\Y\sigma_a) = \ent\!\qty(\sum_{a \in \Sigma} p(a) \tr_\Y \sigma_a) \\
+        \ent(\reg{X}, \reg{Y}) & = \ent(\rho[\reg{X}, \reg{Y}]) = \ent\!\qty(\sum_{a \in \Sigma} p(a) \ketbra{a}\otimes \tr_\Z\sigma_a)                                                   \\
+                               & = \sum_{a \in \Sigma}\ent(p(a) \tr_\Z\sigma_a)           \smalltag{Block diagonal form of $\ketbra{a}\otimes\tr_\Z\sigma_a$}                             \\
+                               & = \ent(p) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Z\sigma_a) \smalltag{$\ent(\alpha P) = \alpha \ent(P) - \alpha \log\alpha \tr(P)$}                         \\
+        \ent(\reg{X}, \reg{Z}) & = \ent(\rho[\reg{X}, \reg{Z}]) = \ent\!\qty(\sum_{a \in \Sigma} p(a) \ketbra{a}\otimes \tr_\Y\sigma_a)                                                   \\
+                               & = \sum_{a \in \Sigma}\ent(p(a) \tr_\Y\sigma_a)                                                                                                           \\
+                               & = \ent(p) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a)                                                                                                 \\
+        \ent(\reg{Y}, \reg{Z}) & = \ent(\rho[\reg{Y}, \reg{Z}]) = \ent\!\qty(\sum_{a \in \Sigma} p(a) \sigma_a)
+        % \ent(\reg{X}, \reg{Y}, \reg{Z}) & = \ent(\rho) = \ent\!\qty(\sum_{a \in \Sigma} p(a) \ketbra{a} \otimes \sigma_a) = \ent\!\qty(\sum_{a \in \Sigma} p(a) \sigma_a) = \ent(\reg{Y}, \reg{Z})
+    \end{align*}
+    We can cancel out the $\ent(\reg{X}, \reg{Y}, \reg{Z})$ term from both sides of our desired inequality to get
+    \begin{equation*}
+        \ent(\reg{X}, \reg{Y}) + \ent(\reg{Z}) \leq \ent(\reg{Y}) + \ent(\reg{X}, \reg{Z}) + \ent(\reg{X}).
+    \end{equation*}
+    Starting on the right hand side and using the above calculated entropies we have
+    \begin{align*}
+        \ent(\reg{Y}) + \ent(\reg{X}, \reg{Z}) + \ent(\reg{X}) & = \ent\!\qty(\sum_{a \in \Sigma} p(a)\tr_\Z\sigma_a) + \ent(p) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a) + \ent(p) \\
+                                                               & = \ent(\reg{Y}) + 2\ent(\reg{X}) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a)                                         \\
+                                                               & \geq \ent(\reg{X}) + \ent(\reg{X}, \reg{Y}) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a) \smalltag{subadditivity}
+    \end{align*}
+    Since $\ent(\reg{X}, \reg{Y})$ appears on both sides, it will suffice to show that $\ent(\reg{X}) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a) \geq \ent(\reg{Z})$.
+    Expressed slightly differently we have
+    \begin{equation*}
+        \ent(p) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a) \geq \ent\!\qty(\sum_{a \in \Sigma} p(a) \tr_\Y\sigma_a).
+    \end{equation*}
+    Which is an immediate consequence of the following theorem from Nielsen \& Chuang with $\rho_a = \tr_\Y\sigma_a$.
+    I've taken the liberty to formulate the theorem from their book into the language and notation of this course, as well as omit some unnecessary information.
+    \begin{fact}[Theorem 11.10 Neilsen \& Chuang]
+        Take $\Sigma$ to be an alphabet, $p \in \P(\Sigma)$ a probability vector, and $\qty{\rho_a : a \in \Sigma} \subseteq \Density(\X)$ a collection of density operators for some complex Euclidean space $\X$.
+        If $\rho \defeq \sum_{a \in \Sigma} p(a)\rho_a$, then
+        \begin{equation*}
+            \ent(\rho) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\rho_a).
+        \end{equation*}
+    \end{fact}
 \end{solution}
 
 \end{document}
