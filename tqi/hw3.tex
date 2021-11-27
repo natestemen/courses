@@ -182,10 +182,19 @@ that part of the course is needed to solve this problem.
     Let's now spectral decompose each $\sigma_a$ as $\sigma_a = \sum_{b\in\Gamma} \lambda_{ab}\ketbra{\psi_{ab}}$ where we've taken $\X = \C^\Gamma$.
     We can now calculate the associated terms of $\op{I}(\reg{X} : \reg{Y})$.
     Here we use a fact that $\ent(\sum_{a \in \Sigma} p(a) \rho_a) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\rho_a)$ for $p\in\P(\Sigma)$ and $\rho_a$ density operators.
-    To see a proof of such fact, please see my collaborators Nicholas Zutt's write up.
+    This fact is formalized in the following theorem from Nielsen \& Chuang's \emph{Quantum Computation and Quantum Information} in Theorem 11.10.
+    I've taken the liberty to formulate the theorem from their book into the language and notation of this course, as well as omit some unnecessary information.
+    \begin{fact}[Theorem 11.10 Neilsen \& Chuang]
+        Take $\Sigma$ to be an alphabet, $p \in \P(\Sigma)$ a probability vector, and $\qty{\rho_a : a \in \Sigma} \subseteq \Density(\X)$ a collection of density operators for some complex Euclidean space $\X$.
+        If $\rho \defeq \sum_{a \in \Sigma} p(a)\rho_a$ is a convex combination of density operators, then
+        \begin{equation*}
+            \ent(\rho) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\rho_a).
+        \end{equation*}
+    \end{fact}
+    Using this we then have
     \begin{align*}
-        \ent(\rho[X]) & = \ent\!\qty(\sum_{a \in \Sigma} p(a) \sigma_a) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\sigma_a) \\
-        \ent(\rho[Y]) & = \ent\!\qty(\sum_{a \in \Sigma} p(a) \xi_a)    \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\xi_a)
+        \ent(\rho[X]) & = \ent\!\qty(\sum_{a \in \Sigma} p(a) \sigma_a) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\sigma_a), \\
+        \ent(\rho[Y]) & = \ent\!\qty(\sum_{a \in \Sigma} p(a) \xi_a)    \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\xi_a).
     \end{align*}
     Finally for the last term we have
     \begin{align*}
@@ -219,8 +228,7 @@ that part of the course is needed to solve this problem.
     \begin{equation*}
         \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\xi_a) \geq \ent\!\qty(\sum_{a \in \Sigma} p(a) \xi_a)
     \end{equation*}
-    which is exactly the same fact we used above.
-    Again see Nicholas Zutt's write up for the complete proof (or Theorem 11.10 of Nielsen and Chuang).
+    which is exactly the same fact we used above with $\rho_a = \xi_a$.
 \end{solution}
 
 %-----------------------------------------------------------------------------%
@@ -271,7 +279,7 @@ Prove that, with respect to the state $\rho$, one has
                                                                & = \ent(\reg{Y}) + 2\ent(\reg{X}) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a)                                         \\
                                                                & \geq \ent(\reg{X}) + \ent(\reg{X}, \reg{Y}) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a) \smalltag{subadditivity}
     \end{align*}
-    Since $\ent(\reg{X}, \reg{Y})$ appears on both sides, it will suffice to show that $\ent(\reg{X}) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a) \geq \ent(\reg{Z})$.
+    Since $\ent(\reg{X}, \reg{Y})$ appears on both sides, we can cancel the term and it will suffice to show that $\ent(\reg{X}) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a) \geq \ent(\reg{Z})$.
     Expressed slightly differently we have
     \begin{equation*}
         \ent(p) + \sum_{a \in \Sigma} p(a)\ent(\tr_\Y\sigma_a) \geq \ent\!\qty(\sum_{a \in \Sigma} p(a) \tr_\Y\sigma_a).
@@ -280,7 +288,7 @@ Prove that, with respect to the state $\rho$, one has
     I've taken the liberty to formulate the theorem from their book into the language and notation of this course, as well as omit some unnecessary information.
     \begin{fact}[Theorem 11.10 Neilsen \& Chuang]
         Take $\Sigma$ to be an alphabet, $p \in \P(\Sigma)$ a probability vector, and $\qty{\rho_a : a \in \Sigma} \subseteq \Density(\X)$ a collection of density operators for some complex Euclidean space $\X$.
-        If $\rho \defeq \sum_{a \in \Sigma} p(a)\rho_a$, then
+        If $\rho \defeq \sum_{a \in \Sigma} p(a)\rho_a$ is a convex combination of density operators, then
         \begin{equation*}
             \ent(\rho) \leq \ent(p) + \sum_{a \in \Sigma} p(a) \ent(\rho_a).
         \end{equation*}
