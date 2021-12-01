@@ -1,0 +1,177 @@
+\documentclass[boxes,pages,color=SeaGreen]{homework}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=SeaGreen!60!black,
+    linkcolor=Bittersweet
+}
+\newcommand{\collab}[1]{\footnote{\href{mailto:#1}{\texttt{#1}}}}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate@stemen.email}
+\term{Fall 2021}
+\course{Theory of Quantum Information}
+\courseid{QIC 820}
+\hwnum{4}
+\duedate{Dec 17, 2021}
+
+\hwname{Assignment}
+
+\usepackage{physics}
+\usepackage{macros}
+\usepackage{cleveref}
+\usepackage{relsize}
+
+%-----------------------------------------------------------------------------%
+% Macros
+%-----------------------------------------------------------------------------%
+
+\newcommand{\tinyspace}{\mspace{1mu}}
+\renewcommand{\op}[1]{\operatorname{#1}}
+
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\I}{\mathbb{1}}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\reg}[1]{\mathsf{#1}}
+\newcommand{\smalltag}[1]{\tag*{\footnotesize (#1)}}
+
+\newcommand{\Lin}{\mathrm{L}}
+\newcommand{\Pos}{\mathrm{Pos}}
+\newcommand{\Unitary}{\mathrm{U}}
+\newcommand{\Density}{\mathrm{D}}
+\newcommand{\Channel}{\mathrm{C}}
+\newcommand{\Sep}{\mathrm{Sep}}
+\newcommand{\SepD}{\mathrm{SepD}}
+\newcommand{\PPT}{\mathrm{PPT}}
+
+
+\begin{document}
+
+%-----------------------------------------------------------------------------%
+
+\begin{problem}
+Let $\Phi \in \Channel(\X, \Y)$ be a channel, for complex Euclidean spaces
+$\X$ and $\Y$.
+Prove that the following three statements are equivalent:
+\begin{parts}
+  \part
+  For every complex Euclidean space $\Z$ and every state
+  $\rho\in\Density(\X\otimes\Z)$, we have
+  \[
+    \qty( \Phi \otimes \I_{\mathsmaller{\Lin(\Z)}})(\rho)
+    \in \SepD(\Y \mathbin{:} \Z).
+  \]\label{part:1a}
+  \part
+  $J(\Phi) \in \Sep(\Y \mathbin{:} \X)$.\label{part:1b}
+  \part
+  There exists an alphabet $\Sigma$, a measurement
+  $\mu: \Sigma \rightarrow \Pos(\X)$, and a collection of states
+  $\qty{\sigma_a : a \in \Sigma } \subseteq \Density(\Y)$ such that
+  \[
+    \Phi(X) = \sum_{a\in\Sigma} \ip{\mu(a)}{X} \sigma_a
+  \]
+  for all $X \in \Lin(\X)$.\label{part:1c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+  \ref{part:1a}
+  \ref{part:1b}
+  \ref{part:1c}
+\end{solution}
+
+\begin{problem}
+For any channel $\Xi$, define the \emph{minimum output entropy} of $\Xi$ as
+\[
+  \op{H}_{\text{min}}(\Xi) = \min_{\rho} \tinyspace \op{H}(\Xi(\rho)),
+\]
+where the minimum is over all density operator inputs to $\Xi$.
+
+Suppose that $\Phi\in\Channel(\X, \Y)$ and $\Psi\in\Channel(\Z, \W)$ are
+channels, for complex Euclidean spaces $\X$, $\Y$, $\Z$, and $\W$, and assume
+that $J(\Phi)\in\Sep(\Y \mathbin{:} \X)$.
+Prove that
+\[
+  \op{H}_{\text{min}}(\Phi\otimes\Psi) =
+  \op{H}_{\text{min}}(\Phi) + \op{H}_{\textup{min}}(\Psi).
+\]
+
+Remark: the equality is not true in general without the assumption
+$J(\Phi)\in\Sep(\Y \mathbin{:} \X)$; a correct answer must make use of this
+assumption.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\begin{problem}
+Let $\X$ be a complex Euclidean space, let $n = \dim(\X)$, and let
+$\Phi\in\Channel(\X)$ be a unital channel.
+Following our usual convention for singular-value decompositions, let
+$s_1(Y) \geq \cdots \geq s_n(Y)$ denote the singular values of a given
+operator $Y\in\Lin(\X)$, ordered from largest to smallest, and taking
+$s_k(Y) = 0$ when $k > \rank(Y)$.
+Prove that, for every operator $X\in\Lin(\X)$, we have
+\[
+  s_1(X) + \cdots + s_m(X) \geq s_1(\Phi(X)) + \cdots + s_m(\Phi(X))
+\]
+for every $m \in \{1,\ldots,n\}$.
+
+Hint: thinking about the block operator
+\[
+  \mqty(
+  0   & X \\
+  X^* & 0
+  )
+  = \ketbra{0}{1} \otimes X + \ketbra{1}{0} \otimes X^*
+\]
+may be helpful when solving this problem.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\begin{problem}
+Let $\Sigma$ be an alphabet, let $\X$ and $\Y$ be complex Euclidean spaces of
+the form $\X = \C^{\Sigma}$ and $\Y = \C^{\Sigma}$, define the
+swap operator
+\[
+  W = \sum_{a,b\in\Sigma} \ketbra{a}{b} \otimes \ketbra{b}{a},
+\]
+which we may regard as a unitary operator $W\in\Unitary(\X\otimes\Y)$,
+define projections
+\[
+  \Pi_0 = \frac{\I_{\X} \otimes \I_{\Y} + W}{2}
+  \quad\text{and}\quad
+  \Pi_1 = \frac{\I_{\X} \otimes \I_{\Y} - W}{2},
+\]
+and define
+\[
+  \rho_0 = \frac{\Pi_0}{\binom{n+1}{2}}
+  \quad\text{and}\quad
+  \rho_1 = \frac{\Pi_1}{\binom{n}{2}},
+\]
+for $n = \abs{\Sigma}$.
+These are the symmetric and anti-symmetric Werner states that were discussed
+a few times, such as in Lecture 3.
+(See also Example 6.10 in the text.)
+
+Prove that if $\mu: \{0,1\} \rightarrow \Pos(\X\otimes\Y)$ is a measurement with
+$\mu(0), \mu(1) \in \PPT(\X \mathbin{:} \Y)$ (i.e., $\mu$ is a
+\emph{PPT measurement}), then
+\[
+  \frac{1}{2}\ip{\mu(0)}{\rho_0} + \frac{1}{2}\ip{\mu(1)}{\rho_1}
+  \leq \frac{1}{2} + \frac{1}{n+1}.
+\]
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\end{document}
