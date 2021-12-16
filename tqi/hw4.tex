@@ -49,6 +49,8 @@
 \newcommand{\Sep}{\mathrm{Sep}}
 \newcommand{\SepD}{\mathrm{SepD}}
 \newcommand{\PPT}{\mathrm{PPT}}
+\DeclareMathOperator{\vect}{vec}
+\DeclareMathOperator{\cone}{cone}
 
 
 \begin{document}
@@ -81,9 +83,51 @@ Prove that the following three statements are equivalent:
 \end{problem}
 
 \begin{solution}
-  \ref{part:1a}
-  \ref{part:1b}
-  \ref{part:1c}
+  First we show \ref{part:1a} $\implies$ \ref{part:1b}.
+  Since \ref{part:1a} holds for all $\Z$ and $\rho\in\Density(\X\otimes\Z)$, we can take $\Z = \X$, and $\rho\in\Density(\X\otimes\X)$ to be equal to $\vect(\1_\X)\vect(\1_\X)^* / \dim(\X)$.
+  Thus we have
+  \begin{equation*}
+    (\Phi \otimes \1_{\mathsmaller{\Lin(\X)}})(\vect(\1_X)\vect(\1_\X)^*/\dim(\X))\in\SepD(\Y : \X)
+  \end{equation*}
+  and by the linearity of $\Phi\otimes\1_\mathsmaller{\Lin(\X)}$ we can pull $\frac{1}{\dim(\X)}$ out.
+  Using the fact that $\cone(\SepD(\W)) = \Sep(\W)$, we can move the (positive) constant to the other side to get
+  \begin{equation*}
+    (\Phi \otimes \1_{\mathsmaller{\Lin(\X)}})(\vect(\1_X)\vect(\1_\X)^*) \eqdef J(\Phi) \in \Sep(\Y : \X).
+  \end{equation*}
+
+  We now prove \ref{part:1b} $\implies$ \ref{part:1c}.
+  Recall from Equation 2.66 we have a channel can be written using the Choi representation as $\Phi(X) = \tr_\X(J(\Phi)\,\1_\Y\otimes X^\intercal)$.
+  Since $J(\Phi)$ is separable, we can write it as
+  \begin{equation*}
+    J(\Phi) = \sum_{a\in\Sigma}A_a\otimes B_a
+  \end{equation*}
+  with $\Sigma$ being an alphabet, $A_a\in\Pos(\Y)$, and $B_a\in\Pos(\X)$ for all $a\in\Sigma$.
+  Using Equation 2.66 we have a channel can be written using the Choi representation as $\Phi(X) = \tr_\X(J(\Phi)\,\1_\Y\otimes X^\intercal)$ and plugging in a separable Choi representation we can simplify.
+  \begin{align*}
+    \Phi(X) & = \tr_\X\qty(\sum_{a\in\Sigma}A_a\otimes B_a [\1_\Y\otimes X^\intercal])        \\
+            & = \tr_\X\qty(\sum_{a\in\Sigma}A_a \otimes B_a X^\intercal)                      \\
+            & = \sum_{a\in\Sigma}A_a\tr(B_a X^\intercal)                                      \\
+            & = \sum_{a\in\Sigma}\frac{A_a}{\tr(A_a)}\tr(\tr(A_a)B_a X^\intercal)             \\
+            & = \sum_{a\in\Sigma}\frac{A_a}{\tr(A_a)}\ip{\overline{\tr(A_a)B_a}}{X^\intercal}
+  \end{align*}
+  Defining $\sigma_a \defeq \frac{A_a}{\tr(A_a)}\in\Density(\Y)$ along with $\mu(a) \defeq \overline{\tr(A_a)B_a} \in \Pos(\X)$ allows us to express $\Phi$ as
+  \begin{equation*}
+    \Phi(X) = \sum_{a\in\Sigma}\ip{\mu(a)}{X}\sigma_a.
+  \end{equation*}
+  All that's left to show is that $\mu:\Sigma\to\Pos(\X)$ is indeed a measurement (that is the completeness relation holds: $\sum_{a\in\Sigma}\mu(a) = \1_\X$).
+  To do this we will use the fact that $\tr_\Y(J(\Phi)) = \1_\X$ for all channels $\Phi$.
+  Since the Choi representation is separable this gives us a condition on the $A_a$'s and $B_a$'s.
+  \begin{equation*}
+    \tr_\Y(J(\Phi)) = \sum_{a\in\Sigma}\tr_\Y(A_a\otimes B_a) = \sum_{a\in\Sigma}\tr(A_a)B_a = \1_\X
+  \end{equation*}
+  Summing up the measurement operators we then have
+  \begin{align*}
+    \sum_{a\in\Sigma}\mu(a) = \sum_{a\in\Sigma}\overline{\tr(A_a)B_a} = \overline{\sum_{a\in\Sigma}\tr(A_a)B_a} = \overline{\1_\X} = \1_\X.
+  \end{align*}
+  Thus $\mu$ is indeed a measurement.
+
+
+  Finally, we show \ref{part:1c} $\implies$ \ref{part:1a} to complete the equivalences.
 \end{solution}
 
 \begin{problem}
@@ -106,6 +150,10 @@ Remark: the equality is not true in general without the assumption
 $J(\Phi)\in\Sep(\Y \mathbin{:} \X)$; a correct answer must make use of this
 assumption.
 \end{problem}
+
+\noindent Solution completed in collaboration with Alev Orfi,\collab{akborfi@uwaterloo.ca} and Muhammad Usman Farooq.\collab{mu7faroo@uwaterloo.ca}
+
+{\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
 \begin{solution}
 \end{solution}
@@ -133,6 +181,10 @@ Hint: thinking about the block operator
 \]
 may be helpful when solving this problem.
 \end{problem}
+
+\noindent Solution completed in collaboration with Mohammad Ayyash,\collab{mmayyash@uwaterloo.ca} and Nicholas Zutt.\collab{nzutt@uwaterloo.ca}
+
+{\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
 \begin{solution}
 \end{solution}
@@ -172,6 +224,42 @@ $\mu(0), \mu(1) \in \PPT(\X \mathbin{:} \Y)$ (i.e., $\mu$ is a
 \end{problem}
 
 \begin{solution}
+  Let's first simplify the terms on the left hand side as much as possible.
+  \begin{align*}
+    \ip{\mu(1)}{\rho_1} & = \frac{1}{\binom{n}{2}}\tr(\mu(1)^*\Pi_1)                                     \\
+                        & = \frac{1}{n(n-1)}\tr(\mu(1)(\1_\X\otimes\1_\Y - W))                           \\
+    \ip{\mu(0)}{\rho_0} & = \frac{1}{\binom{n+1}{2}}\tr(\mu(0)^*\Pi_0)                                   \\
+                        & = \frac{1}{n(n+1)}\tr(\mu(0)(\1_\X\otimes\1_\Y + W))                           \\
+                        & = \frac{1}{n(n+1)}\tr(\qty[\1_\X\otimes\1_\Y - \mu(1)](\1_\X\otimes\1_\Y + W)) \\
+                        & = \frac{1}{n(n+1)}\tr(\1_\X\otimes\1_\Y + W - \mu(1) - \mu(1)W)                \\
+                        & = \frac{1}{n(n+1)}\qty(n^2 + n - \tr(\mu(1) - \mu(1)W))                        \\
+                        & = 1 - \frac{1}{n(n+1)}\tr(\mu(1)(\1_\X\otimes\1_\Y + W))
+  \end{align*}
+  Putting these together, and doing some algebra we have the following equality.
+  \begin{equation*}
+    \ip{\mu(0)}{\rho_0} + \ip{\mu(1)}{\rho_1} = 1 + \frac{2}{n(n^2 - 1)}\qty\Big(\tr(\mu(1)) - n\tr(\mu(1)W))
+  \end{equation*}
+  Proving the desired inequality is now equivalent to showing $\tr(\mu(1)) - n\tr(\mu(1)W) \leq n(n - 1)$.
+  Substituting the second occurrence of $\mu(1)$ for $\1_\X\otimes\1_\Y - \mu(0)$ we obtain $\tr(\mu(1)) - n^2 + n\tr(\mu(0)W)$ for the left hand side.
+  Applying H\"older's inequality to $\ip{\mu(0)}{W}$ with $p = 1$ and $p^* = \infty$ we see $\ip{\mu(0)}{W} = \tr(\mu(0)W) \leq \norm{\mu(0)}_1\norm{W}_\infty$.
+  The swap operator has infinity norm equal to $1$ (almost by definition), and $\norm{\mu(0)}_1 = \tr(\sqrt{(\mu(0)^*\mu(0))}) = \tr(\mu(0))$.
+  In total we then have $\tr(\mu(0)W) \leq \tr(\mu(0))$.
+  Applying this to our desired inequality we have
+  \begin{align*}
+    \tr(\mu(1)) - n^2 + n\tr(\mu(0)W) & = \tr(\mu(1)) - n^2 + (n-1)\tr(\mu(0)W) + \tr(\mu(0)W)   \\
+                                      & \leq \tr(\mu(1)) - n^2 + (n-1)\tr(\mu(0)W) + \tr(\mu(0)) \\
+                                      & = \tr(\mu(0) + \mu(1)) - n^2 + (n-1)\tr(\mu(0)W)         \\
+                                      & = (n-1)\tr(\mu(0)W).
+  \end{align*}
+  Thus, in final we must show $\tr(\mu(0)W) \leq n$, or equivalently (by the completeness relation) $\tr(\mu(0)W) = \tr(W - \mu(1)W) = n - \tr(\mu(1)W)$ that $\tr(\mu(1)W) \geq 0$.
+  \begin{align*}
+    \tr(\mu(1)W) & = \ip{\mu(1)}{W}                                                 \\
+                 & = \ip{(\mathsf{T}\otimes\1_\Y)\mu(1)}{(\mathsf{T}\otimes\1_\Y)W} \\
+                 & = \ip{A}{\sum_{a,b\in\Sigma}E_{a,b}\otimes E_{a,b}}
+  \end{align*}
+  Since $\mu(1) \in \PPT(\X:\Y)$, we know $(\mathsf{T}\otimes\1_\Y)\mu(1)\in\Pos(\X\otimes\Y)$, and additionally it's not hard to show $\sum_{a,b\in\Sigma}E_{a,b}\otimes E_{a,b}\in\Pos(\X\otimes\Y)$.
+  Since we have the inner product of positive semidefinite operators, it must be a nonnegative real number.
+  Thus $\tr(\mu(1)W) \geq 0$, and the proof is complete.
 \end{solution}
 
 \end{document}
