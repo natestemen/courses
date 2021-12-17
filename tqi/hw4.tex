@@ -128,6 +128,18 @@ Prove that the following three statements are equivalent:
 
 
   Finally, we show \ref{part:1c} $\implies$ \ref{part:1a} to complete the equivalences.
+  \begin{align*}
+    \qty\big(\Phi\otimes\1_\mathsmaller{\Lin(\Z)})(\rho) & = \sum_{a\in\Sigma}\sigma_a\otimes \tr_\X\!\qty\Big(\qty\big(\mu(a)\otimes\1_\Z)(\rho))                               \\
+                                                         & = \sum_{a\in\Sigma}\sigma_a\otimes \tr_\X\!\qty[\qty(\sqrt{\mu(a)}\otimes\1_\Z) \rho \qty(\sqrt{\mu(a)}\otimes\1_\Z)]
+  \end{align*}
+  Written in this form we need to show the second term is first positive semidefinite.
+  The fact that this term is Hermitian follows from the Hermiticity of $\rho$, and the eigenvalues remain positive as the register $\mathsf{Z}$ is now in the state
+  \begin{equation*}
+    \frac{\tr_\X\!\qty[\qty(\mu(a)\otimes\1_\Z)\rho]}{\ip{\mu(a)}{\rho[\X]}}.
+  \end{equation*}
+  To see this seperable operator is also a density operator, we can see that tracing over $\Y$ yields the second tensor terms.
+  We can then take the sum inside $\tr_\X$, use the completeness relation for $\mu$ to obtain $[\1_\X\otimes\1_\Z](\rho) = \rho$.
+  Finally $\tr(\rho) = 1$, so this is indeed a density operator, and indeed $(\Phi\otimes\1_\mathsmaller{\Lin(\Z)})(\rho)\in\SepD(\Y:\Z)$.
 \end{solution}
 
 \begin{problem}
@@ -156,6 +168,34 @@ assumption.
 {\noindent\color{SeaGreen!30}\rule{\textwidth}{1.5pt}}
 
 \begin{solution}
+  We first show $\op{H}_{\text{min}}(\Phi\otimes\Psi) \leq \op{H}_{\text{min}}(\Phi) + \op{H}_{\textup{min}}(\Psi)$.
+  To see this take $\rho = a \otimes b$, with $a\in\Density(\X)$ and $b\in\Density(\Y)$ and compute the entropy with respect to product states.
+  \begin{equation*}
+    \op{H}(\Phi\otimes\Psi(a\otimes b)) = \op{H}(\Phi(a)\otimes\Psi(b)) = \op{H}(\Phi(a)) + \op{H}(\Psi(b))
+  \end{equation*}
+  We of course have
+  \begin{align*}
+    \op{H}_\text{min}(\Phi\otimes\Psi) & \defeq \min_{\rho\in\Density(\X\otimes\Z)}\op{H}(\Phi\otimes\Psi(\rho))           \\
+                                       & \leq \min_{\substack{\rho = a \otimes b                                           \\ a\in\Density(\X) \\ b\in\Density(\Z)}}\op{H}(\Phi\otimes\Psi(a\otimes b)) \\
+                                       & = \min_{a\in\Density(\X)}\op{H}(\Phi(a)) + \min_{b\in\Density(\Z)}\op{H}(\Psi(b)) \\
+                                       & \eqdef \op{H}_\text{min}(\Phi) + \op{H}_\text{min}(\Psi)
+  \end{align*}
+  since the minimum is over a strictly smaller set of density operators.
+
+  We must now show $\op{H}_{\text{min}}(\Phi\otimes\Psi) \geq \op{H}_{\text{min}}(\Phi) + \op{H}_{\textup{min}}(\Psi)$ to obtain the equality.
+  To start we use the fact that $\Phi\otimes\1_{\mathsmaller{\Lin(\Z)}}(\rho) \in \SepD(\Y:\Z)$ for all complex Euclidean spaces $\Z$ and $\rho\in\Density(\X\otimes\Z)$ as implied by $J(\Phi)\in\Sep(\Y:\X)$ and problem 1.
+  This allows us to write $\Phi\otimes\Psi(\rho)$ as a separable state as follows.
+  \begin{align*}
+    \qty\big[\Phi\otimes\Psi](\rho) & = (\Phi\otimes\1_\mathsmaller{\Lin(\W)})\underbrace{\qty\Big[\qty\big(\1_\mathsmaller{\Lin(\X)}\otimes\Psi)(\rho)]}_{\in\Density(\X\otimes\W)} \\
+                                    & = \sum_{a\in\Sigma} p(a)\, x_a x_a^* \otimes y_a y_a^* \smalltag{Proposition 6.5}
+  \end{align*}
+  We can now calculate the entropy of such a state, and look to bound it below.
+  \begin{align*}
+    \op{H}\!\qty\big[\qty(\Phi\otimes\Psi)(\rho)] & = \op{H}\!\qty[\sum_{a\in\Sigma}p(a)\, x_a x_a^*\otimes y_a y_a^*]                      \\
+                                                  & \geq \sum_{a\in\Sigma}p(a)\op{H}\!\qty[x_a x_a^*\otimes y_a y_a^*] \smalltag{concavity} \\
+                                                  & = \sum_{a\in\Sigma}p(a)\qty\big[\op{H}(x_a x_a^*) + \op{H}(y_a y_a^*)]
+  \end{align*}
+  By Equation TODO from Watrous we know the minimum entropy is always achieved by a pure state, so instead of taking the ``min'' over all $\rho\in\Density(\X\otimes\Z)$, we can take the ``min'' over $\psi\in\mathcal{S}(\X\otimes\Z)$.
 \end{solution}
 
 \begin{problem}
