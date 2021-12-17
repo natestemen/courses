@@ -186,16 +186,36 @@ assumption.
   To start we use the fact that $\Phi\otimes\1_{\mathsmaller{\Lin(\Z)}}(\rho) \in \SepD(\Y:\Z)$ for all complex Euclidean spaces $\Z$ and $\rho\in\Density(\X\otimes\Z)$ as implied by $J(\Phi)\in\Sep(\Y:\X)$ and problem 1.
   This allows us to write $\Phi\otimes\Psi(\rho)$ as a separable state as follows.
   \begin{align*}
-    \qty\big[\Phi\otimes\Psi](\rho) & = (\Phi\otimes\1_\mathsmaller{\Lin(\W)})\underbrace{\qty\Big[\qty\big(\1_\mathsmaller{\Lin(\X)}\otimes\Psi)(\rho)]}_{\in\Density(\X\otimes\W)} \\
-                                    & = \sum_{a\in\Sigma} p(a)\, x_a x_a^* \otimes y_a y_a^* \smalltag{Proposition 6.5}
+    \qty\big[\Phi\otimes\Psi](\rho) & = \qty\big(\1_\mathsmaller{\Lin(\Y)}\otimes\Psi)\underbrace{\qty\Big[(\Phi\otimes\1_\mathsmaller{\Lin(\Z)})(\rho)]}_{\in\SepD(\Y\otimes\Z)} \\
+                                    & = \qty\big(\1_\mathsmaller{\Lin(\Y)}\otimes\Psi)\sum_{a\in\Sigma} p(a)\, x_a x_a^* \otimes y_a y_a^* \smalltag{Proposition 6.5}             \\
+                                    & = \sum_{a\in\Sigma}p(a) x_a x_a^* \otimes \Psi(y_a y_a^*)
   \end{align*}
   We can now calculate the entropy of such a state, and look to bound it below.
   \begin{align*}
-    \op{H}\!\qty\big[\qty(\Phi\otimes\Psi)(\rho)] & = \op{H}\!\qty[\sum_{a\in\Sigma}p(a)\, x_a x_a^*\otimes y_a y_a^*]                      \\
-                                                  & \geq \sum_{a\in\Sigma}p(a)\op{H}\!\qty[x_a x_a^*\otimes y_a y_a^*] \smalltag{concavity} \\
-                                                  & = \sum_{a\in\Sigma}p(a)\qty\big[\op{H}(x_a x_a^*) + \op{H}(y_a y_a^*)]
+    \op{H}\!\qty\big[\qty(\Phi\otimes\Psi)(\rho)] & = \op{H}\!\qty[\sum_{a\in\Sigma}p(a)\, x_a x_a^*\otimes \Psi(y_a y_a^*)]                                                       \\
+                                                  & \geq \sum_{a\in\Sigma}p(a)\op{H}(x_a x_a^*) + \op{H}\!\qty[\sum_{a\in\Sigma}p(a)\Psi(y_a y_a^*)] \smalltag{HW 3 Problem 3 (b)}
   \end{align*}
-  By Equation TODO from Watrous we know the minimum entropy is always achieved by a pure state, so instead of taking the ``min'' over all $\rho\in\Density(\X\otimes\Z)$, we can take the ``min'' over $\psi\in\mathcal{S}(\X\otimes\Z)$.
+  Taking the minimum of each side we have
+  \begin{multline*}
+    \min_{\rho\in\Density(\X\otimes\Z)}\op{H}\!\qty\big[\qty(\Phi\otimes\Psi)(\rho)]                                                                                                     \\
+    \geq \min_{p\in\mathcal{P}(\Sigma)}\qty(\min_{x_a\in\mathcal{S}(\X)}\sum_{a\in\Sigma}p(a)\op{H}(x_a x_a^*) + \min_{y_a\in\mathcal{S}(\Y)}\op{H}\!\qty[\sum_{a\in\Sigma}p(a) \Psi(y_a y_a^*)]).
+  \end{multline*}
+  Equation 7.398 from the text shows the minimum entropy is always achieved by a pure state.
+  Applying this fact to the second term on the right hand side we must have one $\hat{a}\in\Sigma$ with $p(\hat{a}) = 1$, and $p(a) = 0$ otherwise.
+  This simplifies the equality to
+  \begin{equation*}
+    \min_{\rho\in\Density(\X\otimes\Z)}\op{H}\!\qty\big[\qty(\Phi\otimes\Psi)(\rho)] \geq \min_{x\in\mathcal{S}(\X)}\op{H}(x x^*) + \min_{y\in\mathcal{S}(\Y)}\op{H}(\Psi(y y^*)).
+  \end{equation*}
+  With the $p(a)$'s out of the way, we then have $(\Phi\otimes\1_\mathsmaller{\Lin(\Z)})(\rho) = x_{\hat{a}} x_{\hat{a}}^*\otimes y_{\hat{a}} y_{\hat{a}}^*$, and further
+  \begin{equation*}
+    \Phi(\rho[\X]) = \tr_\Z\!\qty[(\Phi\otimes\1_\mathsmaller{\Lin(\Z)})(\rho)] = x_{\hat{a}} x_{\hat{a}}^*.
+  \end{equation*}
+  We then have
+  \begin{equation*}
+    \op{H}_\text{min}(\Phi\otimes\Psi) \geq \min_{x\in\mathcal{S}(\X)}\op{H}(\Phi(xx^*)) + \min_{y\in\mathcal{S}(\Y)}\op{H}(\Psi(yy^*)) = \op{H}_\text{min}(\Phi) + \op{H}_\text{min}(\Psi)
+  \end{equation*}
+  as desired.
+  These two inequalities complete the proof.
 \end{solution}
 
 \begin{problem}
