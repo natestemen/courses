@@ -90,39 +90,38 @@ Prove that the following three statements are equivalent:
     (\Phi \otimes \1_{\mathsmaller{\Lin(\X)}})(\vect(\1_X)\vect(\1_\X)^*/\dim(\X))\in\SepD(\Y : \X)
   \end{equation*}
   and by the linearity of $\Phi\otimes\1_\mathsmaller{\Lin(\X)}$ we can pull $\frac{1}{\dim(\X)}$ out.
-  Using the fact that $\cone(\SepD(\W)) = \Sep(\W)$, we can move the (positive) constant to the other side to get
+  Using the cone relation that $\cone(\SepD(\W)) = \Sep(\W)$, we can move the (positive) constant to the other side to get
   \begin{equation*}
     (\Phi \otimes \1_{\mathsmaller{\Lin(\X)}})(\vect(\1_X)\vect(\1_\X)^*) \eqdef J(\Phi) \in \Sep(\Y : \X).
   \end{equation*}
 
   We now prove \ref{part:1b} $\implies$ \ref{part:1c}.
-  Recall from Equation 2.66 we have a channel can be written using the Choi representation as $\Phi(X) = \tr_\X(J(\Phi)\,\1_\Y\otimes X^\intercal)$.
   Since $J(\Phi)$ is separable, we can write it as
   \begin{equation*}
     J(\Phi) = \sum_{a\in\Sigma}A_a\otimes B_a
   \end{equation*}
   with $\Sigma$ being an alphabet, $A_a\in\Pos(\Y)$, and $B_a\in\Pos(\X)$ for all $a\in\Sigma$.
-  Using Equation 2.66 we have a channel can be written using the Choi representation as $\Phi(X) = \tr_\X(J(\Phi)\,\1_\Y\otimes X^\intercal)$ and plugging in a separable Choi representation we can simplify.
+  Combining this fact together with Equation 2.66 from the text ($\Phi(X) = \tr_\X(J(\Phi)\,\1_\Y\otimes X^\intercal)$) we have the following manipulations.
   \begin{align*}
-    \Phi(X) & = \tr_\X\qty(\sum_{a\in\Sigma}A_a\otimes B_a [\1_\Y\otimes X^\intercal])        \\
-            & = \tr_\X\qty(\sum_{a\in\Sigma}A_a \otimes B_a X^\intercal)                      \\
-            & = \sum_{a\in\Sigma}A_a\tr(B_a X^\intercal)                                      \\
-            & = \sum_{a\in\Sigma}\frac{A_a}{\tr(A_a)}\tr(\tr(A_a)B_a X^\intercal)             \\
-            & = \sum_{a\in\Sigma}\frac{A_a}{\tr(A_a)}\ip{\overline{\tr(A_a)B_a}}{X^\intercal}
+    \Phi(X) & = \tr_\X\qty(\sum_{a\in\Sigma}A_a\otimes B_a [\1_\Y\otimes X^\intercal])                                                                                                              \\
+            & = \sum_{a\in\Sigma}A_a\tr(B_a X^\intercal)                                                                                                                                            \\
+            & = \sum_{a\in\Sigma}\frac{A_a}{\tr(A_a)}\tr(\tr(A_a)\overline{B_a} X) \smalltag{$\tr(B_AX^\intercal) = \tr((B_aX^\intercal)^\intercal) = \tr(B_a^\intercal X) = \tr(\overline{B_a}X)$} \\
+            & = \sum_{a\in\Sigma}\frac{A_a}{\tr(A_a)}\ip{\tr(A_a)B_a^\intercal}{X} \smalltag{$\tr(A_a)\in\R_{\geq 0}$}
   \end{align*}
-  Defining $\sigma_a \defeq \frac{A_a}{\tr(A_a)}\in\Density(\Y)$ along with $\mu(a) \defeq \overline{\tr(A_a)B_a} \in \Pos(\X)$ allows us to express $\Phi$ as
+  Defining $\sigma_a \defeq \frac{A_a}{\tr(A_a)}\in\Density(\Y)$ along with $\mu(a) \defeq \tr(A_a)B_a^\intercal \in \Pos(\X)$ allows us to express $\Phi$ as
   \begin{equation*}
     \Phi(X) = \sum_{a\in\Sigma}\ip{\mu(a)}{X}\sigma_a.
   \end{equation*}
-  All that's left to show is that $\mu:\Sigma\to\Pos(\X)$ is indeed a measurement (that is the completeness relation holds: $\sum_{a\in\Sigma}\mu(a) = \1_\X$).
-  To do this we will use the fact that $\tr_\Y(J(\Phi)) = \1_\X$ for all channels $\Phi$.
+  What's left to show is that $\mu:\Sigma\to\Pos(\X)$ is indeed a measurement.
+  First $\mu(a) = \tr(A_a)B_a^\intercal\in\Pos(\X)$ because the transpose preserves positive semidefinite operators.
+  To show the completeness relation holds we will use the fact that $\tr_\Y(J(\Phi)) = \1_\X$ for all channels $\Phi$.
   Since the Choi representation is separable this gives us a condition on the $A_a$'s and $B_a$'s.
   \begin{equation*}
     \tr_\Y(J(\Phi)) = \sum_{a\in\Sigma}\tr_\Y(A_a\otimes B_a) = \sum_{a\in\Sigma}\tr(A_a)B_a = \1_\X
   \end{equation*}
   Summing up the measurement operators we then have
   \begin{align*}
-    \sum_{a\in\Sigma}\mu(a) = \sum_{a\in\Sigma}\overline{\tr(A_a)B_a} = \overline{\sum_{a\in\Sigma}\tr(A_a)B_a} = \overline{\1_\X} = \1_\X.
+    \sum_{a\in\Sigma}\mu(a) = \sum_{a\in\Sigma}\tr(A_a)B_a^\intercal = \qty(\sum_{a\in\Sigma}\tr(A_a)B_a)^\intercal = \1_\X^\intercal = \1_\X.
   \end{align*}
   Thus $\mu$ is indeed a measurement.
 
@@ -132,12 +131,14 @@ Prove that the following three statements are equivalent:
     \qty\big(\Phi\otimes\1_\mathsmaller{\Lin(\Z)})(\rho) & = \sum_{a\in\Sigma}\sigma_a\otimes \tr_\X\!\qty\Big(\qty\big(\mu(a)\otimes\1_\Z)(\rho))                               \\
                                                          & = \sum_{a\in\Sigma}\sigma_a\otimes \tr_\X\!\qty[\qty(\sqrt{\mu(a)}\otimes\1_\Z) \rho \qty(\sqrt{\mu(a)}\otimes\1_\Z)]
   \end{align*}
-  Written in this form we need to show the second term is first positive semidefinite.
-  The fact that this term is Hermitian follows from the Hermiticity of $\rho$, and the eigenvalues remain positive as the register $\mathsf{Z}$ is now in the state
+  We'd like to show this is seperable, and clearly $\sigma_a\in\Pos(\Y)$, so the first term is taken care of.
+  The second term is Hermitian since the adjoint commutes with partial trace and the fact that $\rho$ is Hermitian
+  Second, the eigenvalues of the second term are all positive as the register $\reg{Z}$ is now in the state
   \begin{equation*}
     \frac{\tr_\X\!\qty[\qty(\mu(a)\otimes\1_\Z)\rho]}{\ip{\mu(a)}{\rho[\X]}}.
   \end{equation*}
-  To see this seperable operator is also a density operator, we can see that tracing over $\Y$ yields the second tensor terms.
+  Thus, because it is Hermitian with positive eigenvalues, it is positive semidefinite and hence $(\Phi\otimes\1_\mathsmaller{\Lin(\Z)})(\rho)\in\Sep(\Y:\Z)$.
+  To see this is also a density operator, we can see that tracing over $\Y$ yields only the second tensor terms.
   We can then take the sum inside $\tr_\X$, use the completeness relation for $\mu$ to obtain $[\1_\X\otimes\1_\Z](\rho) = \rho$.
   Finally $\tr(\rho) = 1$, so this is indeed a density operator, and indeed $(\Phi\otimes\1_\mathsmaller{\Lin(\Z)})(\rho)\in\SepD(\Y:\Z)$.
 \end{solution}
