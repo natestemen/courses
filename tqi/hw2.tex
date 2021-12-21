@@ -51,7 +51,7 @@
 \newcommand{\CP}{\mathrm{CP}}
 
 \newcommand{\triplenorm}[1]{
-  \lvert\!\lvert\!\lvert #1 
+  \lvert\!\lvert\!\lvert #1
   \rvert\!\rvert\!\rvert}
 
 
@@ -113,8 +113,8 @@ consider the semidefinite program
     Starting with the definition of a semidefinite program we have
     \begin{center}
         \begin{tabular}{rl}
-            $\underset{X}{\text{maximize}}$: & $\left\langle \frac{1}{2}\smqty(0 & M \\ M^* & 0), X\right\rangle$ \\ \cmidrule(lr{1em}){2-2}
-            \multirow{2}{*}{subject to:}     & $\Phi(X) = \smqty(\1_\X           & 0 \\ 0 & \1_\Y)$                         \\
+            $\underset{X}{\text{maximize}}$: & $\left\langle \frac{1}{2}\spmqty{0 & M \\ M^* & 0}, X\right\rangle$ \\ \cmidrule(lr{1em}){2-2}
+            \multirow{2}{*}{subject to:}     & $\Phi(X) = \spmqty{\1_\X           & 0 \\ 0 & \1_\Y}$                         \\
                                              & $X\in\Pos(\X\oplus\Y)$.
         \end{tabular}
     \end{center}
@@ -122,23 +122,23 @@ consider the semidefinite program
     Since $X\in\Pos(\X)$ it must also be hermitian ($X = X^*$), and hence $C = B^*$ making $X = \smqty(\1_\X & B \\ B^* & \1_\Y)$.
     We can now expand out the inner product we are trying to maximize as follows (temporarily omitting the $\frac{1}{2}$):
     \begin{align*}
-        \left\langle\smqty(0 & M                                               \\ M^* & 0), \smqty(\1_\X & B \\ B^* & \1_\Y)\right\rangle & = \tr\qty[\smqty(MB^* & M \\ M^* & M^*B)] \\
-                             & = \tr(MB^*) + \tr(M^*B)                         \\
-                             & = \langle B, M\rangle + \langle B^*, M^*\rangle
+        \left\langle\spmqty{0 & M                                               \\ M^* & 0}, \spmqty{\1_\X & B \\ B^* & \1_\Y}\right\rangle & = \tr\qty[\spmqty{MB^* & M \\ M^* & M^*B}] \\
+                              & = \tr(MB^*) + \tr(M^*B)                         \\
+                              & = \langle B, M\rangle + \langle B^*, M^*\rangle
     \end{align*}
     This allows us to rewrite the primal problem as
     \begin{center}
         \begin{tabular}{rl}
             $\underset{B}{\text{maximize}}$: & $\frac{1}{2}\langle B, M\rangle + \frac{1}{2}\langle B^*, M^*\rangle$     \\ \cmidrule(lr{1em}){2-2}
-            \multirow{2}{*}{subject to:}     & $\smqty(\1_\X                                                         & B \\ B^* & \1_Y) \in \Pos(\X\oplus\Y)$                         \\
+            \multirow{2}{*}{subject to:}     & $\spmqty{\1_\X                                                        & B \\ B^* & \1_Y} \in \Pos(\X\oplus\Y)$                         \\
                                              & $B\in\Lin(\Y, \X)$.
         \end{tabular}
     \end{center}
     In order to understand the dual problem we have to first know what $\Phi^*$ is.
     This can be calculated by the definition of a adjoint map: $\langle\Phi(X), Y\rangle = \langle X, \Phi^*(Y)\rangle$.
     \begin{align*}
-        \langle\Phi\smqty(X & Z \\ W & Y), \smqty(A & B \\ C & D)\rangle & = \tr(\smqty(X^*A & \cdot \\ \cdot & Y^*D)) = \tr(X^*A) + \tr(Y^*D) = \langle X, A\rangle + \langle Y , D \rangle \\
-        \langle\smqty(X     & Z \\ W & Y), \Phi^*\smqty(A & B \\ C & D)\rangle & = \tr(\smqty(X^*A' + W^*C' & \cdot \\ \cdot & Z^*B' + Y^*D'))
+        \langle\Phi\spmqty{X & Z \\ W & Y}, \spmqty{A & B \\ C & D}\rangle & = \tr(\spmqty{X^*A & \cdot \\ \cdot & Y^*D}) = \tr(X^*A) + \tr(Y^*D) = \langle X, A\rangle + \langle Y , D \rangle \\
+        \langle\spmqty{X     & Z \\ W & Y}, \Phi^*\spmqty{A & B \\ C & D}\rangle & = \tr(\spmqty{X^*A' + W^*C' & \cdot \\ \cdot & Z^*B' + Y^*D'})
     \end{align*}
     In order for this to be equal to $\tr(X^*A) + \tr(Y^*D)$ we must have $A' = A$, $D' = D$, as well as $C' = 0 = B'$.
     This gives us the action of $\Phi^*$ as $\Phi^*\smqty(A & B \\ C & D) = \smqty(A & 0 \\ 0 & D)$ and hence $\Phi = \Phi^*$.
@@ -146,8 +146,8 @@ consider the semidefinite program
     To simplify the dual problem we first write it in it's full generality:
     \begin{center}
         \begin{tabular}{rl}
-            $\underset{Y}{\text{minimize}}$: & $\left\langle \smqty(\1_\X        & 0 \\ 0 & \1_\Y), Y\right\rangle$ \\ \cmidrule(lr{1em}){2-2}
-            \multirow{2}{*}{subject to:}     & $\Phi(Y) \geq \frac{1}{2}\smqty(0 & M \\ M^* & 0)$    \\
+            $\underset{Y}{\text{minimize}}$: & $\left\langle \spmqty{\1_\X        & 0 \\ 0 & \1_\Y}, Y\right\rangle$ \\ \cmidrule(lr{1em}){2-2}
+            \multirow{2}{*}{subject to:}     & $\Phi(Y) \geq \frac{1}{2}\spmqty{0 & M \\ M^* & 0}$    \\
                                              & $Y\in\Herm(\X\oplus \Y)$.
         \end{tabular}
     \end{center}
@@ -155,7 +155,7 @@ consider the semidefinite program
     \begin{center}
         \begin{tabular}{rl}
             $\underset{A, D}{\text{minimize}}$: & $\tr(A) + \tr(D)$                 \\ \cmidrule(lr{1em}){2-2}
-            \multirow{2}{*}{subject to:}        & $\smqty(A         & -\frac{1}{2}M \\ -\frac{1}{2}M^* & D)\in\Pos(\X\oplus \Y)$    \\
+            \multirow{2}{*}{subject to:}        & $\spmqty{A        & -\frac{1}{2}M \\ -\frac{1}{2}M^* & D}\in\Pos(\X\oplus \Y)$    \\
                                                 & $A\in\Herm(\X)$                   \\
                                                 & $D\in\Herm(\Y)$.
         \end{tabular}
@@ -169,7 +169,7 @@ consider the semidefinite program
     \begin{center}
         \begin{tabular}{rl}
             $\underset{A, D}{\text{minimize}}$: & $\frac{1}{2}\tr(A) + \frac{1}{2}\tr(D)$      \\ \cmidrule(lr{1em}){2-2}
-            \multirow{2}{*}{subject to:}        & $\smqty(A                               & -M \\ -M^* & D)\in\Pos(\X\oplus \Y)$    \\
+            \multirow{2}{*}{subject to:}        & $\spmqty{A                              & -M \\ -M^* & D}\in\Pos(\X\oplus \Y)$    \\
                                                 & $A\in\Pos(\X)$                               \\
                                                 & $D\in\Pos(\Y)$.
         \end{tabular}

@@ -41,7 +41,7 @@
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\reg}[1]{\mathsf{#1}}
 \newcommand{\ent}{\operatorname{H}}
-\newcommand{\mutIn}[2]{\operatorname{I}(#1 : #2)}
+\newcommand{\mutIn}[2]{\operatorname{I} (#1: #2)}
 \newcommand{\smalltag}[1]{\tag*{\footnotesize (#1)}}
 
 \newcommand{\Pos}{\mathrm{Pos}}
@@ -127,7 +127,8 @@ where
     \begin{align*}
         \relEn(\rho \| \sigma) = \tr(\rho\log\rho) - \tr(\rho\log\sigma) = \sum_{a\in\Sigma}p(a)\qty\big[\tr(\rho_a\log\rho) - \tr(\rho_a\log\sigma)].
     \end{align*} % TODO
-    Thus the left hand side of the equation to be proven is finite when $\im(\rho_a) \subseteq \im(\rho)$ which is always true given the form of $\rho$, and $\im(\rho_a) \subseteq \im(\sigma)$. Given that holds for each $a \in \Sigma$, then it must also hold for a convex combination of them, and hence $\im(\rho) \subseteq \im(\sigma)$.
+    Thus the left hand side of the equation to be proven is finite when $\im(\rho_a) \subseteq \im(\rho)$ which is always true given the form of $\rho$, and $\im(\rho_a) \subseteq \im(\sigma)$.
+    Given that holds for each $a \in \Sigma$, then it must also hold for a convex combination of them, and hence $\im(\rho) \subseteq \im(\sigma)$.
     This implies that when the left hand side is finite, so is the right hand side, and the reasoning can be run in reverse to show both sides are infinite when $\mathrm{D}(\rho_a \| \sigma)$ is infinite.
 
     Now we can address the equality when both sides are finite.
