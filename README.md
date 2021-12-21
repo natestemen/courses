@@ -31,10 +31,10 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 
 ### Fall 2021
 
-| Course                                                                                                                   | Professor                                                       | Directory      | PDFs |
-| ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- | -------------- | ---- |
-| [Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/)                                                   | [John Watrous](https://cs.uwaterloo.ca/~watrous/)               | [`tqi`](./tqi) |      |
-| [General Relativity for Cosmology](https://uwaterloo.ca/poi/teaching/general-relativity-cosmology-amath875phys786-f2021) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`gr`](./gr)   |      |
+| Course                                                                                                                                 | Professor                                                       | Directory      | PDFs                                                         |
+| -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | -------------- | ------------------------------------------------------------ |
+| [Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/)                                                                 | [John Watrous](https://cs.uwaterloo.ca/~watrous/)               | [`tqi`](./tqi) | [link](https://natestemen.xyz/latex/theory-of-quantum-info/) |
+| [~~General Relativity for Cosmology~~ (dropped)](https://uwaterloo.ca/poi/teaching/general-relativity-cosmology-amath875phys786-f2021) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`gr`](./gr)   |                                                              |
 
 ---
 
