@@ -36,6 +36,13 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 | [Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/)                                                                 | [John Watrous](https://cs.uwaterloo.ca/~watrous/)               | [`tqi`](./tqi) | [link](https://natestemen.xyz/latex/theory-of-quantum-info/) |
 | [~~General Relativity for Cosmology~~ (dropped)](https://uwaterloo.ca/poi/teaching/general-relativity-cosmology-amath875phys786-f2021) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`gr`](./gr)   |                                                              |
 
+### Winter 2021
+
+| Course                                                                                                  | Professor                                                                                                                                                                                          | Directory      | PDFs |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---- |
+| Logic and Computability                                                                                 | [Jason Bell](https://www.math.uwaterloo.ca/~jpbell)                                                                                                                                                | [`log`](./log) |      |
+| [Quantum Error Correction and Fault Tolerance](https://www.math.uwaterloo.ca/~wcleung/co781-w2022.html) | [Debbie Leung](https://www.math.uwaterloo.ca/~wcleung) + [Michael Vasmer](https://perimeterinstitute.ca/people/michael-vasmer) + [Beni Yoshida](https://perimeterinstitute.ca/people/beni-yoshida) | [`qec`](./qec) |      |
+
 ---
 
 ## Workflow

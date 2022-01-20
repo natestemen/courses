@@ -1,0 +1,69 @@
+\documentclass[boxes,pages,color=CornflowerBlue]{homework}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=Bittersweet
+}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate@stemen.email}
+\term{Winter 2021}
+\course{Logic and Computability}
+\courseid{PMATH 632}
+\hwnum{1}
+\duedate{Jan 21, 2022 11:59PM}
+
+\hwname{Assignment}
+
+
+\begin{document}
+
+\begin{problem}[ZFC]
+\begin{parts}
+    \part Let $S$ be a set whose elements are non-empty sets and let $T$ be the set that is the union of the elements of $S$ (axiom of union!).
+    Show using the axioms above that there is a map $f:S\to T$ such that $f(s)\in s$ for all $s\in S$.
+    Hint: well-order $T$.
+    Then for $s\in S$ consider $s\cap T$.
+    Now use the fact that $T$ is well-ordered.\label{part:1a}
+    \part Let $X$ be a partially ordered set with partial order $\prec$.
+    % (Here, a partial order on $X$ means that $x\preceq x$ for all $x$; if $x\preceq y$ and $y\preceq x$ then $x=y$; and $x\preceq y$ and $y\preceq z \implies x\preceq z$, for all $x,y,z\in X$.)
+    We say that a subset $T$ of $X$ is a \emph{chain} in $Y$ if the elements of $T$ are totally ordered with respect to $\preceq$; that is, if $t_1,t_2\in T$ then either $t_1\preceq t_2$ or $t_2\preceq t_1$.
+    We say that a chain $T$ has an upper bound in $X$ if there is some element $z\in X$ such that $t\preceq z$ for every $t\in T$.
+    Suppose that all chains in $X$ have an upper bound.
+    Show, using the following approach, the existence of a choice function from \ref{part:1a}) that the set $X$ has a maximal element with respect to $\preceq$ (that is, there is some $v\in X$ such that whenever $v\preceq x$ (with $x\in X$) we have $x=v$).
+    \label{part:1b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:1a}
+    \ref{part:1b}
+\end{solution}
+
+\begin{problem}[$S$-formulas]
+\begin{parts}
+    \part Use induction to show that if $S$ is a first-order alphabet and $\phi, \phi' \in \mathcal{L}^S$ then if $\phi$ is a prefix of $\phi'$ then $\phi = \phi'$.
+    Show that this is no longer true if we use suffixes instead of prefixes.
+    \label{part:2a}
+    \part Use induction to show that if $S$ is a first-order alphabet and $\phi_1, \ldots, \phi_n, \phi_1', \ldots, \phi_m' \in \mathcal{L}^S$ then if $\phi_1\cdots \phi_n = \phi_1'\cdots\phi_m'$ as words in $\mathcal{L}^S$ then $n = m$ and $\phi_i = \phi_i'$ for $i = 1, \ldots, n$.
+    \label{part:2b}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:2a}
+    \ref{part:2b}
+\end{solution}
+
+\begin{problem}[Unique shit]
+Let $S$ be a first-order alphabet, let $n\ge 1$, and let $t_1, \ldots,t_n \in T^S$.
+If $w = t_1 \cdots t_n \in S^*$.
+Show by induction that for each $i < \abs{w}$, there is a unique term $t \in T^S$ and unique $v \in S^*$ such that $w = w[1..i] t v$.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\end{document}
