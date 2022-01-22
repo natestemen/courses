@@ -13,51 +13,177 @@
 \courseid{PMATH 632}
 \hwnum{1}
 \duedate{Jan 21, 2022 11:59PM}
-
 \hwname{Assignment}
+
+\DeclareMathOperator{\Upp}{Upp}
+
 
 
 \begin{document}
 
 \begin{problem}[ZFC]
 \begin{parts}
-    \part Let $S$ be a set whose elements are non-empty sets and let $T$ be the set that is the union of the elements of $S$ (axiom of union!).
-    Show using the axioms above that there is a map $f:S\to T$ such that $f(s)\in s$ for all $s\in S$.
+    \part Let $S$ be a set whose elements are non-empty sets and let $T$ be the set that is the union of the elements of $S$.
+    Show using the axioms (of ZFC) that there is a map $f:S \to T$ such that $f(s) \in s$ for all $s\in S$.
     Hint: well-order $T$.
     Then for $s\in S$ consider $s\cap T$.
-    Now use the fact that $T$ is well-ordered.\label{part:1a}
+    Now use the fact that $T$ is well-ordered.
+    \label{part:1a}
     \part Let $X$ be a partially ordered set with partial order $\prec$.
     % (Here, a partial order on $X$ means that $x\preceq x$ for all $x$; if $x\preceq y$ and $y\preceq x$ then $x=y$; and $x\preceq y$ and $y\preceq z \implies x\preceq z$, for all $x,y,z\in X$.)
-    We say that a subset $T$ of $X$ is a \emph{chain} in $Y$ if the elements of $T$ are totally ordered with respect to $\preceq$; that is, if $t_1,t_2\in T$ then either $t_1\preceq t_2$ or $t_2\preceq t_1$.
-    We say that a chain $T$ has an upper bound in $X$ if there is some element $z\in X$ such that $t\preceq z$ for every $t\in T$.
+    % We say that a subset $T$ of $X$ is a \emph{chain} in $Y$ if the elements of $T$ are totally ordered with respect to $\preceq$; that is, if $t_1,t_2\in T$ then either $t_1\preceq t_2$ or $t_2\preceq t_1$.
+    % We say that a chain $T$ has an upper bound in $X$ if there is some element $z\in X$ such that $t\preceq z$ for every $t\in T$.
     Suppose that all chains in $X$ have an upper bound.
-    Show, using the following approach, the existence of a choice function from \ref{part:1a}) that the set $X$ has a maximal element with respect to $\preceq$ (that is, there is some $v\in X$ such that whenever $v\preceq x$ (with $x\in X$) we have $x=v$).
+    Show the existence of a choice function from \ref{part:1a} that the set $X$ has a maximal element with respect to $\preceq$.% (that is, there is some $v\in X$ such that whenever $v\preceq x$ (with $x\in X$) we have $x=v$).
     \label{part:1b}
 \end{parts}
 \end{problem}
 
 \begin{solution}
     \ref{part:1a}
+    As suggested by the hint, well order $T$ and consider the subset $s\cap T \subseteq T$ for an arbitrary $s \in S$.
+    Since $T$ is well-ordered, this subset must have a least element which we denote by $s_\text{min}$.
+    Now define our function $f: S \to T$ by $f(s) \coloneqq s_\text{min}$.
+    By the definition of $s_\text{min}$, this is both in $T$ (satisfying the correct range), and in $s$.
+    Written differently $f(s) \coloneqq s_\text{min} \in s$ for all $s \in S$.
+
     \ref{part:1b}
+    Following the hint, we will proceed by contradiction and assume that all chains in $X$ have an upper bound, but $X$ has not maximal element.
+
+    \textbf{Step 1:} Let $f$ be a ``choice function'''\footnote{I think this refers to the functions we work with in~\ref{part:1a}, but I don't think we ever defined what a choice function is.} on non-empty subsets of $\mathcal{P}(X)$ (to $X$).
+    For a chain $T$ denote by $\Upp(T)$ the set of upper bounds of $T$ (in $X$) which, by assumption, is non-empty.
+    Let $x = f(\Upp(T))$.
+    We now show that there is a subset $\overline{T}\subset\Upp(T)$ that is non-empty and contains upper bounds that are not contained in $T$.
+    With $t\in\Upp(T)$ and the non-existence of maximal elements in $X$, there must exist a $t'\in X$ such that $t \prec t'$.
+    While $t$ could be in $T$ or not, $t'$ is surely not in $T$ as it is strictly ``greater than'' $t$, and $t$ is an upper bound.
+    Thus, for every chain $T$, we have can find a non-empty set $\overline{T}$ that contains strict upper bounds of said chain.
+    Define $g$ to be a function on chains in $X$ that chooses one such strict upper bounds: that is $g(T)$ is an element of $\overline{T}$.
+    As noted in the hint, we can take $g(\emptyset) = t_0$ for some $t_0 \in X$ since $x \prec t_0$ for all $x\in\emptyset$ vacuously.
+
+    \textbf{Step 2:} First note that $\qty{t_0}$ is indeed a chain: $t_0 \preceq t_0$ and hence all elements are comparable.
+    Substituting $T = \qty{t_0}$ in the definition of a nice chain we have
+    \begin{equation*}
+        g(\qty{u \in \qty{t_0} : u \prec t_0}) = g(\emptyset) \eqqcolon t_0.
+    \end{equation*}
+    Thus we've found $\qty{t_0}$ to be a nice chain, and hence they always exist as long as $X$ is non-empty!
+
+    \textbf{Step 3.a:} Let $a\in I_A(x)$ and suppose $a\notin B$.
+    By the definition of $I_A(x)$, $a\in A$, and $a\prec x$, which invalidates the definition of $x$ being the smallest element of $A \setminus B$.
+    Thus $a \in B$, and hence $I_A(x) \subseteq B$.
+
+    \textbf{Step 3.b:} First note that $I_B(y)\subsetneq B$ since $y \in B$, and $I_B(y)$ is everything that strictly precedes $y$.
+    Now when comparing $z$ and $x$ we can compare them based on the sets they are drawn from: $A \setminus I_B(y)$ and $A \setminus B$ respectively.
+    Since $B$ strictly contains $I_B(y)$ we have $A \setminus B \subsetneq A \setminus I_B(y)$.
+    Hence $z$ must be at least as small as $x$: $z \preceq x$.
+
+    \textbf{Step 3.c:} We begin with $u\in I_B(y)$, $v\in A$, and $v\prec u$.
+    Immediately from $v \prec u$, $u \prec y$ (which comes from $u \in I_B(y)$), and the transitive property of $\prec$ we have $v \prec y$.
+    In order to show $u \in I_A(x)$ we must now show $u \in A$, and $u \prec x$.
+    If we suppose $u \notin A$ then $u \prec y$ would contradict the definition of $y$ being the smallest element in $B \setminus I_A(x)$ and thus $u \in A$.
+    By the definition of $x$, everything in $b$ precedes it,\footnote{I'm not actually convinced of this, but I'm not sure what else to argue.} and hence $u \prec x$ putting $u \in I_A(x)$.
+    Since $v\in A$, $v\prec u$, and $u\in I_A(x)$, we must have $v \in I_A(x)$ as well.
+    Finally by \textbf{Step 3.a} $v\in B$, and since $v\prec y$ we also have $v \in I_B(y)$.
+
+    \textbf{Step 3.d:} To show $I_A(z)\subseteq I_B(y)$ recall \textbf{Step 3.a} where we show $I_A(x) \subseteq B$ combined with \textbf{Step 3.b} which shows $z\preceq x$ to combine to say $I_A(z) \subseteq B$.
+    Then we must show that for all $a \in I_A(z)$ we have $a \prec y$.
+    Since $a \in I_A(z)$ we have $a\prec z$, and by $z\preceq x$ we also have $a \prec x$.
+    Finally because $y$ is the least element in $B \setminus I_A(x)$ we must have $a \prec y$ in order to preserve the definition of $y$ being the least element.
+    Thus $I_A(z) \subseteq I_B(y)$.
+    To go the other way take $b \in I_B(y)$.
+    Since $b\prec y$ and $y$ is the least element in $B \setminus I_A(x)$, $b\in A$ and $b\prec x$: that is $b\in I_A(x)$.
+    We also have $b \neq z$ because\dots.
+    By \textbf{Step 3.c} we cannot have $z \prec b$ since then $z\in I_B(y)$ which contradicts the definition of $z$ as being the smallest element \emph{in} $A \setminus I_B(y)$.
+    Since $b \neq z$ and $z\nprec b$, we must have $z \succ b$.
+    Finally this forces $b \in A$, and hence $b \in I_A(z)$.
+    This means $I_A(z) = I_B(y)$.
+
+    \textbf{Step 3.e:}
+    Let us first show that $z = y$ using the fact that $A$ and $B$ are \emph{nice} chains (with respect to $g$).
+    \begin{equation*}
+        z = g(\qty{u \in A : u \prec z}) = g(I_A(z)) = g(I_B(y)) = g(\qty{u \in B : u \prec y}) = y
+    \end{equation*}
+    Now we cannot have $z = x$ because if we did, then $y = x$ as well, but $x \in A\setminus B$, whereas $y \in B\setminus I_A(x)$.
+    That is $x \notin B$, and $y\in B$.
+    Thus $z \prec x$ and hence $z \in I_A(x)$, and by equality with $z$, $y\in I_A(x)$.
+    This contradicts the definition of $y$ being \emph{in} $B\setminus I_A(x)$.
+    This allows us to conclude that $I_A(x) = B$, and hence the definition of $y$ is vacuous as $B\setminus I_A(x) = \emptyset$.
+    Since we assumed $A\setminus B$ is non-empty, we have $B = \qty{u\in A : u \prec t}$ for some $t\in A$.
+    The third possibility would hold if we assumed $B\setminus A$ was non-empty.
+
+    \textbf{Step 4:} To see that $T_\infty$ is a chain, notice that all $t\in T_\infty$ must have come from a nice chain in $\mathcal{P}(X)$.
+    So there exists a nice chain $A$ containing $t$.
+    By \textbf{Step 3} all nice chains are either equal, or subsets of one another and hence ``comparable''.
+    Now let $Z\subseteq T_\infty$, $z\in Z$, and let $f$ (our choice function) pick a nice chain containing $z$, and call it $A$.
+    The well-ordering of $A$ means $A\cap Z$ has a least element $a$.
+    To see $a$ is a least element of $Z$, assume there is a $b\in Z$ with $b\prec a$.
+    Since $b\notin A$, it must be in some other nice chain $B \neq A$.
+    We are now in a situation where $A$ is not an initial segment of $B$ and vice versa, contradiction the claim in \textbf{Step 3}.
+    Thus $a$ is the least element of $Z$ and hence $T_\infty$ is well-ordered.
+    Finally we are to prove $T_\infty$ is also nice.
+    Let $A$ be a nice chain with $z \in A$.
+    We claim that
+    \begin{equation*}
+        \qty{u\in T_\infty : u\prec z} = \qty{u \in A : u \prec z}.
+    \end{equation*}
+    Assume, by way of contradiction that this is not the case: that there is a $y\in T_\infty$ with $y\prec z$ such that $y\notin A$.
+    We can then find another chain $B$ containing $y$, and by the key claim in \textbf{Step 3} we again have a situation where we have two chains that are not proper initial segments of one another.
+    Thus the equality of sets is true.
+    As we've defined $g$ we then have
+    \begin{equation*}
+        z = g(\qty{u \in A : u\prec z}) = g(\qty{u \in T_\infty : u\prec z})
+    \end{equation*}
+    and thus $T_\infty$ is \emph{niiiiice}.
+
+    \textbf{Step 5:} Let $v\coloneqq g(T_\infty)$ and by the definition of $g$, $v\in \overline{T}$, and hence a strict upper bound for $T_\infty$.
+    We can then see $T_\infty\cup \qty{v}$ is a nice chain because it is first a chain with $t\prec v$ for all $t\in T_\infty$, and it is nice because\dots well I'm not actually sure how we get $g(?) = v$.
+    This is a contradiction because $T_\infty$ was supposed to be the union of all nice chains in $\mathcal{P}(X)$.
+    Thus, our original assumption that $X$ has no maximal elements is false, and $X$ does contain at least one maximal element.
+
 \end{solution}
 
 \begin{problem}[$S$-formulas]
 \begin{parts}
-    \part Use induction to show that if $S$ is a first-order alphabet and $\phi, \phi' \in \mathcal{L}^S$ then if $\phi$ is a prefix of $\phi'$ then $\phi = \phi'$.
+    \part Use induction to show that if $S$ is a first-order alphabet and $\phi, \phi' \in L^S$ then if $\phi$ is a prefix of $\phi'$ then $\phi = \phi'$.
     Show that this is no longer true if we use suffixes instead of prefixes.
     \label{part:2a}
-    \part Use induction to show that if $S$ is a first-order alphabet and $\phi_1, \ldots, \phi_n, \phi_1', \ldots, \phi_m' \in \mathcal{L}^S$ then if $\phi_1\cdots \phi_n = \phi_1'\cdots\phi_m'$ as words in $\mathcal{L}^S$ then $n = m$ and $\phi_i = \phi_i'$ for $i = 1, \ldots, n$.
+    \part Show that if $S$ is a first-order alphabet and $\phi_1, \ldots, \phi_n, \phi_1', \ldots, \phi_m' \in L^S$ then if $\phi_1\cdots \phi_n = \phi_1'\cdots\phi_m'$ as words in $L^S$ then $n = m$ and $\phi_i = \phi_i'$ for $i = 1, \ldots, n$.
     \label{part:2b}
 \end{parts}
 \end{problem}
 
 \begin{solution}
     \ref{part:2a}
+    Let $P$ be the property which holds for an $S$-formula $\varphi$ if and only if \emph{for all $S$-formulas $\psi$, $\psi$ is not a prefix of $\varphi$ and $\varphi$ is not a prefix of $\psi$}.
+    We now proceed by induction, and first the base case(s).
+
+    If $\phi = t_1 \equiv t_2$ and $\psi$ is a prefix of $\phi$, then there exists an $\alpha$ such that $\phi = \psi\alpha$.
+    Without loss of generality\footnote{is this true?} we can take $\psi = t_1' \equiv t_2'$ to have $t_1 \equiv t_2 = t_1' \equiv t_2'\alpha$.
+    This equality implies $t_1 = t_1'$ and $t_2 = t_2'\alpha$.
+    By Lemma 4.2(a) from the text, $\alpha = \square$ (the empty string), and hence $\psi \equiv \phi$.
+    Thus $S$-formulas of the form $\phi = t_1 \equiv t_2$ have property $P$.
+
+    If $\phi = Rt_1\cdots t_n$ and $\psi$ is a prefix of $\phi$, then there exists an $\alpha$ such that $\phi = \psi\alpha$.
+    Since the relation symbol is the first symbol we must have $\psi = Rt_1'\cdots t_n'$.
+    We then have $Rt_1\cdots t_n = Rt_1'\cdots t_n'\alpha$, and stripping away the relation\footnote{Is this allowed? If so, by what means?} we have $t_1\cdots t_n = t_1'\cdots t_n'\alpha$.
+    Again by Lemma 4.2(a) from the text $\alpha = \square$ and $\psi \equiv \phi$.
+    Thus $S$-formulas of the form $\phi = Rt_1 \cdots t_n$ have property $P$.
+
+    Moving on to the induction step we look at $\neg\phi$ which clearly has property $P$ inheriting from $\phi$, combined with the fact that $\neg$ is not an $S$-formula.
+    Next we look at $S$-formulas of the form $\phi * \psi$ where $* = \wedge, \vee, \rightarrow, \leftrightarrow$ where $\phi$ and $\psi$ both enjoy the property $P$.
+    Let $\chi$ be a prefix such that $\phi * \psi = \chi\alpha$.
+    Since $*$ must appear on the right hand side it can either appear in $\chi$ or $\alpha$.
+    In the first case we have $\phi * \psi = \beta * \gamma\alpha$ and hence $\psi = \gamma\alpha$ forcing $\alpha = \square$ and $\psi = \gamma$.
+    In the second case we have $\phi * \psi = \chi\beta * \gamma$ and hence $\phi = \chi\beta$ forcing $\beta = \square$ and $\phi = \chi$.
+    Thus all $S$-formulas $\phi * \psi$ do not have $S$-formula-prefixes.
+
+    Finally we have $\forall x \phi$ and $\exists x \phi$ which enjoy $P$ because $\forall x$ and $\exists x$ are not $S$-formulas, and $\phi$ enjoys $P$.
+
+
     \ref{part:2b}
 \end{solution}
 
-\begin{problem}[Unique shit]
-Let $S$ be a first-order alphabet, let $n\ge 1$, and let $t_1, \ldots,t_n \in T^S$.
+\begin{problem}[Uniqueness decomposition]
+Let $S$ be a first-order alphabet, $n\ge 1$, and $t_1, \ldots,t_n \in T^S$.
 If $w = t_1 \cdots t_n \in S^*$.
 Show by induction that for each $i < \abs{w}$, there is a unique term $t \in T^S$ and unique $v \in S^*$ such that $w = w[1..i] t v$.
 \end{problem}
