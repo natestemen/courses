@@ -1,0 +1,102 @@
+\documentclass[boxes,pages,color=CornflowerBlue]{homework}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=Bittersweet
+}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate@stemen.email}
+\term{Winter 2021}
+\course{Logic and Computability}
+\courseid{PMATH 632}
+\hwnum{2}
+\duedate{Jan 28, 2022 11:59PM}
+\hwname{Assignment}
+
+\begin{document}
+
+\begin{problem}[Truth functions]
+\begin{parts}
+    \part Prove DeMorgan's law:
+    \begin{equation*}
+        \dot{\wedge}(x, y) = \dot{\neg}(\dot{\vee}(\dot{\neg}(x), \dot{\neg}(y)))
+    \end{equation*}
+    for all $x,y \in \qty{T, F}$.
+    \label{part:1a}
+    \part Show that one can similarly express $\dot{\rightarrow}(x,y)$ and $\dot{\leftrightarrow}(x,y)$ in terms of the functions $\dot{\neg}$ and $\dot{\vee}$.
+    \label{part:1b}
+    \part Express contraposition as a statement about $\dot{\rightarrow}$ and $\dot{\neg}$ and $\dot{\leftrightarrow}$.
+    \label{part:1c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:1a}
+    \ref{part:1b}
+    \ref{part:1c}
+\end{solution}
+
+\begin{problem}
+Let $S$ be the first-order alphabet $\qty{R_1, R_2, f}$ in which $R_1$ and $R_2$ are unary relation symbols and $f$ is a binary function symbol.
+Suppose $\mathcal{A} = (A, \mathfrak{a})$ is an $S$-structure and that $\mathcal{J} = (\mathcal{A}, \beta)$ is an $S$-interpretation and ${\bf \Phi}$ is the set of formulas $\{\phi_1, \ldots, \phi_4\}$ with
+\begin{align*}
+    \phi_1 & = \exists v_0 \exists v_1 ((R_1 v_0 \wedge R_1 v_1)\wedge \neg v_0\equiv v_1)                                                            \\
+    \phi_2 & = \exists v_0 \exists v_1 ((R_2 v_0 \wedge R_2 v_1)\wedge \neg v_0\equiv v_1)                                                            \\
+    \phi_3 & = \forall v_0 \exists v_1 \exists v_2 ((R_1 v_1\wedge R_2 v_2)\wedge fv_1v_2\equiv v_0)                                                  \\
+    \phi_4 & = \forall v_1 \forall v_2 \forall v_3 \forall v_4 (((((R_1v_1\wedge R_1 v_2)\wedge R_2 v_3)\wedge R_2 v_4)\wedge fv_1v_3 \equiv fv_2v_4) \\
+           & \qquad \rightarrow (v_1\equiv v_2 \wedge v_3\equiv v_4)).
+\end{align*}
+\begin{parts}
+    \part Show that if $\mathcal{J}\vDash {\bf \Phi}$ and $|A|$ is finite then $|A|$ is a composite number (i.e., not prime and not $1$).
+    \label{part:2a}
+    \part Show that if $|A|<\infty$ is composite then there is an $S$-interpretation $\mathcal{J}$ with universe $A$ such that $\mathcal{J}\vDash {\bf \Phi}$.
+    \label{part:2b}
+    \part (Bonus +1): Find a first-order alphabet $S$ and a finite set ${\bf \Psi}$ of $S$-formulas such that there exists an $S$-interpretation $\mathcal{J}=(A,\mathfrak{a},\beta)$ with $|A|<\infty$ such that $\mathcal{J}\vDash\Psi$ if and only if $|A|$ is prime.
+    \label{part:2c}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:2a}
+    \ref{part:2b}
+    \ref{part:2c}
+\end{solution}
+
+\begin{problem}
+In the following questions, let $S_\text{gr} = (1, \cdot, i)$ and we only consider $S_\text{gr}$-interpretations $\mathcal{J} = (A, \mathfrak{a}, \beta)$ in which $A$ is a group, $1^A$ is the identity of $A$, $\cdot^A$ is multiplication, and $i^A$ is the inverse map.
+For the following formulas $\phi$ give an informal statement of what the formula is saying and say whether $\mathcal{J} \vDash \phi$ for every such interpretation $\mathcal{J}$, for at least one such interpretation but not every such interpretation, or for no such interpretations.
+(For example, if $\phi = \forall v_0 \exists v_1 \cdot v_0 v_1\equiv 1$ then it is saying for every $v_0\in A$ there is some $v_1\in A$ such that $v_0\cdot v_1 = 1$ and this is true in every group, so $\mathcal{J}\vDash \phi$ for every such interpretation.)
+\begin{parts}
+    \part $\forall v_0 \forall v_1 \forall v_2 \cdot \cdot v_0 v_1v_2\equiv \cdot v_0\cdot v_1v_2$
+    \label{part:3a}
+    \part $\forall v_0 \forall v_1 \cdot \cdot v_0 v_1 v_1 \equiv \cdot \cdot v_1 v_0 v_1$
+    \label{part:3b}
+    \part $\exists v_0 ((\neg v_0\equiv 1) \wedge \cdot v_0 v_0\equiv 1)$
+    \label{part:3c}
+    \part $\exists v_0 \forall v_1 v_2 \equiv \cdot v_0 v_1$
+    \label{part:3d}
+    \part $\exists v_0 \exists v_1 v_2 \equiv \cdot v_0 v_1$
+    \label{part:3e}
+    \part $\exists v_0 \exists v_1 (\neg v_0\equiv v_1 \vee \forall v_3 v_3\equiv 1)$.
+    \label{part:3f}
+    \part $\exists v_3 (\cdot v_3 v_2 \equiv 1 \wedge \neg v_3 \equiv iv_2)$
+    \label{part:3g}
+    \part $\forall v_0 ((\cdot v_0 v_0\equiv 1 \wedge \cdot \cdot v_0v_0v_0\equiv 1)\rightarrow v_0\equiv 1)$
+    \label{part:3h}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:3a}
+    \ref{part:3b}
+    \ref{part:3c}
+    \ref{part:3d}
+    \ref{part:3e}
+    \ref{part:3f}
+    \ref{part:3g}
+    \ref{part:3h}
+\end{solution}
+
+\end{document}
