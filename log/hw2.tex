@@ -5,6 +5,8 @@
     linkcolor=Bittersweet
 }
 
+\usepackage{booktabs}
+
 \name{Nate Stemen}
 \studentid{20906566}
 \email{nate@stemen.email}
@@ -15,6 +17,9 @@
 \duedate{Jan 28, 2022 11:59PM}
 \hwname{Assignment}
 
+\newcommand{\true}{\ensuremath{\mathsf{T}}}
+\newcommand{\false}{\ensuremath{\mathsf{F}}}
+
 \begin{document}
 
 \begin{problem}[Truth functions]
@@ -23,7 +28,7 @@
     \begin{equation*}
         \dot{\wedge}(x, y) = \dot{\neg}(\dot{\vee}(\dot{\neg}(x), \dot{\neg}(y)))
     \end{equation*}
-    for all $x,y \in \qty{T, F}$.
+    for all $x,y \in \qty{\true, \false}$.
     \label{part:1a}
     \part Show that one can similarly express $\dot{\rightarrow}(x,y)$ and $\dot{\leftrightarrow}(x,y)$ in terms of the functions $\dot{\neg}$ and $\dot{\vee}$.
     \label{part:1b}
@@ -34,8 +39,49 @@
 
 \begin{solution}
     \ref{part:1a}
+    DeMorgan's law can be seen by building up the right hand side of the equality from it's components.
+    \begin{center}
+        \begin{tabular}{ccccccc}
+            $x$    & $y$    & $\dot{\neg}(x)$ & $\dot{\neg}(y)$ & $\dot{\vee}(\dot{\neg}(x), \dot{\neg}(y))$ & $\dot{\neg}(\dot{\vee}(\dot{\neg}(x), \dot{\neg}(y)))$ & $\dot{\wedge}(x, y)$ \\ \toprule
+            \true  & \true  & \false          & \false          & \false                                     & \true                                                  & \true                \\
+            \true  & \false & \false          & \true           & \true                                      & \false                                                 & \false               \\
+            \false & \true  & \true           & \false          & \true                                      & \false                                                 & \false               \\
+            \false & \false & \true           & \true           & \true                                      & \false                                                 & \false
+        \end{tabular}
+    \end{center}
+
     \ref{part:1b}
+    We give the following two characterizations by truth tables for implication and the biconditional.
+    \begin{center}
+        \begin{tabular}{ccccc}
+            $x$    & $y$    & $\dot{\neg}(x)$ & $\dot{\vee}(\dot{\neg}(x), y)$ & $\dot{\rightarrow}(x, y)$ \\ \toprule
+            \true  & \true  & \false          & \true                          & \true                     \\
+            \true  & \false & \false          & \false                         & \false                    \\
+            \false & \true  & \true           & \true                          & \true                     \\
+            \false & \false & \true           & \true                          & \true
+        \end{tabular}
+    \end{center}
+    \begin{center}
+        \begin{tabular}{cccccc}
+            $x$    & $y$    & $\dot{\wedge}(x, y)$ & $\dot{\wedge}(\dot{\neg}(x), \dot{\neg}(y))$ & $\dot{\vee}(\dot{\wedge}(x, y), \dot{\wedge}(\dot{\neg}(x), \dot{\neg}(y)))$ & $\dot{\leftrightarrow}(x, y)$ \\ \toprule
+            \true  & \true  & \true                & \false                                       & \true                                                                        & \true                         \\
+            \true  & \false & \false               & \false                                       & \false                                                                       & \false                        \\
+            \false & \true  & \false               & \false                                       & \false                                                                       & \false                        \\
+            \false & \false & \false               & \true                                        & \true                                                                        & \true
+        \end{tabular}
+    \end{center}
+    Now since we must use only negation and disjunction we can use DeMorgan's law to write the following.
+    \begin{align*}
+        \dot{\leftrightarrow}(x, y) & = \dot{\vee}(\dot{\wedge}(x, y), \dot{\wedge}(\dot{\neg}(x), \dot{\neg}(y)))                                                                     \\
+                                    & = \dot{\vee}(\dot{\neg}(\dot{\vee}(\dot{\neg}(x), \dot{\neg}(y))), \dot{\neg}(\dot{\vee}(\dot{\neg}(\dot{\neg}(x)), \dot{\neg}(\dot{\neg}(y))))) \\
+                                    & = \dot{\vee}(\dot{\neg}(\dot{\vee}(\dot{\neg}(x), \dot{\neg}(y))), \dot{\neg}(\dot{\vee}(x, y)))
+    \end{align*}
+    Where we've used the contentious\footnote{Okay, maybe not that contentious, but some people don't like it, right?} idea that negation is an involution.
+
     \ref{part:1c}
+    \begin{equation*}
+        \dot{\leftrightarrow}(\dot{\rightarrow}(x, y), \dot{\rightarrow}(\dot{\neg}(y), \dot{\neg}(x)))
+    \end{equation*}
 \end{solution}
 
 \begin{problem}
@@ -90,13 +136,49 @@ For the following formulas $\phi$ give an informal statement of what the formula
 
 \begin{solution}
     \ref{part:3a}
+    Written in infix notation this equation reads
+    \begin{equation*}
+        \forall v_0, v_1, v_2 \in A \quad (v_0 \cdot v_1) \cdot v_2 = v_0 \cdot (v_1 \cdot v_2)
+    \end{equation*}
+    which clearly shows that the multiplication in the group is associative.
+    This facts holds for every such interpretation $\mathcal{J}$ by the definition of group multiplication.
+
     \ref{part:3b}
+    Again, writing in infix notation we have
+    \begin{equation*}
+        \forall v_0, v_1 \in A \quad (v_0 \cdot v_1) \cdot v_1 = (v_1 \cdot v_0) \cdot v_1
+    \end{equation*}
+
     \ref{part:3c}
+    \begin{equation*}
+        \exists v_0 \in A \quad v_0 \neq 1^A \text{ and } v_0^2 = 1^A
+    \end{equation*}
+
     \ref{part:3d}
+    \begin{equation*}
+        \exists v_0\in A \; \forall v_1 \in A \quad v_2 = v_0 \cdot v_1
+    \end{equation*}
+
     \ref{part:3e}
+    \begin{equation*}
+        \exists v_0, v_1 \in A \quad v_2 = v_0 \cdot v_1
+    \end{equation*}
+
     \ref{part:3f}
+    \begin{equation*}
+        \exists v_0, v_1 \in A \quad v_0 \neq v_1 \text{ or } \forall v_3 \in A \quad v_3 = 1^A
+    \end{equation*}
+
     \ref{part:3g}
+    Here we use the notation $g^{-1}$ instead of $i^A(g)$ for familiarity.
+    \begin{equation*}
+        \exists v_3 \in A \quad v_3\cdot v_2 = 1^A \text{ and } v_3 \neq v_2^{-1}
+    \end{equation*}
+
     \ref{part:3h}
+    \begin{equation*}
+        \forall v_0 \in A \quad v_0^2 = 1^A \text{ and } v_0^3 = 1^A \implies v_0 = 1^A
+    \end{equation*}
 \end{solution}
 
 \end{document}
