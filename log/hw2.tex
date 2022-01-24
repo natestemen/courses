@@ -79,10 +79,27 @@
     Where we've used the contentious\footnote{Okay, maybe not that contentious, but some people don't like it, right?} idea that negation is an involution.
 
     \ref{part:1c}
+    When attempting to prove $p \implies q$ we can sometimes try and prove $\neg q \implies \neg p$.
+    This can be encoded into the following tautology using $\dot{\leftrightarrow}$, $\dot{\neg}$, and $\dot{\rightarrow}$.
     \begin{equation*}
         \dot{\leftrightarrow}(\dot{\rightarrow}(x, y), \dot{\rightarrow}(\dot{\neg}(y), \dot{\neg}(x)))
     \end{equation*}
+    To see this is indeed a tautology we can use our expressions above to simplify.
+    \begin{multline*}
+        \dot{\leftrightarrow}(\dot{\rightarrow}(x, y), \dot{\rightarrow}(\dot{\neg}(y), \dot{\neg}(x))) \\
+        = \dot{\vee}(\dot{\neg}(\dot{\vee}(\dot{\neg}(\dot{\vee}(\dot{\neg}(x), y)), \dot{\neg}(\dot{\vee}(y, \dot{\neg}(x))))), \dot{\neg}(\dot{\vee}(\dot{\vee}(\dot{\neg}(x), y), \dot{\vee}(y, \dot{\neg}(x)))))
+    \end{multline*}
+    Now define $A \coloneqq \dot{\vee}(\dot{\neg}(x), y) = \dot{\vee}(y, \dot{\neg}(x))$ where the last equality holds by the symmetry of or.
+    We now have
+    \begin{align*}
+        \dot{\leftrightarrow}(\dot{\rightarrow}(x, y), \dot{\rightarrow}(\dot{\neg}(y), \dot{\neg}(x))) & = \dot{\vee}(\dot{\neg}(\dot{\vee}(\dot{\neg}(A), \dot{\neg}(A))), \dot{\neg}(\dot{\vee}(A, A))) \\
+                                                                                                        & = \dot{\vee}(\dot{\neg}(\dot{\neg}(A)), \dot{\neg}(A))                                           \\
+                                                                                                        & = \dot{\vee}(A, \dot{\neg}(A)).
+    \end{align*}
+    We've now reached the infamous law of excluded middle which we take to be true, always.
+    Thus we have a tautology, and hence proof by contraposition is a valid proof (if you take LEM).
 \end{solution}
+
 
 \begin{problem}
 Let $S$ be the first-order alphabet $\qty{R_1, R_2, f}$ in which $R_1$ and $R_2$ are unary relation symbols and $f$ is a binary function symbol.
