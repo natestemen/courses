@@ -38,10 +38,9 @@ So far I've mostly taken courses pretty seriously, but I know grades during a Ph
 
 ### Winter 2021
 
-| Course                                                                                                  | Professor                                                                                                                                                                                          | Directory      | PDFs |
-| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---- |
-| Logic and Computability                                                                                 | [Jason Bell](https://www.math.uwaterloo.ca/~jpbell)                                                                                                                                                | [`log`](./log) |      |
-| [Quantum Error Correction and Fault Tolerance](https://www.math.uwaterloo.ca/~wcleung/co781-w2022.html) | [Debbie Leung](https://www.math.uwaterloo.ca/~wcleung) + [Michael Vasmer](https://perimeterinstitute.ca/people/michael-vasmer) + [Beni Yoshida](https://perimeterinstitute.ca/people/beni-yoshida) | [`qec`](./qec) |      |
+| Course                  | Professor                                           | Directory      | PDFs |
+| ----------------------- | --------------------------------------------------- | -------------- | ---- |
+| Logic and Computability | [Jason Bell](https://www.math.uwaterloo.ca/~jpbell) | [`log`](./log) |      |
 
 ---
 
