@@ -103,7 +103,7 @@
 
 \begin{problem}
 Let $S$ be the first-order alphabet $\qty{R_1, R_2, f}$ in which $R_1$ and $R_2$ are unary relation symbols and $f$ is a binary function symbol.
-Suppose $\mathcal{A} = (A, \mathfrak{a})$ is an $S$-structure and that $\mathcal{J} = (\mathcal{A}, \beta)$ is an $S$-interpretation and ${\bf \Phi}$ is the set of formulas $\{\phi_1, \ldots, \phi_4\}$ with
+Suppose $\mathcal{A} = (A, \mathfrak{a})$ is an $S$-structure and that $\mathcal{J} = (\mathcal{A}, \beta)$ is an $S$-interpretation and ${\bf \Phi}$ is the set of formulas $\{\phi_1, \phi_2, \phi_3, \phi_4\}$ with
 \begin{align*}
     \phi_1 & = \exists v_0 \exists v_1 ((R_1 v_0 \wedge R_1 v_1)\wedge \neg v_0\equiv v_1)                                                            \\
     \phi_2 & = \exists v_0 \exists v_1 ((R_2 v_0 \wedge R_2 v_1)\wedge \neg v_0\equiv v_1)                                                            \\
@@ -130,7 +130,7 @@ Suppose $\mathcal{A} = (A, \mathfrak{a})$ is an $S$-structure and that $\mathcal
 \begin{problem}
 In the following questions, let $S_\text{gr} = (1, \cdot, i)$ and we only consider $S_\text{gr}$-interpretations $\mathcal{J} = (A, \mathfrak{a}, \beta)$ in which $A$ is a group, $1^A$ is the identity of $A$, $\cdot^A$ is multiplication, and $i^A$ is the inverse map.
 For the following formulas $\phi$ give an informal statement of what the formula is saying and say whether $\mathcal{J} \vDash \phi$ for every such interpretation $\mathcal{J}$, for at least one such interpretation but not every such interpretation, or for no such interpretations.
-(For example, if $\phi = \forall v_0 \exists v_1 \cdot v_0 v_1\equiv 1$ then it is saying for every $v_0\in A$ there is some $v_1\in A$ such that $v_0\cdot v_1 = 1$ and this is true in every group, so $\mathcal{J}\vDash \phi$ for every such interpretation.)
+% (For example, if $\phi = \forall v_0 \exists v_1 \cdot v_0 v_1\equiv 1$ then it is saying for every $v_0\in A$ there is some $v_1\in A$ such that $v_0\cdot v_1 = 1$ and this is true in every group, so $\mathcal{J}\vDash \phi$ for every such interpretation.)
 \begin{parts}
     \part $\forall v_0 \forall v_1 \forall v_2 \cdot \cdot v_0 v_1v_2\equiv \cdot v_0\cdot v_1v_2$
     \label{part:3a}
@@ -165,37 +165,63 @@ For the following formulas $\phi$ give an informal statement of what the formula
     \begin{equation*}
         \forall v_0, v_1 \in A \quad (v_0 \cdot v_1) \cdot v_1 = (v_1 \cdot v_0) \cdot v_1
     \end{equation*}
+    Multiplying on thr right by $v_1^{-1}$ we have $v_0\cdot v_1 = v_1 \cdot v_0$ which is clearly only true in Abelian groups.
+    The existence of non-Abelian groups (e.g. the permutation group) shows this formula holds in at least one such interpretation $\mathcal{J}$.
 
     \ref{part:3c}
+    In everyday math notation we might write
     \begin{equation*}
-        \exists v_0 \in A \quad v_0 \neq 1^A \text{ and } v_0^2 = 1^A
+        \exists v_0 \in A \quad v_0 \neq 1^A \text{ and } v_0^2 = 1^A.
     \end{equation*}
+    This formula holds for at least one interpretation, but not necessarily all.
+    To see this take the trivial group $G = (\qty{e}, \cdot)$ where the only multiplication rule we have is $e \cdot e = e$.
+    Since $G$ is a group where this formula does not hold it cannot hold in all interpretations.
+    That said the group $H = (\qty{1, -1}, \cdot_\mathbb{R})$ is a group where this formula holds with $v_0 = -1$.
 
     \ref{part:3d}
+    Here we have
     \begin{equation*}
-        \exists v_0\in A \; \forall v_1 \in A \quad v_2 = v_0 \cdot v_1
+        \exists v_0\in A \; \forall v_1 \in A \quad v_2 = v_0 \cdot v_1.
     \end{equation*}
+    This can be found to hold, for example, in the trivial group $G = (\qty{e}, \cdot)$.
+    We then have $v_0, v_1, v_2 = e$ and the equation reads $e = e\cdot e$ which clearly holds.
+    That said this equation does not hold in all interpretations.
+    To see this take the group $H = (\qty{1, -1}, \cdot_\mathbb{R})$.
+    Now take $v_2 = 1$ and the equation says either $1 = 1 \cdot -1 \wedge 1 = 1\cdot 1$ \emph{or} $1 = -1\cdot -1 \wedge 1 = -1\cdot 1$ which clearly neither hold.
 
     \ref{part:3e}
+    Here we have
     \begin{equation*}
-        \exists v_0, v_1 \in A \quad v_2 = v_0 \cdot v_1
+        \exists v_0, v_1 \in A \quad v_2 = v_0 \cdot v_1.
     \end{equation*}
+    This can be found to hold in all interpretations by taking $v_0 = v_2$ and $v_1 = 1^A$.
 
     \ref{part:3f}
     \begin{equation*}
         \exists v_0, v_1 \in A \quad v_0 \neq v_1 \text{ or } \forall v_3 \in A \quad v_3 = 1^A
     \end{equation*}
+    This formula says you either have
+    \begin{itemize}[topsep=6pt,itemsep=0pt,partopsep=4pt,parsep=2pt]
+        \item two distinct elements in the group, or
+        \item all elements in your group are the identity element.
+    \end{itemize}
+    And this holds for all interpretations $\mathcal{J}$.
 
     \ref{part:3g}
     Here we use the notation $g^{-1}$ instead of $i^A(g)$ for familiarity.
     \begin{equation*}
         \exists v_3 \in A \quad v_3\cdot v_2 = 1^A \text{ and } v_3 \neq v_2^{-1}
     \end{equation*}
+    This formula does not hold in any such interpretation $\mathcal{J}$ because of the uniqueness of (left and right) inverses in groups.
 
     \ref{part:3h}
+    Finally, in modern notation we have:
     \begin{equation*}
-        \forall v_0 \in A \quad v_0^2 = 1^A \text{ and } v_0^3 = 1^A \implies v_0 = 1^A
+        \forall v_0 \in A \quad v_0^2 = 1^A \text{ and } v_0^3 = 1^A \implies v_0 = 1^A.
     \end{equation*}
+    This formula holds for all such interpretations $\mathcal{J}$ as follows.
+    We can write $v_0^3 = v_0\cdot v_0^2 = v_0 \cdot 1^A = v_0 = 1^A$.
+    This manipulation does not use anything about a particular group and so this formula holds for all such interpretations $\mathcal{J}$.
 \end{solution}
 
 \end{document}
