@@ -1,0 +1,105 @@
+\documentclass[boxes,pages,color=CornflowerBlue]{homework}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=Bittersweet
+}
+
+\usepackage{booktabs}
+
+\name{Nate Stemen}
+\studentid{20906566}
+\email{nate@stemen.email}
+\term{Winter 2021}
+\course{Logic and Computability}
+\courseid{PMATH 632}
+\hwnum{3}
+\duedate{Feb 4, 2022 11:59PM}
+\hwname{Assignment}
+
+\begin{document}
+
+\begin{problem}
+Let $S = \qty{0, 1, +, \cdot}$.
+\begin{parts}
+    \part Show that if $\mathcal{A} = (A, \mathfrak{a})$ is an $S$-structure and suppose that $\sigma:A \to A$ is a bijection such that the following hold:
+    \begin{itemize}
+        \item $\sigma(c^A) = c^A$ for all constant symbols;
+        \item $\sigma(f^A(a_1,\ldots ,a_n)) = f^A(\sigma(a_1),\ldots ,\sigma(a_n))$ for all $n$-ary function symbols $f$ and all $a_1,\ldots ,a_n\in A$;
+        \item $R^A a_1\cdots a_n\iff R\sigma(a_1)\cdots \sigma(a_n)$ for all $n$-ary relation symbols $R$ and $a_1,\ldots ,a_n\in A$.
+    \end{itemize}
+    Show that if $Q\subseteq A^n$ is a relation that is definable in $\mathcal{A}$ then $Qa_1\cdots a_n \iff Q\sigma(a_1)\cdots \sigma(a_n)$.
+    (Hint: isomorphism!)
+    \label{part:1a}
+    \part Show that the binary relation $<$ is definable in $\mathbb{R}$ (where we interpret $0, 1, +, \cdot$ as usual).
+    \label{part:1b}
+    \part Show that the binary relation $<$ is definable in $\mathbb{Z}$ (where we interpret $0, 1, +, \cdot$ as usual).
+    (Hint: use Lagrange's four-squares theorem.)
+    \label{part:1c}
+    \part Show that the binary relation $<$ is not definable in $\mathbb{Q}(\sqrt{2})$, when we interpret $0, 1, +, \cdot$ as usual.
+    (Hint: consider the map $\sigma$ that sends $a + b\sqrt{2} \to a - b\sqrt{2}$ for $a,b\in \mathbb{Q}$.)
+    \label{part:1d}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:1a}
+    \ref{part:1b}
+    \ref{part:1c}
+    \ref{part:1d}
+\end{solution}
+
+\begin{problem}
+For the following we work with a first order alphabet with a binary relation $R$, a binary function $f$, an $(r+1)$-ary function $g$ (where $r$ is a nonnegative integer), and a constant symbol $c$.
+Write all of the formulas below in terms of formulas not involving substitutions.
+\begin{parts}
+    \part \[\left[\forall v_0\exists v_1 ((Rv_0v_1\wedge Rv_0 v_2)\vee \exists v_2  fv_2v_2\equiv v_0)\right]\tfrac{v_0}{v_0}\tfrac{fv_0v_1}{v_2}\]
+    \label{part:2a}
+    \part \[\left[\left(\exists v_0 \forall v_1 fcv_1\equiv v_0 \rightarrow \forall v_2 fv_2v_0\equiv c \right)\right]\tfrac{fv_0v_2}{v_2}\tfrac{fcv_1}{v_1}\tfrac{v_3}{v_0}\]
+    \label{part:2b}
+    \part \[\left[\left(v_0\equiv v_1 \wedge \forall v_0 Rfv_2v_1c\right)\right]\tfrac{fv_2c}{v_0}\]
+    \label{part:2c}
+    \part \begin{multline*}
+        \left[\forall v_0\forall v_1 \cdots \forall v_r (v_0\equiv v_{r+1} \wedge v_1\equiv v_{r+2}\wedge \cdots \wedge v_r \equiv v_{2r+1}\right. \\
+            \left.\rightarrow gv_0\cdots v_r \equiv c)\right]\tfrac{c}{v_{r+1}}\tfrac{c}{v_{r+2}}\cdots \tfrac{c}{v_{2r+1}}
+    \end{multline*}
+    \label{part:2d}
+    \part \[\left[\forall v_0 \exists v_0 fv_0v_0\equiv c\right]\tfrac{fv_0v_0}{v_0}\]
+    \label{part:2e}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:2a}
+    \ref{part:2b}
+    \ref{part:2c}
+    \ref{part:2d}
+    \ref{part:2e}
+\end{solution}
+
+\begin{problem}
+Let $S$ be a first-order alphabet with a binary function symbol $f$ and a unary relation symbol $R$.
+Let $\phi$ and $\psi$ be formulas in $\mathcal{L}^S$ in which $x,y$ are free variables with $x\neq y$.
+Give formulas involving $\phi$, $\psi$, variables, symbols from $S$, $($, $)$, $\forall,\exists, \wedge, \vee, \rightarrow,\leftrightarrow,\neg$, and substitution that say the following when interpreted in a domain of discourse $\mathcal{J} = (A, \mathfrak{a}, \beta)$:
+\begin{parts}
+    \part There are at most three values of $a$ in $A$ for which we do not have $\mathcal{J}\frac{a}{x}\vDash \phi$.
+    \label{part:3a}
+    \part For every value $a\in A$ such that $\mathcal{J}\frac{a}{x} \vDash \phi$ there is some $b\in A$ such that for all $c\in A$, if $\mathcal{J}\frac{b}{x}\frac{c}{y}\vDash \psi$ then $\mathcal{J}\frac{a}{x}\frac{b}{y}\vDash \phi$.
+    \label{part:3b}
+    \part There is some $a\in A$ that is in the image $f^A: A^2\to A$ and some $b\in R^A$ such that $\mathcal{J}\frac{a}{x}\vDash \phi$ and $\mathcal{J}\frac{b}{x}\vDash \psi$.
+    \label{part:3c}
+    \part If there exists some $a\in A$ such that $\mathcal{J}\frac{a}{x}\vDash \phi$ then there is some $b\in A$ such that $\mathcal{J}\frac{b}{x}\vDash \psi$.
+    \label{part:3d}
+    \part If there is some $a\in A$ and some $b\in A$ such that $\mathcal{J}\frac{a}{x}\frac{b}{y} \vDash \phi$ then for every $c\in A$ we have $\mathcal{J}\frac{c}{x}\frac{c}{y}\vDash\phi$.
+    \label{part:3e}
+\end{parts}
+\end{problem}
+
+\begin{solution}
+    \ref{part:3a}
+    \ref{part:3b}
+    \ref{part:3c}
+    \ref{part:3d}
+    \ref{part:3e}
+\end{solution}
+\end{document}
