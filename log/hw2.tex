@@ -6,6 +6,8 @@
 }
 
 \usepackage{booktabs}
+\usepackage{nicematrix}
+% \usepackage[table]{xcolor}
 
 \name{Nate Stemen}
 \studentid{20906566}
@@ -114,16 +116,78 @@ Suppose $\mathcal{A} = (A, \mathfrak{a})$ is an $S$-structure and that $\mathcal
 \begin{parts}
     \part Show that if $\mathcal{J}\vDash {\bf \Phi}$ and $|A|$ is finite then $|A|$ is a composite number (i.e., not prime and not $1$).
     \label{part:2a}
-    \part Show that if $|A|<\infty$ is composite then there is an $S$-interpretation $\mathcal{J}$ with universe $A$ such that $\mathcal{J}\vDash {\bf \Phi}$.
+    \part Show that if $|A| < \infty$ is composite then there is an $S$-interpretation $\mathcal{J}$ with universe $A$ such that $\mathcal{J}\vDash {\bf \Phi}$.
     \label{part:2b}
-    \part (Bonus +1): Find a first-order alphabet $S$ and a finite set ${\bf \Psi}$ of $S$-formulas such that there exists an $S$-interpretation $\mathcal{J}=(A,\mathfrak{a},\beta)$ with $|A|<\infty$ such that $\mathcal{J}\vDash\Psi$ if and only if $|A|$ is prime.
+    \part (Bonus +1): Find a first-order alphabet $S$ and a finite set ${\bf \Psi}$ of $S$-formulas such that there exists an $S$-interpretation $\mathcal{J} = (A, \mathfrak{a}, \beta)$ with $|A| < \infty$ such that $\mathcal{J}\vDash {\bf \Psi}$ if and only if $|A|$ is prime.
     \label{part:2c}
 \end{parts}
 \end{problem}
 
 \begin{solution}
     \ref{part:2a}
+    We first interpret each equation $\phi_i$ given we know $\abs{A}$ is finite.
+    \begin{equation*}
+        \phi_1 = \exists v_0, v_1 \in A \quad R_1^Av_0 \text{ and } R_1^Av_1 \text{ and } v_1 \neq v_0
+    \end{equation*}
+    Thus $\phi_1$ is telling us there are \emph{at least} two distinct elements that satisfy the relation $R_1^A$.
+    Put differently, since $R_1^A\subseteq A$, we know $\abs{R_1^A} \geq 2$.
+    Similarly for $\phi_2$ we have
+    \begin{equation*}
+        \phi_2 = \exists v_0, v_1 \in A \quad R_2^Av_0 \text{ and } R_2^Av_1 \text{ and } v_1 \neq v_0
+    \end{equation*}
+    where again this is telling us that $\abs{R_2^A} \geq 2$, or that there are at least two elements that satisfy $R_2^A$.
+    Moving on for $\phi_3$ we have
+    \begin{equation*}
+        \phi_3 = \forall v_0 \in A \quad \exists v_1, v_2 \in A \quad R_1^A v_2 \text{ and } R_2^A v_2 \text{ and } f^A(v_1, v_2) = v_0.
+    \end{equation*}
+    This formula tells us that $f^A: A\times A \to A$ when restricted to $R_1^A \times R_2^A$ is a surjection onto $A$.
+    That is $\eval{f^A}_{R_1^A\times R_2^A}$ is a surjection.
+    Lastly we have
+    \begin{multline*}
+        \phi_4 = \forall v_1, v_2, v_3, v_4 \in A \quad v_1, v_2 \in R_1^A \text{ and } v_3, v_4\in R_2^A \text{ and } f^A(v_1, v_3) = f^A(v_2, v_4) \\
+        \text{ imply } v_1 = v_2 \text{ and } v_3 = v_4.
+    \end{multline*}
+    This is exactly the condition for $\eval{f^A}_{R_1^A\times R_2^A}$ being injective.
+    This fact, together with the previous one implies $f^A$ is a bijection, and hence the domain and range have the same cardinality: $\abs{R_1^A\times R_2^A} = \abs{A}$.
+    A basic property about the cardinality of finite sites $B$ and $C$ is $\abs{B\times C} = \abs{B}\cdot \abs{C}$.\footnote{Maybe this holds for larger cardinals too, but I'm not familiar enough to say.}
+    We then have $\abs{A} = \abs{R_1^A}\cdot \abs{R_2^A}$ and hence a composite number.
+
     \ref{part:2b}
+    Now take $\abs{A} = n\cdot m$ with $n, m\in \mathbb{N}$ such that $n,m \neq 1$.
+    Arrange the elements of $A$ in a grid as follows (in arbitrary order) and give each element a name based on it's grid position.
+    \begin{equation*}
+        \begin{NiceMatrix}
+            a_{11} & a_{12} & \Cdots & a_{1m} \\
+            a_{21} & a_{22} &        & \Vdots \\
+            \Vdots &        & \Ddots &        \\
+            a_{n1} & \Cdots &        & a_{nm}
+        \end{NiceMatrix}
+    \end{equation*}
+    Then form the following two (intersecting) subsets of $A$.
+    \begin{equation*}
+        \begin{NiceMatrix}
+            \CodeBefore
+            \rectanglecolor{red!15}{2-2}{2-5}
+            \rectanglecolor{blue!15}{2-2}{5-2}
+            \cellcolor{purple!35}{2-2}
+            \Body
+                           & \Block{1-4}{B} &        &                 \\
+            \Block{4-1}{C} & a_{11}         & a_{12} & \Cdots & a_{1m} \\
+                           & a_{21}         & a_{22} &        & \Vdots \\
+                           & \Vdots         &        & \Ddots &        \\
+                           & a_{n1}         & \Cdots &        & a_{nm}
+        \end{NiceMatrix}
+    \end{equation*}
+    These can be written $B = \qty{a_{1j}\in A : 1 \leq j \leq m}$, and $C = \qty{a_{i1}\in A : 1 \leq i \leq n}$.
+    Since $n, m > 1$ each one of these subsets must have more than one element in each.
+    That is $\abs{B} > 1$ and $\abs{C} > 1$.
+    We can then take $B$ and $C$ to be relations on $A$ and hence $\phi_1$ and $\phi_2$ are automatically satisfied with $R_1^A = B$ and $R_2^A = C$.
+    Next we define $f^A: B\times C \to A$ as
+    \begin{equation*}
+        f(b, c) = f(a_{1j}, a_{i1}) \coloneqq a_{ij}.
+    \end{equation*}
+    This is clearly a bijection from $B\times C$ to $A$, and hence $\phi_3$ and $\phi_4$ are also satisfied.
+    Hence we have constructed an $\qty{R_1, R_2, f}$-structure where $\mathcal{J}\vDash {\bf \Phi}$.
     \ref{part:2c}
 \end{solution}
 
