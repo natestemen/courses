@@ -5,8 +5,6 @@
     linkcolor=Bittersweet
 }
 
-\usepackage{booktabs}
-
 \name{Nate Stemen}
 \studentid{20906566}
 \email{nate@stemen.email}
@@ -16,6 +14,10 @@
 \hwnum{3}
 \duedate{Feb 11, 2022 11:59PM}
 \hwname{Assignment}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
 
 \begin{document}
 
@@ -45,7 +47,24 @@ Let $S = \qty{0, 1, +, \cdot}$.
 \begin{solution}
     \ref{part:1a}
     \ref{part:1b}
+    Let $i: \R \to \R$ be the function satisfying $a + i(a) = 0$: that is the additive inverse function.
+    Now consider $\phi\in L^S$ to be given by
+    \begin{equation*}
+        \phi = \exists r \; \qty\Big(v_1 + i(v_0) \equiv r^2 \wedge \neg \qty[v \equiv 0]).
+    \end{equation*}
+    Written in the the context of $\R$ we have $v_1 - v_0 = r^2$ and hence $\phi[a, b] = b - a = r^2$.
+    Hence we've found a formula that holds in $\R$ if and only if $a<b$.
+    More formally we have $\mathcal{A}\vDash \phi[a, b] \iff a < b$.
+
     \ref{part:1c}
+    Let $i: \Z \to \Z$ be the function satisfying $a + i(a) = 0$: that is, it's the additive inverse function.
+    Consider $\phi\in L^S$ to be given by
+    \begin{equation*}
+        \phi = \exists a_0 \, \exists a_1 \, \exists a_2 \, \exists a_3 \; (v_1 + i(v_0) \equiv a_0^2 + a_1^2 + a_2^2 + a_3^2).
+    \end{equation*}
+    Then for $\phi$ to be true, we must have $v_1 + i(v_0) = v_1 - v_0$ be a positive integer.
+    Written differently, $\mathcal{A}\vDash \phi[a,b] \iff a < b$ and hence $<$ is definable in $\Z$.
+
     \ref{part:1d}
 \end{solution}
 
