@@ -1,8 +1,10 @@
 # courses
 
-A repo for my coursework as a phd student at the University of Waterloo in the applied math department, with a specialization in quantum information.
+A repo for my coursework as a ~phd~ masters student at the University of Waterloo in the applied math department, with a specialization in quantum information.
 
-So far I've mostly taken courses pretty seriously, but I know grades during a PhD basically don't matter. For that reason I try not to spend crazy amounts of time on homeworks, but if I do, chances are it's because I'm fiddling with LaTeX, not doing homework. I've learned a lot of cool TeX things by doing my homework like drawing quantum circuit diagrams, plotting functions, and doing things with colors.
+I mostly took courses pretty seriously, but I know grades during a grad degree basically don't matter.
+For that reason I tried not to spend crazy amounts of time on homeworks, but if I did, chances were I was fiddling with LaTeX, not doing homework.
+I learned a lot of cool TeX things while writing all these up, like drawing quantum circuit diagrams, plotting functions, and doing things with colors.
 
 ## Year 1 (2020-2021)
 
