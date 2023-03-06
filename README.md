@@ -10,18 +10,18 @@ I learned a lot of cool TeX things while writing all these up, like drawing quan
 
 ### Fall 2020
 
-| Course                                                                                                                                     | Professor                                                       | Directory      | PDFs                                                          |
-| ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- | -------------- | ------------------------------------------------------------- |
-| Numerical Analysis                                                                                                                         | [Hans De Sterck](http://www.hansdesterck.net/)                  | [`num`](./num) | [link](https://natestemen.xyz/latex/numerical-analysis/)      |
-| [Advanced Quantum Theory](https://uwaterloo.ca/physics-of-information-lab/teaching/advanced-quantum-theory-amath-473673-phys454-fall-2020) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`aqt`](.aqt)  | [link](https://natestemen.xyz/latex/quantum-theory/)          |
-| [Quantum Info. Processing](http://cleve.iqc.uwaterloo.ca/qic710/index.html)                                                                | [Richard Cleve](http://cleve.iqc.uwaterloo.ca/)                 | [`qip`](./qip) | [link](https://natestemen.xyz/latex/quantum-info-processing/) |
+| Course                                                                                                                                     | Professor                                                       | Directory      |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- | -------------- |
+| Numerical Analysis                                                                                                                         | [Hans De Sterck](http://www.hansdesterck.net/)                  | [`num`](./num) |
+| [Advanced Quantum Theory](https://uwaterloo.ca/physics-of-information-lab/teaching/advanced-quantum-theory-amath-473673-phys454-fall-2020) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`aqt`](.aqt)  |
+| [Quantum Info. Processing](http://cleve.iqc.uwaterloo.ca/qic710/index.html)                                                                | [Richard Cleve](http://cleve.iqc.uwaterloo.ca/)                 | [`qip`](./qip) |
 
 ### Winter 2021
 
-| Course                    | Professor                                                                    | Directory      | PDFs                                                       |
-| ------------------------- | ---------------------------------------------------------------------------- | -------------- | ---------------------------------------------------------- |
-| Open Quantum Systems      | [Joseph Emerson](https://services.iqc.uwaterloo.ca/people/profile/jemerson/) | [`oqs`](./oqs) | [link](https://natestemen.xyz/latex/open-quantum-systems/) |
-| Lie Groups & Lie Algebras | [Da Rong Cheng](https://sites.google.com/view/daren-cheng)                   | [`lie`](./lie) | [link](https://natestemen.xyz/latex/lie-theory/)           |
+| Course                    | Professor                                                                    | Directory      |
+| ------------------------- | ---------------------------------------------------------------------------- | -------------- |
+| Open Quantum Systems      | [Joseph Emerson](https://services.iqc.uwaterloo.ca/people/profile/jemerson/) | [`oqs`](./oqs) |
+| Lie Groups & Lie Algebras | [Da Rong Cheng](https://sites.google.com/view/daren-cheng)                   | [`lie`](./lie) |
 
 ### Summer 2021
 
@@ -33,16 +33,16 @@ I learned a lot of cool TeX things while writing all these up, like drawing quan
 
 ### Fall 2021
 
-| Course                                                                                                                                 | Professor                                                       | Directory      | PDFs                                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | -------------- | ------------------------------------------------------------ |
-| [Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/)                                                                 | [John Watrous](https://cs.uwaterloo.ca/~watrous/)               | [`tqi`](./tqi) | [link](https://natestemen.xyz/latex/theory-of-quantum-info/) |
-| [~~General Relativity for Cosmology~~ (dropped)](https://uwaterloo.ca/poi/teaching/general-relativity-cosmology-amath875phys786-f2021) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`gr`](./gr)   |                                                              |
+| Course                                                                                                                                 | Professor                                                       | Directory      |
+| -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | -------------- |
+| [Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/)                                                                 | [John Watrous](https://cs.uwaterloo.ca/~watrous/)               | [`tqi`](./tqi) |
+| [~~General Relativity for Cosmology~~ (dropped)](https://uwaterloo.ca/poi/teaching/general-relativity-cosmology-amath875phys786-f2021) | [Achim Kempf](https://uwaterloo.ca/physics-of-information-lab/) | [`gr`](./gr)   |
 
 ### Winter 2021
 
-| Course                  | Professor                                           | Directory      | PDFs |
-| ----------------------- | --------------------------------------------------- | -------------- | ---- |
-| Logic and Computability | [Jason Bell](https://www.math.uwaterloo.ca/~jpbell) | [`log`](./log) |      |
+| Course                          | Professor                                           | Directory      |
+| ------------------------------- | --------------------------------------------------- | -------------- |
+| Logic and Computability (audit) | [Jason Bell](https://www.math.uwaterloo.ca/~jpbell) | [`log`](./log) |
 
 ---
 
