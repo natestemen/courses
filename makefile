@@ -1,4 +1,4 @@
-DIRS = aqt num qip oqs lie tqi gr
+DIRS = aqt num qip oqs lie tqi gr log
 
 .PHONY: clean
 
